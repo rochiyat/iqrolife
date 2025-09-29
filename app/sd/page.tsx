@@ -43,8 +43,7 @@ export default function SDPage() {
                   <span className="text-green-600">Pendidikan Dasar Unggulan</span>
                 </h1>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  Pendidikan dasar dengan kurikulum terintegrasi yang mengembangkan potensi akademik dan karakter islami
-                  siswa.
+                  Pendidikan dasar dengan kurikulum terintegrasi yang mengembangkan potensi akademik dan islami siswa.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button size="lg" className="bg-green-600 hover:bg-green-700">
