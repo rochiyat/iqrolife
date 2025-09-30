@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 export default function PPDBPage() {
   const programs = [
     {
-      level: "KB-TK Iqrolife",
+      level: "KBTK Iqrolife",
       age: "3-6 tahun",
       fee: "Rp 15.000.000",
       color: "bg-blue-100 text-blue-800",
@@ -194,7 +194,7 @@ export default function PPDBPage() {
               <div className="text-center animate-fade-in-up">
                 <img
                   src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?w=400&h=300&fit=crop"
-                  alt="Anak-anak KB-TK sedang belajar membaca dengan gembira"
+                  alt="Anak-anak KBTK sedang belajar membaca dengan gembira"
                   className="rounded-2xl shadow-lg mb-4 hover:shadow-xl transition-shadow duration-300 animate-float"
                 />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">📖 Belajar Membaca</h3>
@@ -203,7 +203,7 @@ export default function PPDBPage() {
               <div className="text-center animate-fade-in-up delay-200">
                 <img
                   src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop"
-                  alt="Anak-anak KB-TK bermain dan belajar bersama"
+                  alt="Anak-anak KBTK bermain dan belajar bersama"
                   className="rounded-2xl shadow-lg mb-4 hover:shadow-xl transition-shadow duration-300 animate-float delay-300"
                 />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">🤝 Bermain Bersama</h3>
@@ -212,7 +212,7 @@ export default function PPDBPage() {
               <div className="text-center animate-fade-in-up delay-300">
                 <img
                   src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop"
-                  alt="Anak-anak KB-TK dalam kegiatan pembelajaran kreatif"
+                  alt="Anak-anak KBTK dalam kegiatan pembelajaran kreatif"
                   className="rounded-2xl shadow-lg mb-4 hover:shadow-xl transition-shadow duration-300 animate-float delay-500"
                 />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">🎨 Aktivitas Kreatif</h3>

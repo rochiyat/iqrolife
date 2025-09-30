@@ -4,7 +4,7 @@ import { BookOpen, Users, Gamepad2, Home, Star } from "lucide-react"
 const programs = [
   {
     icon: BookOpen,
-    title: "KB-TK Iqrolife",
+    title: "KBTK Iqrolife",
     description: "Program pendidikan anak usia dini dengan pendekatan bermain sambil belajar yang menyenangkan.",
     color: "bg-fun-blue text-white",
     emoji: "🧸",

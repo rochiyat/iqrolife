@@ -78,7 +78,7 @@ export default function KBTKPage() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight animate-bounce">
-                  🌟 KB-TK Iqrolife 🌟
+                  🌟 KBTK Iqrolife 🌟
                   <br />
                   <span className="text-primary bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                     Belajar Sambil Bermain! 🎈
@@ -108,7 +108,7 @@ export default function KBTKPage() {
                 <div className="absolute -inset-4 bg-gradient-to-r from-primary to-secondary rounded-3xl opacity-20 animate-pulse"></div>
                 <Image
                   src="/happy-kindergarten-children-playing-and-learning-i.jpg"
-                  alt="KB-TK Iqrolife - Anak-anak bermain dan belajar"
+                  alt="KBTK Iqrolife - Anak-anak bermain dan belajar"
                   width={600}
                   height={400}
                   className="rounded-2xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-300"
@@ -153,7 +153,7 @@ export default function KBTKPage() {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 animate-bounce">🏆 Keunggulan KB-TK Iqrolife 🏆</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4 animate-bounce">🏆 Keunggulan KBTK Iqrolife 🏆</h2>
               <p className="text-xl text-gray-600">Program unggulan untuk perkembangan optimal anak usia dini 🌱</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -180,6 +180,7 @@ export default function KBTKPage() {
           </div>
         </section>
 
+        {/* Educational Games Section */}
         <section className="py-16 bg-gradient-to-br from-purple-50 to-blue-50">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
@@ -230,7 +231,7 @@ export default function KBTKPage() {
               <Card className="rounded-3xl overflow-hidden shadow-2xl">
                 <CardContent className="p-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center animate-bounce">
-                    🏫 Lokasi KB-TK Iqrolife 🏫
+                    🏫 Lokasi KBTK Iqrolife 🏫
                   </h3>
                   <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-6">
@@ -257,7 +258,7 @@ export default function KBTKPage() {
                     <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl h-64 flex items-center justify-center shadow-lg">
                       <div className="text-center">
                         <div className="text-8xl mb-4 animate-bounce">🗺️</div>
-                        <p className="text-gray-600 font-semibold">Peta Lokasi KB-TK Iqrolife</p>
+                        <p className="text-gray-600 font-semibold">Peta Lokasi KBTK Iqrolife</p>
                       </div>
                     </div>
                   </div>

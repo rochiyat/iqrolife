@@ -80,7 +80,7 @@ export default function TentangPage() {
                   </p>
                   <p className="leading-relaxed">
                     Dengan mengusung konsep "Leadership School with Islamic Values", Sekolah Iqrolife terus berkembang
-                    dan kini telah memiliki berbagai jenjang pendidikan mulai dari KB-TK, SD, hingga SMP dengan suasana
+                    dan kini telah memiliki berbagai jenjang pendidikan mulai dari KBTK, SD, hingga SMP dengan suasana
                     belajar yang ceria dan menyenangkan! 🎉
                   </p>
                   <p className="leading-relaxed">
@@ -174,7 +174,7 @@ export default function TentangPage() {
               <div className="text-center animate-fade-in-left">
                 <img
                   src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=500&h=300&fit=crop"
-                  alt="Anak-anak KB-TK sedang belajar di dalam kelas dengan gembira"
+                  alt="Anak-anak KBTK sedang belajar di dalam kelas dengan gembira"
                   className="rounded-2xl shadow-lg mb-4 hover:shadow-xl transition-shadow duration-300 animate-float"
                 />
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">📚 Belajar di Dalam Kelas 📚</h3>
@@ -185,7 +185,7 @@ export default function TentangPage() {
               <div className="text-center animate-fade-in-right">
                 <img
                   src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=500&h=300&fit=crop"
-                  alt="Anak-anak KB-TK bermain di luar kelas dengan riang gembira"
+                  alt="Anak-anak KBTK bermain di luar kelas dengan riang gembira"
                   className="rounded-2xl shadow-lg mb-4 hover:shadow-xl transition-shadow duration-300 animate-float delay-300"
                 />
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">🌳 Bermain di Luar Kelas 🌳</h3>

@@ -1,48 +1,60 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+'use client';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
 export default function ContactSection() {
   const locations = [
     {
-      title: "Kantor Pusat Yasmina-Sekolah Iqrolife",
-      address: "Jl. Johar Raya no. 38 Kel. Kedung Waringin\nKec. Tanah Sareal Kota Bogor\nJawa Barat 16164",
-      phone: "08111202244 / 0251-8357845",
-      email: "hkd@sekolahiqrolife.sch.id",
-    },
-    {
-      title: "Lokasi KBTK Iqrolife",
+      title: 'Kantor Pusat Yasmina-Sekolah Iqrolife',
       address:
-        "Jl. Johar Raya no. 38 RT 02/ RW 04 Kel. Kedung Waringin, Kec. Tanah Sareal, Kota Bogor, Jawa Barat 16164",
-      phone: "08111202244",
-      email: "hkd@sekolahiqrolife.sch.id",
+        'Jl. Johar Raya no. 38 Kel. Kedung Waringin\nKec. Tanah Sareal Kota Bogor\nJawa Barat 16164',
+      phone: '08111202244 / 0251-8357845',
+      email: 'hkd@sekolahiqrolife.sch.id',
     },
     {
-      title: "Lokasi SD Iqrolife",
-      address: "Jl. Kranji Ujung No.71 RT 03/RW 04\nKel. Sukaresmi, Kec. Tanah Sareal, Kota Bogor\nJawa Barat 16165",
-      phone: "08111202244",
-      email: "hkd@sekolahiqrolife.sch.id",
+      title: 'Lokasi KBTK Iqrolife',
+      address:
+        'Jl. Johar Raya no. 38 RT 02/ RW 04 Kel. Kedung Waringin, Kec. Tanah Sareal, Kota Bogor, Jawa Barat 16164',
+      phone: '08111202244',
+      email: 'hkd@sekolahiqrolife.sch.id',
     },
     {
-      title: "Lokasi SMP & HS SMU Iqrolife",
-      address: "Jl. raya Munjul RT 03/ RW 05 Kel. Kayu Manis Kec. Tanah Sareal, Kota Bogor Jawa Barat 16169",
-      phone: "08111202244",
-      email: "hkd@sekolahiqrolife.sch.id",
+      title: 'Lokasi SD Iqrolife',
+      address:
+        'Jl. Kranji Ujung No.71 RT 03/RW 04\nKel. Sukaresmi, Kec. Tanah Sareal, Kota Bogor\nJawa Barat 16165',
+      phone: '08111202244',
+      email: 'hkd@sekolahiqrolife.sch.id',
     },
-  ]
+    {
+      title: 'Lokasi SMP & HS SMU Iqrolife',
+      address:
+        'Jl. raya Munjul RT 03/ RW 05 Kel. Kayu Manis Kec. Tanah Sareal, Kota Bogor Jawa Barat 16169',
+      phone: '08111202244',
+      email: 'hkd@sekolahiqrolife.sch.id',
+    },
+  ];
 
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Hubungi Kami</h2>
-          <p className="text-xl text-gray-600">Informasi kontak dan lokasi Sekolah Iqrolife</p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Hubungi Kami
+          </h2>
+          <p className="text-xl text-gray-600">
+            Informasi kontak dan lokasi Sekolah Iqrolife
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {locations.map((location, index) => (
             <Card key={index} className="h-full">
               <CardHeader>
-                <CardTitle className="text-lg text-blue-900">{location.title}</CardTitle>
+                <CardTitle className="text-lg text-blue-900">
+                  {location.title}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -66,10 +78,17 @@ export default function ContactSection() {
                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                       />
                     </svg>
-                    <p className="text-gray-700 whitespace-pre-line">{location.address}</p>
+                    <p className="text-gray-700 whitespace-pre-line">
+                      {location.address}
+                    </p>
                   </div>
                   <div className="flex items-center">
-                    <svg className="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg
+                      className="w-5 h-5 text-gray-500 mr-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -80,7 +99,12 @@ export default function ContactSection() {
                     <p className="text-gray-700">{location.phone}</p>
                   </div>
                   <div className="flex items-center">
-                    <svg className="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg
+                      className="w-5 h-5 text-gray-500 mr-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -98,12 +122,16 @@ export default function ContactSection() {
 
         <div className="text-center">
           <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
-            <a href="https://wa.me/628111202244" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://wa.me/628111202244"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Send via WhatsApp
             </a>
           </Button>
         </div>
       </div>
     </section>
-  )
+  );
 }
