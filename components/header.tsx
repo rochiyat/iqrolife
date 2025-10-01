@@ -47,7 +47,10 @@ export default function Header() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-fun-green group-hover:w-full transition-all duration-300"></span>
             </Link>
             <div className="relative group">
-              <button className="text-gray-700 hover:text-fun-purple font-medium transition-all duration-300 hover:scale-105 flex items-center">
+              <Link
+                href="/school/kbtk"
+                className="text-gray-700 hover:text-fun-purple font-medium transition-all duration-300 hover:scale-105 flex items-center"
+              >
                 Program
                 <svg
                   className="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform duration-300"
@@ -62,7 +65,7 @@ export default function Header() {
                     d="M19 9l-7 7-7-7"
                   />
                 </svg>
-              </button>
+              </Link>
               <div className="absolute top-full left-0 mt-2 w-56 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-fun-blue/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                 <div className="py-3">
                   <Link
@@ -70,24 +73,6 @@ export default function Header() {
                     className="block px-6 py-3 text-sm text-gray-700 hover:bg-fun-blue/10 hover:text-fun-blue font-medium transition-all duration-200 rounded-lg mx-2"
                   >
                     🧸 KBTK Iqrolife
-                  </Link>
-                  <Link
-                    href="/school/sd"
-                    className="block px-6 py-3 text-sm text-gray-700 hover:bg-fun-green/10 hover:text-fun-green font-medium transition-all duration-200 rounded-lg mx-2"
-                  >
-                    📖 SD Iqrolife
-                  </Link>
-                  <Link
-                    href="/school/smp"
-                    className="block px-6 py-3 text-sm text-gray-700 hover:bg-fun-orange/10 hover:text-fun-orange font-medium transition-all duration-200 rounded-lg mx-2"
-                  >
-                    🎯 SMP Iqrolife
-                  </Link>
-                  <Link
-                    href="/school/homeschooling"
-                    className="block px-6 py-3 text-sm text-gray-700 hover:bg-fun-purple/10 hover:text-fun-purple font-medium transition-all duration-200 rounded-lg mx-2"
-                  >
-                    🏠 Homeschooling
                   </Link>
                 </div>
               </div>
@@ -117,12 +102,16 @@ export default function Header() {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button className="bg-gradient-to-r from-fun-orange to-fun-pink hover:from-fun-pink hover:to-fun-orange text-white font-bold px-5 py-2 rounded-full fun-button shadow-lg border-2 border-white/20">
-              <Link href="/school/ppdb">Daftar</Link>
-            </Button>
-            <Button className="bg-gradient-to-r from-fun-blue to-fun-purple hover:from-fun-purple hover:to-fun-blue text-white font-bold px-5 py-2 rounded-full fun-button shadow-lg">
-              <Link href="/school/login">Masuk Online</Link>
-            </Button>
+            <Link href="/school/ppdb">
+              <Button className="bg-gradient-to-r from-fun-orange to-fun-pink hover:from-fun-pink hover:to-fun-orange text-white font-bold px-5 py-2 rounded-full fun-button shadow-lg border-2 border-white/20">
+                Daftar
+              </Button>
+            </Link>
+            <Link href="/school/login">
+              <Button className="bg-gradient-to-r from-fun-blue to-fun-purple hover:from-fun-purple hover:to-fun-blue text-white font-bold px-5 py-2 rounded-full fun-button shadow-lg">
+                Masuk Online
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile menu trigger */}
@@ -157,24 +146,6 @@ export default function Header() {
                         className="px-3 py-2 rounded-lg hover:bg-fun-blue/10"
                       >
                         KBTK Iqrolife
-                      </Link>
-                      <Link
-                        href="/school/sd"
-                        className="px-3 py-2 rounded-lg hover:bg-fun-green/10"
-                      >
-                        SD Iqrolife
-                      </Link>
-                      <Link
-                        href="/school/smp"
-                        className="px-3 py-2 rounded-lg hover:bg-fun-orange/10"
-                      >
-                        SMP Iqrolife
-                      </Link>
-                      <Link
-                        href="/school/homeschooling"
-                        className="px-3 py-2 rounded-lg hover:bg-fun-purple/10"
-                      >
-                        Homeschooling
                       </Link>
                     </div>
                   </div>
