@@ -146,64 +146,69 @@ export function FoundationHeader() {
                 </svg>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[84%] sm:w-[380px]">
-              <div className="flex items-center justify-between">
+            <SheetContent
+              side="right"
+              className="w-[84%] sm:w-[380px] flex flex-col"
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-[#e8f5e3]">
                 <div className="flex items-center gap-3">
                   <img
                     src="/iqrolife-logo.jpg"
                     alt="Logo Iqrolife"
-                    className="h-7 w-7 rounded-md ring-1 ring-border"
+                    className="h-7 w-7 rounded-md ring-1 ring-[#e8f5e3]"
                   />
-                  <span className="text-sm font-semibold">
+                  <span className="text-sm font-bold text-[#2e7d32]">
                     Tumbuh Bersama Iqrolife
                   </span>
                 </div>
               </div>
 
-              <div className="mt-6 flex flex-col gap-1">
-                {foundationNav.map((item) => {
-                  if (item.children) {
+              <div className="mt-6 flex-1 overflow-y-auto">
+                <div className="flex flex-col gap-1 pb-6">
+                  {foundationNav.map((item) => {
+                    if (item.children) {
+                      return (
+                        <div key={item.href}>
+                          <div className="px-3 py-2 text-base font-medium text-[#2e7d32]">
+                            {item.label}
+                          </div>
+                          <div className="ml-3 flex flex-col gap-1">
+                            {item.children.map((child) => (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                onClick={() => setOpen(false)}
+                                className={cn(
+                                  'rounded-md px-3 py-2 text-sm transition-all hover:bg-[#e8f5e3] hover:translate-x-0.5',
+                                  pathname === child.href
+                                    ? 'bg-[#e8f5e3] font-medium text-[#1b5e20]'
+                                    : 'text-[#4caf50]/90'
+                                )}
+                              >
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    }
                     return (
-                      <div key={item.href}>
-                        <div className="px-3 py-2 text-sm font-medium text-muted-foreground">
-                          {item.label}
-                        </div>
-                        <div className="ml-3 flex flex-col gap-1">
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              onClick={() => setOpen(false)}
-                              className={cn(
-                                'rounded-md px-3 py-2 text-sm transition-all hover:bg-muted hover:translate-x-0.5',
-                                pathname === child.href
-                                  ? 'bg-muted font-medium'
-                                  : 'text-foreground'
-                              )}
-                            >
-                              {child.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          'rounded-md px-3 py-3 text-base transition-all hover:bg-[#e8f5e3] hover:translate-x-0.5',
+                          pathname === item.href
+                            ? 'bg-[#e8f5e3] font-medium text-[#1b5e20]'
+                            : 'text-[#4caf50]/90'
+                        )}
+                      >
+                        {item.label}
+                      </Link>
                     );
-                  }
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className={cn(
-                        'rounded-md px-3 py-3 text-base transition-all hover:bg-muted hover:translate-x-0.5',
-                        pathname === item.href
-                          ? 'bg-muted font-medium'
-                          : 'text-foreground'
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                })}
+                  })}
+                </div>
               </div>
             </SheetContent>
           </Sheet>
