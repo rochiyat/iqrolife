@@ -70,7 +70,7 @@ export default function FoundationLanding() {
                       href="#program"
                       className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-fun-blue/30 font-semibold hover:bg-fun-blue/10 transition-all duration-300 hover:scale-105"
                     >
-                      Lihat Program Yayasan
+                      Lihat Program Komunitas
                     </a>
                   </motion.div>
                 </div>
@@ -104,13 +104,13 @@ export default function FoundationLanding() {
 
         <VisionMissionSection />
 
-        {/* Program Yayasan */}
+        {/* Program Komunitas */}
         <section id="program" className="py-16">
           <div className="container mx-auto px-4">
             <AnimatedSection>
               <div className="text-center mb-10">
                 <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-fun-blue to-fun-purple bg-clip-text text-transparent">
-                  Program Yayasan
+                  Program Komunitas
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
                   Dukungan pendidikan dan keluarga untuk tumbuh bersama dalam

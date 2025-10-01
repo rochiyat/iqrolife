@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
-import Link from "next/link"
-import { Menu, Sparkles } from "lucide-react"
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Menu, Sparkles } from 'lucide-react';
+import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 
 export default function Header() {
   return (
@@ -55,7 +55,12 @@ export default function Header() {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
               <div className="absolute top-full left-0 mt-2 w-56 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-fun-blue/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
@@ -105,7 +110,7 @@ export default function Header() {
               href="/"
               className="text-gray-700 hover:text-fun-blue font-medium transition-all duration-300 hover:scale-105 relative group"
             >
-              Yayasan
+              Komunitas
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-fun-blue group-hover:w-full transition-all duration-300"></span>
             </Link>
           </nav>
@@ -130,36 +135,65 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="right" className="w-4/5 sm:max-w-xs">
                 <nav className="flex flex-col gap-2 mt-6">
-                  <Link href="/school" className="px-3 py-2 rounded-lg hover:bg-fun-blue/10">
+                  <Link
+                    href="/school"
+                    className="px-3 py-2 rounded-lg hover:bg-fun-blue/10"
+                  >
                     Beranda
                   </Link>
-                  <Link href="/school/tentang" className="px-3 py-2 rounded-lg hover:bg-fun-green/10">
+                  <Link
+                    href="/school/tentang"
+                    className="px-3 py-2 rounded-lg hover:bg-fun-green/10"
+                  >
                     Tentang Kami
                   </Link>
                   <div className="mt-2">
-                    <p className="px-3 py-2 text-sm text-muted-foreground">Program</p>
+                    <p className="px-3 py-2 text-sm text-muted-foreground">
+                      Program
+                    </p>
                     <div className="flex flex-col gap-1">
-                      <Link href="/school/kbtk" className="px-3 py-2 rounded-lg hover:bg-fun-blue/10">
+                      <Link
+                        href="/school/kbtk"
+                        className="px-3 py-2 rounded-lg hover:bg-fun-blue/10"
+                      >
                         KBTK Iqrolife
                       </Link>
-                      <Link href="/school/sd" className="px-3 py-2 rounded-lg hover:bg-fun-green/10">
+                      <Link
+                        href="/school/sd"
+                        className="px-3 py-2 rounded-lg hover:bg-fun-green/10"
+                      >
                         SD Iqrolife
                       </Link>
-                      <Link href="/school/smp" className="px-3 py-2 rounded-lg hover:bg-fun-orange/10">
+                      <Link
+                        href="/school/smp"
+                        className="px-3 py-2 rounded-lg hover:bg-fun-orange/10"
+                      >
                         SMP Iqrolife
                       </Link>
-                      <Link href="/school/homeschooling" className="px-3 py-2 rounded-lg hover:bg-fun-purple/10">
+                      <Link
+                        href="/school/homeschooling"
+                        className="px-3 py-2 rounded-lg hover:bg-fun-purple/10"
+                      >
                         Homeschooling
                       </Link>
                     </div>
                   </div>
-                  <Link href="/school/ppdb" className="px-3 py-2 rounded-lg hover:bg-fun-orange/10">
+                  <Link
+                    href="/school/ppdb"
+                    className="px-3 py-2 rounded-lg hover:bg-fun-orange/10"
+                  >
                     PPDB
                   </Link>
-                  <Link href="/school/kontak" className="px-3 py-2 rounded-lg hover:bg-fun-pink/10">
+                  <Link
+                    href="/school/kontak"
+                    className="px-3 py-2 rounded-lg hover:bg-fun-pink/10"
+                  >
                     Kontak
                   </Link>
-                  <Link href="/" className="px-3 py-2 rounded-lg hover:bg-fun-blue/10">
+                  <Link
+                    href="/"
+                    className="px-3 py-2 rounded-lg hover:bg-fun-blue/10"
+                  >
                     Yayasan
                   </Link>
                   <div className="mt-4 flex gap-2">
@@ -183,5 +217,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
