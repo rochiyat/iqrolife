@@ -122,14 +122,6 @@ export function FoundationHeader() {
               </Link>
             );
           })}
-          <Link href="/school" className="ml-2">
-            <Button
-              size="sm"
-              className="font-medium transition-transform hover:translate-y-[-1px] bg-[#2e7d32] hover:bg-[#1b5e20] text-white shadow-sm"
-            >
-              Masuk Sekolah
-            </Button>
-          </Link>
         </nav>
 
         {/* Mobile nav */}
@@ -219,15 +211,6 @@ export function FoundationHeader() {
                     </Link>
                   );
                 })}
-                <Link
-                  href="/school"
-                  onClick={() => setOpen(false)}
-                  className="mt-2"
-                >
-                  <Button className="w-full" size="sm">
-                    Masuk Sekolah
-                  </Button>
-                </Link>
               </div>
             </SheetContent>
           </Sheet>

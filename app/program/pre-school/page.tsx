@@ -120,6 +120,13 @@ export default function PreSchoolPage() {
                 Berikan kesempatan terbaik untuk perkembangan anak Anda melalui
                 program pre-school yang komprehensif dan berkualitas.
               </p>
+              <div className="flex justify-center mb-8">
+                <a href="/school" className="inline-block">
+                  <button className="px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-yellow-600 to-yellow-800 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                    Masuk Sekolah
+                  </button>
+                </a>
+              </div>
               <div className="grid grid-cols-2 gap-4 text-left text-sm">
                 <div className="space-y-2">
                   <h4 className="font-semibold">Persyaratan:</h4>
