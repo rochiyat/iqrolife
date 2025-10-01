@@ -49,8 +49,8 @@ export function FoundationHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="w-full sticky top-0 z-50 border-b-2 border-[#e8f5e3] bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 md:px-6">
+    <header className="w-full sticky top-0 z-50 border-b-2 border-[#e8f5e3] bg-gradient-to-b from-white to-[#f7f9f7] backdrop-blur supports-[backdrop-filter]:bg-white/95">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-8">
         <Link
           href="/"
           className="flex items-center gap-3 group"
@@ -62,40 +62,34 @@ export function FoundationHeader() {
             className="h-9 w-9 rounded-md ring-1 ring-border group-hover:scale-105 transition-transform duration-200"
           />
           <div className="flex flex-col">
-            <span className="text-sm font-semibold leading-none text-foreground md:text-base group-hover:text-primary transition-colors">
+            <span className="text-base font-bold leading-none text-[#2e7d32] md:text-lg group-hover:text-[#1b5e20] transition-colors">
               Tumbuh Bersama Iqrolife
             </span>
-            <span className="text-xs text-muted-foreground md:text-sm">
+            <span className="text-sm text-[#4caf50] md:text-base">
               Profesional • Kekeluargaan
             </span>
           </div>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden md:flex items-center gap-8">
           {foundationNav.map((item) => {
             if (item.children) {
               return (
                 <DropdownMenu key={item.href}>
-                  <DropdownMenuTrigger
-                    className={cn(
-                      'relative rounded-md px-3 py-2 text-sm transition-all hover:bg-[#e8f5e3] hover:translate-y-[-1px] flex items-center gap-0.5',
-                      'after:absolute after:left-3 after:right-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-[#2e7d32] after:scale-x-0 after:transition-transform after:duration-200 after:origin-left hover:after:scale-x-100',
-                      pathname.startsWith(item.href)
-                        ? 'bg-[#e8f5e3] font-medium after:scale-x-100'
-                        : 'text-gray-700'
-                    )}
-                  >
-                    {item.label} <ChevronDownIcon className="h-4 w-4" />
+                  <DropdownMenuTrigger className="flex items-center gap-1 text-base font-medium text-[#4caf50]/90 transition-colors hover:text-[#2e7d32]">
+                    {item.label}
+                    <ChevronDownIcon className="h-4 w-4" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
+                  <DropdownMenuContent>
                     {item.children.map((child) => (
                       <DropdownMenuItem key={child.href} asChild>
                         <Link
                           href={child.href}
                           className={cn(
-                            'w-full cursor-pointer',
-                            pathname === child.href ? 'font-medium' : ''
+                            'w-full cursor-pointer text-[#4caf50]/90 transition-colors hover:text-[#2e7d32]',
+                            pathname === child.href &&
+                              'font-medium text-[#1b5e20]'
                           )}
                         >
                           {child.label}
@@ -111,11 +105,10 @@ export function FoundationHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'relative rounded-md px-3 py-2 text-sm transition-all hover:bg-[#e8f5e3] hover:translate-y-[-1px]',
-                  'after:absolute after:left-3 after:right-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-[#2e7d32] after:scale-x-0 after:transition-transform after:duration-200 after:origin-left hover:after:scale-x-100',
+                  'text-base font-medium transition-colors hover:text-[#2e7d32]',
                   pathname === item.href
-                    ? 'bg-[#e8f5e3] font-medium after:scale-x-100'
-                    : 'text-gray-700'
+                    ? 'text-[#1b5e20]'
+                    : 'text-[#4caf50]/90'
                 )}
               >
                 {item.label}
