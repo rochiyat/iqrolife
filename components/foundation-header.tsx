@@ -26,7 +26,21 @@ const foundationNav = [
       { href: '/profile/misi', label: 'Misi' },
     ],
   },
-  { href: '/program', label: 'Program' },
+  {
+    href: '/program',
+    label: 'Program',
+    children: [
+      { href: '/program/pre-school', label: 'Pre-School' },
+      { href: '/program/kelas-eksplorasi', label: 'Kelas Eksplorasi' },
+      { href: '/program/kelas-aqil-baligh', label: 'Kelas Aqil Baligh' },
+      {
+        href: '/program/kelas-belajar-orang-tua',
+        label: 'Kelas Belajar Orang Tua',
+      },
+      { href: '/program/konsultasi-tm', label: 'Konsultasi TM' },
+      { href: '/program/komunitas-ayah', label: 'Komunitas Ayah' },
+    ],
+  },
   { href: '/kontak', label: 'Kontak' },
 ];
 
