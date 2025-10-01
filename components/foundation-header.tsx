@@ -49,7 +49,7 @@ export function FoundationHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="w-full sticky top-0 z-50 border-b-2 border-muted bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header className="w-full sticky top-0 z-50 border-b-2 border-[#e8f5e3] bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 md:px-6">
         <Link
           href="/"
@@ -79,11 +79,11 @@ export function FoundationHeader() {
                 <DropdownMenu key={item.href}>
                   <DropdownMenuTrigger
                     className={cn(
-                      'relative rounded-md px-3 py-2 text-sm transition-all hover:bg-muted hover:translate-y-[-1px] flex items-center gap-0.5',
-                      'after:absolute after:left-3 after:right-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-primary after:scale-x-0 after:transition-transform after:duration-200 after:origin-left hover:after:scale-x-100',
+                      'relative rounded-md px-3 py-2 text-sm transition-all hover:bg-[#e8f5e3] hover:translate-y-[-1px] flex items-center gap-0.5',
+                      'after:absolute after:left-3 after:right-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-[#2e7d32] after:scale-x-0 after:transition-transform after:duration-200 after:origin-left hover:after:scale-x-100',
                       pathname.startsWith(item.href)
-                        ? 'bg-muted font-medium after:scale-x-100'
-                        : 'text-foreground'
+                        ? 'bg-[#e8f5e3] font-medium after:scale-x-100'
+                        : 'text-gray-700'
                     )}
                   >
                     {item.label} <ChevronDownIcon className="h-4 w-4" />
@@ -111,11 +111,11 @@ export function FoundationHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'relative rounded-md px-3 py-2 text-sm transition-all hover:bg-muted hover:translate-y-[-1px]',
-                  'after:absolute after:left-3 after:right-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-primary after:scale-x-0 after:transition-transform after:duration-200 after:origin-left hover:after:scale-x-100',
+                  'relative rounded-md px-3 py-2 text-sm transition-all hover:bg-[#e8f5e3] hover:translate-y-[-1px]',
+                  'after:absolute after:left-3 after:right-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-[#2e7d32] after:scale-x-0 after:transition-transform after:duration-200 after:origin-left hover:after:scale-x-100',
                   pathname === item.href
-                    ? 'bg-muted font-medium after:scale-x-100'
-                    : 'text-foreground'
+                    ? 'bg-[#e8f5e3] font-medium after:scale-x-100'
+                    : 'text-gray-700'
                 )}
               >
                 {item.label}
@@ -125,7 +125,7 @@ export function FoundationHeader() {
           <Link href="/school" className="ml-2">
             <Button
               size="sm"
-              className="font-medium transition-transform hover:translate-y-[-1px]"
+              className="font-medium transition-transform hover:translate-y-[-1px] bg-[#2e7d32] hover:bg-[#1b5e20] text-white shadow-sm"
             >
               Masuk Sekolah
             </Button>
