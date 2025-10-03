@@ -9,16 +9,6 @@ import { konsultasiTMData } from '@/lib/data/konsultasi-tm';
 export async function GET() {
   const programs = [
     {
-      id: 'kbtk',
-      title: 'KB-TK Iqrolife',
-      desc: 'Program pendidikan anak usia dini dengan pendekatan bermain sambil belajar',
-      icon: '🏫',
-      color: 'from-fun-blue to-fun-purple',
-      age: '3-6 tahun',
-      type: 'school',
-      href: '/school/kbtk',
-    },
-    {
       id: 'pre-school',
       title: preSchoolData.title,
       desc: preSchoolData.subtitle,

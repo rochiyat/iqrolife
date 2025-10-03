@@ -37,16 +37,28 @@ export async function GET() {
       title: 'Program',
       items: [
         {
+          title: 'Pre-School Iqrolife',
+          href: '/program/pre-school',
+        },
+        {
           title: 'Kelas Eksplorasi',
           href: '/program/kelas-eksplorasi',
+        },
+        {
+          title: 'Kelas Aqil Baligh',
+          href: '/program/kelas-aqil-baligh',
         },
         {
           title: 'Kelas Belajar Orang Tua',
           href: '/program/kelas-belajar-orang-tua',
         },
         {
-          title: 'Kelas Pra Aqil Baligh',
-          href: '/program/kelas-pra-aqil-baligh',
+          title: 'Komunitas Ayah',
+          href: '/program/komunitas-ayah',
+        },
+        {
+          title: 'Konsultasi TM',
+          href: '/program/konsultasi-tm',
         },
       ],
     },
@@ -54,20 +66,8 @@ export async function GET() {
       title: 'Sekolah',
       items: [
         {
-          title: 'KB-TK Islam',
+          title: 'KB-TK Iqrolife',
           href: '/school/kbtk',
-        },
-        {
-          title: 'SD Islam',
-          href: '/school/sd',
-        },
-        {
-          title: 'SMP Islam',
-          href: '/school/smp',
-        },
-        {
-          title: 'Homeschooling',
-          href: '/school/homeschooling',
         },
       ],
     },
@@ -84,7 +84,7 @@ export async function GET() {
       },
     },
     copyright: {
-      text: '© 2024 Iqrolife. Hak Cipta Dilindungi.',
+      text: '© 2025 Iqrolife. Hak Cipta Dilindungi.',
       links: [
         {
           title: 'Kebijakan Privasi',
