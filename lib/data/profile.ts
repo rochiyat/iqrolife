@@ -1,0 +1,138 @@
+export const sejarahData = {
+  title: 'Sejarah Iqrolife',
+  subtitle:
+    'Perjalanan kami dalam membangun generasi yang berakhlak mulia, berprestasi, dan siap menghadapi tantangan masa depan.',
+  milestones: [
+    {
+      year: '2018',
+      title: 'Awal Mula',
+      description:
+        'Dimulai dari sebuah komunitas belajar kecil yang fokus pada pendidikan anak dan pembinaan keluarga.',
+      image: '/placeholder.jpg',
+    },
+    {
+      year: '2019',
+      title: 'Pendirian KB-TK',
+      description:
+        'Membuka KB-TK Iqrolife sebagai langkah awal pendidikan formal dengan konsep pembelajaran yang menyenangkan.',
+      image: '/school-building-exterior.png',
+    },
+    {
+      year: '2020',
+      title: 'Pengembangan SD',
+      description:
+        'Memperluas jenjang pendidikan dengan membuka SD Iqrolife untuk memberikan pendidikan berkelanjutan.',
+      image: '/classroom-learning.png',
+    },
+    {
+      year: '2021',
+      title: 'Program Homeschooling',
+      description:
+        'Menghadirkan program homeschooling untuk memenuhi kebutuhan pendidikan yang lebih personal.',
+      image: '/keluarga-belajar.jpg',
+    },
+    {
+      year: '2022',
+      title: 'Pembukaan SMP',
+      description:
+        'Melengkapi jenjang pendidikan dasar dengan pembukaan SMP Iqrolife.',
+      image: '/science-laboratory.png',
+    },
+    {
+      year: '2023',
+      title: 'Pengembangan Program',
+      description:
+        'Mengembangkan berbagai program pemberdayaan keluarga dan masyarakat.',
+      image: '/kelas-parenting-belajar-orang-tua.jpg',
+    },
+  ],
+};
+
+export const visiData = {
+  title: 'Visi Iqrolife',
+  quote:
+    'Terwujudnya sekolah berprestasi berbasis lingkungan yang ramah anak dan mengedepankan pencapaian akhlak islami serta nilai kepemimpinan setiap siswa.',
+  explanation: [
+    {
+      icon: '🎯',
+      title: 'Sekolah Berprestasi',
+      description:
+        'Mengembangkan potensi akademik dan non-akademik setiap siswa untuk mencapai prestasi optimal.',
+    },
+    {
+      icon: '🌱',
+      title: 'Berbasis Lingkungan',
+      description:
+        'Menciptakan lingkungan pembelajaran yang mendukung tumbuh kembang anak dan kesadaran lingkungan.',
+    },
+    {
+      icon: '❤️',
+      title: 'Ramah Anak',
+      description:
+        'Menyediakan suasana belajar yang aman, nyaman, dan menyenangkan bagi setiap anak.',
+    },
+    {
+      icon: '🕌',
+      title: 'Akhlak Islami',
+      description:
+        'Membentuk karakter dan kepribadian siswa berdasarkan nilai-nilai Islam.',
+    },
+    {
+      icon: '👥',
+      title: 'Nilai Kepemimpinan',
+      description:
+        'Mengembangkan jiwa kepemimpinan dan tanggung jawab dalam diri setiap siswa.',
+    },
+  ],
+};
+
+export const misiData = {
+  title: 'Misi Iqrolife',
+  subtitle: 'Langkah-langkah Pencapaian Visi:',
+  missions: [
+    {
+      icon: '📖',
+      title: "Mendidik Kecintaan Al-Qur'an",
+      description:
+        "Mengembangkan program tahfidz dan pembelajaran Al-Qur'an yang menyenangkan untuk menumbuhkan kecintaan pada Al-Qur'an sejak dini.",
+      points: [
+        'Program tahfidz harian',
+        "Metode pembelajaran Al-Qur'an yang interaktif",
+        "Pembiasaan tadabbur Al-Qur'an",
+      ],
+    },
+    {
+      icon: '🎨',
+      title: 'Pengembangan Kreativitas',
+      description:
+        'Mendidik setiap peserta didik menjadi pribadi yang kreatif, produktif, dan bertanggungjawab dalam menghadapi tantangan masa depan.',
+      points: [
+        'Program pengembangan bakat dan minat',
+        'Project-based learning',
+        'Pelatihan soft skills dan leadership',
+      ],
+    },
+    {
+      icon: '🏫',
+      title: 'Lingkungan Belajar Menyenangkan',
+      description:
+        'Menciptakan suasana belajar yang menyenangkan dan kondusif untuk perkembangan optimal setiap siswa.',
+      points: [
+        'Fasilitas pembelajaran modern',
+        'Kegiatan outdoor learning',
+        'Program ekstrakurikuler beragam',
+      ],
+    },
+    {
+      icon: '🌿',
+      title: 'Kesadaran Lingkungan',
+      description:
+        'Mengenalkan dan mengajarkan pentingnya menjaga lingkungan melalui berbagai program dan kegiatan.',
+      points: [
+        'Program go green',
+        'Pengelolaan sampah terpadu',
+        'Pembelajaran berbasis lingkungan',
+      ],
+    },
+  ],
+};

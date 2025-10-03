@@ -5,15 +5,63 @@ import { AnimatedSection } from '@/components/animated-section';
 import { Card, CardContent } from '@/components/ui/card';
 import { FoundationHeader } from '@/components/foundation-header';
 import FoundationFooter from '@/components/foundation-footer';
+import { useState, useEffect } from 'react';
 
 export default function MisiPage() {
+  const [misiData, setMisiData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMisiData = async () => {
+      try {
+        const response = await fetch('/api/profile/misi');
+        const data = await response.json();
+        setMisiData(data);
+      } catch (error) {
+        console.error('Error fetching misi data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMisiData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
+        <FoundationHeader />
+        <main className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold">Loading...</h1>
+          </div>
+        </main>
+        <FoundationFooter />
+      </div>
+    );
+  }
+
+  if (!misiData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
+        <FoundationHeader />
+        <main className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold">Error loading page</h1>
+          </div>
+        </main>
+        <FoundationFooter />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
       <FoundationHeader />
       <main className="container mx-auto px-4 py-16">
         <AnimatedSection>
           <h1 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
-            Misi Iqrolife
+            {misiData.title}
           </h1>
         </AnimatedSection>
 
@@ -27,55 +75,10 @@ export default function MisiPage() {
             <CardContent className="p-8">
               <div className="space-y-6">
                 <h2 className="text-xl font-semibold text-green-800 mb-4">
-                  Langkah-langkah Pencapaian Visi:
+                  {misiData.subtitle}
                 </h2>
 
-                {[
-                  {
-                    icon: '📖',
-                    title: "Mendidik Kecintaan Al-Qur'an",
-                    description:
-                      "Mengembangkan program tahfidz dan pembelajaran Al-Qur'an yang menyenangkan untuk menumbuhkan kecintaan pada Al-Qur'an sejak dini.",
-                    points: [
-                      'Program tahfidz harian',
-                      "Metode pembelajaran Al-Qur'an yang interaktif",
-                      "Pembiasaan tadabbur Al-Qur'an",
-                    ],
-                  },
-                  {
-                    icon: '🎨',
-                    title: 'Pengembangan Kreativitas',
-                    description:
-                      'Mendidik setiap peserta didik menjadi pribadi yang kreatif, produktif, dan bertanggungjawab dalam menghadapi tantangan masa depan.',
-                    points: [
-                      'Program pengembangan bakat dan minat',
-                      'Project-based learning',
-                      'Pelatihan soft skills dan leadership',
-                    ],
-                  },
-                  {
-                    icon: '🏫',
-                    title: 'Lingkungan Belajar Menyenangkan',
-                    description:
-                      'Menciptakan suasana belajar yang menyenangkan dan kondusif untuk perkembangan optimal setiap siswa.',
-                    points: [
-                      'Fasilitas pembelajaran modern',
-                      'Kegiatan outdoor learning',
-                      'Program ekstrakurikuler beragam',
-                    ],
-                  },
-                  {
-                    icon: '🌿',
-                    title: 'Kesadaran Lingkungan',
-                    description:
-                      'Mengenalkan dan mengajarkan pentingnya menjaga lingkungan melalui berbagai program dan kegiatan.',
-                    points: [
-                      'Program go green',
-                      'Pengelolaan sampah terpadu',
-                      'Pembelajaran berbasis lingkungan',
-                    ],
-                  },
-                ].map((item, index) => (
+                {misiData.missions.map((item: any, index: number) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
@@ -92,7 +95,7 @@ export default function MisiPage() {
                       </h3>
                       <p className="text-gray-700 mb-3">{item.description}</p>
                       <ul className="space-y-2">
-                        {item.points.map((point, i) => (
+                        {item.points.map((point: string, i: number) => (
                           <li
                             key={i}
                             className="flex items-center gap-2 text-gray-600"
