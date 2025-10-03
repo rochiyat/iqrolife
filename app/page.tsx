@@ -105,9 +105,9 @@ export default function FoundationLanding() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background" suppressHydrationWarning={true}>
       <FoundationHeader />
-      <main>
+      <main suppressHydrationWarning={true}>
         {/* Hero */}
         <section className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-emerald-50">
           <motion.div
