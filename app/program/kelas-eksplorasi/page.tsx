@@ -1,9 +1,58 @@
+'use client';
+
 import FoundationHeader from '@/components/foundation-header';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import FoundationFooter from '@/components/foundation-footer';
+import { useState, useEffect } from 'react';
 
 export default function Page() {
+  const [kelasEksplorasiData, setKelasEksplorasiData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchKelasEksplorasiData = async () => {
+      try {
+        const response = await fetch('/api/programs/kelas-eksplorasi');
+        const data = await response.json();
+        setKelasEksplorasiData(data);
+      } catch (error) {
+        console.error('Error fetching kelas-eksplorasi data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchKelasEksplorasiData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <FoundationHeader />
+        <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+          <div className="text-center">
+            <h1 className="text-3xl font-semibold">Loading...</h1>
+          </div>
+        </section>
+        <FoundationFooter />
+      </div>
+    );
+  }
+
+  if (!kelasEksplorasiData) {
+    return (
+      <div>
+        <FoundationHeader />
+        <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+          <div className="text-center">
+            <h1 className="text-3xl font-semibold">Error loading page</h1>
+          </div>
+        </section>
+        <FoundationFooter />
+      </div>
+    );
+  }
   return (
     <div>
       <main>
@@ -20,61 +69,50 @@ export default function Page() {
           <div className="mt-4 grid items-start gap-8 md:grid-cols-2">
             <div>
               <h1 className="text-pretty text-3xl font-semibold md:text-4xl">
-                Kelas Eksplorasi
+                {kelasEksplorasiData.title}
               </h1>
               <p className="mt-3 leading-relaxed text-muted-foreground">
-                Ruang belajar berbasis bermain untuk menumbuhkan rasa ingin
-                tahu, kreativitas, kolaborasi, dan kemandirian anak melalui
-                kegiatan sensorik, sains sederhana, seni, dan permainan peran.
+                {kelasEksplorasiData.description}
               </p>
               <ul className="mt-6 list-disc pl-5 text-muted-foreground">
-                <li>Kegiatan tematik: alam, sains, seni, dan literasi awal</li>
-                <li>
-                  Eksperimen aman dan menyenangkan untuk melatih pemecahan
-                  masalah
-                </li>
-                <li>
-                  Penguatan adab dalam interaksi dan kebiasaan baik harian
-                </li>
+                {kelasEksplorasiData.features.map(
+                  (feature: string, index: number) => (
+                    <li key={index}>{feature}</li>
+                  )
+                )}
               </ul>
               <div className="mt-6 flex gap-3">
-                <Button>Daftar Minat</Button>
-                <Link href="/kontak">
-                  <Button variant="outline">Konsultasi</Button>
-                </Link>
+                {kelasEksplorasiData.buttons.map((button: any, index: number) =>
+                  button.href ? (
+                    <Link key={index} href={button.href}>
+                      <Button variant={button.variant}>{button.text}</Button>
+                    </Link>
+                  ) : (
+                    <Button key={index} variant={button.variant}>
+                      {button.text}
+                    </Button>
+                  )
+                )}
               </div>
             </div>
             <div className="rounded-lg border bg-card p-4 shadow-sm">
               <img
-                src="/kelas-eksplorasi-anak-bermain-belajar.jpg"
-                alt="Kegiatan Kelas Eksplorasi"
+                src={kelasEksplorasiData.image}
+                alt={kelasEksplorasiData.imageAlt}
                 className="h-auto w-full rounded-md"
               />
             </div>
           </div>
 
           <div className="mt-10 grid gap-4 md:grid-cols-3">
-            <div className="rounded-lg border bg-card p-5">
-              <h3 className="font-semibold">Tujuan</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Menstimulasi aspek kognitif, sosial-emosional, motorik, dan
-                bahasa secara seimbang.
-              </p>
-            </div>
-            <div className="rounded-lg border bg-card p-5">
-              <h3 className="font-semibold">Metode</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Play-based, project-based, dan discovery learning dengan
-                pendampingan fasilitator.
-              </p>
-            </div>
-            <div className="rounded-lg border bg-card p-5">
-              <h3 className="font-semibold">Output</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Anak berani mencoba, mampu berekspresi, dan terbiasa bekerja
-                sama.
-              </p>
-            </div>
+            {kelasEksplorasiData.details.map((detail: any, index: number) => (
+              <div key={index} className="rounded-lg border bg-card p-5">
+                <h3 className="font-semibold">{detail.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {detail.description}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
       </main>

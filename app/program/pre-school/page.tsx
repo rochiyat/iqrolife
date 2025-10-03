@@ -6,53 +6,57 @@ import { Card, CardContent } from '@/components/ui/card';
 import { FoundationHeader } from '@/components/foundation-header';
 import FoundationFooter from '@/components/foundation-footer';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 export default function PreSchoolPage() {
-  const programs = [
-    {
-      title: 'Program Pembentukan Karakter',
-      description:
-        'Pembentukan karakter islami dan pengembangan nilai-nilai moral sejak dini.',
-      icon: '🌟',
-      details: [
-        'Pembiasaan adab islami',
-        'Pengenalan nilai-nilai moral',
-        'Aktivitas pembiasaan mandiri',
-      ],
-    },
-    {
-      title: 'Pengembangan Motorik',
-      description:
-        'Aktivitas yang mendukung perkembangan motorik halus dan kasar.',
-      icon: '🎨',
-      details: [
-        'Kegiatan seni dan kerajinan',
-        'Permainan fisik terstruktur',
-        'Latihan koordinasi tubuh',
-      ],
-    },
-    {
-      title: 'Stimulasi Kognitif',
-      description:
-        'Program pembelajaran yang merangsang perkembangan kognitif anak.',
-      icon: '🧩',
-      details: [
-        'Pengenalan huruf dan angka',
-        'Aktivitas pemecahan masalah',
-        'Permainan edukatif',
-      ],
-    },
-    {
-      title: 'Pengembangan Sosial',
-      description: 'Aktivitas yang membangun kemampuan sosial dan komunikasi.',
-      icon: '👥',
-      details: [
-        'Bermain kelompok',
-        'Aktivitas bercerita',
-        'Pembelajaran kolaboratif',
-      ],
-    },
-  ];
+  const [preSchoolData, setPreSchoolData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPreSchoolData = async () => {
+      try {
+        const response = await fetch('/api/programs/pre-school');
+        const data = await response.json();
+        setPreSchoolData(data);
+      } catch (error) {
+        console.error('Error fetching pre-school data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPreSchoolData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-blue-50">
+        <FoundationHeader />
+        <main className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold">Loading...</h1>
+          </div>
+        </main>
+        <FoundationFooter />
+      </div>
+    );
+  }
+
+  if (!preSchoolData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-blue-50">
+        <FoundationHeader />
+        <main className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold">Error loading page</h1>
+          </div>
+        </main>
+        <FoundationFooter />
+      </div>
+    );
+  }
+
+  const programs = preSchoolData.programs;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-blue-50">
@@ -60,17 +64,15 @@ export default function PreSchoolPage() {
       <main className="container mx-auto px-4 py-16">
         <AnimatedSection>
           <h1 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">
-            Pre-School Iqrolife
+            {preSchoolData.title}
           </h1>
           <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-            Program pre-school yang dirancang khusus untuk mempersiapkan
-            anak-anak menuju jenjang pendidikan formal dengan pendekatan yang
-            menyenangkan dan islami.
+            {preSchoolData.subtitle}
           </p>
         </AnimatedSection>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {programs.map((program, index) => (
+          {programs.map((program: any, index: number) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -89,7 +91,7 @@ export default function PreSchoolPage() {
                   </div>
                   <p className="text-gray-600 mb-4">{program.description}</p>
                   <ul className="space-y-2">
-                    {program.details.map((detail, i) => (
+                    {program.details.map((detail: string, i: number) => (
                       <li
                         key={i}
                         className="flex items-center gap-2 text-gray-700"
@@ -114,16 +116,18 @@ export default function PreSchoolPage() {
           <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4 text-yellow-800">
-                Daftarkan Anak Anda Sekarang
+                {preSchoolData.cta.title}
               </h2>
               <p className="text-gray-600 mb-6">
-                Berikan kesempatan terbaik untuk perkembangan anak Anda melalui
-                program pre-school yang komprehensif dan berkualitas.
+                {preSchoolData.cta.description}
               </p>
               <div className="flex justify-center mb-8">
-                <a href="/school" className="inline-block">
+                <a
+                  href={preSchoolData.cta.button.href}
+                  className="inline-block"
+                >
                   <button className="px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-yellow-600 to-yellow-800 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                    Masuk Sekolah
+                    {preSchoolData.cta.button.text}
                   </button>
                 </a>
               </div>
@@ -131,17 +135,21 @@ export default function PreSchoolPage() {
                 <div className="space-y-2">
                   <h4 className="font-semibold">Persyaratan:</h4>
                   <ul className="space-y-1 text-gray-600">
-                    <li>• Usia 3-6 tahun</li>
-                    <li>• Fotokopi akte kelahiran</li>
-                    <li>• Fotokopi KK</li>
+                    {preSchoolData.cta.requirements.map(
+                      (req: string, i: number) => (
+                        <li key={i}>• {req}</li>
+                      )
+                    )}
                   </ul>
                 </div>
                 <div className="space-y-2">
                   <h4 className="font-semibold">Waktu Pendaftaran:</h4>
                   <ul className="space-y-1 text-gray-600">
-                    <li>• Senin - Jumat</li>
-                    <li>• 08.00 - 15.00 WIB</li>
-                    <li>• Sepanjang tahun</li>
+                    {preSchoolData.cta.registrationTime.map(
+                      (time: string, i: number) => (
+                        <li key={i}>• {time}</li>
+                      )
+                    )}
                   </ul>
                 </div>
               </div>

@@ -6,58 +6,58 @@ import { Card, CardContent } from '@/components/ui/card';
 import { FoundationHeader } from '@/components/foundation-header';
 import FoundationFooter from '@/components/foundation-footer';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 export default function KelasAqilBalighPage() {
-  const programs = [
-    {
-      title: 'Pemahaman Fiqih',
-      description: 'Pembelajaran mendalam tentang fiqih ibadah dan muamalah.',
-      icon: '🕌',
-      details: [
-        'Fiqih thaharah dan shalat',
-        'Adab pergaulan islami',
-        'Hukum-hukum dasar islam',
-      ],
-      color: 'green',
-    },
-    {
-      title: 'Pembinaan Karakter',
-      description: 'Membentuk kepribadian remaja yang berakhlak mulia.',
-      icon: '⭐',
-      details: [
-        'Penguatan aqidah',
-        'Pembentukan akhlak',
-        'Pengembangan kepemimpinan',
-      ],
-      color: 'blue',
-    },
-    {
-      title: 'Pendidikan Kesehatan',
-      description: 'Pemahaman tentang kesehatan fisik dan mental remaja.',
-      icon: '🏥',
-      details: [
-        'Pendidikan kesehatan reproduksi',
-        'Manajemen emosi',
-        'Pola hidup sehat',
-      ],
-      color: 'red',
-    },
-    {
-      title: 'Keterampilan Sosial',
-      description: 'Pengembangan kemampuan berinteraksi dan berkomunikasi.',
-      icon: '👥',
-      details: ['Public speaking', 'Manajemen konflik', 'Kerjasama tim'],
-      color: 'purple',
-    },
-  ];
+  const [kelasAqilBalighData, setKelasAqilBalighData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  const schedule = {
-    regular: [
-      { day: 'Sabtu', time: '09.00 - 11.30', type: 'Kelas Putra' },
-      { day: 'Minggu', time: '09.00 - 11.30', type: 'Kelas Putri' },
-    ],
-    special: ['Camp Ramadhan', 'Outbound Leadership', 'Seminar Parenting'],
-  };
+  useEffect(() => {
+    const fetchKelasAqilBalighData = async () => {
+      try {
+        const response = await fetch('/api/programs/kelas-aqil-baligh');
+        const data = await response.json();
+        setKelasAqilBalighData(data);
+      } catch (error) {
+        console.error('Error fetching kelas-aqil-baligh data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchKelasAqilBalighData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
+        <FoundationHeader />
+        <main className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold">Loading...</h1>
+          </div>
+        </main>
+        <FoundationFooter />
+      </div>
+    );
+  }
+
+  if (!kelasAqilBalighData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
+        <FoundationHeader />
+        <main className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold">Error loading page</h1>
+          </div>
+        </main>
+        <FoundationFooter />
+      </div>
+    );
+  }
+
+  const programs = kelasAqilBalighData.programs;
+  const schedule = kelasAqilBalighData.schedule;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
@@ -65,17 +65,15 @@ export default function KelasAqilBalighPage() {
       <main className="container mx-auto px-4 py-16">
         <AnimatedSection>
           <h1 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-            Kelas Aqil Baligh
+            {kelasAqilBalighData.title}
           </h1>
           <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-            Program pembinaan remaja menuju kedewasaan yang dilandasi
-            nilai-nilai islami, mempersiapkan generasi yang berakhlak mulia dan
-            siap menghadapi tantangan zaman.
+            {kelasAqilBalighData.subtitle}
           </p>
         </AnimatedSection>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {programs.map((program, index) => (
+          {programs.map((program: any, index: number) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -98,7 +96,7 @@ export default function KelasAqilBalighPage() {
                   </div>
                   <p className="text-gray-600 mb-4">{program.description}</p>
                   <ul className="space-y-2">
-                    {program.details.map((detail, i) => (
+                    {program.details.map((detail: string, i: number) => (
                       <li
                         key={i}
                         className="flex items-center gap-2 text-gray-700"
@@ -133,7 +131,7 @@ export default function KelasAqilBalighPage() {
                     Kelas Reguler
                   </h3>
                   <div className="grid gap-4">
-                    {schedule.regular.map((item, index) => (
+                    {schedule.regular.map((item: any, index: number) => (
                       <div
                         key={index}
                         className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg bg-blue-50/50"
@@ -153,7 +151,7 @@ export default function KelasAqilBalighPage() {
                     Program Khusus
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    {schedule.special.map((item, index) => (
+                    {schedule.special.map((item: string, index: number) => (
                       <div
                         key={index}
                         className="p-4 rounded-lg bg-green-50/50 text-center"
@@ -169,22 +167,14 @@ export default function KelasAqilBalighPage() {
                     Persyaratan Peserta:
                   </h3>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-700">
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                      Usia 10-15 tahun
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                      Memiliki semangat belajar
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                      Izin orang tua
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                      Komitmen mengikuti program
-                    </li>
+                    {kelasAqilBalighData.requirements.map(
+                      (req: string, i: number) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
+                          {req}
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
               </div>
