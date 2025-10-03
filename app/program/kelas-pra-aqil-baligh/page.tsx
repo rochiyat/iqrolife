@@ -1,6 +1,6 @@
-import FoundationHeader from "@/components/foundation-header"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import FoundationHeader from '@/components/foundation-header';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function Page() {
   return (
@@ -17,10 +17,13 @@ export default function Page() {
 
         <div className="mt-4 grid items-start gap-8 md:grid-cols-2">
           <div>
-            <h1 className="text-pretty text-3xl font-semibold md:text-4xl">Kelas Pra Aqil Baligh</h1>
+            <h1 className="text-pretty text-3xl font-semibold md:text-4xl">
+              Kelas Pra Aqil Baligh
+            </h1>
             <p className="mt-3 leading-relaxed text-muted-foreground">
-              Kelas pendampingan menjelang baligh yang menekankan kesiapan adab, tanggung jawab, kemampuan mengambil
-              keputusan, serta pemahaman keislaman dasar yang membumi pada kehidupan remaja.
+              Kelas pendampingan menjelang baligh yang menekankan kesiapan adab,
+              tanggung jawab, kemampuan mengambil keputusan, serta pemahaman
+              keislaman dasar yang membumi pada kehidupan remaja.
             </p>
             <ul className="mt-6 list-disc pl-5 text-muted-foreground">
               <li>Adab pergaulan, amanah, dan kebiasaan baik remaja</li>
@@ -29,9 +32,9 @@ export default function Page() {
             </ul>
             <div className="mt-6 flex gap-3">
               <Button>Daftar Minat</Button>
-              <Link href="/kontak">
-                <Button variant="outline">Konsultasi</Button>
-              </Link>
+              <Button variant="outline" asChild>
+                <Link href="/kontak">Konsultasi</Link>
+              </Button>
             </div>
           </div>
           <div className="rounded-lg border bg-card p-4 shadow-sm">
@@ -47,7 +50,8 @@ export default function Page() {
           <div className="rounded-lg border bg-card p-5">
             <h3 className="font-semibold">Tujuan</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Remaja siap memasuki fase baligh dengan pondasi adab, ibadah, dan tanggung jawab.
+              Remaja siap memasuki fase baligh dengan pondasi adab, ibadah, dan
+              tanggung jawab.
             </p>
           </div>
           <div className="rounded-lg border bg-card p-5">
@@ -65,5 +69,5 @@ export default function Page() {
         </div>
       </section>
     </main>
-  )
+  );
 }

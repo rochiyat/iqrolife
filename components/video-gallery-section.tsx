@@ -1,35 +1,98 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+'use client';
+
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useEffect, useState } from 'react';
 
 export default function VideoGallerySection() {
+  const [videoGalleryData, setVideoGalleryData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchVideoGalleryData = async () => {
+      try {
+        const response = await fetch('/api/school/video-gallery');
+        const data = await response.json();
+        setVideoGalleryData(data);
+      } catch (error) {
+        console.error('Error fetching video gallery data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVideoGalleryData();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-blue-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="text-4xl font-bold mb-4">Loading...</h2>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!videoGalleryData) {
+    return (
+      <section className="py-16 bg-blue-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="text-4xl font-bold mb-4">
+              Error loading video gallery data
+            </h2>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 bg-blue-900 text-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Leadership School With Islamic Values</h2>
-          <p className="text-xl text-blue-100 mb-8">Membentuk pemimpin masa depan dengan nilai-nilai islami</p>
+          <h2 className="text-4xl font-bold mb-4">{videoGalleryData.title}</h2>
+          <p className="text-xl text-blue-100 mb-8">
+            {videoGalleryData.subtitle}
+          </p>
           <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
-            <a href="https://wa.me/628111202244" target="_blank" rel="noopener noreferrer">
+            <a
+              href={videoGalleryData.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Hubungi Kami
             </a>
           </Button>
         </div>
 
         <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold mb-8">Gallery Video Sekolah Kreativa</h3>
+          <h3 className="text-2xl font-bold mb-8">
+            Gallery Video Sekolah Kreativa
+          </h3>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((index) => (
-            <Card key={index} className="bg-white/10 backdrop-blur-sm border-white/20">
+          {videoGalleryData.videos?.map((video: any) => (
+            <Card
+              key={video.id}
+              className="bg-white/10 backdrop-blur-sm border-white/20"
+            >
               <CardContent className="p-4">
                 <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-16 h-16 text-white/60" fill="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-16 h-16 text-white/60"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </div>
-                <h4 className="font-semibold text-lg">Video Kegiatan {index}</h4>
-                <p className="text-blue-100 text-sm">Dokumentasi kegiatan sekolah</p>
+                <h4 className="font-semibold text-lg">{video.title}</h4>
+                <p className="text-blue-100 text-sm">{video.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -38,7 +101,7 @@ export default function VideoGallerySection() {
         <div className="text-center mt-12">
           <div className="flex justify-center space-x-6">
             <a
-              href="https://www.facebook.com/SekolahKreativa"
+              href={videoGalleryData.socialLinks?.facebook}
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-blue-300"
@@ -48,7 +111,7 @@ export default function VideoGallerySection() {
               </svg>
             </a>
             <a
-              href="https://www.instagram.com/sekolahkreativa.bogor/"
+              href={videoGalleryData.socialLinks?.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-pink-300"
@@ -58,7 +121,7 @@ export default function VideoGallerySection() {
               </svg>
             </a>
             <a
-              href="https://www.youtube.com/c/YasminaSekolahKreativa"
+              href={videoGalleryData.socialLinks?.youtube}
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-red-300"
@@ -71,5 +134,5 @@ export default function VideoGallerySection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
