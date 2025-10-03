@@ -12,24 +12,6 @@ export default function PPDBPage() {
       fee: 'Rp 15.000.000',
       color: 'bg-blue-100 text-blue-800',
     },
-    {
-      level: 'SD Iqrolife',
-      age: '6-12 tahun',
-      fee: 'Rp 18.000.000',
-      color: 'bg-green-100 text-green-800',
-    },
-    {
-      level: 'SMP Iqrolife',
-      age: '12-15 tahun',
-      fee: 'Rp 20.000.000',
-      color: 'bg-orange-100 text-orange-800',
-    },
-    {
-      level: 'Homeschooling',
-      age: '6-15 tahun',
-      fee: 'Rp 12.000.000',
-      color: 'bg-purple-100 text-purple-800',
-    },
   ];
 
   const requirements = [
@@ -124,7 +106,7 @@ export default function PPDBPage() {
                 Anda
               </p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid md:grid-cols-1 gap-6 max-w-md mx-auto">
               {programs.map((program, index) => (
                 <Card
                   key={index}

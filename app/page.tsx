@@ -52,10 +52,12 @@ export default function FoundationLanding() {
   const [hero, setHero] = useState<HeroData | null>(null);
   const [programs, setPrograms] = useState<ProgramData[]>([]);
   const [cta, setCta] = useState<CTAData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const [heroRes, programsRes, ctaRes] = await Promise.all([
           fetch('/api/hero'),
           fetch('/api/programs'),
@@ -69,15 +71,38 @@ export default function FoundationLanding() {
         ]);
 
         setHero(heroData);
-        setPrograms(programsData);
+        setPrograms(programsData.programs || programsData);
         setCta(ctaData);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, []);
+
+  // Show loading state to prevent hydration mismatch
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <FoundationHeader />
+        <main>
+          <section className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-emerald-50 py-16 lg:py-24">
+            <div className="container mx-auto px-4">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  Loading...
+                </h2>
+              </div>
+            </div>
+          </section>
+        </main>
+        <FoundationFooter />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -92,7 +117,7 @@ export default function FoundationLanding() {
             className="container mx-auto px-4 py-16 lg:py-24"
           >
             <div className="grid lg:grid-cols-2 gap-10 items-center">
-              {hero && (
+              {hero ? (
                 <>
                   <AnimatedSection direction="left" delay={0.2}>
                     <div>
@@ -172,6 +197,12 @@ export default function FoundationLanding() {
                     </div>
                   </AnimatedSection>
                 </>
+              ) : (
+                <div className="text-center">
+                  <p className="text-muted-foreground">
+                    Loading hero content...
+                  </p>
+                </div>
               )}
             </div>
           </motion.div>
@@ -195,21 +226,29 @@ export default function FoundationLanding() {
             </AnimatedSection>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {programs.map((item, i) => (
-                <AnimatedSection key={i} delay={0.2 * (i + 1)}>
-                  <Card className="border-2 border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
-                    <CardContent className="p-6">
-                      <div
-                        className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center text-2xl bg-gradient-to-r ${item.color} text-white transform group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        {item.icon}
-                      </div>
-                      <h3 className="font-semibold text-lg">{item.title}</h3>
-                      <p className="text-muted-foreground mt-2">{item.desc}</p>
-                    </CardContent>
-                  </Card>
-                </AnimatedSection>
-              ))}
+              {programs && programs.length > 0 ? (
+                programs.map((item, i) => (
+                  <AnimatedSection key={i} delay={0.2 * (i + 1)}>
+                    <Card className="border-2 border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+                      <CardContent className="p-6">
+                        <div
+                          className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center text-2xl bg-gradient-to-r ${item.color} text-white transform group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          {item.icon}
+                        </div>
+                        <h3 className="font-semibold text-lg">{item.title}</h3>
+                        <p className="text-muted-foreground mt-2">
+                          {item.desc}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </AnimatedSection>
+                ))
+              ) : (
+                <div className="col-span-3 text-center">
+                  <p className="text-muted-foreground">Loading programs...</p>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -238,7 +277,7 @@ export default function FoundationLanding() {
 
           <div className="container mx-auto px-4 relative">
             <AnimatedSection>
-              {cta && (
+              {cta ? (
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white/50 backdrop-blur-sm p-8 rounded-2xl border-2 border-white/60 shadow-xl">
                   <div className="text-center md:text-left">
                     <h3 className="text-2xl font-bold bg-gradient-to-r from-fun-blue to-fun-purple bg-clip-text text-transparent mb-2">
@@ -261,6 +300,12 @@ export default function FoundationLanding() {
                       </Link>
                     ))}
                   </div>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <p className="text-muted-foreground">
+                    Loading CTA content...
+                  </p>
                 </div>
               )}
             </AnimatedSection>
