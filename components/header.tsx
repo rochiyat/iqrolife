@@ -102,22 +102,24 @@ export default function Header() {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center space-x-3">
-            <Link href="/school/ppdb">
-              <Button className="bg-gradient-to-r from-fun-orange to-fun-pink hover:from-fun-pink hover:to-fun-orange text-white font-bold px-5 py-2 rounded-full fun-button shadow-lg border-2 border-white/20">
-                Daftar
-              </Button>
-            </Link>
-            <Link href="/school/login">
-              <Button className="bg-gradient-to-r from-fun-blue to-fun-purple hover:from-fun-purple hover:to-fun-blue text-white font-bold px-5 py-2 rounded-full fun-button shadow-lg">
-                Masuk Online
-              </Button>
-            </Link>
+            <Button
+              asChild
+              className="bg-gradient-to-r from-fun-orange to-fun-pink hover:from-fun-pink hover:to-fun-orange text-white font-bold px-5 py-2 rounded-full fun-button shadow-lg border-2 border-white/20"
+            >
+              <Link href="/school/ppdb">Daftar</Link>
+            </Button>
+            <Button
+              asChild
+              className="bg-gradient-to-r from-fun-blue to-fun-purple hover:from-fun-purple hover:to-fun-blue text-white font-bold px-5 py-2 rounded-full fun-button shadow-lg"
+            >
+              <Link href="/school/login">Masuk Online</Link>
+            </Button>
           </div>
 
           {/* Mobile menu trigger */}
           <div className="md:hidden flex items-center">
             <Sheet>
-              <SheetTrigger aria-label="Buka menu">
+              <SheetTrigger asChild aria-label="Buka menu">
                 <Button variant="ghost" className="p-2">
                   <Menu className="w-6 h-6" />
                 </Button>

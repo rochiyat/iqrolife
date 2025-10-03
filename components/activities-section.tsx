@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { SkeletonActivities } from '@/components/ui/skeleton-loading';
 
 export default function ActivitiesSection() {
   const [activitiesData, setActivitiesData] = useState<any>(null);
@@ -26,17 +27,7 @@ export default function ActivitiesSection() {
   }, []);
 
   if (loading) {
-    return (
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Loading...
-            </h2>
-          </div>
-        </div>
-      </section>
-    );
+    return <SkeletonActivities />;
   }
 
   if (!activitiesData) {

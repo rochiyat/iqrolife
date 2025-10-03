@@ -3,6 +3,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { BookOpen, Users, Gamepad2, Home, Star } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { SkeletonPrograms } from '@/components/ui/skeleton-loading';
 
 const iconMap = {
   BookOpen,
@@ -32,17 +33,7 @@ export default function ProgramsSection() {
   }, []);
 
   if (loading) {
-    return (
-      <section className="py-20 bg-gradient-to-br from-fun-yellow/10 via-white to-fun-pink/10 relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Loading...
-            </h2>
-          </div>
-        </div>
-      </section>
-    );
+    return <SkeletonPrograms />;
   }
 
   if (!programsData) {

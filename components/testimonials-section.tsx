@@ -145,12 +145,14 @@ export default function TestimonialsSection() {
             {testimonials.map((_: any, index: number) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => setCurrentTestimonial(index)}
-                className={`w-4 h-4 rounded-full transition-all duration-300 animate-pulse ${
+                className={`w-4 h-4 rounded-full transition-all duration-300 animate-pulse border-0 cursor-pointer ${
                   index === currentTestimonial
                     ? 'bg-primary scale-125'
                     : 'bg-gray-300 hover:bg-gray-400'
                 }`}
+                aria-label={`Testimonial ${index + 1}`}
               />
             ))}
           </div>

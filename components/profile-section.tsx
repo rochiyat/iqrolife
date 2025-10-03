@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { SkeletonProfile } from '@/components/ui/skeleton-loading';
 
 export default function ProfileSection() {
   const [profileData, setProfileData] = useState<any>(null);
@@ -24,17 +25,7 @@ export default function ProfileSection() {
   }, []);
 
   if (loading) {
-    return (
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Loading...
-            </h2>
-          </div>
-        </div>
-      </section>
-    );
+    return <SkeletonProfile />;
   }
 
   if (!profileData) {

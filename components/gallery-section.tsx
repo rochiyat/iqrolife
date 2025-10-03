@@ -125,8 +125,10 @@ export default function GallerySection() {
                 className="w-full h-auto rounded-lg"
               />
               <button
+                type="button"
                 onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 text-white w-10 h-10 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 transition-colors"
+                className="absolute top-4 right-4 text-white w-10 h-10 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 transition-colors border-0 cursor-pointer"
+                aria-label="Close gallery"
               >
                 ✕
               </button>

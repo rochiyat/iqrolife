@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Play, Star, Heart, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { SkeletonHero } from '@/components/ui/skeleton-loading';
 
 export default function HeroSection() {
   const [heroData, setHeroData] = useState<any>(null);
@@ -26,17 +27,7 @@ export default function HeroSection() {
   }, []);
 
   if (loading) {
-    return (
-      <section className="relative bg-gradient-to-br from-fun-blue/20 via-fun-pink/10 to-fun-yellow/20 py-20 overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Loading...
-            </h2>
-          </div>
-        </div>
-      </section>
-    );
+    return <SkeletonHero />;
   }
 
   if (!heroData) {

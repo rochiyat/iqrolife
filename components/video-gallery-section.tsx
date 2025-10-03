@@ -3,6 +3,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
+import { SkeletonVideoGallery } from '@/components/ui/skeleton-loading';
 
 export default function VideoGallerySection() {
   const [videoGalleryData, setVideoGalleryData] = useState<any>(null);
@@ -25,15 +26,7 @@ export default function VideoGallerySection() {
   }, []);
 
   if (loading) {
-    return (
-      <section className="py-16 bg-blue-900 text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold mb-4">Loading...</h2>
-          </div>
-        </div>
-      </section>
-    );
+    return <SkeletonVideoGallery />;
   }
 
   if (!videoGalleryData) {
