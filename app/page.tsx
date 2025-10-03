@@ -10,8 +10,75 @@ import TestimonialsSection from '@/components/testimonials-section';
 import ContactSection from '@/components/contact-section';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
+interface HeroData {
+  subtitle: string;
+  title: string;
+  description: string;
+  buttons: Array<{
+    label: string;
+    href: string;
+    variant: 'primary' | 'secondary';
+  }>;
+  image: {
+    src: string;
+    alt: string;
+    logo: {
+      src: string;
+      alt: string;
+    };
+  };
+}
+
+interface ProgramData {
+  title: string;
+  desc: string;
+  icon: string;
+  color: string;
+}
+
+interface CTAData {
+  title: string;
+  description: string;
+  buttons: Array<{
+    label: string;
+    href: string;
+    variant: 'primary' | 'secondary';
+  }>;
+}
 
 export default function FoundationLanding() {
+  const [hero, setHero] = useState<HeroData | null>(null);
+  const [programs, setPrograms] = useState<ProgramData[]>([]);
+  const [cta, setCta] = useState<CTAData | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [heroRes, programsRes, ctaRes] = await Promise.all([
+          fetch('/api/hero'),
+          fetch('/api/programs'),
+          fetch('/api/cta'),
+        ]);
+
+        const [heroData, programsData, ctaData] = await Promise.all([
+          heroRes.json(),
+          programsRes.json(),
+          ctaRes.json(),
+        ]);
+
+        setHero(heroData);
+        setPrograms(programsData);
+        setCta(ctaData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <FoundationHeader />
@@ -25,79 +92,87 @@ export default function FoundationLanding() {
             className="container mx-auto px-4 py-16 lg:py-24"
           >
             <div className="grid lg:grid-cols-2 gap-10 items-center">
-              <AnimatedSection direction="left" delay={0.2}>
-                <div>
-                  <motion.p
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="text-sm font-semibold text-fun-blue tracking-wide mb-2"
-                  >
-                    Yayasan
-                  </motion.p>
-                  <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="text-3xl sm:text-4xl lg:text-5xl font-bold text-balance bg-gradient-to-r from-fun-blue via-fun-purple to-fun-blue bg-clip-text text-transparent"
-                  >
-                    Tumbuh Bersama Iqrolife
-                  </motion.h1>
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-4 text-muted-foreground leading-relaxed text-pretty"
-                  >
-                    Mewujudkan pendidikan berkarakter dalam naungan keluarga
-                    yang hangat dan profesional. Kami mendukung sekolah-sekolah
-                    Iqrolife serta program pemberdayaan keluarga dan masyarakat
-                    untuk masa depan yang lebih cerah.
-                  </motion.p>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    className="mt-6 flex flex-col sm:flex-row gap-3"
-                  >
-                    <Link
-                      href="/school"
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-gradient-to-r from-fun-blue to-fun-purple text-white font-semibold shadow-lg hover:opacity-90 transition-all duration-300 hover:scale-105"
-                    >
-                      Masuk ke Sekolah
-                    </Link>
-                    <a
-                      href="#program"
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-fun-blue/30 font-semibold hover:bg-fun-blue/10 transition-all duration-300 hover:scale-105"
-                    >
-                      Lihat Program Komunitas
-                    </a>
-                  </motion.div>
-                </div>
-              </AnimatedSection>
-              <AnimatedSection direction="right" delay={0.4}>
-                <div className="relative">
-                  <motion.img
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                    src="/keluarga-belajar.jpg"
-                    alt="Keluarga Iqrolife belajar bersama"
-                    className="rounded-2xl shadow-lg w-full"
-                  />
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.7 }}
-                    className="absolute -top-4 -right-4 hidden sm:block"
-                  >
-                    <img
-                      src="/logo-iqrolife.png"
-                      alt="Logo Iqrolife"
-                      className="w-14 h-14 rounded-full ring-4 ring-white shadow-md"
-                    />
-                  </motion.div>
-                </div>
-              </AnimatedSection>
+              {hero && (
+                <>
+                  <AnimatedSection direction="left" delay={0.2}>
+                    <div>
+                      <motion.p
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="text-sm font-semibold text-fun-blue tracking-wide mb-2"
+                      >
+                        {hero.subtitle}
+                      </motion.p>
+                      <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                        className="text-3xl sm:text-4xl lg:text-5xl font-bold text-balance bg-gradient-to-r from-fun-blue via-fun-purple to-fun-blue bg-clip-text text-transparent"
+                      >
+                        {hero.title}
+                      </motion.h1>
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        className="mt-4 text-muted-foreground leading-relaxed text-pretty"
+                      >
+                        {hero.description}
+                      </motion.p>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 }}
+                        className="mt-6 flex flex-col sm:flex-row gap-3"
+                      >
+                        {hero.buttons.map((button, index) =>
+                          button.variant === 'primary' ? (
+                            <Link
+                              key={index}
+                              href={button.href}
+                              className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-gradient-to-r from-fun-blue to-fun-purple text-white font-semibold shadow-lg hover:opacity-90 transition-all duration-300 hover:scale-105"
+                            >
+                              {button.label}
+                            </Link>
+                          ) : (
+                            <a
+                              key={index}
+                              href={button.href}
+                              className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-fun-blue/30 font-semibold hover:bg-fun-blue/10 transition-all duration-300 hover:scale-105"
+                            >
+                              {button.label}
+                            </a>
+                          )
+                        )}
+                      </motion.div>
+                    </div>
+                  </AnimatedSection>
+                  <AnimatedSection direction="right" delay={0.4}>
+                    <div className="relative">
+                      <motion.img
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.3 }}
+                        src={hero.image.src}
+                        alt={hero.image.alt}
+                        className="rounded-2xl shadow-lg w-full"
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.7 }}
+                        className="absolute -top-4 -right-4 hidden sm:block"
+                      >
+                        <img
+                          src={hero.image.logo.src}
+                          alt={hero.image.logo.alt}
+                          className="w-14 h-14 rounded-full ring-4 ring-white shadow-md"
+                        />
+                      </motion.div>
+                    </div>
+                  </AnimatedSection>
+                </>
+              )}
             </div>
           </motion.div>
         </section>
@@ -120,26 +195,7 @@ export default function FoundationLanding() {
             </AnimatedSection>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  title: 'Sekolah Iqrolife',
-                  desc: 'KB-TK, SD, SMP, Homeschooling',
-                  icon: '🏫',
-                  color: 'from-fun-blue to-fun-purple',
-                },
-                {
-                  title: 'Parenting & Keluarga',
-                  desc: 'Kelas parenting, konseling keluarga, dan komunitas',
-                  icon: '👨‍👩‍👧‍👦',
-                  color: 'from-fun-orange to-fun-pink',
-                },
-                {
-                  title: 'Pemberdayaan Masyarakat',
-                  desc: 'Beasiswa, pelatihan guru, dan program sosial',
-                  icon: '🤝',
-                  color: 'from-fun-yellow to-fun-orange',
-                },
-              ].map((item, i) => (
+              {programs.map((item, i) => (
                 <AnimatedSection key={i} delay={0.2 * (i + 1)}>
                   <Card className="border-2 border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
                     <CardContent className="p-6">
@@ -182,31 +238,31 @@ export default function FoundationLanding() {
 
           <div className="container mx-auto px-4 relative">
             <AnimatedSection>
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white/50 backdrop-blur-sm p-8 rounded-2xl border-2 border-white/60 shadow-xl">
-                <div className="text-center md:text-left">
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-fun-blue to-fun-purple bg-clip-text text-transparent mb-2">
-                    Siap tumbuh bersama keluarga besar Iqrolife?
-                  </h3>
-                  <p className="text-muted-foreground">
-                    Bergabunglah dengan kami dalam membangun generasi yang
-                    berakhlak dan berprestasi
-                  </p>
+              {cta && (
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white/50 backdrop-blur-sm p-8 rounded-2xl border-2 border-white/60 shadow-xl">
+                  <div className="text-center md:text-left">
+                    <h3 className="text-2xl font-bold bg-gradient-to-r from-fun-blue to-fun-purple bg-clip-text text-transparent mb-2">
+                      {cta.title}
+                    </h3>
+                    <p className="text-muted-foreground">{cta.description}</p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    {cta.buttons.map((button, index) => (
+                      <Link
+                        key={index}
+                        href={button.href}
+                        className={`px-6 py-3 rounded-full ${
+                          button.variant === 'primary'
+                            ? 'bg-gradient-to-r from-fun-blue to-fun-purple text-white font-semibold shadow-lg hover:opacity-90'
+                            : 'border-2 border-fun-blue/30 font-semibold hover:bg-fun-blue/10'
+                        } transition-all duration-300 hover:scale-105 text-center`}
+                      >
+                        {button.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Link
-                    href="/school/ppdb"
-                    className="px-6 py-3 rounded-full bg-gradient-to-r from-fun-blue to-fun-purple text-white font-semibold shadow-lg hover:opacity-90 transition-all duration-300 hover:scale-105 text-center"
-                  >
-                    Daftar PPDB
-                  </Link>
-                  <Link
-                    href="/school"
-                    className="px-6 py-3 rounded-full border-2 border-fun-blue/30 font-semibold hover:bg-fun-blue/10 transition-all duration-300 hover:scale-105 text-center"
-                  >
-                    Jelajahi Sekolah
-                  </Link>
-                </div>
-              </div>
+              )}
             </AnimatedSection>
           </div>
         </section>

@@ -3,8 +3,73 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
+interface ContactData {
+  title: string;
+  subtitle: string;
+  office: {
+    title: string;
+    address: string;
+    phone: string;
+    email: string;
+    whatsapp: string;
+    hours: string;
+  };
+  social: {
+    facebook: string;
+    instagram: string;
+    youtube: string;
+    twitter: string;
+  };
+  map: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  form: {
+    title: string;
+    fields: Array<{
+      name: string;
+      label: string;
+      type: string;
+      placeholder: string;
+    }>;
+  };
+}
 
 export default function ContactSection() {
+  const [contactData, setContactData] = useState<ContactData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/contact');
+        const data = await response.json();
+        setContactData(data);
+      } catch (error) {
+        console.error('Error fetching contact data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <p>Loading contact information...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const locations = [
     {
       title: 'Kantor Pusat Yasmina-Sekolah Iqrolife',
@@ -41,10 +106,11 @@ export default function ContactSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Hubungi Kami
+            {contactData?.title || 'Hubungi Kami'}
           </h2>
           <p className="text-xl text-gray-600">
-            Informasi kontak dan lokasi Sekolah Iqrolife
+            {contactData?.subtitle ||
+              'Informasi kontak dan lokasi Sekolah Iqrolife'}
           </p>
         </div>
 
@@ -123,7 +189,10 @@ export default function ContactSection() {
         <div className="text-center">
           <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
             <a
-              href="https://wa.me/628111202244"
+              href={`https://wa.me/${contactData?.office.whatsapp.replace(
+                /[^0-9]/g,
+                ''
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
             >
