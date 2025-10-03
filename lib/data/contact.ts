@@ -1,18 +1,59 @@
 export const contactData = {
   title: 'Hubungi Kami',
-  subtitle:
-    'Jika Anda memiliki pertanyaan atau ingin mengetahui lebih lanjut tentang program-program kami, silakan hubungi kami melalui kontak di bawah ini.',
-  contactInfo: {
+  subtitle: 'Ada pertanyaan? Jangan ragu untuk menghubungi kami',
+  office: {
+    title: 'Kantor Yayasan',
     address:
       'Cimanggu Hejo, Kedung Waringin, Kec. Tanah Sereal, Kota Bogor, Jawa Barat 17540',
-    email: 'info@iqrolife.or.id',
     phone: '+0813-1040-5995',
-    hours: {
-      weekdays: 'Senin - Jumat: 08.00 - 16.00 WIB',
-      weekends: 'Sabtu - Minggu: Tutup',
-    },
+    email: 'info@iqrolife.or.id',
+    whatsapp: '+081310405995',
+    hours: 'Senin - Jumat: 08.00 - 16.00 WIB',
   },
-  mapUrl: 'https://maps.app.goo.gl/eBvyD7rMYi1QT3Vq7',
-  mapEmbed:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.6192632291422!2d106.78327259999999!3d-6.569643999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c516b6b5f175%3A0xdcb8a03ffb629ce5!2sSaung%20Iqrolife!5e0!3m2!1sen!2sid!4v1759298955005!5m2!1sen!2sid',
+  social: {
+    facebook: 'https://facebook.com/iqrolife',
+    instagram: 'https://instagram.com/iqrolife',
+    youtube: 'https://youtube.com/@iqrolife',
+    twitter: 'https://twitter.com/iqrolife',
+  },
+  map: {
+    latitude: -6.569644,
+    longitude: 106.783273,
+    zoom: 15,
+  },
+  form: {
+    title: 'Kirim Pesan',
+    fields: [
+      {
+        name: 'name',
+        label: 'Nama Lengkap',
+        type: 'text',
+        placeholder: 'Masukkan nama lengkap',
+      },
+      {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
+        placeholder: 'Masukkan email',
+      },
+      {
+        name: 'phone',
+        label: 'No. Handphone',
+        type: 'tel',
+        placeholder: 'Masukkan no. handphone',
+      },
+      {
+        name: 'subject',
+        label: 'Subjek',
+        type: 'text',
+        placeholder: 'Subjek pesan',
+      },
+      {
+        name: 'message',
+        label: 'Pesan',
+        type: 'textarea',
+        placeholder: 'Tulis pesan Anda',
+      },
+    ],
+  },
 };
