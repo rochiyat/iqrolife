@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { FoundationHeader } from '@/components/foundation-header';
 import FoundationFooter from '@/components/foundation-footer';
 import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function MisiPage() {
   const [misiData, setMisiData] = useState<any>(null);
@@ -32,8 +33,39 @@ export default function MisiPage() {
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold">Loading...</h1>
+          <div className="text-center mb-12">
+            <Skeleton className="h-12 w-64 mx-auto mb-6" />
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+              <CardContent className="p-8">
+                <div className="space-y-6">
+                  <Skeleton className="h-6 w-48 mb-4" />
+
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-4 p-4 rounded-lg"
+                    >
+                      <Skeleton className="w-12 h-12 rounded-full flex-shrink-0" />
+                      <div className="flex-1">
+                        <Skeleton className="h-5 w-48 mb-2" />
+                        <Skeleton className="h-4 w-full mb-3" />
+                        <div className="space-y-2">
+                          {Array.from({ length: 3 }).map((_, j) => (
+                            <div key={j} className="flex items-center gap-2">
+                              <Skeleton className="w-1.5 h-1.5 rounded-full" />
+                              <Skeleton className="h-4 w-32" />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </main>
         <FoundationFooter />

@@ -72,32 +72,18 @@ export default function ContactSection() {
 
   const locations = [
     {
-      title: 'Kantor Pusat Yasmina-Sekolah Iqrolife',
+      title: 'Kantor Pusat Sekolah Iqrolife',
       address:
-        'Jl. Johar Raya no. 38 Kel. Kedung Waringin\nKec. Tanah Sareal Kota Bogor\nJawa Barat 16164',
+        'Cimanggu Hejo, Kedung Waringin\n Kec. Tanah Sereal, Kota Bogor\n Jawa Barat 17540',
       phone: '08111202244 / 0251-8357845',
-      email: 'hkd@sekolahiqrolife.sch.id',
+      email: 'iqrolife@gmail.com',
     },
     {
       title: 'Lokasi KBTK Iqrolife',
       address:
-        'Jl. Johar Raya no. 38 RT 02/ RW 04 Kel. Kedung Waringin, Kec. Tanah Sareal, Kota Bogor, Jawa Barat 16164',
+        'Cimanggu Hejo, Kedung Waringin\n Kec. Tanah Sereal, Kota Bogor\n Jawa Barat 17540',
       phone: '08111202244',
-      email: 'hkd@sekolahiqrolife.sch.id',
-    },
-    {
-      title: 'Lokasi SD Iqrolife',
-      address:
-        'Jl. Kranji Ujung No.71 RT 03/RW 04\nKel. Sukaresmi, Kec. Tanah Sareal, Kota Bogor\nJawa Barat 16165',
-      phone: '08111202244',
-      email: 'hkd@sekolahiqrolife.sch.id',
-    },
-    {
-      title: 'Lokasi SMP & HS SMU Iqrolife',
-      address:
-        'Jl. raya Munjul RT 03/ RW 05 Kel. Kayu Manis Kec. Tanah Sareal, Kota Bogor Jawa Barat 16169',
-      phone: '08111202244',
-      email: 'hkd@sekolahiqrolife.sch.id',
+      email: 'iqrolife@gmail.com',
     },
   ];
 

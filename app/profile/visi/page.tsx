@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { FoundationHeader } from '@/components/foundation-header';
 import FoundationFooter from '@/components/foundation-footer';
 import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function VisiPage() {
   const [visiData, setVisiData] = useState<any>(null);
@@ -32,8 +33,33 @@ export default function VisiPage() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold">Loading...</h1>
+          <div className="text-center mb-12">
+            <Skeleton className="h-12 w-80 mx-auto mb-6" />
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+              <CardContent className="p-8">
+                <Skeleton className="h-6 w-full mb-4" />
+                <Skeleton className="h-6 w-5/6 mb-6" />
+
+                <div className="space-y-6 mt-8">
+                  <Skeleton className="h-6 w-32 mb-4" />
+                  <div className="space-y-4">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <div key={i} className="flex items-start gap-4">
+                        <Skeleton className="w-12 h-12 rounded-full flex-shrink-0" />
+                        <div className="flex-1">
+                          <Skeleton className="h-5 w-32 mb-2" />
+                          <Skeleton className="h-4 w-full" />
+                          <Skeleton className="h-4 w-3/4" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </main>
         <FoundationFooter />

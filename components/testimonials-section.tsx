@@ -3,6 +3,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Star } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function TestimonialsSection() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -40,10 +41,50 @@ export default function TestimonialsSection() {
     return (
       <section className="py-16 bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Loading...
-            </h2>
+          <div className="text-center mb-12">
+            <Skeleton className="h-10 w-80 mx-auto mb-4" />
+            <Skeleton className="h-6 w-96 mx-auto" />
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-2 border-yellow-200">
+              <CardContent className="p-8">
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  <div className="flex-shrink-0">
+                    <Skeleton className="w-24 h-24 rounded-full" />
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <div className="flex justify-center md:justify-start mb-3">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Skeleton key={i} className="w-6 h-6 mr-1" />
+                      ))}
+                    </div>
+                    <Skeleton className="h-6 w-full mb-2" />
+                    <Skeleton className="h-6 w-3/4 mb-4" />
+                    <div>
+                      <Skeleton className="h-5 w-32 mb-1" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="flex justify-center mt-8 gap-3">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} className="w-4 h-4 rounded-full" />
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="text-center">
+                <Skeleton className="h-8 w-16 mx-auto mb-2" />
+                <Skeleton className="h-4 w-24 mx-auto mb-2" />
+                <Skeleton className="h-6 w-8 mx-auto" />
+              </div>
+            ))}
           </div>
         </div>
       </section>

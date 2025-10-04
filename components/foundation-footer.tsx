@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 interface FooterData {
   about: {
@@ -74,7 +75,70 @@ export default function FoundationFooter() {
     return (
       <footer className="border-t bg-gradient-to-b from-white to-[#e8f5e3]">
         <div className="mx-auto max-w-6xl px-4 py-10 md:px-6">
-          <p className="text-center">Loading footer information...</p>
+          <div className="grid gap-8 md:grid-cols-4">
+            {/* Logo and About Section Skeleton */}
+            <div className="md:col-span-4 lg:col-span-1">
+              <div className="flex items-center gap-3 mb-4">
+                <Skeleton className="h-9 w-9 rounded-md" />
+                <div className="flex flex-col">
+                  <Skeleton className="h-4 w-32 mb-1" />
+                  <Skeleton className="h-3 w-24" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+                <Skeleton className="h-4 w-4/5" />
+              </div>
+            </div>
+
+            {/* Quick Links Section Skeleton */}
+            <div className="md:col-span-2 lg:col-span-1">
+              <Skeleton className="h-4 w-20 mb-3" />
+              <div className="space-y-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <Skeleton key={i} className="h-4 w-24" />
+                ))}
+              </div>
+            </div>
+
+            {/* Programs Section Skeleton */}
+            <div className="md:col-span-2 lg:col-span-1">
+              <Skeleton className="h-4 w-20 mb-3" />
+              <div className="space-y-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <Skeleton key={i} className="h-4 w-28" />
+                ))}
+              </div>
+            </div>
+
+            {/* Contact Section Skeleton */}
+            <div className="md:col-span-2 lg:col-span-1">
+              <Skeleton className="h-4 w-16 mb-3" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-4 w-36" />
+                <div className="flex gap-4 pt-2">
+                  <Skeleton className="h-4 w-16" />
+                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-4 w-16" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Copyright Section Skeleton */}
+          <div className="mt-8 border-t pt-6">
+            <div className="text-center space-y-2">
+              <Skeleton className="h-3 w-64 mx-auto" />
+              <div className="flex justify-center gap-4">
+                <Skeleton className="h-3 w-16" />
+                <Skeleton className="h-3 w-20" />
+                <Skeleton className="h-3 w-12" />
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     );
