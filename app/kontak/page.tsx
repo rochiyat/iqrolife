@@ -5,6 +5,7 @@ import FoundationFooter from '@/components/foundation-footer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function Page() {
   const [contactData, setContactData] = useState<any>(null);
@@ -32,8 +33,32 @@ export default function Page() {
         <FoundationHeader />
         <main>
           <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold">Loading...</h1>
+            <div className="text-center mb-10">
+              <Skeleton className="h-10 w-64 mx-auto mb-4" />
+              <Skeleton className="h-6 w-96 mx-auto" />
+            </div>
+
+            <div className="grid gap-8 lg:grid-cols-2">
+              <Card className="p-6 shadow-lg bg-white/80 backdrop-blur-sm">
+                <div className="space-y-6">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="h-5 w-16 mb-2" />
+                      <Skeleton className="h-4 w-full" />
+                      {i === 3 && (
+                        <div className="space-y-1 mt-2">
+                          <Skeleton className="h-4 w-32" />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  <Skeleton className="h-10 w-full" />
+                </div>
+              </Card>
+
+              <Card className="shadow-lg overflow-hidden bg-white/80 backdrop-blur-sm">
+                <Skeleton className="h-96 w-full" />
+              </Card>
             </div>
           </section>
         </main>

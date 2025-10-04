@@ -7,6 +7,7 @@ import { FoundationHeader } from '@/components/foundation-header';
 import FoundationFooter from '@/components/foundation-footer';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function PreSchoolPage() {
   const [preSchoolData, setPreSchoolData] = useState<any>(null);
@@ -33,8 +34,64 @@ export default function PreSchoolPage() {
       <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-blue-50">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold">Loading...</h1>
+          <div className="text-center mb-12">
+            <Skeleton className="h-12 w-64 mx-auto mb-4" />
+            <Skeleton className="h-6 w-96 mx-auto mb-6" />
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Card
+                key={i}
+                className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg"
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-4 mb-4">
+                    <Skeleton className="w-12 h-12 rounded-full flex-shrink-0" />
+                    <Skeleton className="h-6 w-32" />
+                  </div>
+                  <Skeleton className="h-4 w-full mb-4" />
+                  <div className="space-y-2">
+                    {Array.from({ length: 3 }).map((_, j) => (
+                      <div key={j} className="flex items-center gap-2">
+                        <Skeleton className="w-1.5 h-1.5 rounded-full" />
+                        <Skeleton className="h-4 w-24" />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-16 max-w-3xl mx-auto">
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+              <CardContent className="p-8">
+                <Skeleton className="h-8 w-64 mx-auto mb-4" />
+                <Skeleton className="h-6 w-full mb-6" />
+                <div className="flex justify-center mb-8">
+                  <Skeleton className="h-12 w-40" />
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-20" />
+                    <div className="space-y-1">
+                      {Array.from({ length: 3 }).map((_, i) => (
+                        <Skeleton key={i} className="h-3 w-32" />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-32" />
+                    <div className="space-y-1">
+                      {Array.from({ length: 3 }).map((_, i) => (
+                        <Skeleton key={i} className="h-3 w-28" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </main>
         <FoundationFooter />

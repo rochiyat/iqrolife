@@ -5,6 +5,7 @@ import FoundationHeader from '@/components/foundation-header';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function Page() {
   const [kelasBelajarOrangTuaData, setKelasBelajarOrangTuaData] =
@@ -32,8 +33,43 @@ export default function Page() {
       <div>
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <div className="text-center">
-            <h1 className="text-3xl font-semibold">Loading...</h1>
+          <nav className="text-sm text-muted-foreground mb-4">
+            <Skeleton className="h-4 w-16 inline-block" />
+            <Skeleton className="h-4 w-2 inline-block mx-2" />
+            <Skeleton className="h-4 w-32 inline-block" />
+          </nav>
+
+          <div className="mt-4 grid items-start gap-8 md:grid-cols-2">
+            <div>
+              <Skeleton className="h-10 w-3/4 mb-3" />
+              <Skeleton className="h-6 w-full mb-2" />
+              <Skeleton className="h-6 w-5/6 mb-4" />
+              <ul className="mt-6 space-y-2">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <Skeleton className="w-1.5 h-1.5 rounded-full mt-2" />
+                    <Skeleton className="h-4 w-32" />
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 flex gap-3">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-20" />
+              </div>
+            </div>
+            <div className="rounded-lg border bg-card p-4 shadow-sm">
+              <Skeleton className="h-48 w-full" />
+            </div>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="rounded-lg border bg-card p-5">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-2/3" />
+              </div>
+            ))}
           </div>
         </section>
         <FoundationFooter />

@@ -4,6 +4,7 @@ import FoundationHeader from '@/components/foundation-header';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function Page() {
   const [programsData, setProgramsData] = useState<any>(null);
@@ -30,8 +31,27 @@ export default function Page() {
       <main>
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <div className="text-center">
-            <h1 className="text-3xl font-semibold">Loading...</h1>
+          <div className="grid items-center gap-8 md:grid-cols-2">
+            <div>
+              <Skeleton className="h-10 w-3/4 mb-3" />
+              <Skeleton className="h-6 w-full mb-2" />
+              <Skeleton className="h-6 w-5/6 mb-4" />
+              <Skeleton className="h-12 w-32" />
+            </div>
+            <div className="rounded-lg border bg-card p-4 shadow-sm">
+              <Skeleton className="h-48 w-full" />
+            </div>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="rounded-lg border bg-card p-5">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-full mb-1" />
+                <Skeleton className="h-4 w-2/3 mb-4" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+            ))}
           </div>
         </section>
       </main>
