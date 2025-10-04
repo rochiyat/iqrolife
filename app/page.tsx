@@ -11,6 +11,11 @@ import ContactSection from '@/components/contact-section';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import {
+  SkeletonFoundationHero,
+  SkeletonFoundationPrograms,
+  SkeletonFoundationCTA,
+} from '@/components/ui/skeleton-loading';
 
 interface HeroData {
   subtitle: string;
@@ -83,21 +88,74 @@ export default function FoundationLanding() {
     fetchData();
   }, []);
 
-  // Show loading state to prevent hydration mismatch
+  // Show beautiful skeleton loading state
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
         <FoundationHeader />
         <main>
-          <section className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-emerald-50 py-16 lg:py-24">
+          <SkeletonFoundationHero />
+          <section className="py-16 bg-gradient-to-br from-blue-50 to-green-50">
             <div className="container mx-auto px-4">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Loading...
-                </h2>
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-green-600 rounded-full mx-auto mb-4 animate-pulse"></div>
+                <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-blue-600 rounded-full mx-auto mb-4 animate-pulse delay-300"></div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-lg p-8">
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-blue-600 rounded-full mx-auto mb-4 animate-pulse"></div>
+                    <div className="w-32 h-8 mx-auto mb-4 bg-gradient-to-r from-blue-600 to-blue-800 animate-pulse"></div>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="h-4 w-full bg-gray-300 animate-pulse"></div>
+                    <div className="h-4 w-5/6 bg-gray-300 animate-pulse"></div>
+                    <div className="h-4 w-4/5 bg-gray-300 animate-pulse"></div>
+                  </div>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-lg p-8">
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-green-600 rounded-full mx-auto mb-4 animate-pulse"></div>
+                    <div className="w-32 h-8 mx-auto mb-6 bg-gradient-to-r from-green-600 to-green-800 animate-pulse"></div>
+                  </div>
+                  <div className="space-y-4">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 animate-pulse"></div>
+                        <div className="h-4 flex-1 bg-gray-300 animate-pulse"></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </section>
+          <SkeletonFoundationPrograms />
+          <section className="py-16 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <div className="w-96 h-10 mx-auto mb-4 bg-gradient-to-r from-gray-300 to-gray-400 animate-pulse"></div>
+                <div className="w-64 h-6 mx-auto bg-gray-300 animate-pulse"></div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6 mb-12">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="h-full">
+                    <div className="rounded-2xl shadow-lg p-6 border-2 border-gray-200">
+                      <div className="text-center mb-4">
+                        <div className="w-16 h-16 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full mx-auto mb-3 animate-pulse"></div>
+                        <div className="w-48 h-6 mx-auto mb-2 bg-gray-300 animate-pulse"></div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-4 w-full bg-gray-300 animate-pulse"></div>
+                        <div className="h-4 w-5/6 bg-gray-300 animate-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+          <SkeletonFoundationCTA />
         </main>
         <FoundationFooter />
       </div>

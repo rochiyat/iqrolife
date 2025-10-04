@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface SkeletonProps {
   className?: string;
@@ -250,5 +251,76 @@ export function SkeletonFooter() {
         </div>
       </div>
     </footer>
+  );
+}
+
+// Foundation/Community Page Skeletons
+export function SkeletonFoundationHero() {
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-emerald-50 py-16 lg:py-24">
+      <div className="container mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-10 items-center">
+          <div className="space-y-6">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-16 w-full" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-4 w-5/6" />
+            <div className="flex gap-4">
+              <Skeleton className="h-12 w-40" />
+              <Skeleton className="h-12 w-32" />
+            </div>
+          </div>
+          <div className="relative">
+            <Skeleton className="h-96 w-full rounded-2xl" />
+            <Skeleton className="absolute -top-4 -right-4 h-14 w-14 rounded-full" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function SkeletonFoundationPrograms() {
+  return (
+    <section className="py-16">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-10">
+          <Skeleton className="h-10 w-64 mx-auto mb-4" />
+          <Skeleton className="h-6 w-full max-w-2xl mx-auto" />
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Card key={i} className="border-2 border-slate-100">
+              <CardContent className="p-6">
+                <Skeleton className="w-12 h-12 rounded-full mb-4 bg-gradient-to-r from-fun-blue to-fun-purple" />
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-2/3" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function SkeletonFoundationCTA() {
+  return (
+    <section className="relative py-20 bg-gradient-to-r from-fun-yellow/20 to-fun-pink/20 overflow-hidden">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white/50 backdrop-blur-sm p-8 rounded-2xl border-2 border-white/60 shadow-xl">
+          <div className="text-center md:text-left">
+            <Skeleton className="h-8 w-48 mb-2" />
+            <Skeleton className="h-4 w-full max-w-md" />
+            <Skeleton className="h-4 w-3/4" />
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Skeleton className="h-12 w-32" />
+            <Skeleton className="h-12 w-32" />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
