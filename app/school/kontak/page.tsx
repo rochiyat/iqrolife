@@ -1,11 +1,90 @@
+'use client';
+
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useEffect, useState } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function KontakPage() {
+  const [contactData, setContactData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchContactData = async () => {
+      try {
+        const response = await fetch('/api/school/contact');
+        if (!response.ok) {
+          throw new Error('Failed to fetch contact data');
+        }
+        const data = await response.json();
+        setContactData(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContactData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main>
+          {/* Hero Section Skeleton */}
+          <section className="bg-gradient-to-r from-primary to-secondary text-white py-20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto text-center">
+                <Skeleton className="h-12 w-80 mx-auto mb-4" />
+                <Skeleton className="h-6 w-96 mx-auto" />
+              </div>
+            </div>
+          </section>
+
+          {/* Contact Information Skeleton */}
+          <section className="py-16 bg-gradient-to-b from-blue-50 to-green-50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-12">
+                  <Skeleton className="h-8 w-48 mx-auto mb-4" />
+                  <Skeleton className="h-6 w-64 mx-auto" />
+                </div>
+                <div className="grid md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
+                  <Skeleton className="h-40 w-full" />
+                  <Skeleton className="h-40 w-full" />
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !contactData) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Error loading contact information
+            </h2>
+            <p className="text-gray-600">{error || 'Data not available'}</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header Component */}
@@ -30,11 +109,10 @@ export default function KontakPage() {
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl lg:text-5xl font-bold mb-6 animate-bounce">
-                🌟 Hubungi Kami 🌟
+                {contactData.hero.title}
               </h1>
               <p className="text-xl text-blue-100">
-                Kami siap membantu Anda dengan informasi lengkap tentang Sekolah
-                Iqrolife! 📞✨
+                {contactData.hero.description}
               </p>
             </div>
           </div>
@@ -46,10 +124,10 @@ export default function KontakPage() {
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4 animate-wiggle">
-                  🏫 Informasi Kontak 🏫
+                  {contactData.contactInfo.title}
                 </h2>
                 <p className="text-xl text-gray-600">
-                  Temukan lokasi dan cara menghubungi kami 📍
+                  {contactData.contactInfo.description}
                 </p>
               </div>
 
@@ -61,21 +139,21 @@ export default function KontakPage() {
                       <MapPin className="w-8 h-8 text-primary" />
                     </div>
                     <h3 className="text-lg font-bold text-gray-900">
-                      🏢 Kantor Pusat Yasmina-Sekolah Iqrolife
+                      {contactData.contactInfo.locations[0].title}
                     </h3>
                   </div>
                   <div className="space-y-2 text-sm text-gray-600">
                     <p className="flex items-center">
                       <MapPin className="w-4 h-4 mr-2" />
-                      Jl. Raya Dramaga KM 7, Bogor
+                      {contactData.contactInfo.locations[0].address}
                     </p>
                     <p className="flex items-center">
                       <Phone className="w-4 h-4 mr-2" />
-                      0251-8625-992
+                      {contactData.contactInfo.locations[0].phone}
                     </p>
                     <p className="flex items-center">
                       <Mail className="w-4 h-4 mr-2" />
-                      hkd@sekolahiqrolife.sch.id
+                      {contactData.contactInfo.locations[0].email}
                     </p>
                   </div>
                 </div>
@@ -86,21 +164,21 @@ export default function KontakPage() {
                       <MapPin className="w-8 h-8 text-secondary" />
                     </div>
                     <h3 className="text-lg font-bold text-gray-900">
-                      🎈 Lokasi KB-TK Iqrolife
+                      {contactData.contactInfo.locations[1].title}
                     </h3>
                   </div>
                   <div className="space-y-2 text-sm text-gray-600">
                     <p className="flex items-center">
                       <MapPin className="w-4 h-4 mr-2" />
-                      Jl. Raya Dramaga KM 7, Bogor
+                      {contactData.contactInfo.locations[1].address}
                     </p>
                     <p className="flex items-center">
                       <Phone className="w-4 h-4 mr-2" />
-                      0251-8625-992
+                      {contactData.contactInfo.locations[1].phone}
                     </p>
                     <p className="flex items-center">
                       <Mail className="w-4 h-4 mr-2" />
-                      hkd@sekolahiqrolife.sch.id
+                      {contactData.contactInfo.locations[1].email}
                     </p>
                   </div>
                 </div>
@@ -176,12 +254,14 @@ export default function KontakPage() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900 mb-2">
-                          ⏰ Jam Operasional
+                          {contactData.operationalInfo.title}
                         </h4>
                         <div className="text-sm text-gray-600 space-y-1">
-                          <p>Senin - Jumat: 07:00 - 16:00</p>
-                          <p>Sabtu: 07:00 - 12:00</p>
-                          <p>Minggu: Tutup</p>
+                          {contactData.operationalInfo.hours.map(
+                            (hour: string, index: number) => (
+                              <p key={index}>{hour}</p>
+                            )
+                          )}
                         </div>
                       </div>
                     </div>
@@ -192,11 +272,11 @@ export default function KontakPage() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900 mb-2">
-                          📞 Hotline PPDB
+                          {contactData.contactDetails.title}
                         </h4>
                         <div className="text-sm text-gray-600 space-y-1">
-                          <p>0251-8625-992 (Kantor Pusat)</p>
-                          <p>WhatsApp: 0812-3456-7890</p>
+                          <p>{contactData.contactDetails.phone}</p>
+                          <p>WhatsApp: {contactData.contactDetails.whatsapp}</p>
                         </div>
                       </div>
                     </div>
@@ -207,12 +287,14 @@ export default function KontakPage() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900 mb-2">
-                          📧 Email Khusus
+                          {contactData.emailInfo.title}
                         </h4>
                         <div className="text-sm text-gray-600 space-y-1">
-                          <p>PPDB: ppdb@sekolahiqrolife.sch.id</p>
-                          <p>Akademik: akademik@sekolahiqrolife.sch.id</p>
-                          <p>Keuangan: keuangan@sekolahiqrolife.sch.id</p>
+                          {contactData.emailInfo.emails.map(
+                            (email: string, index: number) => (
+                              <p key={index}>{email}</p>
+                            )
+                          )}
                         </div>
                       </div>
                     </div>
@@ -229,47 +311,25 @@ export default function KontakPage() {
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4 animate-bounce">
-                  ❓ Pertanyaan Umum ❓
+                  {contactData.faq.title}
                 </h2>
                 <p className="text-xl text-gray-600">
-                  Jawaban untuk pertanyaan yang sering diajukan 💭
+                  {contactData.faq.description}
                 </p>
               </div>
 
               <div className="space-y-6">
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform duration-300">
-                  <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
-                    🎯 Bagaimana cara mendaftar di Sekolah Iqrolife?
-                  </h3>
-                  <p className="text-gray-600">
-                    Anda dapat mendaftar melalui halaman PPDB kami atau datang
-                    langsung ke kantor pusat. Proses pendaftaran dibuka setiap
-                    tahun pada bulan Januari-Maret.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform duration-300">
-                  <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
-                    🎓 Apakah tersedia program beasiswa?
-                  </h3>
-                  <p className="text-gray-600">
-                    Ya, kami menyediakan berbagai program beasiswa untuk siswa
-                    berprestasi dan kurang mampu. Informasi lengkap dapat
-                    diperoleh di bagian akademik.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform duration-300">
-                  <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
-                    📖 Bagaimana sistem pembelajaran di Sekolah Iqrolife?
-                  </h3>
-                  <p className="text-gray-600">
-                    Kami menerapkan sistem pembelajaran terpadu yang
-                    mengintegrasikan kurikulum nasional dengan nilai-nilai
-                    Islam, didukung teknologi modern dan metode pembelajaran
-                    aktif.
-                  </p>
-                </div>
+                {contactData.faq.items.map((item: any, index: number) => (
+                  <div
+                    key={index}
+                    className="bg-white rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform duration-300"
+                  >
+                    <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                      {item.question}
+                    </h3>
+                    <p className="text-gray-600">{item.answer}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
