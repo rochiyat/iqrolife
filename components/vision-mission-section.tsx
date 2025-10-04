@@ -4,8 +4,33 @@ import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { AnimatedSection } from './animated-section';
+import { useEffect, useState } from 'react';
+import { SkeletonVisionMission } from '@/components/ui/skeleton-loading';
 
 export default function VisionMissionSection() {
+  const [visionMissionData, setVisionMissionData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchVisionMissionData = async () => {
+      try {
+        // Try foundation API first, fallback to school API
+        let response = await fetch('/api/foundation-vision-mission');
+        if (!response.ok) {
+          response = await fetch('/api/school/vision-mission');
+        }
+        const data = await response.json();
+        setVisionMissionData(data);
+      } catch (error) {
+        console.error('Error fetching vision mission data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVisionMissionData();
+  }, []);
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -32,12 +57,30 @@ export default function VisionMissionSection() {
     },
   };
 
+  if (loading) {
+    return <SkeletonVisionMission />;
+  }
+
+  if (!visionMissionData) {
+    return (
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-green-50 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Error loading vision mission data
+            </h2>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 bg-gradient-to-br from-blue-50 to-green-50 overflow-hidden">
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-            Visi & Misi Kami
+            {visionMissionData.title}
           </h2>
         </AnimatedSection>
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -83,9 +126,7 @@ export default function VisionMissionSection() {
                   transition={{ delay: 0.3 }}
                   className="text-gray-700 text-lg leading-relaxed text-center italic"
                 >
-                  "Terwujudnya sekolah berprestasi berbasis lingkungan yang
-                  ramah anak dan mengedepankan pencapaian akhlak islami serta
-                  nilai kepemimpinan setiap siswa."
+                  "{visionMissionData.visi}"
                 </motion.p>
               </CardContent>
             </Card>
@@ -122,29 +163,26 @@ export default function VisionMissionSection() {
                   </motion.h2>
                 </div>
                 <motion.ul className="space-y-4">
-                  {[
-                    "Mendidik siswa memiliki kecintaan terhadap Al-Qur'an.",
-                    'Mendidik setiap peserta didik menjadi pribadi yang kreatif, produktif, bertanggungjawab dan memiliki semangat berprestasi dalam menghadapi tantangan masa depan.',
-                    'Menjadikan sekolah sebagai ruang anak yang menyenangkan.',
-                    'Mengenalkan anak akan pentingnya konservasi lingkungan.',
-                  ].map((item, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 + index * 0.1 }}
-                      whileHover={{ x: 10 }}
-                      className="flex items-start group"
-                    >
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.6 + index * 0.1 }}
-                        className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0 group-hover:scale-150 transition-transform"
-                      />
-                      <p className="text-gray-700">{item}</p>
-                    </motion.li>
-                  ))}
+                  {visionMissionData.misi?.map(
+                    (item: string, index: number) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5 + index * 0.1 }}
+                        whileHover={{ x: 10 }}
+                        className="flex items-start group"
+                      >
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.6 + index * 0.1 }}
+                          className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0 group-hover:scale-150 transition-transform"
+                        />
+                        <p className="text-gray-700">{item}</p>
+                      </motion.li>
+                    )
+                  )}
                 </motion.ul>
               </CardContent>
             </Card>

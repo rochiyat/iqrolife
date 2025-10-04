@@ -1,14 +1,57 @@
-import { MapPin, Phone, Mail, Clock } from "lucide-react"
-import Image from "next/image"
+'use client';
+
+import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { SkeletonFooter } from '@/components/ui/skeleton-loading';
 
 export default function Footer() {
+  const [footerData, setFooterData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFooterData = async () => {
+      try {
+        const response = await fetch('/api/school/footer');
+        const data = await response.json();
+        setFooterData(data);
+      } catch (error) {
+        console.error('Error fetching footer data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFooterData();
+  }, []);
+
+  if (loading) {
+    return <SkeletonFooter />;
+  }
+
+  if (!footerData) {
+    return (
+      <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
+        <div className="container mx-auto px-4 py-16 relative z-10">
+          <div className="text-center">
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Error loading footer data
+            </h2>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 left-10 w-8 h-8 bg-fun-yellow/20 rounded-full animate-bounce opacity-50">
           ⭐
         </div>
-        <div className="absolute top-20 right-20 w-6 h-6 bg-fun-pink/20 rounded-full animate-pulse opacity-50">🌟</div>
+        <div className="absolute top-20 right-20 w-6 h-6 bg-fun-pink/20 rounded-full animate-pulse opacity-50">
+          🌟
+        </div>
         <div className="absolute bottom-20 left-20 w-10 h-10 bg-fun-blue/20 rounded-full animate-float opacity-50">
           🎈
         </div>
@@ -22,82 +65,69 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Image
-                src="/logo-iqrolife.png"
+                src={footerData.brand.logo || '/logo-iqrolife.png'}
                 alt="Sekolah Iqrolife Logo"
                 width={40}
                 height={40}
                 className="rounded-full hover:scale-110 transition-transform duration-300"
               />
               <span className="text-xl font-bold bg-gradient-to-r from-fun-yellow to-fun-orange bg-clip-text text-transparent">
-                Sekolah Iqrolife
+                {footerData.brand.name}
               </span>
             </div>
             <p className="text-gray-300 leading-relaxed">
-              🌟 Membangun generasi Qur'ani yang berkarakter, kreatif, dan berprestasi melalui pendidikan Islam terpadu
-              🌟
+              {footerData.brand.description}
             </p>
           </div>
 
           <div>
-            <h3 className="text-lg font-bold mb-4 flex items-center">🏫 Fasilitas Sekolah</h3>
+            <h3 className="text-lg font-bold mb-4 flex items-center">
+              🏫 Fasilitas Sekolah
+            </h3>
             <ul className="space-y-2 text-gray-300">
-              <li className="flex items-center">
-                <span className="mr-2">❄️</span>Ruang Kelas Ber-AC
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">💻</span>Laboratorium Komputer
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">📚</span>Perpustakaan Digital
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">🕌</span>Masjid & Ruang Tahfidz
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">⚽</span>Lapangan Olahraga
-              </li>
+              {footerData.facilities?.map((facility: string, index: number) => (
+                <li key={index} className="flex items-center">
+                  <span className="mr-2">❄️</span>
+                  {facility}
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-bold mb-4 flex items-center">🎯 Program Khusus</h3>
+            <h3 className="text-lg font-bold mb-4 flex items-center">
+              🎯 Program Khusus
+            </h3>
             <ul className="space-y-2 text-gray-300">
-              <li className="flex items-center">
-                <span className="mr-2">👑</span>Islamic Leadership
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">🌱</span>Green School
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">📖</span>Tahfidz Al-Qur'an
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">🌍</span>Bilingual Education
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">⭐</span>Character Building
-              </li>
+              {footerData.programs?.map((program: string, index: number) => (
+                <li key={index} className="flex items-center">
+                  <span className="mr-2">👑</span>
+                  {program}
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-bold mb-4 flex items-center">📞 Kontak Kami</h3>
+            <h3 className="text-lg font-bold mb-4 flex items-center">
+              📞 Kontak Kami
+            </h3>
             <div className="space-y-3 text-gray-300">
               <div className="flex items-start gap-3 hover:text-fun-blue transition-colors duration-300">
                 <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
-                <span className="text-sm">Jl. Raya Bogor, Kota Bogor, Jawa Barat</span>
+                <span className="text-sm">{footerData.contact.address}</span>
               </div>
               <div className="flex items-center gap-3 hover:text-fun-green transition-colors duration-300">
                 <Phone className="w-5 h-5 flex-shrink-0" />
-                <span className="text-sm">(0251) 123-4567</span>
+                <span className="text-sm">{footerData.contact.phone}</span>
               </div>
               <div className="flex items-center gap-3 hover:text-fun-orange transition-colors duration-300">
                 <Mail className="w-5 h-5 flex-shrink-0" />
-                <span className="text-sm">info@sekolahiqrolife.sch.id</span>
+                <span className="text-sm">{footerData.contact.email}</span>
               </div>
               <div className="flex items-start gap-3 hover:text-fun-pink transition-colors duration-300">
                 <Clock className="w-5 h-5 mt-1 flex-shrink-0" />
-                <span className="text-sm">Senin - Jumat: 07:00 - 16:00</span>
+                <span className="text-sm">{footerData.contact.hours}</span>
               </div>
             </div>
           </div>
@@ -111,5 +141,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

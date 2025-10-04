@@ -1,46 +1,74 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
+'use client';
+
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { SkeletonActivities } from '@/components/ui/skeleton-loading';
 
 export default function ActivitiesSection() {
-  const activities = [
-    {
-      image: "/classroom-learning.png",
-      title: "Pembelajaran Interaktif",
-      description: "Siswa belajar dengan metode yang menyenangkan dan interaktif",
-    },
-    {
-      image: "/placeholder-nzl00.png",
-      title: "Eksperimen Sains",
-      description: "Praktik langsung untuk memahami konsep sains dengan lebih baik",
-    },
-    {
-      image: "/placeholder-p0atk.png",
-      title: "Pembelajaran Al-Qur'an",
-      description: "Menumbuhkan kecintaan terhadap Al-Qur'an sejak dini",
-    },
-    {
-      image: "/placeholder-bp0kl.png",
-      title: "Kegiatan Outdoor",
-      description: "Pembelajaran di luar kelas untuk mengenal lingkungan",
-    },
-  ]
+  const [activitiesData, setActivitiesData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchActivitiesData = async () => {
+      try {
+        const response = await fetch('/api/school/activities');
+        const data = await response.json();
+        setActivitiesData(data);
+      } catch (error) {
+        console.error('Error fetching activities data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchActivitiesData();
+  }, []);
+
+  if (loading) {
+    return <SkeletonActivities />;
+  }
+
+  if (!activitiesData) {
+    return (
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Error loading activities data
+            </h2>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Aktivitas Kami</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            {activitiesData.title}
+          </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Berbagai kegiatan pembelajaran yang dirancang untuk mengembangkan potensi siswa secara optimal
+            {activitiesData.description}
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {activities.map((activity, index) => (
-            <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+          {activitiesData.items?.map((activity: any, index: number) => (
+            <Card
+              key={index}
+              className="overflow-hidden hover:shadow-lg transition-shadow"
+            >
               <div className="aspect-square relative">
-                <Image src={activity.image || "/placeholder.svg"} alt={activity.title} fill className="object-cover" />
+                <Image
+                  src={activity.image || '/placeholder.svg'}
+                  alt={activity.title}
+                  fill
+                  className="object-cover"
+                />
               </div>
               <CardContent className="p-4">
                 <h3 className="font-semibold text-lg mb-2">{activity.title}</h3>
@@ -52,12 +80,16 @@ export default function ActivitiesSection() {
 
         <div className="text-center">
           <Button asChild className="bg-pink-600 hover:bg-pink-700">
-            <a href="https://www.instagram.com/sekolahkreativa.bogor/" target="_blank" rel="noopener noreferrer">
+            <a
+              href={activitiesData.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Follow us on Instagram
             </a>
           </Button>
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,8 +1,71 @@
-import FoundationHeader from "@/components/foundation-header"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+'use client';
+
+import FoundationHeader from '@/components/foundation-header';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton-loading';
+import { useState, useEffect } from 'react';
 
 export default function Page() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading for static content
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <main>
+        <FoundationHeader />
+        <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+          <nav className="text-sm text-muted-foreground mb-4">
+            <Skeleton className="h-4 w-16 inline-block" />
+            <Skeleton className="h-4 w-2 inline-block mx-2" />
+            <Skeleton className="h-4 w-32 inline-block" />
+          </nav>
+
+          <div className="mt-4 grid items-start gap-8 md:grid-cols-2">
+            <div>
+              <Skeleton className="h-10 w-3/4 mb-3" />
+              <Skeleton className="h-6 w-full mb-2" />
+              <Skeleton className="h-6 w-5/6 mb-4" />
+              <ul className="mt-6 space-y-2">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <Skeleton className="w-1.5 h-1.5 rounded-full mt-2" />
+                    <Skeleton className="h-4 w-48" />
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 flex gap-3">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-20" />
+              </div>
+            </div>
+            <div className="rounded-lg border bg-card p-4 shadow-sm">
+              <Skeleton className="h-48 w-full" />
+            </div>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="rounded-lg border bg-card p-5">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-2/3" />
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main>
       <FoundationHeader />
@@ -17,10 +80,13 @@ export default function Page() {
 
         <div className="mt-4 grid items-start gap-8 md:grid-cols-2">
           <div>
-            <h1 className="text-pretty text-3xl font-semibold md:text-4xl">Kelas Pra Aqil Baligh</h1>
+            <h1 className="text-pretty text-3xl font-semibold md:text-4xl">
+              Kelas Pra Aqil Baligh
+            </h1>
             <p className="mt-3 leading-relaxed text-muted-foreground">
-              Kelas pendampingan menjelang baligh yang menekankan kesiapan adab, tanggung jawab, kemampuan mengambil
-              keputusan, serta pemahaman keislaman dasar yang membumi pada kehidupan remaja.
+              Kelas pendampingan menjelang baligh yang menekankan kesiapan adab,
+              tanggung jawab, kemampuan mengambil keputusan, serta pemahaman
+              keislaman dasar yang membumi pada kehidupan remaja.
             </p>
             <ul className="mt-6 list-disc pl-5 text-muted-foreground">
               <li>Adab pergaulan, amanah, dan kebiasaan baik remaja</li>
@@ -29,9 +95,9 @@ export default function Page() {
             </ul>
             <div className="mt-6 flex gap-3">
               <Button>Daftar Minat</Button>
-              <Link href="/kontak">
-                <Button variant="outline">Konsultasi</Button>
-              </Link>
+              <Button variant="outline" asChild>
+                <Link href="/kontak">Konsultasi</Link>
+              </Button>
             </div>
           </div>
           <div className="rounded-lg border bg-card p-4 shadow-sm">
@@ -47,7 +113,8 @@ export default function Page() {
           <div className="rounded-lg border bg-card p-5">
             <h3 className="font-semibold">Tujuan</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Remaja siap memasuki fase baligh dengan pondasi adab, ibadah, dan tanggung jawab.
+              Remaja siap memasuki fase baligh dengan pondasi adab, ibadah, dan
+              tanggung jawab.
             </p>
           </div>
           <div className="rounded-lg border bg-card p-5">
@@ -65,5 +132,5 @@ export default function Page() {
         </div>
       </section>
     </main>
-  )
+  );
 }

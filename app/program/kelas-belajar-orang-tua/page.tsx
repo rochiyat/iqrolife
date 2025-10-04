@@ -1,9 +1,95 @@
+'use client';
+
 import FoundationFooter from '@/components/foundation-footer';
 import FoundationHeader from '@/components/foundation-header';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function Page() {
+  const [kelasBelajarOrangTuaData, setKelasBelajarOrangTuaData] =
+    useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchKelasBelajarOrangTuaData = async () => {
+      try {
+        const response = await fetch('/api/programs/kelas-belajar-orang-tua');
+        const data = await response.json();
+        setKelasBelajarOrangTuaData(data);
+      } catch (error) {
+        console.error('Error fetching kelas-belajar-orang-tua data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchKelasBelajarOrangTuaData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <FoundationHeader />
+        <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+          <nav className="text-sm text-muted-foreground mb-4">
+            <Skeleton className="h-4 w-16 inline-block" />
+            <Skeleton className="h-4 w-2 inline-block mx-2" />
+            <Skeleton className="h-4 w-32 inline-block" />
+          </nav>
+
+          <div className="mt-4 grid items-start gap-8 md:grid-cols-2">
+            <div>
+              <Skeleton className="h-10 w-3/4 mb-3" />
+              <Skeleton className="h-6 w-full mb-2" />
+              <Skeleton className="h-6 w-5/6 mb-4" />
+              <ul className="mt-6 space-y-2">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <Skeleton className="w-1.5 h-1.5 rounded-full mt-2" />
+                    <Skeleton className="h-4 w-32" />
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 flex gap-3">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-20" />
+              </div>
+            </div>
+            <div className="rounded-lg border bg-card p-4 shadow-sm">
+              <Skeleton className="h-48 w-full" />
+            </div>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="rounded-lg border bg-card p-5">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-2/3" />
+              </div>
+            ))}
+          </div>
+        </section>
+        <FoundationFooter />
+      </div>
+    );
+  }
+
+  if (!kelasBelajarOrangTuaData) {
+    return (
+      <div>
+        <FoundationHeader />
+        <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+          <div className="text-center">
+            <h1 className="text-3xl font-semibold">Error loading page</h1>
+          </div>
+        </section>
+        <FoundationFooter />
+      </div>
+    );
+  }
   return (
     <div>
       <main>
@@ -20,65 +106,53 @@ export default function Page() {
           <div className="mt-4 grid items-start gap-8 md:grid-cols-2">
             <div>
               <h1 className="text-pretty text-3xl font-semibold md:text-4xl">
-                Kelas Belajar Orang Tua
+                {kelasBelajarOrangTuaData.title}
               </h1>
               <p className="mt-3 leading-relaxed text-muted-foreground">
-                Ruang belajar bagi ayah dan ibu untuk memperkuat peran
-                pengasuhan melalui materi, praktik, dan pendampingan berbasis
-                nilai serta kebutuhan keluarga.
+                {kelasBelajarOrangTuaData.description}
               </p>
               <ul className="mt-6 list-disc pl-5 text-muted-foreground">
-                <li>
-                  Topik: komunikasi hangat, disiplin positif, literasi, dan adab
-                  keluarga
-                </li>
-                <li>
-                  Format: workshop, studi kasus, coaching singkat, dan rencana
-                  aksi
-                </li>
-                <li>
-                  Komunitas: saling dukung antar orang tua untuk keberlanjutan
-                  perubahan
-                </li>
+                {kelasBelajarOrangTuaData.features.map(
+                  (feature: string, index: number) => (
+                    <li key={index}>{feature}</li>
+                  )
+                )}
               </ul>
               <div className="mt-6 flex gap-3">
-                <Button>Daftar Minat</Button>
-                <Link href="/kontak">
-                  <Button variant="outline">Konsultasi</Button>
-                </Link>
+                {kelasBelajarOrangTuaData.buttons.map(
+                  (button: any, index: number) =>
+                    button.href ? (
+                      <Link key={index} href={button.href}>
+                        <Button variant={button.variant}>{button.text}</Button>
+                      </Link>
+                    ) : (
+                      <Button key={index} variant={button.variant}>
+                        {button.text}
+                      </Button>
+                    )
+                )}
               </div>
             </div>
             <div className="rounded-lg border bg-card p-4 shadow-sm">
               <img
-                src="/kelas-parenting-belajar-orang-tua.jpg"
-                alt="Kegiatan Kelas Belajar Orang Tua"
+                src={kelasBelajarOrangTuaData.image}
+                alt={kelasBelajarOrangTuaData.imageAlt}
                 className="h-auto w-full rounded-md"
               />
             </div>
           </div>
 
           <div className="mt-10 grid gap-4 md:grid-cols-3">
-            <div className="rounded-lg border bg-card p-5">
-              <h3 className="font-semibold">Tujuan</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Orang tua memiliki pengetahuan, sikap, dan strategi pengasuhan
-                yang membumi.
-              </p>
-            </div>
-            <div className="rounded-lg border bg-card p-5">
-              <h3 className="font-semibold">Metode</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Workshop interaktif, praktik terarah, dan pendampingan tindak
-                lanjut.
-              </p>
-            </div>
-            <div className="rounded-lg border bg-card p-5">
-              <h3 className="font-semibold">Output</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Terbentuknya budaya belajar keluarga dan kebiasaan baik yang
-                konsisten.
-              </p>
-            </div>
+            {kelasBelajarOrangTuaData.details.map(
+              (detail: any, index: number) => (
+                <div key={index} className="rounded-lg border bg-card p-5">
+                  <h3 className="font-semibold">{detail.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {detail.description}
+                  </p>
+                </div>
+              )
+            )}
           </div>
         </section>
       </main>
