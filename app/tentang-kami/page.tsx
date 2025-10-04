@@ -4,6 +4,7 @@ import FoundationFooter from '@/components/foundation-footer';
 import FoundationHeader from '@/components/foundation-header';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function Page() {
   const [aboutData, setAboutData] = useState<any>(null);
@@ -30,8 +31,34 @@ export default function Page() {
       <div>
         <FoundationHeader />
         <main className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <div className="text-center">
-            <h1 className="text-3xl font-semibold">Loading...</h1>
+          <div className="grid items-center gap-8 md:grid-cols-2">
+            <div className="order-2 md:order-1 space-y-6">
+              <Skeleton className="h-12 w-3/4" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+              <Skeleton className="h-4 w-4/5" />
+              <div className="flex gap-3">
+                <Skeleton className="h-10 w-32" />
+                <Skeleton className="h-10 w-32" />
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              <Skeleton className="h-64 w-full rounded-lg" />
+            </div>
+          </div>
+          <div className="mt-16">
+            <div className="grid gap-6 md:grid-cols-3">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-lg border bg-card p-5 shadow-sm"
+                >
+                  <Skeleton className="h-6 w-24 mb-2" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-3/4 mt-2" />
+                </div>
+              ))}
+            </div>
           </div>
         </main>
         <FoundationFooter />
@@ -71,11 +98,16 @@ export default function Page() {
                   <Button
                     key={index}
                     variant={button.variant}
+                    asChild={button.href ? true : undefined}
                     className={`transition-transform hover:-translate-y-0.5 ${
                       button.variant === 'outline' ? 'bg-transparent' : ''
                     }`}
                   >
-                    {button.text}
+                    {button.href ? (
+                      <a href={button.href}>{button.text}</a>
+                    ) : (
+                      button.text
+                    )}
                   </Button>
                 ))}
               </div>
