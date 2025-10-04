@@ -43,8 +43,8 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {Array.from({ length: 6 }).map((_, i) => (
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {Array.from({ length: 7 }).map((_, i) => (
               <div key={i} className="rounded-lg border bg-card p-5">
                 <Skeleton className="h-6 w-3/4 mb-2" />
                 <Skeleton className="h-4 w-full mb-1" />
