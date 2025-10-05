@@ -48,7 +48,7 @@ export default function Header() {
             </Link>
             <div className="relative group">
               <Link
-                href="/school/kbtk"
+                href="/school"
                 className="text-gray-700 hover:text-fun-purple font-medium transition-all duration-300 hover:scale-105 flex items-center"
               >
                 Program
@@ -66,13 +66,25 @@ export default function Header() {
                   />
                 </svg>
               </Link>
-              <div className="absolute top-full left-0 mt-2 w-56 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-fun-blue/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-fun-blue/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                 <div className="py-3">
                   <Link
                     href="/school/kbtk"
                     className="block px-6 py-3 text-sm text-gray-700 hover:bg-fun-blue/10 hover:text-fun-blue font-medium transition-all duration-200 rounded-lg mx-2"
                   >
                     🧸 KBTK Iqrolife
+                  </Link>
+                  <Link
+                    href="/school"
+                    className="block px-6 py-3 text-sm text-gray-700 hover:bg-fun-green/10 hover:text-fun-green font-medium transition-all duration-200 rounded-lg mx-2"
+                  >
+                    🏫 Profil Sekolah
+                  </Link>
+                  <Link
+                    href="/school/tentang"
+                    className="block px-6 py-3 text-sm text-gray-700 hover:bg-fun-purple/10 hover:text-fun-purple font-medium transition-all duration-200 rounded-lg mx-2"
+                  >
+                    📖 Tentang Kami
                   </Link>
                 </div>
               </div>
@@ -147,7 +159,19 @@ export default function Header() {
                         href="/school/kbtk"
                         className="px-3 py-2 rounded-lg hover:bg-fun-blue/10"
                       >
-                        KBTK Iqrolife
+                        🧸 KBTK Iqrolife
+                      </Link>
+                      <Link
+                        href="/school"
+                        className="px-3 py-2 rounded-lg hover:bg-fun-green/10"
+                      >
+                        🏫 Profil Sekolah
+                      </Link>
+                      <Link
+                        href="/school/tentang"
+                        className="px-3 py-2 rounded-lg hover:bg-fun-purple/10"
+                      >
+                        📖 Tentang Kami
                       </Link>
                     </div>
                   </div>
