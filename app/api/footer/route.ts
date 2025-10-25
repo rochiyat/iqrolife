@@ -3,9 +3,9 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   const footer = {
     about: {
-      title: 'Tentang Iqrolife',
+      title: 'Tentang Iqrolife Community',
       description:
-        'Iqrolife adalah lembaga pendidikan Islam yang berfokus pada pengembangan karakter dan potensi anak melalui pendekatan pembelajaran yang holistik dan Islami.',
+        'Komunitas pendidikan berbasis fitrah dengan 7 pendekatan pendidikan yang holistik guna mengembangkan manusia yang paripurna dari 3 aspek: jiwa, fisik dan akal. Iqrolife hadir dengan ekosistem pendidikan untuk semua komponen keluarga: Ayah, Ibu dan Anak dengan program-program yang terstruktur dan terukur.',
       logo: '/logo-iqrolife.png',
     },
     quickLinks: {
