@@ -4,47 +4,59 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* IqroLife Brand Colors */
+  --brand-emerald: oklch(0.59 0.12 163); /* #2D9B6C */
+  --brand-sky: oklch(0.82 0.08 225); /* #87CEEB */
+  --brand-lime: oklch(0.83 0.12 115); /* #C4D96F */
+  --brand-warm-brown: oklch(0.36 0.08 55); /* #6B4423 */
+  --brand-cyan: oklch(0.68 0.09 195); /* #2CB5B0 */
+  --brand-coral: oklch(0.69 0.13 25); /* #E57C73 */
+  --brand-off-white: oklch(0.98 0.005 260); /* #F8F9FA */
+  --brand-gray: oklch(0.51 0.01 260); /* #6C757D */
+  --brand-dark-brown: oklch(0.23 0.04 45); /* #3D2817 */
 
-  /* Added custom colors for kindergarten theme */
-  --color-fun-pink: oklch(0.8 0.2 340);
-  --color-fun-blue: oklch(0.7 0.25 240);
-  --color-fun-green: oklch(0.7 0.2 140);
-  --color-fun-orange: oklch(0.75 0.25 45);
-  --color-fun-purple: oklch(0.65 0.25 320);
-  --color-fun-yellow: oklch(0.85 0.2 80);
+  /* Semantic tokens using IqroLife colors */
+  --background: var(--brand-off-white);
+  --foreground: var(--brand-dark-brown);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--brand-dark-brown);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--brand-dark-brown);
+  --primary: var(--brand-emerald);
+  --primary-foreground: var(--brand-off-white);
+  --secondary: var(--brand-coral);
+  --secondary-foreground: var(--brand-off-white);
+  --muted: oklch(0.95 0.01 260);
+  --muted-foreground: var(--brand-gray);
+  --accent: var(--brand-lime);
+  --accent-foreground: var(--brand-dark-brown);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.90 0.02 163);
+  --input: oklch(0.92 0.01 163);
+  --ring: var(--brand-cyan);
+  --chart-1: var(--brand-emerald);
+  --chart-2: var(--brand-cyan);
+  --chart-3: var(--brand-lime);
+  --chart-4: var(--brand-coral);
+  --chart-5: var(--brand-sky);
+  --radius: 0.625rem;
+  --sidebar: var(--brand-emerald);
+  --sidebar-foreground: var(--brand-off-white);
+  --sidebar-primary: var(--brand-cyan);
+  --sidebar-primary-foreground: var(--brand-off-white);
+  --sidebar-accent: var(--brand-lime);
+  --sidebar-accent-foreground: var(--brand-dark-brown);
+  --sidebar-border: oklch(0.65 0.10 163);
+  --sidebar-ring: var(--brand-cyan);
+
+  /* Legacy fun colors for backward compatibility */
+  --color-fun-pink: var(--brand-coral);
+  --color-fun-blue: var(--brand-sky);
+  --color-fun-green: var(--brand-lime);
+  --color-fun-orange: var(--brand-coral);
+  --color-fun-purple: var(--brand-warm-brown);
+  --color-fun-yellow: var(--brand-lime);
 }
 
 .dark {
@@ -83,7 +95,18 @@
 }
 
 @theme inline {
-  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
+  /* IqroLife Brand Colors */
+  --color-brand-emerald: var(--brand-emerald);
+  --color-brand-sky: var(--brand-sky);
+  --color-brand-lime: var(--brand-lime);
+  --color-brand-warm-brown: var(--brand-warm-brown);
+  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-coral: var(--brand-coral);
+  --color-brand-off-white: var(--brand-off-white);
+  --color-brand-gray: var(--brand-gray);
+  --color-brand-dark-brown: var(--brand-dark-brown);
+
+  /* Semantic tokens */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -121,7 +144,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Added fun color utilities */
+  /* Legacy fun color utilities for backward compatibility */
   --color-fun-pink: var(--color-fun-pink);
   --color-fun-blue: var(--color-fun-blue);
   --color-fun-green: var(--color-fun-green);
@@ -292,41 +315,80 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Utility classes for fun colors */
+/* IqroLife Brand Color Utilities */
+.bg-brand-emerald {
+  background-color: var(--brand-emerald);
+}
+.bg-brand-sky {
+  background-color: var(--brand-sky);
+}
+.bg-brand-lime {
+  background-color: var(--brand-lime);
+}
+.bg-brand-warm-brown {
+  background-color: var(--brand-warm-brown);
+}
+.bg-brand-cyan {
+  background-color: var(--brand-cyan);
+}
+.bg-brand-coral {
+  background-color: var(--brand-coral);
+}
+
+.text-brand-emerald {
+  color: var(--brand-emerald);
+}
+.text-brand-sky {
+  color: var(--brand-sky);
+}
+.text-brand-lime {
+  color: var(--brand-lime);
+}
+.text-brand-warm-brown {
+  color: var(--brand-warm-brown);
+}
+.text-brand-cyan {
+  color: var(--brand-cyan);
+}
+.text-brand-coral {
+  color: var(--brand-coral);
+}
+
+/* Legacy fun colors for backward compatibility */
 .bg-fun-pink {
-  background-color: oklch(0.8 0.2 340);
+  background-color: var(--brand-coral);
 }
 .bg-fun-blue {
-  background-color: oklch(0.7 0.25 240);
+  background-color: var(--brand-sky);
 }
 .bg-fun-green {
-  background-color: oklch(0.7 0.2 140);
+  background-color: var(--brand-lime);
 }
 .bg-fun-orange {
-  background-color: oklch(0.75 0.25 45);
+  background-color: var(--brand-coral);
 }
 .bg-fun-purple {
-  background-color: oklch(0.65 0.25 320);
+  background-color: var(--brand-warm-brown);
 }
 .bg-fun-yellow {
-  background-color: oklch(0.85 0.2 80);
+  background-color: var(--brand-lime);
 }
 
 .text-fun-pink {
-  color: oklch(0.8 0.2 340);
+  color: var(--brand-coral);
 }
 .text-fun-blue {
-  color: oklch(0.7 0.25 240);
+  color: var(--brand-sky);
 }
 .text-fun-green {
-  color: oklch(0.7 0.2 140);
+  color: var(--brand-lime);
 }
 .text-fun-orange {
-  color: oklch(0.75 0.25 45);
+  color: var(--brand-coral);
 }
 .text-fun-purple {
-  color: oklch(0.65 0.25 320);
+  color: var(--brand-warm-brown);
 }
 .text-fun-yellow {
-  color: oklch(0.85 0.2 80);
+  color: var(--brand-lime);
 }

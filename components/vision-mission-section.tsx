@@ -76,10 +76,10 @@ export default function VisionMissionSection() {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-green-50 overflow-hidden">
+    <section className="py-16 bg-gradient-to-br from-brand-sky/20 to-brand-lime/10 overflow-hidden">
       <div className="container mx-auto px-4">
         <AnimatedSection>
-          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent">
             {visionMissionData.title}
           </h2>
         </AnimatedSection>
@@ -92,7 +92,7 @@ export default function VisionMissionSection() {
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 360 }}
                     transition={{ duration: 0.5 }}
-                    className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4"
+                    className="w-16 h-16 bg-brand-warm-brown rounded-full flex items-center justify-center mx-auto mb-4"
                   >
                     <svg
                       className="w-8 h-8 text-white"
@@ -110,7 +110,7 @@ export default function VisionMissionSection() {
                   </motion.div>
                   <motion.h2
                     whileHover={{ scale: 1.05 }}
-                    className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-4"
+                    className="text-3xl font-bold bg-gradient-to-r from-brand-warm-brown to-brand-dark-brown bg-clip-text text-transparent mb-4"
                   >
                     Purpose
                   </motion.h2>
@@ -119,7 +119,7 @@ export default function VisionMissionSection() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
-                  className="text-gray-700 text-lg leading-relaxed text-center italic"
+                  className="text-brand-gray text-lg leading-relaxed text-center italic"
                 >
                   "{visionMissionData.purpose}"
                 </motion.p>
@@ -136,7 +136,7 @@ export default function VisionMissionSection() {
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 360 }}
                     transition={{ duration: 0.5 }}
-                    className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4"
+                    className="w-16 h-16 bg-brand-cyan rounded-full flex items-center justify-center mx-auto mb-4"
                   >
                     <svg
                       className="w-8 h-8 text-white"
@@ -160,7 +160,7 @@ export default function VisionMissionSection() {
                   </motion.div>
                   <motion.h2
                     whileHover={{ scale: 1.05 }}
-                    className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4"
+                    className="text-3xl font-bold bg-gradient-to-r from-brand-cyan to-brand-emerald bg-clip-text text-transparent mb-4"
                   >
                     Visi
                   </motion.h2>
@@ -169,7 +169,7 @@ export default function VisionMissionSection() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
-                  className="text-gray-700 text-lg leading-relaxed text-center italic"
+                  className="text-brand-gray text-lg leading-relaxed text-center italic"
                 >
                   "{visionMissionData.visi}"
                 </motion.p>
@@ -184,7 +184,7 @@ export default function VisionMissionSection() {
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 360 }}
                     transition={{ duration: 0.5 }}
-                    className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4"
+                    className="w-16 h-16 bg-brand-emerald rounded-full flex items-center justify-center mx-auto mb-4"
                   >
                     <svg
                       className="w-8 h-8 text-white"
@@ -202,7 +202,7 @@ export default function VisionMissionSection() {
                   </motion.div>
                   <motion.h2
                     whileHover={{ scale: 1.05 }}
-                    className="text-3xl font-bold bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent mb-6"
+                    className="text-3xl font-bold bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent mb-6"
                   >
                     Misi
                   </motion.h2>
@@ -211,7 +211,7 @@ export default function VisionMissionSection() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="text-gray-700 text-lg leading-relaxed text-center italic"
+                  className="text-brand-gray text-lg leading-relaxed text-center italic"
                 >
                   "{visionMissionData.misi}"
                 </motion.p>

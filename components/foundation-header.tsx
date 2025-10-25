@@ -49,7 +49,7 @@ export function FoundationHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="w-full sticky top-0 z-50 border-b-2 border-[#e8f5e3] bg-gradient-to-b from-white to-[#f7f9f7] backdrop-blur supports-[backdrop-filter]:bg-white/95">
+    <header className="w-full sticky top-0 z-50 border-b-2 border-brand-lime/30 bg-brand-emerald backdrop-blur supports-[backdrop-filter]:bg-brand-emerald/95 transition-all duration-300">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-8">
         <Link
           href="/"
@@ -62,10 +62,10 @@ export function FoundationHeader() {
             className="h-9 w-9 rounded-md ring-1 ring-border group-hover:scale-105 transition-transform duration-200"
           />
           <div className="flex flex-col">
-            <span className="text-base font-bold leading-none text-[#2e7d32] md:text-lg group-hover:text-[#1b5e20] transition-colors">
+            <span className="text-base font-bold leading-none text-brand-off-white md:text-lg group-hover:text-brand-lime transition-colors duration-300">
               Iqrolife Community
             </span>
-            <span className="text-sm text-[#4caf50] md:text-base">
+            <span className="text-sm text-brand-lime md:text-base">
               Profesional • Kekeluargaan
             </span>
           </div>
@@ -77,7 +77,7 @@ export function FoundationHeader() {
             if (item.children) {
               return (
                 <DropdownMenu key={item.href}>
-                  <DropdownMenuTrigger className="flex items-center gap-1 text-base font-medium text-[#4caf50]/90 transition-colors hover:text-[#2e7d32]">
+                  <DropdownMenuTrigger className="flex items-center gap-1 text-base font-medium text-brand-off-white transition-colors duration-300 hover:text-brand-lime">
                     {item.label}
                     <ChevronDownIcon className="h-4 w-4" />
                   </DropdownMenuTrigger>
@@ -87,9 +87,9 @@ export function FoundationHeader() {
                         <Link
                           href={child.href}
                           className={cn(
-                            'w-full cursor-pointer text-[#4caf50]/90 transition-colors hover:text-[#2e7d32]',
+                            'w-full cursor-pointer text-brand-gray transition-colors duration-300 hover:text-brand-cyan',
                             pathname === child.href &&
-                              'font-medium text-[#1b5e20]'
+                              'font-medium text-brand-emerald'
                           )}
                         >
                           {child.label}
@@ -105,10 +105,10 @@ export function FoundationHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'text-base font-medium transition-colors hover:text-[#2e7d32]',
+                  'text-base font-medium transition-colors duration-300 hover:text-brand-lime',
                   pathname === item.href
-                    ? 'text-[#1b5e20]'
-                    : 'text-[#4caf50]/90'
+                    ? 'text-brand-lime font-bold'
+                    : 'text-brand-off-white'
                 )}
               >
                 {item.label}
@@ -150,14 +150,14 @@ export function FoundationHeader() {
               side="right"
               className="w-[84%] sm:w-[380px] flex flex-col"
             >
-              <div className="flex items-center justify-between pb-4 border-b border-[#e8f5e3]">
+              <div className="flex items-center justify-between pb-4 border-b border-brand-lime/30">
                 <div className="flex items-center gap-3">
                   <img
                     src="/iqrolife-logo.jpg"
                     alt="Logo Iqrolife"
-                    className="h-7 w-7 rounded-md ring-1 ring-[#e8f5e3]"
+                    className="h-7 w-7 rounded-md ring-1 ring-brand-lime/30"
                   />
-                  <span className="text-sm font-bold text-[#2e7d32]">
+                  <span className="text-sm font-bold text-brand-emerald">
                     Iqrolife Community
                   </span>
                 </div>
@@ -169,7 +169,7 @@ export function FoundationHeader() {
                     if (item.children) {
                       return (
                         <div key={item.href}>
-                          <div className="px-3 py-2 text-base font-medium text-[#2e7d32]">
+                          <div className="px-3 py-2 text-base font-medium text-brand-emerald">
                             {item.label}
                           </div>
                           <div className="ml-3 flex flex-col gap-1">
@@ -179,10 +179,10 @@ export function FoundationHeader() {
                                 href={child.href}
                                 onClick={() => setOpen(false)}
                                 className={cn(
-                                  'rounded-md px-3 py-2 text-sm transition-all hover:bg-[#e8f5e3] hover:translate-x-0.5',
+                                  'rounded-md px-3 py-2 text-sm transition-all duration-300 hover:bg-brand-lime/20 hover:translate-x-0.5',
                                   pathname === child.href
-                                    ? 'bg-[#e8f5e3] font-medium text-[#1b5e20]'
-                                    : 'text-[#4caf50]/90'
+                                    ? 'bg-brand-lime/20 font-medium text-brand-emerald'
+                                    : 'text-brand-gray'
                                 )}
                               >
                                 {child.label}
@@ -198,10 +198,10 @@ export function FoundationHeader() {
                         href={item.href}
                         onClick={() => setOpen(false)}
                         className={cn(
-                          'rounded-md px-3 py-3 text-base transition-all hover:bg-[#e8f5e3] hover:translate-x-0.5',
+                          'rounded-md px-3 py-3 text-base transition-all duration-300 hover:bg-brand-lime/20 hover:translate-x-0.5',
                           pathname === item.href
-                            ? 'bg-[#e8f5e3] font-medium text-[#1b5e20]'
-                            : 'text-[#4caf50]/90'
+                            ? 'bg-brand-lime/20 font-medium text-brand-emerald'
+                            : 'text-brand-gray'
                         )}
                       >
                         {item.label}
