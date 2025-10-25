@@ -130,7 +130,7 @@ export default function VisionMissionSection() {
 
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           <AnimatedSection delay={0.2}>
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
               <CardContent className="p-8">
                 <div className="text-center mb-6">
                   <motion.div
@@ -178,7 +178,7 @@ export default function VisionMissionSection() {
           </AnimatedSection>
 
           <AnimatedSection delay={0.4}>
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
               <CardContent className="p-8">
                 <div className="text-center mb-6">
                   <motion.div
