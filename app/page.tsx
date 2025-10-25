@@ -277,7 +277,8 @@ export default function FoundationLanding() {
                   Nilai-Nilai Komunitas
                 </h2>
                 <p className="text-brand-gray max-w-2xl mx-auto">
-                  Prinsip-prinsip fundamental yang menjadi landasan dalam setiap aktivitas pendidikan dan pengembangan komunitas kami.
+                  Prinsip-prinsip fundamental yang menjadi landasan dalam setiap
+                  aktivitas pendidikan dan pengembangan komunitas kami.
                 </p>
               </div>
             </AnimatedSection>
@@ -319,7 +320,10 @@ export default function FoundationLanding() {
                       transition={{ delay: 0.3 }}
                       className="text-brand-gray leading-relaxed text-center flex-grow"
                     >
-                      Kami meyakini bahwa manusia diciptakan dengan fitrah. Fitrah sebagai bekal, dan fitrah sebagai prediksi peran. Tugas orang tua mengembalikan fitrah diri dan menjaga kesejatian fitrah anak agar tumbuh secara paripurna.
+                      Kami meyakini bahwa manusia diciptakan dengan fitrah.
+                      Fitrah sebagai bekal, dan fitrah sebagai prediksi peran.
+                      Tugas orang tua mengembalikan fitrah diri dan menjaga
+                      kesejatian fitrah anak agar tumbuh secara paripurna.
                     </motion.p>
                   </CardContent>
                 </Card>
@@ -361,7 +365,10 @@ export default function FoundationLanding() {
                       transition={{ delay: 0.4 }}
                       className="text-brand-gray leading-relaxed text-center flex-grow"
                     >
-                      Kami meyakini bahwa pendidikan harus dilakukan berdasarkan kebutuhan pada setiap tahap kehidupan. Ketiadaan kebertahapan, hanya akan menjadi bom waktu untuk tumbuh kembang anak di masa depan.
+                      Kami meyakini bahwa pendidikan harus dilakukan berdasarkan
+                      kebutuhan pada setiap tahap kehidupan. Ketiadaan
+                      kebertahapan, hanya akan menjadi bom waktu untuk tumbuh
+                      kembang anak di masa depan.
                     </motion.p>
                   </CardContent>
                 </Card>
@@ -403,7 +410,12 @@ export default function FoundationLanding() {
                       transition={{ delay: 0.5 }}
                       className="text-brand-gray leading-relaxed text-center flex-grow"
                     >
-                      Kami meyakini bahwa pendidikan harus dilihat sebagai sebuah ekosistem yang saling terkait guna membentuk manusia paripurna, secara fisik, jiwa, dan akal. Pendidikan holistik merupakan pengejawantahan atas keyakinan kami tentang bagaimana seharusnya pendidikan itu sendiri.
+                      Kami meyakini bahwa pendidikan harus dilihat sebagai
+                      sebuah ekosistem yang saling terkait guna membentuk
+                      manusia paripurna, secara fisik, jiwa, dan akal.
+                      Pendidikan holistik merupakan pengejawantahan atas
+                      keyakinan kami tentang bagaimana seharusnya pendidikan itu
+                      sendiri.
                     </motion.p>
                   </CardContent>
                 </Card>
@@ -445,7 +457,11 @@ export default function FoundationLanding() {
                       transition={{ delay: 0.6 }}
                       className="text-brand-gray leading-relaxed text-center flex-grow"
                     >
-                      Kami mendefinisikan sukses sebagai sebuah hasil dari perjalanan panjang menemukan misi hidup, menjawab kenapa kami dilahirkan. Sukses yang sejalan dengan misi hidup adalah sukses yang mampu menjawab ekspektasi Allah SWT menciptakan, sehingga akan muncul kesejatian kebahagiaan.
+                      Kami mendefinisikan sukses sebagai sebuah hasil dari
+                      perjalanan panjang menemukan misi hidup, menjawab kenapa
+                      kami dilahirkan. Sukses yang sejalan dengan misi hidup
+                      adalah sukses yang mampu menjawab ekspektasi Allah SWT
+                      menciptakan, sehingga akan muncul kesejatian kebahagiaan.
                     </motion.p>
                   </CardContent>
                 </Card>
@@ -463,7 +479,8 @@ export default function FoundationLanding() {
                   7 Dimensi Pendidikan Holistik
                 </h2>
                 <p className="text-brand-gray max-w-2xl mx-auto">
-                  Pendekatan komprehensif yang mengintegrasikan berbagai aspek perkembangan anak sesuai dengan tahapan usia mereka.
+                  Pendekatan komprehensif yang mengintegrasikan berbagai aspek
+                  perkembangan anak sesuai dengan tahapan usia mereka.
                 </p>
               </div>
             </AnimatedSection>
@@ -487,14 +504,17 @@ export default function FoundationLanding() {
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 bg-brand-emerald rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-lg">1</span>
+                          <span className="text-white font-bold text-lg">
+                            1
+                          </span>
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-brand-emerald mb-2">
                             Pendidikan Iman, Islam & Ihsan
                           </h3>
                           <p className="text-sm text-brand-gray">
-                            Membangun fondasi spiritual dan keimanan yang kuat sejak dini
+                            Membangun fondasi spiritual dan keimanan yang kuat
+                            sejak dini
                           </p>
                         </div>
                       </div>
@@ -505,7 +525,9 @@ export default function FoundationLanding() {
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-lg">2</span>
+                          <span className="text-white font-bold text-lg">
+                            2
+                          </span>
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-brand-cyan mb-2">
@@ -523,14 +545,17 @@ export default function FoundationLanding() {
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 bg-brand-lime rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-lg">3</span>
+                          <span className="text-white font-bold text-lg">
+                            3
+                          </span>
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-brand-warm-brown mb-2">
                             Pendidikan Emosi & Manajemen Konflik
                           </h3>
                           <p className="text-sm text-brand-gray">
-                            Mengelola emosi secara sehat dan menyelesaikan konflik dengan bijak
+                            Mengelola emosi secara sehat dan menyelesaikan
+                            konflik dengan bijak
                           </p>
                         </div>
                       </div>
@@ -541,14 +566,17 @@ export default function FoundationLanding() {
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 bg-brand-coral rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-lg">4</span>
+                          <span className="text-white font-bold text-lg">
+                            4
+                          </span>
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-brand-coral mb-2">
                             Stimulasi Sensorik-Motorik & Pendidikan Jasmani
                           </h3>
                           <p className="text-sm text-brand-gray">
-                            Mengoptimalkan perkembangan fisik dan keterampilan motorik
+                            Mengoptimalkan perkembangan fisik dan keterampilan
+                            motorik
                           </p>
                         </div>
                       </div>
@@ -559,14 +587,17 @@ export default function FoundationLanding() {
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 bg-brand-warm-brown rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-lg">5</span>
+                          <span className="text-white font-bold text-lg">
+                            5
+                          </span>
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-brand-warm-brown mb-2">
                             Pendidikan Intelektual & Learning Agility
                           </h3>
                           <p className="text-sm text-brand-gray">
-                            Mengasah kemampuan berpikir kritis dan adaptif dalam belajar
+                            Mengasah kemampuan berpikir kritis dan adaptif dalam
+                            belajar
                           </p>
                         </div>
                       </div>
@@ -577,14 +608,17 @@ export default function FoundationLanding() {
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 bg-brand-emerald rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-lg">6</span>
+                          <span className="text-white font-bold text-lg">
+                            6
+                          </span>
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-brand-emerald mb-2">
                             Pendidikan Bakat, Keterampilan & Peran
                           </h3>
                           <p className="text-sm text-brand-gray">
-                            Menggali dan mengembangkan potensi unik setiap individu
+                            Menggali dan mengembangkan potensi unik setiap
+                            individu
                           </p>
                         </div>
                       </div>
@@ -595,14 +629,18 @@ export default function FoundationLanding() {
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white font-bold text-lg">7</span>
+                          <span className="text-white font-bold text-lg">
+                            7
+                          </span>
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-brand-cyan mb-2">
-                            Pendidikan Seksual, Generatif & Keberlanjutan Peradaban
+                            Pendidikan Seksual, Generatif & Keberlanjutan
+                            Peradaban
                           </h3>
                           <p className="text-sm text-brand-gray">
-                            Memahami fitrah seksualitas dengan sehat dan kontribusi positif bagi peradaban
+                            Memahami fitrah seksualitas dengan sehat dan
+                            kontribusi positif bagi peradaban
                           </p>
                         </div>
                       </div>
@@ -619,21 +657,27 @@ export default function FoundationLanding() {
                     </h3>
                     <div className="grid md:grid-cols-3 gap-6 mt-6">
                       <div className="bg-white/80 rounded-xl p-6 border-2 border-brand-lime/20">
-                        <div className="text-3xl font-bold text-brand-emerald mb-2">0-6</div>
+                        <div className="text-3xl font-bold text-brand-emerald mb-2">
+                          0-6
+                        </div>
                         <div className="text-sm text-brand-gray">Tahun</div>
                         <p className="text-sm text-brand-gray mt-3">
                           Fase fondasi: Internalisasi nilai & kepahiawaan
                         </p>
                       </div>
                       <div className="bg-white/80 rounded-xl p-6 border-2 border-brand-cyan/20">
-                        <div className="text-3xl font-bold text-brand-cyan mb-2">7-10</div>
+                        <div className="text-3xl font-bold text-brand-cyan mb-2">
+                          7-10
+                        </div>
                         <div className="text-sm text-brand-gray">Tahun</div>
                         <p className="text-sm text-brand-gray mt-3">
                           Fase eksplorasi: Sosialisasi & internalisasi konsep
                         </p>
                       </div>
                       <div className="bg-white/80 rounded-xl p-6 border-2 border-brand-coral/20">
-                        <div className="text-3xl font-bold text-brand-coral mb-2">11-15</div>
+                        <div className="text-3xl font-bold text-brand-coral mb-2">
+                          11-15
+                        </div>
                         <div className="text-sm text-brand-gray">Tahun</div>
                         <p className="text-sm text-brand-gray mt-3">
                           Fase konfirmasi: Pendalaman & kontribusi sosial
@@ -648,44 +692,281 @@ export default function FoundationLanding() {
         </section>
 
         {/* Program Komunitas */}
-        <section id="program" className="py-16">
+        <section
+          id="program"
+          className="py-16 bg-gradient-to-br from-white to-brand-emerald/5"
+        >
           <div className="container mx-auto px-4">
             <AnimatedSection>
-              <div className="text-center mb-10">
-                <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-fun-blue to-fun-purple bg-clip-text text-transparent">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent">
                   Program Komunitas
                 </h2>
-                <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
+                <p className="text-brand-gray max-w-2xl mx-auto">
                   Dukungan pendidikan dan keluarga untuk tumbuh bersama dalam
-                  nilai islami dan profesionalisme.
+                  nilai fitrah.
                 </p>
               </div>
             </AnimatedSection>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {programs && programs.length > 0 ? (
-                programs.map((item, i) => (
-                  <AnimatedSection key={i} delay={0.2 * (i + 1)}>
-                    <Card className="border-2 border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
-                      <CardContent className="p-6">
-                        <div
-                          className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center text-2xl bg-gradient-to-r ${item.color} text-white transform group-hover:scale-110 transition-transform duration-300`}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+              <AnimatedSection delay={0.1}>
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-emerald/20 hover:border-brand-emerald/40 hover:shadow-xl transition-all duration-300 h-full group">
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="mb-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-14 h-14 bg-brand-emerald rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
+                      >
+                        <svg
+                          className="w-7 h-7 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
                         >
-                          {item.icon}
-                        </div>
-                        <h3 className="font-semibold text-lg">{item.title}</h3>
-                        <p className="text-muted-foreground mt-2">
-                          {item.desc}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </AnimatedSection>
-                ))
-              ) : (
-                <div className="col-span-3 text-center">
-                  <p className="text-muted-foreground">Loading programs...</p>
-                </div>
-              )}
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                          />
+                        </svg>
+                      </motion.div>
+                      <h3 className="font-bold text-xl text-brand-emerald mb-2 group-hover:text-brand-cyan transition-colors">
+                        Kelas Siap Sekolah
+                      </h3>
+                    </div>
+                    <p className="text-brand-gray leading-relaxed flex-grow">
+                      Pendidikan pra sekolah yang mencakup pendidikan iman,
+                      ego/individualitas, emosi dan sensori-motorik guna
+                      mempersiapkan anak untuk menuju jenjang pendidikan
+                      berikutnya.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.2}>
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-cyan/20 hover:border-brand-cyan/40 hover:shadow-xl transition-all duration-300 h-full group">
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="mb-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-14 h-14 bg-brand-cyan rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
+                      >
+                        <svg
+                          className="w-7 h-7 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                          />
+                        </svg>
+                      </motion.div>
+                      <h3 className="font-bold text-xl text-brand-cyan mb-2 group-hover:text-brand-emerald transition-colors">
+                        Kelas Eksplorasi
+                      </h3>
+                    </div>
+                    <p className="text-brand-gray leading-relaxed flex-grow">
+                      Program pendidikan dimana teman Iqrolife akan dipaparkan
+                      dengan berbagai hal tentang bagaimana dunia bekerja dan
+                      dikenalkan dengan berbagai tokoh dan profesi yang ada di
+                      dunia.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.3}>
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-lime/20 hover:border-brand-lime/40 hover:shadow-xl transition-all duration-300 h-full group">
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="mb-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-14 h-14 bg-brand-lime rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
+                      >
+                        <svg
+                          className="w-7 h-7 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                          />
+                        </svg>
+                      </motion.div>
+                      <h3 className="font-bold text-xl text-brand-warm-brown mb-2 group-hover:text-brand-lime transition-colors">
+                        Kelas Aqil Baligh
+                      </h3>
+                    </div>
+                    <p className="text-brand-gray leading-relaxed flex-grow">
+                      Program pendidikan guna mempersiapkan teman iqrolife
+                      menuju tahapan aqil balighnya dengan pendalaman bidang
+                      keahlian, menguatkan kesadaran tanggung jawab &
+                      kedewasaan, serta keterlibatan pada kegiatan sosial dan
+                      amal kebaikan di tengah masyarakat.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.4}>
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-warm-brown/20 hover:border-brand-warm-brown/40 hover:shadow-xl transition-all duration-300 h-full group">
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="mb-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-14 h-14 bg-brand-warm-brown rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
+                      >
+                        <svg
+                          className="w-7 h-7 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                          />
+                        </svg>
+                      </motion.div>
+                      <h3 className="font-bold text-xl text-brand-warm-brown mb-2 group-hover:text-brand-coral transition-colors">
+                        Kelas Belajar Orang Tua
+                      </h3>
+                    </div>
+                    <p className="text-brand-gray leading-relaxed flex-grow">
+                      Program pendidikan dimana orang tua akan belajar tentang
+                      berbagai topik seputar pengasuhan, keayahan, pendidikan
+                      holistik, pendidikan berbasis fitrah dll, guna memastikan
+                      keselarasan pendidikan di rumah dan di komunitas.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.5}>
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-coral/20 hover:border-brand-coral/40 hover:shadow-xl transition-all duration-300 h-full group">
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="mb-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-14 h-14 bg-brand-coral rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
+                      >
+                        <svg
+                          className="w-7 h-7 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
+                        </svg>
+                      </motion.div>
+                      <h3 className="font-bold text-xl text-brand-coral mb-2 group-hover:text-brand-warm-brown transition-colors">
+                        Mentoring Ayah
+                      </h3>
+                    </div>
+                    <p className="text-brand-gray leading-relaxed flex-grow">
+                      Program pendampingan intensif dan berkelanjutan untuk Ayah
+                      Iqrolife guna memastikan keterlibatan dan keselarasan
+                      peran Ayah pada proses pengasuhan dan pendidikan anak.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.6}>
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-emerald/20 hover:border-brand-emerald/40 hover:shadow-xl transition-all duration-300 h-full group">
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="mb-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-14 h-14 bg-gradient-to-br from-brand-emerald to-brand-cyan rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
+                      >
+                        <svg
+                          className="w-7 h-7 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                          />
+                        </svg>
+                      </motion.div>
+                      <h3 className="font-bold text-xl text-brand-emerald mb-2 group-hover:text-brand-cyan transition-colors">
+                        Mentoring Ibu
+                      </h3>
+                    </div>
+                    <p className="text-brand-gray leading-relaxed flex-grow">
+                      Program pendampingan intensif dan berkelanjutan untuk Ibu
+                      Iqrolife guna memastikan kesiapan dan keselarasan Ibu
+                      dalam mendampingi tumbuh kembang anak yang selaras fitrah.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.7}>
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-cyan/20 hover:border-brand-cyan/40 hover:shadow-xl transition-all duration-300 h-full group md:col-span-2 lg:col-span-3">
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="mb-4">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-14 h-14 bg-gradient-to-br from-brand-cyan to-brand-lime rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
+                      >
+                        <svg
+                          className="w-7 h-7 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                          />
+                        </svg>
+                      </motion.div>
+                      <h3 className="font-bold text-xl text-brand-cyan mb-2 group-hover:text-brand-lime transition-colors">
+                        Family Talent Discovery
+                      </h3>
+                    </div>
+                    <p className="text-brand-gray leading-relaxed flex-grow">
+                      Program mengenal lebih jauh bakat diri, pasangan, dan
+                      anak-anak guna menemukan potensi kekuatan diri, pasangan
+                      dan anak-anak dalam upaya menemukan misi hidup dan
+                      keluarga.
+                    </p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
             </div>
           </div>
         </section>
