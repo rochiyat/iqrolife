@@ -120,7 +120,7 @@ export default function Page() {
                     Telepon
                   </h3>
                   <p className="mt-2 text-gray-600">
-                    {contactData?.office?.phone || '+0813-1040-5995'}
+                    {contactData?.office?.phone || '+62813-1522-5557'}
                   </p>
                 </div>
                 <div>
