@@ -152,12 +152,12 @@ export default function FoundationFooter() {
             <div className="flex items-center gap-3">
               <img
                 src={footerData?.about.logo || '/iqrolife-logo.jpg'}
-                alt="Logo Yayasan Iqrolife"
+                alt="Logo Iqrolife Community"
                 className="h-9 w-9 rounded-md"
               />
               <div className="flex flex-col">
                 <span className="text-sm font-semibold leading-none text-foreground md:text-base">
-                  {footerData?.about.title || 'Tumbuh Bersama Iqrolife'}
+                  {footerData?.about.title || 'Iqrolife Community'}
                 </span>
                 <span className="text-xs text-muted-foreground md:text-sm">
                   Profesional • Kekeluargaan

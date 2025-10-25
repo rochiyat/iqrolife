@@ -54,7 +54,7 @@ export function FoundationHeader() {
         <Link
           href="/"
           className="flex items-center gap-3 group"
-          aria-label="Yayasan Tumbuh Bersama Iqrolife - Beranda"
+          aria-label="Iqrolife Community - Beranda"
         >
           <img
             src="/iqrolife-logo.jpg"
@@ -63,7 +63,7 @@ export function FoundationHeader() {
           />
           <div className="flex flex-col">
             <span className="text-base font-bold leading-none text-[#2e7d32] md:text-lg group-hover:text-[#1b5e20] transition-colors">
-              Tumbuh Bersama Iqrolife
+              Iqrolife Community
             </span>
             <span className="text-sm text-[#4caf50] md:text-base">
               Profesional • Kekeluargaan
@@ -158,7 +158,7 @@ export function FoundationHeader() {
                     className="h-7 w-7 rounded-md ring-1 ring-[#e8f5e3]"
                   />
                   <span className="text-sm font-bold text-[#2e7d32]">
-                    Tumbuh Bersama Iqrolife
+                    Iqrolife Community
                   </span>
                 </div>
               </div>

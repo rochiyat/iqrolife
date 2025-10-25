@@ -1,10 +1,7 @@
 export const foundationVisionMissionData = {
-  title: 'Visi & Misi Kami',
-  visi: "Terwujudnya masyarakat yang profesional, kekeluargaan, dan kolaboratif dalam mendidik generasi Qur'ani yang berkarakter, kreatif, dan berprestasi.",
-  misi: [
-    'Membangun ekosistem pendidikan Islam yang terintegrasi dan berkualitas.',
-    'Mengembangkan potensi guru, orang tua, dan masyarakat dalam pendidikan anak.',
-    'Menciptakan lingkungan belajar yang kondusif dan menyenangkan untuk anak-anak.',
-    'Menjalin kerjasama dengan berbagai pihak untuk kemajuan pendidikan Islam.',
-  ],
+  title: 'Purpose, Mission & Vision',
+  purpose:
+    'Pendidikan Peradaban: Pendidikan yang Menyukseskan dan Membahagiakan Manusia',
+  misi: 'Mengembalikan kesejatian pendidikan dengan membersamai tumbuh kembang anak, orang tua dan keluarga menuju manusia yang paripurna secara jiwa, akal dan fisik guna mencapai misi kehidupan dan keluarga masing-masing',
+  visi: 'Terbentuknya ekosistem pendidikan berbasis komunitas dan selaras fitrah pada Tahun 2035',
 };

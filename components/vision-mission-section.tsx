@@ -83,6 +83,51 @@ export default function VisionMissionSection() {
             {visionMissionData.title}
           </h2>
         </AnimatedSection>
+
+        {visionMissionData.purpose && (
+          <AnimatedSection delay={0.1}>
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8 max-w-6xl mx-auto">
+              <CardContent className="p-8">
+                <div className="text-center mb-6">
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4"
+                  >
+                    <svg
+                      className="w-8 h-8 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                      />
+                    </svg>
+                  </motion.div>
+                  <motion.h2
+                    whileHover={{ scale: 1.05 }}
+                    className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-4"
+                  >
+                    Purpose
+                  </motion.h2>
+                </div>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-gray-700 text-lg leading-relaxed text-center italic"
+                >
+                  "{visionMissionData.purpose}"
+                </motion.p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        )}
+
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           <AnimatedSection delay={0.2}>
             <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -162,28 +207,14 @@ export default function VisionMissionSection() {
                     Misi
                   </motion.h2>
                 </div>
-                <motion.ul className="space-y-4">
-                  {visionMissionData.misi?.map(
-                    (item: string, index: number) => (
-                      <motion.li
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5 + index * 0.1 }}
-                        whileHover={{ x: 10 }}
-                        className="flex items-start group"
-                      >
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.6 + index * 0.1 }}
-                          className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0 group-hover:scale-150 transition-transform"
-                        />
-                        <p className="text-gray-700">{item}</p>
-                      </motion.li>
-                    )
-                  )}
-                </motion.ul>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="text-gray-700 text-lg leading-relaxed text-center italic"
+                >
+                  "{visionMissionData.misi}"
+                </motion.p>
               </CardContent>
             </Card>
           </AnimatedSection>

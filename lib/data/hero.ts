@@ -1,11 +1,11 @@
 export const heroData = {
   subtitle: 'Komunitas',
-  title: 'Tumbuh Bersama Iqrolife',
+  title: 'Iqrolife Community',
   description:
-    'Mewujudkan pendidikan berkarakter dalam naungan keluarga yang hangat dan profesional. Kami mendukung sekolah-sekolah Iqrolife serta program pemberdayaan keluarga dan masyarakat untuk masa depan yang lebih cerah.',
+    'Komunitas pendidikan berbasis fitrah dengan 7 pendekatan pendidikan yang holistik guna mengembangkan manusia yang paripurna dari 3 aspek: jiwa, fisik dan akal. Iqrolife hadir dengan ekosistem pendidikan untuk semua komponen keluarga: Ayah, Ibu dan Anak dengan program-program yang terstruktur dan terukur. ',
   buttons: [
     {
-      label: 'Masuk ke Sekolah',
+      label: 'Lihat Sekolah',
       href: '/school',
       variant: 'primary' as const,
     },
