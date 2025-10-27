@@ -109,7 +109,7 @@ export default function Page() {
                 {p.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {p.description}
+                {p.desc}
               </p>
               <span className="mt-4 inline-block text-sm font-medium text-primary">
                 Pelajari lebih lanjut →

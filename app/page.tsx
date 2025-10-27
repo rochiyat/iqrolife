@@ -8,6 +8,7 @@ import VisionMissionSection from '@/components/vision-mission-section';
 import GallerySection from '@/components/gallery-section';
 import TestimonialsSection from '@/components/testimonials-section';
 import ContactSection from '@/components/contact-section';
+import { ProgramIcon } from '@/lib/utils/program-icons';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -37,10 +38,16 @@ interface HeroData {
 }
 
 interface ProgramData {
+  id: string;
   title: string;
   desc: string;
   icon: string;
   color: string;
+  borderColor: string;
+  age: string;
+  type: string;
+  href: string;
+  fullWidth?: boolean;
 }
 
 interface CTAData {
@@ -710,263 +717,36 @@ export default function FoundationLanding() {
             </AnimatedSection>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-              <AnimatedSection delay={0.1}>
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-emerald/20 hover:border-brand-emerald/40 hover:shadow-xl transition-all duration-300 h-full group">
-                  <CardContent className="p-6 h-full flex flex-col">
-                    <div className="mb-4">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-14 h-14 bg-brand-emerald rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
-                      >
-                        <svg
-                          className="w-7 h-7 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                          />
-                        </svg>
-                      </motion.div>
-                      <h3 className="font-bold text-xl text-brand-emerald mb-2 group-hover:text-brand-cyan transition-colors">
-                        Kelas Siap Sekolah
-                      </h3>
-                    </div>
-                    <p className="text-brand-gray leading-relaxed flex-grow">
-                      Pendidikan pra sekolah yang mencakup pendidikan iman,
-                      ego/individualitas, emosi dan sensori-motorik guna
-                      mempersiapkan anak untuk menuju jenjang pendidikan
-                      berikutnya.
-                    </p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.2}>
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-cyan/20 hover:border-brand-cyan/40 hover:shadow-xl transition-all duration-300 h-full group">
-                  <CardContent className="p-6 h-full flex flex-col">
-                    <div className="mb-4">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-14 h-14 bg-brand-cyan rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
-                      >
-                        <svg
-                          className="w-7 h-7 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                          />
-                        </svg>
-                      </motion.div>
-                      <h3 className="font-bold text-xl text-brand-cyan mb-2 group-hover:text-brand-emerald transition-colors">
-                        Kelas Eksplorasi
-                      </h3>
-                    </div>
-                    <p className="text-brand-gray leading-relaxed flex-grow">
-                      Program pendidikan dimana teman Iqrolife akan dipaparkan
-                      dengan berbagai hal tentang bagaimana dunia bekerja dan
-                      dikenalkan dengan berbagai tokoh dan profesi yang ada di
-                      dunia.
-                    </p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.3}>
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-lime/20 hover:border-brand-lime/40 hover:shadow-xl transition-all duration-300 h-full group">
-                  <CardContent className="p-6 h-full flex flex-col">
-                    <div className="mb-4">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-14 h-14 bg-brand-lime rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
-                      >
-                        <svg
-                          className="w-7 h-7 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                          />
-                        </svg>
-                      </motion.div>
-                      <h3 className="font-bold text-xl text-brand-warm-brown mb-2 group-hover:text-brand-lime transition-colors">
-                        Kelas Aqil Baligh
-                      </h3>
-                    </div>
-                    <p className="text-brand-gray leading-relaxed flex-grow">
-                      Program pendidikan guna mempersiapkan teman iqrolife
-                      menuju tahapan aqil balighnya dengan pendalaman bidang
-                      keahlian, menguatkan kesadaran tanggung jawab &
-                      kedewasaan, serta keterlibatan pada kegiatan sosial dan
-                      amal kebaikan di tengah masyarakat.
-                    </p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.4}>
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-warm-brown/20 hover:border-brand-warm-brown/40 hover:shadow-xl transition-all duration-300 h-full group">
-                  <CardContent className="p-6 h-full flex flex-col">
-                    <div className="mb-4">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-14 h-14 bg-brand-warm-brown rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
-                      >
-                        <svg
-                          className="w-7 h-7 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                          />
-                        </svg>
-                      </motion.div>
-                      <h3 className="font-bold text-xl text-brand-warm-brown mb-2 group-hover:text-brand-coral transition-colors">
-                        Kelas Belajar Orang Tua
-                      </h3>
-                    </div>
-                    <p className="text-brand-gray leading-relaxed flex-grow">
-                      Program pendidikan dimana orang tua akan belajar tentang
-                      berbagai topik seputar pengasuhan, keayahan, pendidikan
-                      holistik, pendidikan berbasis fitrah dll, guna memastikan
-                      keselarasan pendidikan di rumah dan di komunitas.
-                    </p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.5}>
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-coral/20 hover:border-brand-coral/40 hover:shadow-xl transition-all duration-300 h-full group">
-                  <CardContent className="p-6 h-full flex flex-col">
-                    <div className="mb-4">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-14 h-14 bg-brand-coral rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
-                      >
-                        <svg
-                          className="w-7 h-7 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                          />
-                        </svg>
-                      </motion.div>
-                      <h3 className="font-bold text-xl text-brand-coral mb-2 group-hover:text-brand-warm-brown transition-colors">
-                        Mentoring Ayah
-                      </h3>
-                    </div>
-                    <p className="text-brand-gray leading-relaxed flex-grow">
-                      Program pendampingan intensif dan berkelanjutan untuk Ayah
-                      Iqrolife guna memastikan keterlibatan dan keselarasan
-                      peran Ayah pada proses pengasuhan dan pendidikan anak.
-                    </p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.6}>
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-emerald/20 hover:border-brand-emerald/40 hover:shadow-xl transition-all duration-300 h-full group">
-                  <CardContent className="p-6 h-full flex flex-col">
-                    <div className="mb-4">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-14 h-14 bg-gradient-to-br from-brand-emerald to-brand-cyan rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
-                      >
-                        <svg
-                          className="w-7 h-7 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                          />
-                        </svg>
-                      </motion.div>
-                      <h3 className="font-bold text-xl text-brand-emerald mb-2 group-hover:text-brand-cyan transition-colors">
-                        Mentoring Ibu
-                      </h3>
-                    </div>
-                    <p className="text-brand-gray leading-relaxed flex-grow">
-                      Program pendampingan intensif dan berkelanjutan untuk Ibu
-                      Iqrolife guna memastikan kesiapan dan keselarasan Ibu
-                      dalam mendampingi tumbuh kembang anak yang selaras fitrah.
-                    </p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.7}>
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-cyan/20 hover:border-brand-cyan/40 hover:shadow-xl transition-all duration-300 h-full group md:col-span-2 lg:col-span-3">
-                  <CardContent className="p-6 h-full flex flex-col">
-                    <div className="mb-4">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-14 h-14 bg-gradient-to-br from-brand-cyan to-brand-lime rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg"
-                      >
-                        <svg
-                          className="w-7 h-7 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                          />
-                        </svg>
-                      </motion.div>
-                      <h3 className="font-bold text-xl text-brand-cyan mb-2 group-hover:text-brand-lime transition-colors">
-                        Family Talent Discovery
-                      </h3>
-                    </div>
-                    <p className="text-brand-gray leading-relaxed flex-grow">
-                      Program mengenal lebih jauh bakat diri, pasangan, dan
-                      anak-anak guna menemukan potensi kekuatan diri, pasangan
-                      dan anak-anak dalam upaya menemukan misi hidup dan
-                      keluarga.
-                    </p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
+              {programs.map((program, index) => {
+                const isGradient = program.color.includes('from-');
+                const bgClass = isGradient ? `bg-gradient-to-br ${program.color}` : `bg-${program.color}`;
+                const textClass = isGradient ? 'text-brand-emerald' : `text-${program.color}`;
+                
+                return (
+                <AnimatedSection key={program.id} delay={0.1 + index * 0.1}>
+                  <Link href={program.href}>
+                    <Card className={`bg-white/80 backdrop-blur-sm border-2 border-${program.borderColor}/20 hover:border-${program.borderColor}/40 hover:shadow-xl transition-all duration-300 h-full group ${program.fullWidth ? 'md:col-span-2 lg:col-span-3' : ''}`}>
+                      <CardContent className="p-6 h-full flex flex-col">
+                        <div className="mb-4">
+                          <motion.div
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            transition={{ duration: 0.3 }}
+                            className={`w-14 h-14 ${bgClass} rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg`}
+                          >
+                            <ProgramIcon iconName={program.icon} />
+                          </motion.div>
+                          <h3 className={`font-bold text-xl ${textClass} mb-2 group-hover:opacity-80 transition-all`}>
+                            {program.title}
+                          </h3>
+                        </div>
+                        <p className="text-brand-gray leading-relaxed flex-grow">
+                          {program.desc}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </AnimatedSection>
+              )})}
             </div>
           </div>
         </section>
