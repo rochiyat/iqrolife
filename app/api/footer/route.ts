@@ -37,7 +37,7 @@ export async function GET() {
       title: 'Program',
       items: [
         {
-          title: 'Pre-School Iqrolife',
+          title: 'Kelas Siap Sekolah',
           href: '/program/pre-school',
         },
         {

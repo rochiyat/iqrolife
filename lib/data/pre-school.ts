@@ -1,7 +1,7 @@
 export const preSchoolData = {
-  title: 'Pre-School Iqrolife',
+  title: 'Kelas Siap Sekolah Iqrolife',
   subtitle:
-    'Program pre-school yang dirancang khusus untuk mempersiapkan anak-anak menuju jenjang pendidikan formal dengan pendekatan yang menyenangkan dan islami.',
+    'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
   programs: [
     {
       title: 'Program Pembentukan Karakter',
@@ -50,7 +50,7 @@ export const preSchoolData = {
   cta: {
     title: 'Daftarkan Anak Anda Sekarang',
     description:
-      'Berikan kesempatan terbaik untuk perkembangan anak Anda melalui program pre-school yang komprehensif dan berkualitas.',
+      'Berikan kesempatan terbaik untuk perkembangan anak Anda melalui program Siap Sekolah Iqrolife yang komprehensif dan berkualitas.',
     button: {
       text: 'Masuk Sekolah',
       href: '/school',
