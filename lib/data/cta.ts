@@ -4,14 +4,9 @@ export const ctaData = {
     'Bergabunglah dengan kami dalam membangun generasi yang berakhlak dan berprestasi',
   buttons: [
     {
-      label: 'Daftar PPDB',
+      label: 'Daftar PPDB Kelas Siap Sekolah',
       href: '/school/ppdb',
       variant: 'primary' as const,
-    },
-    {
-      label: 'Jelajahi Sekolah',
-      href: '/school',
-      variant: 'secondary' as const,
     },
   ],
 };

@@ -22,7 +22,7 @@ export const sejarahData = {
       title: 'Pengembangan SD',
       description:
         'Memperluas jenjang pendidikan dengan membuka SD Iqrolife untuk memberikan pendidikan berkelanjutan.',
-      image: '/classroom-learning.png',
+      image: '/kelas-bermain.png',
     },
     {
       year: '2021',

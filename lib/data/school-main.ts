@@ -66,7 +66,7 @@ export const schoolMainData = {
       'Berbagai kegiatan pembelajaran yang dirancang untuk mengembangkan potensi siswa secara optimal',
     items: [
       {
-        image: '/classroom-learning.png',
+        image: '/kelas-bermain.png',
         title: 'Pembelajaran Interaktif',
         description:
           'Siswa belajar dengan metode yang menyenangkan dan interaktif',
@@ -95,7 +95,7 @@ export const schoolMainData = {
     subtitle: 'Momen-momen berharga dalam perjalanan kami',
     images: [
       {
-        src: '/classroom-learning.png',
+        src: '/kelas-bermain.png',
         alt: 'Suasana Belajar di Kelas',
         caption: 'Pembelajaran Interaktif',
       },
