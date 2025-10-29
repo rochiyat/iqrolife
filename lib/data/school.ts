@@ -173,7 +173,7 @@ export const schoolData = {
       'Hubungi kami untuk informasi lebih lanjut atau langsung daftar online untuk masa depan cerah anak Anda!',
     button: {
       text: '🚀 Daftar Online',
-      href: '/school/ppdb',
+      href: '/program/school/registration',
     },
     whatsappButton: {
       text: '💬 Hubungi via WhatsApp',
