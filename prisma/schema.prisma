@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Role model
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique // admin, teacher, staff, parent
+  displayName String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  users       User[]
+  roleMenus   RoleMenu[]
+
+  @@map("roles")
+}
+
+// Menu model
+model Menu {
+  id          String   @id @default(cuid())
+  name        String
+  path        String   @unique
+  icon        String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  roleMenus   RoleMenu[]
+
+  @@map("menus")
+}
+
+// Junction table for Role-Menu many-to-many
+model RoleMenu {
+  id        String   @id @default(cuid())
+  roleId    String
+  menuId    String
+  createdAt DateTime @default(now())
+  
+  // Relations
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  menu      Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, menuId])
+  @@map("role_menus")
+}
+
+// User model for authentication
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  name              String
+  password          String
+  roleId            String?
+  roleName          String    @default("admin") // Temporary field for backward compatibility
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  role              Role?     @relation(fields: [roleId], references: [id])
+
+  @@map("users")
+}
+
+// Prospective Student model for school registrations
+model ProspectiveStudent {
+  id                String    @id @default(cuid())
+  // Child data
+  namaLengkap       String
+  tanggalLahir      String
+  jenisKelamin      String
+  asalSekolah       String?
+  
+  // Parent/Guardian data
+  namaOrangTua      String
+  noTelepon         String
+  email             String
+  alamat            String
+  
+  // Additional info
+  catatan           String?
+  buktiTransferPath String?
+  
+  // Status tracking
+  status            String    @default("pending") // pending, approved, rejected
+  
+  // Timestamps
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("prospective_students")
+}

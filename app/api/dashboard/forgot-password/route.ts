@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
+import prisma from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,43 +23,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: In production, you should:
-    // 1. Check if email exists in database
-    // 2. Generate a secure reset token
-    // 3. Store token in database with expiration (1 hour)
-    // 4. Send email with reset link
-    // 5. Implement rate limiting to prevent abuse
+    // Check if user exists in database
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
 
-    // For now, this is a mock implementation
-    // In production, replace with actual email service (SendGrid, AWS SES, etc.)
-
-    // Generate a mock reset token
-    const resetToken = crypto.randomBytes(32).toString('hex');
-    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/dashboard/reset-password?token=${resetToken}`;
-
-    // Mock email check (in production, query from database)
-    const validEmails = ['admin@iqrolife.com', 'test@iqrolife.com'];
-    
-    // Simulate email verification
-    // In production, you would:
-    // - Check database for email
-    // - If not found, return generic success message (security best practice)
-    // - If found, send email and store token
-    
-    // For security reasons, always return success even if email doesn't exist
+    // For security: Always return success even if email doesn't exist
     // This prevents email enumeration attacks
-    
+    if (!user) {
+      // Simulate delay to prevent timing attacks
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return NextResponse.json({
+        success: true,
+        message: 'Jika email terdaftar, link reset password akan dikirim ke email Anda',
+      });
+    }
+
+    // Generate secure reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
+
+    // Store token in database
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        resetToken,
+        resetTokenExpiry,
+      },
+    });
+
+    const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/dashboard/reset-password?token=${resetToken}`;
+
     console.log('Password reset requested for:', email);
-    console.log('Reset token generated:', resetToken);
+    console.log('Reset token generated and stored in database');
     console.log('Reset URL:', resetUrl);
 
-    // In production, send email here
+    // TODO: In production, send email here
     // await sendResetEmail(email, resetUrl);
+    // Example with SendGrid or Nodemailer
 
-    // Simulate email sending delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Always return success to prevent email enumeration
     return NextResponse.json({
       success: true,
       message: 'Jika email terdaftar, link reset password akan dikirim ke email Anda',
@@ -73,7 +76,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Optional: GET method to verify reset token
+// GET method to verify reset token
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -86,17 +89,31 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // TODO: In production:
-    // 1. Query database for token
-    // 2. Check if token is expired
-    // 3. Return valid/invalid status
+    // Find user with this reset token
+    const user = await prisma.user.findFirst({
+      where: {
+        resetToken: token,
+        resetTokenExpiry: {
+          gt: new Date(), // Token not expired
+        },
+      },
+      select: {
+        id: true,
+        email: true,
+      },
+    });
 
-    // Mock token validation
-    console.log('Validating reset token:', token);
+    if (!user) {
+      return NextResponse.json(
+        { valid: false, error: 'Token tidak valid atau sudah kadaluarsa' },
+        { status: 400 }
+      );
+    }
 
     return NextResponse.json({
       valid: true,
       message: 'Token valid',
+      email: user.email,
     });
 
   } catch (error) {

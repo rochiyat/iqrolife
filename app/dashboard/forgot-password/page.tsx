@@ -1,66 +1,84 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Link from "next/link"
-import Image from "next/image"
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle")
-  const [message, setMessage] = useState("")
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setStatus("idle")
-    setMessage("")
+    e.preventDefault();
+    setIsLoading(true);
+    setStatus('idle');
+    setMessage('');
 
     try {
-      const response = await fetch("/api/dashboard/forgot-password", {
-        method: "POST",
+      const response = await fetch('/api/dashboard/forgot-password', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (response.ok) {
-        setStatus("success")
-        setMessage(data.message || "Link reset password telah dikirim ke email Anda")
-        setEmail("")
+        setStatus('success');
+        setMessage(
+          data.message || 'Link reset password telah dikirim ke email Anda'
+        );
+        setEmail('');
       } else {
-        setStatus("error")
-        setMessage(data.error || "Gagal mengirim link reset password")
+        setStatus('error');
+        setMessage(data.error || 'Gagal mengirim link reset password');
       }
     } catch (error) {
-      console.error("Forgot password error:", error)
-      setStatus("error")
-      setMessage("Terjadi kesalahan. Silakan coba lagi.")
+      console.error('Forgot password error:', error);
+      setStatus('error');
+      setMessage('Terjadi kesalahan. Silakan coba lagi.');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-cyan-50 to-lime-100 flex items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-10 text-4xl animate-bounce">🔑</div>
-        <div className="absolute top-20 right-20 text-3xl animate-pulse">✉️</div>
-        <div className="absolute bottom-20 left-20 text-3xl animate-bounce">🔒</div>
-        <div className="absolute bottom-10 right-10 text-4xl animate-pulse">💡</div>
-        <div className="absolute top-1/2 left-5 text-2xl animate-wiggle">🌟</div>
-        <div className="absolute top-1/3 right-5 text-2xl animate-wiggle">✨</div>
-        <div className="absolute top-2/3 left-1/4 text-2xl animate-float">☁️</div>
-        <div className="absolute top-1/4 right-1/4 text-2xl animate-float">🎯</div>
+        <div className="absolute top-10 left-10 text-4xl animate-bounce">
+          🔑
+        </div>
+        <div className="absolute top-20 right-20 text-3xl animate-pulse">
+          ✉️
+        </div>
+        <div className="absolute bottom-20 left-20 text-3xl animate-bounce">
+          🔒
+        </div>
+        <div className="absolute bottom-10 right-10 text-4xl animate-pulse">
+          💡
+        </div>
+        <div className="absolute top-1/2 left-5 text-2xl animate-wiggle">
+          🌟
+        </div>
+        <div className="absolute top-1/3 right-5 text-2xl animate-wiggle">
+          ✨
+        </div>
+        <div className="absolute top-2/3 left-1/4 text-2xl animate-float">
+          ☁️
+        </div>
+        <div className="absolute top-1/4 right-1/4 text-2xl animate-float">
+          🎯
+        </div>
       </div>
 
       <div className="w-full max-w-md relative z-10">
@@ -74,8 +92,12 @@ export default function ForgotPasswordPage() {
               className="animate-bounce-gentle"
             />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">🔐 Lupa Password? 🔐</h1>
-          <p className="text-gray-600">Masukkan email Anda untuk reset password</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            🔐 Lupa Password? 🔐
+          </h1>
+          <p className="text-gray-600">
+            Masukkan email Anda untuk reset password
+          </p>
         </div>
 
         <Card className="shadow-2xl border-2 border-emerald-200 bg-white/95 backdrop-blur-sm animate-scale-in">
@@ -83,10 +105,12 @@ export default function ForgotPasswordPage() {
             <CardTitle className="text-2xl font-bold text-brand-emerald flex items-center justify-center gap-2">
               🔄 Reset Password 🔄
             </CardTitle>
-            <p className="text-gray-600 text-sm">Kami akan mengirimkan link reset ke email Anda</p>
+            <p className="text-gray-600 text-sm">
+              Kami akan mengirimkan link reset ke email Anda
+            </p>
           </CardHeader>
           <CardContent>
-            {status === "success" && (
+            {status === 'success' && (
               <div className="mb-6 p-4 bg-green-100 border border-green-300 rounded-lg animate-fade-in-up">
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">✅</span>
@@ -94,14 +118,15 @@ export default function ForgotPasswordPage() {
                     <p className="font-semibold text-green-800">Berhasil!</p>
                     <p className="text-sm text-green-700">{message}</p>
                     <p className="text-xs text-green-600 mt-2">
-                      Silakan cek email Anda (termasuk folder spam) untuk link reset password.
+                      Silakan cek email Anda (termasuk folder spam) untuk link
+                      reset password.
                     </p>
                   </div>
                 </div>
               </div>
             )}
 
-            {status === "error" && (
+            {status === 'error' && (
               <div className="mb-6 p-4 bg-red-100 border border-red-300 rounded-lg animate-fade-in-up">
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">⚠️</span>
@@ -115,7 +140,10 @@ export default function ForgotPasswordPage() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2 animate-fade-in-up">
-                <Label htmlFor="email" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                >
                   📧 Email Terdaftar
                 </Label>
                 <Input
@@ -144,21 +172,21 @@ export default function ForgotPasswordPage() {
                     Mengirim...
                   </div>
                 ) : (
-                  "📧 Kirim Link Reset 📧"
+                  '📧 Kirim Link Reset 📧'
                 )}
               </Button>
             </form>
 
             <div className="mt-6 text-center space-y-3">
               <Link
-                href="/app/dashboard/login"
+                href="/dashboard/login"
                 className="text-sm text-brand-emerald hover:text-brand-cyan transition-colors duration-300 flex items-center justify-center gap-1"
               >
                 ← Kembali ke Login
               </Link>
 
               <div className="text-sm text-gray-600">
-                Belum punya akun?{" "}
+                Belum punya akun?{' '}
                 <Link
                   href="/"
                   className="text-brand-emerald hover:text-brand-cyan font-medium transition-colors duration-300"
@@ -178,7 +206,7 @@ export default function ForgotPasswordPage() {
 
         <div className="text-center mt-6 animate-fade-in-up">
           <p className="text-sm text-gray-600">
-            Butuh bantuan? Hubungi kami di{" "}
+            Butuh bantuan? Hubungi kami di{' '}
             <a
               href="https://wa.me/6281315225557"
               target="_blank"
@@ -191,5 +219,5 @@ export default function ForgotPasswordPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

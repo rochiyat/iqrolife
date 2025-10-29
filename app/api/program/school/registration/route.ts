@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
+import prisma from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
@@ -79,27 +80,34 @@ export async function POST(request: NextRequest) {
       await writeFile(filePath, buffer);
     }
 
-    // Here you would typically:
-    // 1. Save to database
-    // 2. Send email notification to admin
-    // 3. Send confirmation email to parent
-    // For now, we'll just log the data and return success
-
-    console.log('New Registration:', {
-      ...registrationData,
-      buktiTransferPath: `/uploads/registrations/${fileName}`,
+    // Save to database
+    const prospectiveStudent = await prisma.prospectiveStudent.create({
+      data: {
+        namaLengkap,
+        tanggalLahir,
+        jenisKelamin,
+        asalSekolah: asalSekolah || null,
+        namaOrangTua,
+        noTelepon,
+        email,
+        alamat,
+        catatan: catatan || null,
+        buktiTransferPath: fileName ? `/uploads/registrations/${fileName}` : null,
+        status: 'pending',
+      },
     });
 
-    // In production, you might want to:
-    // - Save to database
-    // - Send notification email
+    console.log('New Registration saved to database:', prospectiveStudent.id);
+
+    // TODO: In production:
+    // - Send email notification to admin
+    // - Send confirmation email to parent
     // - Add to CRM system
-    // - etc.
 
     return NextResponse.json({
       success: true,
       message: 'Pendaftaran berhasil diterima',
-      registrationId: `REG-${Date.now()}`,
+      registrationId: prospectiveStudent.id,
     });
   } catch (error) {
     console.error('Registration error:', error);
