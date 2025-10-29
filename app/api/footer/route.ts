@@ -25,7 +25,7 @@ export async function GET() {
         },
         {
           title: 'Sekolah',
-          href: '/school',
+          href: '/program/school',
         },
         {
           title: 'Kontak',

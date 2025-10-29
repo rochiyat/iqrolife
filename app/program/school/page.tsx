@@ -131,54 +131,6 @@ export default function SchoolPage() {
           </AnimatedSection>
         </section>
 
-        {/* Vision & Mission Section */}
-        {schoolData.visionMission && (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-16"
-          >
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg max-w-5xl mx-auto">
-              <CardContent className="p-8">
-                <h2 className="text-3xl font-bold text-center mb-8 text-purple-800">
-                  {schoolData.visionMission.title}
-                </h2>
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 text-orange-600 flex items-center gap-2">
-                      <Book className="w-6 h-6" />
-                      Visi
-                    </h3>
-                    <p className="text-gray-700 leading-relaxed">
-                      {schoolData.visionMission.visi}
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 text-pink-600 flex items-center gap-2">
-                      <CheckCircle className="w-6 h-6" />
-                      Misi
-                    </h3>
-                    <ul className="space-y-2">
-                      {schoolData.visionMission.misi.map(
-                        (item: string, i: number) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-2 text-gray-700"
-                          >
-                            <span className="w-2 h-2 rounded-full bg-pink-400 mt-2 flex-shrink-0" />
-                            <span>{item}</span>
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.section>
-        )}
-
         {/* Programs Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12 text-purple-800">
