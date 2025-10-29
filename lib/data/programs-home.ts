@@ -2,7 +2,7 @@ import { schoolData } from './school';
 import { kelasEksplorasiData } from './kelas-eksplorasi';
 import { kelasAqilBalighData } from './kelas-aqil-baligh';
 import { kelasBelajarOrangTuaData } from './kelas-belajar-orang-tua';
-import { komunitasAyahData } from './komunitas-ayah';
+import { mentoringAyahData } from './mentoring-ayah';
 import { familyTalentDiscoveryData } from './family-talent-discovery';
 
 export const programsHomeData = [
@@ -59,7 +59,7 @@ export const programsHomeData = [
     borderColor: 'brand-coral',
     age: 'Dewasa',
     type: 'community',
-    href: '/program/komunitas-ayah',
+    href: '/program/mentoring-ayah',
   },
   {
     id: 'mentoring-ibu',

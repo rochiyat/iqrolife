@@ -1,7 +1,7 @@
-export const komunitasAyahData = {
-  title: 'Komunitas Ayah',
+export const mentoringAyahData = {
+  title: 'Mentoring Ayah',
   subtitle:
-    'Wadah untuk para ayah dalam mengembangkan diri dan berbagi pengalaman dalam menjalankan peran sebagai pemimpin keluarga yang bertanggung jawab.',
+    'Program pendampingan intensif dan berkelanjutan untuk para ayah dalam mengembangkan diri dan menjalankan peran sebagai pemimpin keluarga yang bertanggung jawab.',
   activities: [
     {
       title: 'Kajian Rutin',

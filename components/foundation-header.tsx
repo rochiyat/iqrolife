@@ -38,7 +38,7 @@ const foundationNav = [
         href: '/program/kelas-belajar-orang-tua',
         label: 'Kelas Belajar Orang Tua',
       },
-      { href: '/program/komunitas-ayah', label: 'Mentoring Ayah' },
+      { href: '/program/mentoring-ayah', label: 'Mentoring Ayah' },
       { href: '/program/mentoring-ibu', label: 'Mentoring Ibu' },
       {
         href: '/program/family-talent-discovery',

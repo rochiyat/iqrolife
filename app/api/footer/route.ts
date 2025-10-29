@@ -53,8 +53,8 @@ export async function GET() {
           href: '/program/kelas-belajar-orang-tua',
         },
         {
-          title: 'Komunitas Ayah',
-          href: '/program/komunitas-ayah',
+          title: 'Mentoring Ayah',
+          href: '/program/mentoring-ayah',
         },
         {
           title: 'Mentoring Ibu',
