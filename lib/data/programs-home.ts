@@ -70,7 +70,7 @@ export const programsHomeData = [
     borderColor: 'brand-emerald',
     age: 'Dewasa',
     type: 'community',
-    href: '/kontak',
+    href: '/program/mentoring-ibu',
   },
   {
     id: 'family-talent-discovery',

@@ -57,6 +57,10 @@ export async function GET() {
           href: '/program/komunitas-ayah',
         },
         {
+          title: 'Mentoring Ibu',
+          href: '/program/mentoring-ibu',
+        },
+        {
           title: 'Family Talent Discovery',
           href: '/program/family-talent-discovery',
         },
