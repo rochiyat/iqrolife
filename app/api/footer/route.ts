@@ -38,7 +38,7 @@ export async function GET() {
       items: [
         {
           title: 'Kelas Siap Sekolah',
-          href: '/program/pre-school',
+          href: '/program/school',
         },
         {
           title: 'Kelas Eksplorasi',
@@ -57,8 +57,8 @@ export async function GET() {
           href: '/program/komunitas-ayah',
         },
         {
-          title: 'Konsultasi TM',
-          href: '/program/konsultasi-tm',
+          title: 'Family Talent Discovery',
+          href: '/program/family-talent-discovery',
         },
       ],
     },

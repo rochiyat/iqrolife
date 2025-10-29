@@ -1,21 +1,21 @@
-import { preSchoolData } from './pre-school';
+import { schoolData } from './school';
 import { kelasEksplorasiData } from './kelas-eksplorasi';
 import { kelasAqilBalighData } from './kelas-aqil-baligh';
 import { kelasBelajarOrangTuaData } from './kelas-belajar-orang-tua';
 import { komunitasAyahData } from './komunitas-ayah';
-import { konsultasiTMData } from './konsultasi-tm';
+import { familyTalentDiscoveryData } from './family-talent-discovery';
 
 export const programsHomeData = [
   {
-    id: 'pre-school',
+    id: 'school',
     title: 'Kelas Siap Sekolah',
-    desc: 'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
+    desc: 'Pendidikan sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
     icon: 'book',
     color: 'brand-emerald',
     borderColor: 'brand-emerald',
     age: '3-6 tahun',
     type: 'program',
-    href: '/program/pre-school',
+    href: '/program/school',
   },
   {
     id: 'kelas-eksplorasi',

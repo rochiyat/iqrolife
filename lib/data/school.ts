@@ -1,7 +1,7 @@
-export const preSchoolData = {
+export const schoolData = {
   title: 'Kelas Siap Sekolah',
   subtitle:
-    'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
+    'Pendidikan sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
   programs: [
     {
       title: 'Program Pembentukan Karakter',

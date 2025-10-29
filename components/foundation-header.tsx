@@ -31,15 +31,18 @@ const foundationNav = [
     href: '/program',
     label: 'Program',
     children: [
-      { href: '/program/pre-school', label: 'Kelas Siap Sekolah' },
+      { href: '/program/school', label: 'Kelas Siap Sekolah' },
       { href: '/program/kelas-eksplorasi', label: 'Kelas Eksplorasi' },
       { href: '/program/kelas-aqil-baligh', label: 'Kelas Aqil Baligh' },
       {
         href: '/program/kelas-belajar-orang-tua',
         label: 'Kelas Belajar Orang Tua',
       },
-      { href: '/program/konsultasi-tm', label: 'Konsultasi TM' },
-      { href: '/program/komunitas-ayah', label: 'Komunitas Ayah' },
+      { href: '/program/komunitas-ayah', label: 'Mentoring Ayah' },
+      {
+        href: '/program/family-talent-discovery',
+        label: 'Family Talent Discovery',
+      },
     ],
   },
   { href: '/kontak', label: 'Kontak' },
