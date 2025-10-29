@@ -76,7 +76,7 @@ export default function ContactSection() {
       title: 'Kantor Iqrolife',
       address:
         'Cimanggu Hejo, Kedung Waringin\n Kec. Tanah Sereal, Kota Bogor\n Jawa Barat 17540',
-      phone: '0813-1522-5557',
+      phone: '+62813-1522-5557',
       email: 'iqrolife@gmail.com',
     },
   ];

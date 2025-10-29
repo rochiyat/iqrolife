@@ -1,7 +1,7 @@
 export const schoolVideoGalleryData = {
   title: 'Leadership School With Islamic Values',
   subtitle: 'Membentuk pemimpin masa depan dengan nilai-nilai islami',
-  whatsappUrl: 'https://wa.me/628111202244',
+  whatsappUrl: 'https://wa.me/6281315225557',
   videos: [
     {
       id: 1,

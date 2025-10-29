@@ -177,7 +177,7 @@ export const schoolData = {
     },
     whatsappButton: {
       text: '💬 Hubungi via WhatsApp',
-      href: 'https://wa.me/628111202244',
+      href: 'https://wa.me/6281315225557',
     },
     requirements: ['Usia 3-6 tahun', 'Fotokopi akte kelahiran', 'Fotokopi KK'],
     registrationTime: ['Senin - Jumat', '08.00 - 15.00 WIB', 'Sepanjang tahun'],

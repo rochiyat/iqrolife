@@ -11,7 +11,7 @@ export const schoolContactData = {
       {
         title: '🏢 Kantor Pusat Yasmina-Sekolah Iqrolife',
         address: 'Jl. Raya Dramaga KM 7, Bogor',
-        phone: '0251-8625-992',
+        phone: '+62813-1522-5557',
         email: 'hkd@sekolahiqrolife.sch.id',
         icon: 'MapPin',
         color: 'from-blue-100 to-blue-200',
@@ -19,7 +19,7 @@ export const schoolContactData = {
       {
         title: '🎈 Lokasi KB-TK Iqrolife',
         address: 'Jl. Raya Dramaga KM 7, Bogor',
-        phone: '0251-8625-992',
+        phone: '+62813-1522-5557',
         email: 'hkd@sekolahiqrolife.sch.id',
         icon: 'MapPin',
         color: 'from-green-100 to-green-200',
@@ -36,8 +36,8 @@ export const schoolContactData = {
   },
   contactDetails: {
     title: '📞 Hotline PPDB',
-    phone: '0251-8625-992 (Kantor Pusat)',
-    whatsapp: '0812-3456-7890',
+    phone: '+62813-1522-5557',
+    whatsapp: '+62813-1522-5557',
   },
   emailInfo: {
     title: '📧 Email Khusus',

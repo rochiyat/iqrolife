@@ -78,7 +78,7 @@ export async function GET() {
     contact: {
       title: 'Kontak',
       address: 'Jl. Raya Bogor No. 123, Kota Bogor',
-      phone: '+62 812-3456-7890',
+      phone: '+62813-1522-5557',
       email: 'info@iqrolife.org',
       social: {
         facebook: 'https://facebook.com/iqrolife',

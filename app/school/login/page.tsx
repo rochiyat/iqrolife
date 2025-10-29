@@ -139,7 +139,7 @@ export default function LoginPage() {
           <p className="text-sm text-gray-600">
             Butuh bantuan? Hubungi kami di{" "}
             <a
-              href="https://wa.me/628111202244"
+              href="https://wa.me/6281315225557"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:text-primary/80 font-medium transition-colors duration-300"

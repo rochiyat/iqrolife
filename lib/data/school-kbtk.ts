@@ -95,7 +95,7 @@ export const schoolKBTKData = {
       city: 'Kota Bogor, Jawa Barat 16164',
     },
     contact: {
-      phone: '08111202244',
+      phone: '+62813-1522-5557',
       email: 'hkd@sekolahiqrolife.sch.id',
     },
   },

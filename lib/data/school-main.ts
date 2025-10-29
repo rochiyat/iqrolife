@@ -129,7 +129,7 @@ export const schoolMainData = {
   videoGallery: {
     title: 'Leadership School With Islamic Values',
     subtitle: 'Membentuk pemimpin masa depan dengan nilai-nilai islami',
-    whatsappUrl: 'https://wa.me/628111202244',
+    whatsappUrl: 'https://wa.me/6281315225557',
     videos: [
       {
         id: 1,
@@ -214,32 +214,32 @@ export const schoolMainData = {
         title: 'Kantor Pusat Yasmina-Sekolah Iqrolife',
         address:
           'Jl. Johar Raya no. 38 Kel. Kedung Waringin\nKec. Tanah Sareal Kota Bogor\nJawa Barat 16164',
-        phone: '08111202244 / 0251-8357845',
+        phone: '+62813-1522-5557',
         email: 'hkd@sekolahiqrolife.sch.id',
       },
       {
         title: 'Lokasi KBTK Iqrolife',
         address:
           'Jl. Johar Raya no. 38 RT 02/ RW 04 Kel. Kedung Waringin, Kec. Tanah Sareal, Kota Bogor, Jawa Barat 16164',
-        phone: '08111202244',
+        phone: '+62813-1522-5557',
         email: 'hkd@sekolahiqrolife.sch.id',
       },
       {
         title: 'Lokasi SD Iqrolife',
         address:
           'Jl. Kranji Ujung No.71 RT 03/RW 04\nKel. Sukaresmi, Kec. Tanah Sareal, Kota Bogor\nJawa Barat 16165',
-        phone: '08111202244',
+        phone: '+62813-1522-5557',
         email: 'hkd@sekolahiqrolife.sch.id',
       },
       {
         title: 'Lokasi SMP & HS SMU Iqrolife',
         address:
           'Jl. raya Munjul RT 03/ RW 05 Kel. Kayu Manis Kec. Tanah Sareal, Kota Bogor Jawa Barat 16169',
-        phone: '08111202244',
+        phone: '+62813-1522-5557',
         email: 'hkd@sekolahiqrolife.sch.id',
       },
     ],
-    whatsappUrl: 'https://wa.me/628111202244',
+    whatsappUrl: 'https://wa.me/6281315225557',
   },
   footer: {
     brand: {
