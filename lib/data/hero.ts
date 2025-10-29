@@ -6,7 +6,7 @@ export const heroData = {
   buttons: [
     {
       label: 'Lihat Sekolah',
-      href: '/school',
+      href: '/program/school',
       variant: 'primary' as const,
     },
     {
