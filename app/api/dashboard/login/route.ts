@@ -73,6 +73,7 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         message: 'Login berhasil',
+        token, // Include token in response for localStorage
         user: {
           id: user.id,
           email: user.email,

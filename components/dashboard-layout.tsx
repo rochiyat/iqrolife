@@ -55,10 +55,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const handleLogout = async () => {
     try {
+      // Clear localStorage
+      localStorage.removeItem('auth-token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('role');
+      
+      // Call logout API
       await fetch('/api/dashboard/logout', { method: 'POST' });
-      router.push('/dashboard/login');
+      
+      // Redirect to login
+      window.location.href = '/dashboard/login';
     } catch (error) {
       console.error('Logout error:', error);
+      // Still redirect even if API fails
+      window.location.href = '/dashboard/login';
     }
   };
 

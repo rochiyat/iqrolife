@@ -20,7 +20,7 @@ export default function DashboardLoginPage() {
 
   const getRoleBasedRoute = (user: any) => {
     const roleName = user.role?.name || user.roleName;
-    
+    console.log('roleName', roleName);
     switch (roleName) {
       case 'admin':
         // Admin: full access, redirect to main dashboard
@@ -56,12 +56,30 @@ export default function DashboardLoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        const roleDisplayName = data.user.role?.displayName || data.user.roleName || 'User';
+        const roleDisplayName =
+          data.user.role?.displayName || data.user.roleName || 'User';
         const redirectRoute = getRoleBasedRoute(data.user);
-        
-        // Redirect to role-based dashboard on success
+
+        // Save to localStorage for client-side access
+        try {
+          localStorage.setItem('auth-token', data.token || '');
+          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('role', JSON.stringify(data.user.role || { name: data.user.roleName }));
+          console.log('Data saved to localStorage:', {
+            token: data.token,
+            user: data.user,
+            role: data.user.role,
+          });
+        } catch (storageError) {
+          console.error('LocalStorage error:', storageError);
+        }
+
+        // Show success message
         alert(`Login berhasil! Selamat datang, ${roleDisplayName}! 🎉`);
-        router.push(redirectRoute);
+        
+        // Use window.location.href for reliable redirect
+        console.log('Redirecting to:', redirectRoute);
+        window.location.href = redirectRoute;
       } else {
         setError(data.error || 'Login gagal. Silakan coba lagi.');
       }
