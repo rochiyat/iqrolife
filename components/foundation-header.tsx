@@ -120,6 +120,14 @@ export function FoundationHeader() {
               </Link>
             );
           })}
+          <Link href="/dashboard/login">
+            <Button
+              variant="outline"
+              className="bg-brand-lime text-brand-dark-brown hover:bg-brand-lime/90 hover:text-brand-dark-brown border-brand-lime font-semibold transition-all duration-300 hover:scale-105"
+            >
+              🔐 Login
+            </Button>
+          </Link>
         </nav>
 
         {/* Mobile nav */}
@@ -213,6 +221,13 @@ export function FoundationHeader() {
                       </Link>
                     );
                   })}
+                  <Link
+                    href="/app/dashboard/login"
+                    onClick={() => setOpen(false)}
+                    className="rounded-md px-3 py-3 text-base font-semibold transition-all duration-300 bg-brand-lime/20 hover:bg-brand-lime/30 text-brand-emerald mt-2"
+                  >
+                    🔐 Login
+                  </Link>
                 </div>
               </div>
             </SheetContent>
