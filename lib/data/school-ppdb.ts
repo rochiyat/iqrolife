@@ -97,7 +97,7 @@ export const schoolPPDBData = {
       {
         text: '💬 Hubungi via WhatsApp',
         variant: 'outline' as const,
-        href: 'https://wa.me/628111202244',
+        href: 'https://wa.me/6281315225557',
       },
     ],
   },

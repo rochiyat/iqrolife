@@ -4,7 +4,7 @@ export const schoolActivitiesData = {
     'Berbagai kegiatan pembelajaran yang dirancang untuk mengembangkan potensi siswa secara optimal',
   items: [
     {
-      image: '/classroom-learning.png',
+      image: '/kelas-bermain.png',
       title: 'Pembelajaran Interaktif',
       description:
         'Siswa belajar dengan metode yang menyenangkan dan interaktif',

@@ -3,9 +3,9 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   const footer = {
     about: {
-      title: 'Tentang Iqrolife',
+      title: 'Tentang Iqrolife Community',
       description:
-        'Iqrolife adalah lembaga pendidikan Islam yang berfokus pada pengembangan karakter dan potensi anak melalui pendekatan pembelajaran yang holistik dan Islami.',
+        'Komunitas pendidikan berbasis fitrah dengan 7 pendekatan pendidikan yang holistik guna mengembangkan manusia yang paripurna dari 3 aspek: jiwa, fisik dan akal. Iqrolife hadir dengan ekosistem pendidikan untuk semua komponen keluarga: Ayah, Ibu dan Anak dengan program-program yang terstruktur dan terukur.',
       logo: '/logo-iqrolife.png',
     },
     quickLinks: {
@@ -25,7 +25,7 @@ export async function GET() {
         },
         {
           title: 'Sekolah',
-          href: '/school',
+          href: '/program/school',
         },
         {
           title: 'Kontak',
@@ -37,8 +37,8 @@ export async function GET() {
       title: 'Program',
       items: [
         {
-          title: 'Pre-School Iqrolife',
-          href: '/program/pre-school',
+          title: 'Kelas Siap Sekolah',
+          href: '/program/school',
         },
         {
           title: 'Kelas Eksplorasi',
@@ -53,12 +53,16 @@ export async function GET() {
           href: '/program/kelas-belajar-orang-tua',
         },
         {
-          title: 'Komunitas Ayah',
-          href: '/program/komunitas-ayah',
+          title: 'Mentoring Ayah',
+          href: '/program/mentoring-ayah',
         },
         {
-          title: 'Konsultasi TM',
-          href: '/program/konsultasi-tm',
+          title: 'Mentoring Ibu',
+          href: '/program/mentoring-ibu',
+        },
+        {
+          title: 'Family Talent Discovery',
+          href: '/program/family-talent-discovery',
         },
       ],
     },
@@ -74,7 +78,7 @@ export async function GET() {
     contact: {
       title: 'Kontak',
       address: 'Jl. Raya Bogor No. 123, Kota Bogor',
-      phone: '+62 812-3456-7890',
+      phone: '+62813-1522-5557',
       email: 'info@iqrolife.org',
       social: {
         facebook: 'https://facebook.com/iqrolife',

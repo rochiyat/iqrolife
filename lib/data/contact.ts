@@ -2,13 +2,13 @@ export const contactData = {
   title: 'Hubungi Kami',
   subtitle: 'Ada pertanyaan? Jangan ragu untuk menghubungi kami',
   office: {
-    title: 'Kantor Yayasan',
+    title: 'Kantor',
     address:
       'Cimanggu Hejo, Kedung Waringin, Kec. Tanah Sereal, Kota Bogor, Jawa Barat 17540',
-    phone: '+0813-1040-5995',
-    email: 'info@iqrolife.or.id',
-    whatsapp: '+081310405995',
-    hours: 'Senin - Jumat: 08.00 - 16.00 WIB',
+    phone: '+62813-1522-5557',
+    email: 'iqrolife@gmail.com',
+    whatsapp: '+6281315225557',
+    hours: 'Senin - Jumat: 07.30 - 15.00 WIB',
   },
   social: {
     facebook: 'https://facebook.com/iqrolife',

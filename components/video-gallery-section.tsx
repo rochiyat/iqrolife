@@ -64,7 +64,7 @@ export default function VideoGallerySection() {
 
         <div className="text-center mb-8">
           <h3 className="text-2xl font-bold mb-8">
-            Gallery Video Sekolah Kreativa
+            Gallery Video Iqrolife Community
           </h3>
         </div>
 

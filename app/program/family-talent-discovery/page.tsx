@@ -9,24 +9,24 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton-loading';
 
-export default function KonsultasiTMPage() {
-  const [konsultasiTMData, setKonsultasiTMData] = useState<any>(null);
+export default function FamilyTalentDiscoveryPage() {
+  const [familyTalentDiscoveryData, setFamilyTalentDiscoveryData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchKonsultasiTMData = async () => {
+    const fetchFamilyTalentDiscoveryData = async () => {
       try {
-        const response = await fetch('/api/programs/konsultasi-tm');
+        const response = await fetch('/api/programs/family-talent-discovery');
         const data = await response.json();
-        setKonsultasiTMData(data);
+        setFamilyTalentDiscoveryData(data);
       } catch (error) {
-        console.error('Error fetching konsultasi-tm data:', error);
+        console.error('Error fetching family-talent-discovery data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchKonsultasiTMData();
+    fetchFamilyTalentDiscoveryData();
   }, []);
 
   if (loading) {
@@ -139,7 +139,7 @@ export default function KonsultasiTMPage() {
     );
   }
 
-  if (!konsultasiTMData) {
+  if (!familyTalentDiscoveryData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50">
         <FoundationHeader />
@@ -153,8 +153,8 @@ export default function KonsultasiTMPage() {
     );
   }
 
-  const services = konsultasiTMData.services;
-  const consultants = konsultasiTMData.consultants;
+  const services = familyTalentDiscoveryData.services;
+  const consultants = familyTalentDiscoveryData.consultants;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50">
@@ -162,10 +162,10 @@ export default function KonsultasiTMPage() {
       <main className="container mx-auto px-4 py-16">
         <AnimatedSection>
           <h1 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">
-            {konsultasiTMData.title}
+            {familyTalentDiscoveryData.title}
           </h1>
           <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-            {konsultasiTMData.subtitle}
+            {familyTalentDiscoveryData.subtitle}
           </p>
         </AnimatedSection>
 
@@ -269,7 +269,7 @@ export default function KonsultasiTMPage() {
                       Jadwal Konsultasi:
                     </h3>
                     <ul className="space-y-2 text-gray-700">
-                      {konsultasiTMData.schedule.map(
+                      {familyTalentDiscoveryData.schedule.map(
                         (item: string, index: number) => (
                           <li key={index} className="flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
@@ -284,7 +284,7 @@ export default function KonsultasiTMPage() {
                       Metode Konsultasi:
                     </h3>
                     <ul className="space-y-2 text-gray-700">
-                      {konsultasiTMData.methods.map(
+                      {familyTalentDiscoveryData.methods.map(
                         (method: string, index: number) => (
                           <li key={index} className="flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
@@ -301,7 +301,7 @@ export default function KonsultasiTMPage() {
                     Cara Mendaftar:
                   </h3>
                   <ol className="list-decimal list-inside space-y-1 text-gray-700">
-                    {konsultasiTMData.registrationSteps.map(
+                    {familyTalentDiscoveryData.registrationSteps.map(
                       (step: string, index: number) => (
                         <li key={index}>{step}</li>
                       )

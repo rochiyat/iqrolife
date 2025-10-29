@@ -2,7 +2,7 @@ export const aboutData = {
   hero: {
     title: 'Tentang Kami',
     description:
-      'Yayasan Tumbuh Bersama Iqrolife berkomitmen membangun lingkungan pendidikan yang profesional, hangat, dan kekeluargaan. Kami mendampingi pertumbuhan anak dan keluarga melalui program yang terstruktur dan kolaboratif.',
+      'Iqrolife Community adalah Komunitas pendidikan berbasis fitrah dengan 7 pendekatan pendidikan yang holistik guna mengembangkan manusia yang paripurna dari 3 aspek: jiwa, fisik dan akal. Iqrolife hadir dengan ekosistem pendidikan untuk semua komponen keluarga: Ayah, Ibu dan Anak dengan program-program yang terstruktur dan terukur.',
     image: '/keluarga-belajar.jpg',
     imageAlt: 'Ilustrasi keluarga belajar bersama',
     buttons: [

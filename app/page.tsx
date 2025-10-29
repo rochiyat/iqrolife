@@ -8,6 +8,7 @@ import VisionMissionSection from '@/components/vision-mission-section';
 import GallerySection from '@/components/gallery-section';
 import TestimonialsSection from '@/components/testimonials-section';
 import ContactSection from '@/components/contact-section';
+import { ProgramIcon } from '@/lib/utils/program-icons';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -37,10 +38,16 @@ interface HeroData {
 }
 
 interface ProgramData {
+  id: string;
   title: string;
   desc: string;
   icon: string;
   color: string;
+  borderColor: string;
+  age: string;
+  type: string;
+  href: string;
+  fullWidth?: boolean;
 }
 
 interface CTAData {
@@ -268,45 +275,481 @@ export default function FoundationLanding() {
 
         <VisionMissionSection />
 
-        {/* Program Komunitas */}
-        <section id="program" className="py-16">
+        {/* Nilai-Nilai Komunitas */}
+        <section className="py-16 bg-gradient-to-br from-brand-off-white to-brand-sky/10">
           <div className="container mx-auto px-4">
             <AnimatedSection>
-              <div className="text-center mb-10">
-                <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-fun-blue to-fun-purple bg-clip-text text-transparent">
-                  Program Komunitas
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent">
+                  Nilai-Nilai Komunitas
                 </h2>
-                <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
-                  Dukungan pendidikan dan keluarga untuk tumbuh bersama dalam
-                  nilai islami dan profesionalisme.
+                <p className="text-brand-gray max-w-2xl mx-auto">
+                  Prinsip-prinsip fundamental yang menjadi landasan dalam setiap
+                  aktivitas pendidikan dan pengembangan komunitas kami.
                 </p>
               </div>
             </AnimatedSection>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {programs && programs.length > 0 ? (
-                programs.map((item, i) => (
-                  <AnimatedSection key={i} delay={0.2 * (i + 1)}>
-                    <Card className="border-2 border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
-                      <CardContent className="p-6">
-                        <div
-                          className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center text-2xl bg-gradient-to-r ${item.color} text-white transform group-hover:scale-110 transition-transform duration-300`}
+            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              <AnimatedSection delay={0.2}>
+                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                  <CardContent className="p-8 h-full flex flex-col">
+                    <div className="text-center mb-6">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 360 }}
+                        transition={{ duration: 0.5 }}
+                        className="w-16 h-16 bg-brand-emerald rounded-full flex items-center justify-center mx-auto mb-4"
+                      >
+                        <svg
+                          className="w-8 h-8 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
                         >
-                          {item.icon}
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                          />
+                        </svg>
+                      </motion.div>
+                      <motion.h3
+                        whileHover={{ scale: 1.05 }}
+                        className="text-2xl font-bold text-brand-emerald mb-4"
+                      >
+                        Fitrah
+                      </motion.h3>
+                    </div>
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                      className="text-brand-gray leading-relaxed text-center flex-grow"
+                    >
+                      Kami meyakini bahwa manusia diciptakan dengan fitrah.
+                      Fitrah sebagai bekal, dan fitrah sebagai prediksi peran.
+                      Tugas orang tua mengembalikan fitrah diri dan menjaga
+                      kesejatian fitrah anak agar tumbuh secara paripurna.
+                    </motion.p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.3}>
+                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                  <CardContent className="p-8 h-full flex flex-col">
+                    <div className="text-center mb-6">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 360 }}
+                        transition={{ duration: 0.5 }}
+                        className="w-16 h-16 bg-brand-cyan rounded-full flex items-center justify-center mx-auto mb-4"
+                      >
+                        <svg
+                          className="w-8 h-8 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                          />
+                        </svg>
+                      </motion.div>
+                      <motion.h3
+                        whileHover={{ scale: 1.05 }}
+                        className="text-2xl font-bold text-brand-cyan mb-4"
+                      >
+                        Bertahap
+                      </motion.h3>
+                    </div>
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.4 }}
+                      className="text-brand-gray leading-relaxed text-center flex-grow"
+                    >
+                      Kami meyakini bahwa pendidikan harus dilakukan berdasarkan
+                      kebutuhan pada setiap tahap kehidupan. Ketiadaan
+                      kebertahapan, hanya akan menjadi bom waktu untuk tumbuh
+                      kembang anak di masa depan.
+                    </motion.p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.4}>
+                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                  <CardContent className="p-8 h-full flex flex-col">
+                    <div className="text-center mb-6">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 360 }}
+                        transition={{ duration: 0.5 }}
+                        className="w-16 h-16 bg-brand-warm-brown rounded-full flex items-center justify-center mx-auto mb-4"
+                      >
+                        <svg
+                          className="w-8 h-8 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                          />
+                        </svg>
+                      </motion.div>
+                      <motion.h3
+                        whileHover={{ scale: 1.05 }}
+                        className="text-2xl font-bold text-brand-warm-brown mb-4"
+                      >
+                        Paripurna
+                      </motion.h3>
+                    </div>
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-brand-gray leading-relaxed text-center flex-grow"
+                    >
+                      Kami meyakini bahwa pendidikan harus dilihat sebagai
+                      sebuah ekosistem yang saling terkait guna membentuk
+                      manusia paripurna, secara fisik, jiwa, dan akal.
+                      Pendidikan holistik merupakan pengejawantahan atas
+                      keyakinan kami tentang bagaimana seharusnya pendidikan itu
+                      sendiri.
+                    </motion.p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.5}>
+                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                  <CardContent className="p-8 h-full flex flex-col">
+                    <div className="text-center mb-6">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 360 }}
+                        transition={{ duration: 0.5 }}
+                        className="w-16 h-16 bg-brand-coral rounded-full flex items-center justify-center mx-auto mb-4"
+                      >
+                        <svg
+                          className="w-8 h-8 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      </motion.div>
+                      <motion.h3
+                        whileHover={{ scale: 1.05 }}
+                        className="text-2xl font-bold text-brand-coral mb-4"
+                      >
+                        Sukses & Bahagia
+                      </motion.h3>
+                    </div>
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.6 }}
+                      className="text-brand-gray leading-relaxed text-center flex-grow"
+                    >
+                      Kami mendefinisikan sukses sebagai sebuah hasil dari
+                      perjalanan panjang menemukan misi hidup, menjawab kenapa
+                      kami dilahirkan. Sukses yang sejalan dengan misi hidup
+                      adalah sukses yang mampu menjawab ekspektasi Allah SWT
+                      menciptakan, sehingga akan muncul kesejatian kebahagiaan.
+                    </motion.p>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+            </div>
+          </div>
+        </section>
+
+        {/* 7 Pendidikan Holistik */}
+        <section className="py-16 bg-gradient-to-br from-brand-lime/5 to-brand-emerald/5">
+          <div className="container mx-auto px-4">
+            <AnimatedSection>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-brand-warm-brown to-brand-emerald bg-clip-text text-transparent">
+                  7 Dimensi Pendidikan Holistik
+                </h2>
+                <p className="text-brand-gray max-w-2xl mx-auto">
+                  Pendekatan komprehensif yang mengintegrasikan berbagai aspek
+                  perkembangan anak sesuai dengan tahapan usia mereka.
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <div className="max-w-7xl mx-auto">
+              <AnimatedSection delay={0.2}>
+                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-brand-lime/20 mb-12">
+                  <motion.img
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
+                    src="/7-dimensi-pendidikan.jpg"
+                    alt="7 Dimensi Pendidikan Holistik - Tahapan 0-15 Tahun"
+                    className="w-full h-auto"
+                  />
+                </div>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.3}>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-emerald/20 hover:border-brand-emerald/40 hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-brand-emerald rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-lg">
+                            1
+                          </span>
                         </div>
-                        <h3 className="font-semibold text-lg">{item.title}</h3>
-                        <p className="text-muted-foreground mt-2">
-                          {item.desc}
+                        <div>
+                          <h3 className="font-bold text-lg text-brand-emerald mb-2">
+                            Pendidikan Iman, Islam & Ihsan
+                          </h3>
+                          <p className="text-sm text-brand-gray">
+                            Membangun fondasi spiritual dan keimanan yang kuat
+                            sejak dini
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-cyan/20 hover:border-brand-cyan/40 hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-lg">
+                            2
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg text-brand-cyan mb-2">
+                            Pendidikan Ego, Sosial & Adab
+                          </h3>
+                          <p className="text-sm text-brand-gray">
+                            Mengembangkan karakter, etika sosial, dan adab mulia
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-lime/20 hover:border-brand-lime/40 hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-brand-lime rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-lg">
+                            3
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg text-brand-warm-brown mb-2">
+                            Pendidikan Emosi & Manajemen Konflik
+                          </h3>
+                          <p className="text-sm text-brand-gray">
+                            Mengelola emosi secara sehat dan menyelesaikan
+                            konflik dengan bijak
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-coral/20 hover:border-brand-coral/40 hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-brand-coral rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-lg">
+                            4
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg text-brand-coral mb-2">
+                            Stimulasi Sensorik-Motorik & Pendidikan Jasmani
+                          </h3>
+                          <p className="text-sm text-brand-gray">
+                            Mengoptimalkan perkembangan fisik dan keterampilan
+                            motorik
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-warm-brown/20 hover:border-brand-warm-brown/40 hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-brand-warm-brown rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-lg">
+                            5
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg text-brand-warm-brown mb-2">
+                            Pendidikan Intelektual & Learning Agility
+                          </h3>
+                          <p className="text-sm text-brand-gray">
+                            Mengasah kemampuan berpikir kritis dan adaptif dalam
+                            belajar
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-emerald/20 hover:border-brand-emerald/40 hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-brand-emerald rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-lg">
+                            6
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg text-brand-emerald mb-2">
+                            Pendidikan Bakat, Keterampilan & Peran
+                          </h3>
+                          <p className="text-sm text-brand-gray">
+                            Menggali dan mengembangkan potensi unik setiap
+                            individu
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-white/80 backdrop-blur-sm border-2 border-brand-cyan/20 hover:border-brand-cyan/40 hover:shadow-xl transition-all duration-300 md:col-span-2 lg:col-span-3">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-lg">
+                            7
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg text-brand-cyan mb-2">
+                            Pendidikan Seksual, Generatif & Keberlanjutan
+                            Peradaban
+                          </h3>
+                          <p className="text-sm text-brand-gray">
+                            Memahami fitrah seksualitas dengan sehat dan
+                            kontribusi positif bagi peradaban
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.4}>
+                <div className="mt-12 bg-gradient-to-r from-brand-emerald/10 to-brand-cyan/10 rounded-2xl p-8 border-2 border-brand-lime/30">
+                  <div className="text-center">
+                    <h3 className="text-xl font-bold text-brand-emerald mb-4">
+                      Tahapan Usia dalam Pendidikan Holistik
+                    </h3>
+                    <div className="grid md:grid-cols-3 gap-6 mt-6">
+                      <div className="bg-white/80 rounded-xl p-6 border-2 border-brand-lime/20">
+                        <div className="text-3xl font-bold text-brand-emerald mb-2">
+                          0-6
+                        </div>
+                        <div className="text-sm text-brand-gray">Tahun</div>
+                        <p className="text-sm text-brand-gray mt-3">
+                          Fase fondasi: Internalisasi nilai & kepahiawaan
                         </p>
+                      </div>
+                      <div className="bg-white/80 rounded-xl p-6 border-2 border-brand-cyan/20">
+                        <div className="text-3xl font-bold text-brand-cyan mb-2">
+                          7-10
+                        </div>
+                        <div className="text-sm text-brand-gray">Tahun</div>
+                        <p className="text-sm text-brand-gray mt-3">
+                          Fase eksplorasi: Sosialisasi & internalisasi konsep
+                        </p>
+                      </div>
+                      <div className="bg-white/80 rounded-xl p-6 border-2 border-brand-coral/20">
+                        <div className="text-3xl font-bold text-brand-coral mb-2">
+                          11-15
+                        </div>
+                        <div className="text-sm text-brand-gray">Tahun</div>
+                        <p className="text-sm text-brand-gray mt-3">
+                          Fase konfirmasi: Pendalaman & kontribusi sosial
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedSection>
+            </div>
+          </div>
+        </section>
+
+        {/* Program Komunitas */}
+        <section
+          id="program"
+          className="py-16 bg-gradient-to-br from-white to-brand-emerald/5"
+        >
+          <div className="container mx-auto px-4">
+            <AnimatedSection>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent">
+                  Program Komunitas
+                </h2>
+                <p className="text-brand-gray max-w-2xl mx-auto">
+                  Dukungan pendidikan dan keluarga untuk tumbuh bersama dalam
+                  nilai fitrah.
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+              {programs.map((program, index) => {
+                const isGradient = program.color.includes('from-');
+                const bgClass = isGradient ? `bg-gradient-to-br ${program.color}` : `bg-${program.color}`;
+                const textClass = isGradient ? 'text-brand-emerald' : `text-${program.color}`;
+                
+                return (
+                <AnimatedSection key={program.id} delay={0.1 + index * 0.1}>
+                  <Link href={program.href}>
+                    <Card className={`bg-white/80 backdrop-blur-sm border-2 border-${program.borderColor}/20 hover:border-${program.borderColor}/40 hover:shadow-xl transition-all duration-300 h-full group ${program.fullWidth ? 'md:col-span-2 lg:col-span-3' : ''}`}>
+                      <CardContent className="p-6 h-full flex flex-col">
+                        <div className="mb-4">
+                          <motion.div
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            transition={{ duration: 0.3 }}
+                            className={`w-14 h-14 ${bgClass} rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg`}
+                          >
+                            <ProgramIcon iconName={program.icon} />
+                          </motion.div>
+                          <h3 className={`font-bold text-xl ${textClass} mb-2 group-hover:opacity-80 transition-all`}>
+                            {program.title}
+                          </h3>
+                        </div>
+                        <p className="text-brand-gray leading-relaxed flex-grow">
+                          {program.desc}
+                        </p>
+                        <span className={`mt-4 inline-block text-sm font-medium ${textClass} group-hover:translate-x-1 transition-transform`}>
+                          Pelajari lebih lanjut →
+                        </span>
                       </CardContent>
                     </Card>
-                  </AnimatedSection>
-                ))
-              ) : (
-                <div className="col-span-3 text-center">
-                  <p className="text-muted-foreground">Loading programs...</p>
-                </div>
-              )}
+                  </Link>
+                </AnimatedSection>
+              )})}
             </div>
           </div>
         </section>
