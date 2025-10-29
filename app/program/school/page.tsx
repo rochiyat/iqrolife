@@ -101,30 +101,48 @@ export default function SchoolPage() {
             <div className="absolute top-20 right-20 text-3xl animate-pulse">
               📝
             </div>
-            <div className="absolute bottom-20 left-20 text-3xl animate-bounce delay-300">
+            <div className="absolute bottom-20 left-20 text-3xl animate-bounce">
               🌟
             </div>
-            <div className="absolute bottom-10 right-10 text-4xl animate-pulse delay-500">
+            <div className="absolute bottom-10 right-10 text-4xl animate-pulse">
               🎉
+            </div>
+            <div className="absolute top-1/2 left-5 text-2xl animate-wiggle">
+              🎈
+            </div>
+            <div className="absolute top-1/3 right-5 text-2xl animate-wiggle">
+              🎈
+            </div>
+            <div className="absolute top-1/4 left-1/4 text-3xl animate-float">
+              📚
+            </div>
+            <div className="absolute bottom-1/4 right-1/4 text-3xl animate-float">
+              ✨
+            </div>
+            <div className="absolute top-2/3 left-10 text-2xl animate-bounce-gentle">
+              🌈
+            </div>
+            <div className="absolute top-1/3 right-10 text-2xl animate-bounce-gentle">
+              🎨
             </div>
           </div>
 
           <AnimatedSection>
             <div className="text-center relative z-10">
               {schoolData.badge && (
-                <Badge className="mb-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-2 text-lg">
+                <Badge className="mb-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-2 text-lg animate-bounce">
                   {schoolData.badge}
                 </Badge>
               )}
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 bg-clip-text text-transparent animate-bounce-gentle">
                 {schoolData.hero?.title || schoolData.title}
               </h1>
               {schoolData.hero?.subtitle && (
-                <p className="text-xl md:text-2xl font-semibold text-gray-800 mb-4">
+                <p className="text-xl md:text-2xl font-semibold text-gray-800 mb-4 animate-fade-in-up">
                   {schoolData.hero.subtitle}
                 </p>
               )}
-              <p className="text-center text-gray-600 max-w-3xl mx-auto mb-8 text-lg">
+              <p className="text-center text-gray-600 max-w-3xl mx-auto mb-8 text-lg animate-fade-in-up">
                 {schoolData.hero?.description || schoolData.description}
               </p>
             </div>
@@ -133,7 +151,7 @@ export default function SchoolPage() {
 
         {/* Programs Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12 text-purple-800">
+          <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
             Program Unggulan
           </h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -144,7 +162,7 @@ export default function SchoolPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
               >
-                <Card className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-shadow">
+                <Card className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
                   <CardContent className="p-6">
                     <div className="flex items-center gap-4 mb-4">
                       <div className="w-16 h-16 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 flex items-center justify-center flex-shrink-0">
@@ -181,10 +199,10 @@ export default function SchoolPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mb-16"
           >
-            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800">
+            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
               {schoolData.activities.title}
             </h2>
-            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in-up">
               {schoolData.activities.description}
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -192,7 +210,8 @@ export default function SchoolPage() {
                 (activity: any, index: number) => (
                   <Card
                     key={index}
-                    className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                    className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+                    style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="relative h-48">
                       <Image
@@ -259,9 +278,9 @@ export default function SchoolPage() {
           >
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {schoolData.requirements && (
-                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] animate-fade-in-up">
                   <CardContent className="p-8">
-                    <h2 className="text-2xl font-bold mb-6 text-orange-800">
+                    <h2 className="text-2xl font-bold mb-6 text-orange-800 animate-bounce-gentle">
                       {schoolData.requirements.title}
                     </h2>
                     <ul className="space-y-3">
@@ -282,9 +301,9 @@ export default function SchoolPage() {
               )}
 
               {schoolData.timeline && (
-                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] animate-fade-in-up">
                   <CardContent className="p-8">
-                    <h2 className="text-2xl font-bold mb-6 text-purple-800">
+                    <h2 className="text-2xl font-bold mb-6 text-purple-800 animate-bounce-gentle">
                       {schoolData.timeline.title}
                     </h2>
                     <div className="space-y-4">
@@ -324,17 +343,18 @@ export default function SchoolPage() {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="mb-16"
           >
-            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800">
+            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
               {schoolData.gallery.title}
             </h2>
-            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in-up">
               {schoolData.gallery.description}
             </p>
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {schoolData.gallery.items.map((item: any, index: number) => (
                 <Card
                   key={index}
-                  className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                  className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="relative h-64">
                     <Image
@@ -373,7 +393,7 @@ export default function SchoolPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <a href={schoolData.cta.button.href} className="inline-block">
-                  <button className="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-orange-600 to-pink-600 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                  <button className="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-orange-600 to-pink-600 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
                     {schoolData.cta.button.text}
                   </button>
                 </a>
@@ -384,7 +404,7 @@ export default function SchoolPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <button className="px-8 py-4 text-lg font-semibold text-purple-700 bg-white border-2 border-purple-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                    <button className="px-8 py-4 text-lg font-semibold text-purple-700 bg-white border-2 border-purple-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-pulse">
                       {schoolData.cta.whatsappButton.text}
                     </button>
                   </a>
