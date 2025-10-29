@@ -86,6 +86,33 @@ export const visiData = {
   ],
 };
 
+export const purposeData = {
+  title: 'Purpose Iqrolife',
+  quote: 'Pendidikan Peradaban: Pendidikan yang Menyukseskan dan Membahagiakan Manusia',
+  description:
+    'Iqrolife hadir dengan tujuan mulia untuk mengembalikan kesejatian pendidikan. Kami percaya bahwa pendidikan bukan hanya tentang transfer ilmu, tetapi tentang membentuk peradaban yang memanusiakan manusia. Pendidikan yang sejati adalah yang mampu membawa setiap individu menuju kesuksesan dan kebahagiaan hakiki dalam kehidupan.',
+  pillars: [
+    {
+      icon: '🎓',
+      title: 'Pendidikan Peradaban',
+      description:
+        'Membangun sistem pendidikan yang tidak hanya fokus pada akademik, tetapi membentuk karakter dan peradaban yang bermartabat.',
+    },
+    {
+      icon: '✨',
+      title: 'Menyukseskan',
+      description:
+        'Mengembangkan potensi optimal setiap individu untuk mencapai kesuksesan dalam berbagai aspek kehidupan.',
+    },
+    {
+      icon: '😊',
+      title: 'Membahagiakan',
+      description:
+        'Menciptakan suasana pembelajaran yang menyenangkan dan membawa kebahagiaan sejati bagi seluruh komunitas.',
+    },
+  ],
+};
+
 export const misiData = {
   title: 'Misi Iqrolife',
   subtitle: 'Langkah-langkah Pencapaian Visi:',

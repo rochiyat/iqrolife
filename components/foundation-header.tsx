@@ -22,15 +22,16 @@ const foundationNav = [
     label: 'Profile',
     children: [
       { href: '/profile/sejarah', label: 'Sejarah' },
-      { href: '/profile/visi', label: 'Visi' },
+      { href: '/profile/purpose', label: 'Purpose' },
       { href: '/profile/misi', label: 'Misi' },
+      { href: '/profile/visi', label: 'Visi' },
     ],
   },
   {
     href: '/program',
     label: 'Program',
     children: [
-      { href: '/program/pre-school', label: 'Pre-School' },
+      { href: '/program/pre-school', label: 'Kelas Siap Sekolah' },
       { href: '/program/kelas-eksplorasi', label: 'Kelas Eksplorasi' },
       { href: '/program/kelas-aqil-baligh', label: 'Kelas Aqil Baligh' },
       {
