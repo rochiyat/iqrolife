@@ -2,6 +2,7 @@
 
 import FoundationHeader from '@/components/foundation-header';
 import { Button } from '@/components/ui/button';
+import { ProgramIcon } from '@/lib/utils/program-icons';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton-loading';
@@ -98,24 +99,33 @@ export default function Page() {
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {programsData.programs.map((p: any) => (
+          {programsData.programs.map((p: any) => {
+            const isGradient = p.color && p.color.includes('from-');
+            const bgClass = isGradient ? `bg-gradient-to-br ${p.color}` : `bg-${p.color || 'brand-emerald'}`;
+            
+            return (
             <Link
               key={p.title}
               href={p.href}
               className="group rounded-lg border bg-card p-5 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               aria-label={p.title}
             >
-              <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
-                {p.title}
-              </h3>
+              <div className="mb-3">
+                <div className={`w-12 h-12 ${bgClass} rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                  <ProgramIcon iconName={p.icon || 'book'} className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
+                  {p.title}
+                </h3>
+              </div>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {p.desc}
               </p>
-              <span className="mt-4 inline-block text-sm font-medium text-primary">
+              <span className="mt-4 inline-block text-sm font-medium text-primary group-hover:translate-x-1 transition-transform">
                 Pelajari lebih lanjut →
               </span>
             </Link>
-          ))}
+          )})}
         </div>
       </section>
     </main>

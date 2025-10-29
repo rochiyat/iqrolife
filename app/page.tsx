@@ -742,6 +742,9 @@ export default function FoundationLanding() {
                         <p className="text-brand-gray leading-relaxed flex-grow">
                           {program.desc}
                         </p>
+                        <span className={`mt-4 inline-block text-sm font-medium ${textClass} group-hover:translate-x-1 transition-transform`}>
+                          Pelajari lebih lanjut →
+                        </span>
                       </CardContent>
                     </Card>
                   </Link>
