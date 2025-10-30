@@ -20,7 +20,7 @@ export default function DashboardLoginPage() {
 
   const getRoleBasedRoute = (user: any) => {
     const roleName = user.role?.name || user.roleName;
-    console.log('roleName', roleName);
+    console.log('Role detected:', roleName);
     switch (roleName) {
       case 'admin':
         // Admin: full access, redirect to main dashboard
@@ -64,21 +64,23 @@ export default function DashboardLoginPage() {
         try {
           localStorage.setItem('auth-token', data.token || '');
           localStorage.setItem('user', JSON.stringify(data.user));
-          localStorage.setItem('role', JSON.stringify(data.user.role || { name: data.user.roleName }));
-          console.log('Data saved to localStorage:', {
-            token: data.token,
-            user: data.user,
-            role: data.user.role,
+          localStorage.setItem(
+            'role',
+            JSON.stringify(data.user.role || { name: data.user.roleName })
+          );
+          console.log('✅ Data saved to localStorage:', {
+            token: data.token ? 'Token present' : 'No token',
+            user: data.user.email,
+            role: data.user.role?.displayName || data.user.roleName,
           });
         } catch (storageError) {
-          console.error('LocalStorage error:', storageError);
+          console.error('❌ LocalStorage error:', storageError);
         }
 
-        // Show success message
-        alert(`Login berhasil! Selamat datang, ${roleDisplayName}! 🎉`);
+        // Show success message first
+        console.log('✅ Login successful! Redirecting to:', redirectRoute);
         
         // Use window.location.href for reliable redirect
-        console.log('Redirecting to:', redirectRoute);
         window.location.href = redirectRoute;
       } else {
         setError(data.error || 'Login gagal. Silakan coba lagi.');

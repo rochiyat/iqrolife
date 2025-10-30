@@ -29,12 +29,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/logo-iqrolife.png" type="image/png" />
       </head>
       <body
         className={`font-sans ${inter.variable} ${poppins.variable} antialiased`}
+        suppressHydrationWarning
       >
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
