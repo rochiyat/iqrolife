@@ -222,7 +222,7 @@ export function FoundationHeader() {
                     );
                   })}
                   <Link
-                    href="/app/dashboard/login"
+                    href="/dashboard/login"
                     onClick={() => setOpen(false)}
                     className="rounded-md px-3 py-3 text-base font-semibold transition-all duration-300 bg-brand-lime/20 hover:bg-brand-lime/30 text-brand-emerald mt-2"
                   >
