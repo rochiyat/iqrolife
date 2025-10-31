@@ -67,6 +67,26 @@ export default function DashboardHome() {
     { action: 'Settings diupdate', name: 'Admin', time: '2 jam yang lalu' },
   ];
 
+  // Check if user is parent or teacher
+  const isLimitedRole = user?.role === 'parent' || user?.role === 'teacher';
+
+  // For parent and teacher, show simple welcome
+  if (isLimitedRole) {
+    return (
+      <div className="space-y-6">
+        <div className="text-center py-20">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Selamat Datang! 👋
+          </h2>
+          <p className="text-gray-600 text-lg">
+            Selamat datang di Dashboard Iqrolife
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // For superadmin and staff, show full dashboard
   return (
     <div className="space-y-6">
       <div>
