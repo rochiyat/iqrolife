@@ -1,7 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, Check, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Shield, Check, X, Menu as MenuIcon } from 'lucide-react';
+import { roleMenuAccess } from '@/lib/auth-context';
 
 interface Permission {
   name: string;
@@ -13,6 +16,36 @@ interface Permission {
 }
 
 export default function RolesPage() {
+  const [menuAccess, setMenuAccess] = useState(roleMenuAccess);
+
+  const availableMenus = [
+    { id: 'home', label: 'Dashboard', icon: '🏠' },
+    { id: 'calon-murid', label: 'Calon Murid', icon: '🎓' },
+    { id: 'users', label: 'Users', icon: '👥' },
+    { id: 'roles', label: 'Roles', icon: '🛡️' },
+    { id: 'menu', label: 'Menu', icon: '📋' },
+    { id: 'formulir', label: 'Formulir', icon: '📝' },
+    { id: 'settings', label: 'Settings', icon: '⚙️' },
+  ];
+
+  const toggleMenuAccess = (roleKey: string, menuId: string) => {
+    setMenuAccess((prev) => {
+      const currentAccess = prev[roleKey as keyof typeof prev] || [];
+      const hasAccess = currentAccess.includes(menuId);
+      
+      return {
+        ...prev,
+        [roleKey]: hasAccess
+          ? currentAccess.filter(id => id !== menuId)
+          : [...currentAccess, menuId],
+      };
+    });
+  };
+
+  const hasMenuAccess = (roleKey: string, menuId: string): boolean => {
+    return (menuAccess[roleKey as keyof typeof menuAccess] || []).includes(menuId);
+  };
+
   const permissions: Permission[] = [
     {
       name: 'Akses Dashboard',
@@ -41,6 +74,14 @@ export default function RolesPage() {
     {
       name: 'Kelola Roles',
       description: 'Dapat melihat dan mengatur role & permissions',
+      superadmin: true,
+      staff: false,
+      teacher: false,
+      parent: false,
+    },
+    {
+      name: 'Kelola Menu',
+      description: 'Dapat mengelola menu navigasi dashboard',
       superadmin: true,
       staff: false,
       teacher: false,
@@ -223,6 +264,86 @@ export default function RolesPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Menu Access Management */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              <MenuIcon className="w-5 h-5 text-brand-emerald" />
+              Menu Access per Role
+            </CardTitle>
+            <Button
+              size="sm"
+              onClick={() => {
+                alert('Perubahan menu access berhasil disimpan!\n\nNote: Dalam production, ini akan menyimpan ke database.');
+                console.log('Menu Access:', menuAccess);
+              }}
+              className="bg-brand-emerald hover:bg-brand-emerald/90"
+            >
+              Simpan Perubahan
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b-2">
+                  <th className="text-left py-4 px-4 font-semibold text-gray-700">
+                    Menu
+                  </th>
+                  {roles.map((role) => (
+                    <th key={role.key} className="text-center py-4 px-4 font-semibold text-gray-700">
+                      {role.icon} {role.name}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {availableMenus.map((menu) => (
+                  <tr key={menu.id} className="border-b hover:bg-gray-50">
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{menu.icon}</span>
+                        <div className="font-medium text-gray-900">
+                          {menu.label}
+                        </div>
+                      </div>
+                    </td>
+                    {roles.map((role) => (
+                      <td key={role.key} className="py-4 px-4 text-center">
+                        <div className="flex justify-center">
+                          <button
+                            onClick={() => toggleMenuAccess(role.key, menu.id)}
+                            className={`p-2 rounded-full transition-colors ${
+                              hasMenuAccess(role.key, menu.id)
+                                ? 'bg-green-100 hover:bg-green-200'
+                                : 'bg-red-100 hover:bg-red-200'
+                            }`}
+                          >
+                            {hasMenuAccess(role.key, menu.id) ? (
+                              <Check className="w-5 h-5 text-green-600" />
+                            ) : (
+                              <X className="w-5 h-5 text-red-600" />
+                            )}
+                          </button>
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-sm text-blue-800">
+              <strong>Info:</strong> Klik icon ✓ atau ✗ untuk mengubah akses menu untuk role tertentu. 
+              Jangan lupa klik "Simpan Perubahan" setelah melakukan modifikasi.
+            </p>
           </div>
         </CardContent>
       </Card>

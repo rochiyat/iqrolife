@@ -114,6 +114,7 @@ export const rolePermissions = {
     canManageStudents: true,
     canManageForms: true,
     canManageSettings: true,
+    canManageMenu: true,
   },
   staff: {
     canAccessAll: false,
@@ -122,6 +123,7 @@ export const rolePermissions = {
     canManageStudents: true,
     canManageForms: true,
     canManageSettings: false,
+    canManageMenu: false,
   },
   teacher: {
     canAccessAll: false,
@@ -130,6 +132,7 @@ export const rolePermissions = {
     canManageStudents: true,
     canManageForms: false,
     canManageSettings: false,
+    canManageMenu: false,
   },
   parent: {
     canAccessAll: false,
@@ -138,5 +141,13 @@ export const rolePermissions = {
     canManageStudents: false,
     canManageForms: true,
     canManageSettings: false,
+    canManageMenu: false,
   },
+};
+
+export const roleMenuAccess = {
+  superadmin: ['home', 'calon-murid', 'users', 'roles', 'menu', 'formulir', 'settings'],
+  staff: ['home', 'calon-murid', 'formulir'],
+  teacher: ['home', 'calon-murid'],
+  parent: ['home', 'formulir'],
 };

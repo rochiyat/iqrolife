@@ -12,7 +12,8 @@ import {
   LogOut,
   Menu,
   X,
-  GraduationCap
+  GraduationCap,
+  Menu as MenuIcon
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -101,6 +102,12 @@ export default function DashboardLayout({
         icon: UserCog,
         href: '/dashboard/roles',
         show: permissions.canManageRoles,
+      },
+      {
+        label: 'Menu',
+        icon: MenuIcon,
+        href: '/dashboard/menu',
+        show: permissions.canManageMenu,
       },
       {
         label: 'Formulir',
