@@ -115,6 +115,7 @@ export const rolePermissions = {
     canManageForms: true,
     canManageSettings: true,
     canManageMenu: true,
+    canViewPortfolio: true,
   },
   staff: {
     canAccessAll: false,
@@ -124,6 +125,7 @@ export const rolePermissions = {
     canManageForms: true,
     canManageSettings: false,
     canManageMenu: false,
+    canViewPortfolio: true,
   },
   teacher: {
     canAccessAll: false,
@@ -133,6 +135,7 @@ export const rolePermissions = {
     canManageForms: false,
     canManageSettings: false,
     canManageMenu: false,
+    canViewPortfolio: true,
   },
   parent: {
     canAccessAll: false,
@@ -142,12 +145,13 @@ export const rolePermissions = {
     canManageForms: true,
     canManageSettings: false,
     canManageMenu: false,
+    canViewPortfolio: true,
   },
 };
 
 export const roleMenuAccess = {
-  superadmin: ['home', 'calon-murid', 'users', 'roles', 'menu', 'formulir', 'settings'],
-  staff: ['home', 'calon-murid', 'formulir'],
-  teacher: ['home', 'calon-murid'],
-  parent: ['home', 'formulir'],
+  superadmin: ['home', 'calon-murid', 'users', 'roles', 'menu', 'formulir', 'portofolio', 'settings'],
+  staff: ['home', 'calon-murid', 'formulir', 'portofolio'],
+  teacher: ['home', 'calon-murid', 'portofolio'],
+  parent: ['home', 'formulir', 'portofolio'],
 };

@@ -13,7 +13,8 @@ import {
   Menu,
   X,
   GraduationCap,
-  Menu as MenuIcon
+  Menu as MenuIcon,
+  Briefcase
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -114,6 +115,12 @@ export default function DashboardLayout({
         icon: FileText,
         href: '/dashboard/formulir',
         show: permissions.canManageForms,
+      },
+      {
+        label: 'Portofolio',
+        icon: Briefcase,
+        href: '/dashboard/portofolio',
+        show: permissions.canViewPortfolio,
       },
       {
         label: 'Settings',
