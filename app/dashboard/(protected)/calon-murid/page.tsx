@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Eye, UserPlus } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, Eye, UserPlus, FileImage, ExternalLink } from 'lucide-react';
 
 interface Student {
   id: string;
@@ -29,6 +29,7 @@ interface Student {
   status: 'pending' | 'approved' | 'rejected';
   registrationDate: string;
   notes?: string;
+  paymentProof?: string;
 }
 
 export default function CalonMuridPage() {
@@ -53,6 +54,7 @@ export default function CalonMuridPage() {
       status: 'approved',
       registrationDate: '2024-10-15',
       notes: 'Anak aktif dan suka belajar',
+      paymentProof: 'https://placehold.co/600x400/0ea5e9/white?text=Bukti+Transfer+Ahmad',
     },
     {
       id: '2',
@@ -68,6 +70,7 @@ export default function CalonMuridPage() {
       program: 'Kelas Pra Aqil Baligh',
       status: 'pending',
       registrationDate: '2024-10-20',
+      paymentProof: 'https://placehold.co/600x400/ec4899/white?text=Bukti+Transfer+Siti',
     },
     {
       id: '3',
@@ -83,6 +86,7 @@ export default function CalonMuridPage() {
       status: 'approved',
       registrationDate: '2024-10-18',
       notes: 'Belum pernah sekolah sebelumnya',
+      paymentProof: 'https://placehold.co/600x400/10b981/white?text=Bukti+Transfer+Rizki',
     },
     {
       id: '4',
@@ -98,6 +102,7 @@ export default function CalonMuridPage() {
       program: 'KBTK',
       status: 'pending',
       registrationDate: '2024-10-22',
+      paymentProof: 'https://placehold.co/600x400/f97316/white?text=Bukti+Transfer+Fatimah',
     },
     {
       id: '5',
@@ -114,6 +119,7 @@ export default function CalonMuridPage() {
       status: 'approved',
       registrationDate: '2024-10-19',
       notes: 'Hafal 5 juz Al-Quran',
+      paymentProof: 'https://placehold.co/600x400/8b5cf6/white?text=Bukti+Transfer+Abdullah',
     },
   ]);
 
@@ -419,6 +425,30 @@ export default function CalonMuridPage() {
                   <div className="col-span-2">
                     <Label className="text-gray-600">Catatan</Label>
                     <p className="font-medium">{selectedStudent.notes}</p>
+                  </div>
+                )}
+                {selectedStudent.paymentProof && (
+                  <div className="col-span-2">
+                    <Label className="text-gray-600 flex items-center gap-2">
+                      <FileImage className="w-4 h-4" />
+                      Bukti Transfer Pendaftaran
+                    </Label>
+                    <div className="mt-2 border rounded-lg overflow-hidden">
+                      <img 
+                        src={selectedStudent.paymentProof} 
+                        alt="Bukti Transfer" 
+                        className="w-full h-auto max-h-96 object-contain bg-gray-50"
+                      />
+                    </div>
+                    <a 
+                      href={selectedStudent.paymentProof}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-brand-emerald hover:text-brand-emerald/80 mt-2"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Lihat gambar full size
+                    </a>
                   </div>
                 )}
               </div>
