@@ -35,9 +35,7 @@ export default function DashboardLoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Redirect to dashboard on success
-        alert('Login berhasil! Selamat datang di Dashboard Iqrolife! 🎉');
-        router.push('/dashboard');
+        router.push('/dashboard/home');
       } else {
         setError(data.error || 'Login gagal. Silakan coba lagi.');
       }
@@ -184,9 +182,34 @@ export default function DashboardLoginPage() {
             </div>
 
             <div className="mt-6 p-4 bg-gradient-to-r from-emerald-100 to-cyan-100 rounded-lg border-2 border-emerald-200 animate-fade-in-up">
-              <p className="text-center text-sm text-gray-700 font-medium">
+              <p className="text-center text-sm text-gray-700 font-medium mb-3">
                 🌟 "Kelola dengan bijak, dampingi dengan hati" 🌟
               </p>
+              <div className="bg-white/80 p-3 rounded-lg text-xs space-y-2">
+                <p className="font-semibold text-brand-emerald text-center">Demo Credentials:</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="text-left">
+                    <p className="font-medium">👑 Super Admin:</p>
+                    <p className="text-gray-600">superadmin@iqrolife.com</p>
+                    <p className="text-gray-600">superadmin123</p>
+                  </div>
+                  <div className="text-left">
+                    <p className="font-medium">💼 Staff:</p>
+                    <p className="text-gray-600">staff@iqrolife.com</p>
+                    <p className="text-gray-600">staff123</p>
+                  </div>
+                  <div className="text-left">
+                    <p className="font-medium">📚 Teacher:</p>
+                    <p className="text-gray-600">teacher@iqrolife.com</p>
+                    <p className="text-gray-600">teacher123</p>
+                  </div>
+                  <div className="text-left">
+                    <p className="font-medium">👨‍👩‍👧 Parent:</p>
+                    <p className="text-gray-600">parent@iqrolife.com</p>
+                    <p className="text-gray-600">parent123</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

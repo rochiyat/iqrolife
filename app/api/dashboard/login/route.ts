@@ -1,10 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Dummy users for testing with 4 different roles
+const dummyUsers = [
+  {
+    id: '1',
+    email: 'superadmin@iqrolife.com',
+    password: 'superadmin123',
+    name: 'Super Admin',
+    role: 'superadmin',
+    avatar: '/avatars/superadmin.jpg',
+  },
+  {
+    id: '2',
+    email: 'staff@iqrolife.com',
+    password: 'staff123',
+    name: 'Staff Iqrolife',
+    role: 'staff',
+    avatar: '/avatars/staff.jpg',
+  },
+  {
+    id: '3',
+    email: 'teacher@iqrolife.com',
+    password: 'teacher123',
+    name: 'Ustadz Ahmad',
+    role: 'teacher',
+    avatar: '/avatars/teacher.jpg',
+  },
+  {
+    id: '4',
+    email: 'parent@iqrolife.com',
+    password: 'parent123',
+    name: 'Ibu Siti',
+    role: 'parent',
+    avatar: '/avatars/parent.jpg',
+  },
+];
+
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
 
-    // Validate required fields
     if (!email || !password) {
       return NextResponse.json(
         { error: 'Email dan password wajib diisi' },
@@ -12,7 +47,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -21,49 +55,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: In production, you should:
-    // 1. Check credentials against database
-    // 2. Use proper password hashing (bcrypt, argon2, etc.)
-    // 3. Generate JWT token or session
-    // 4. Set secure HTTP-only cookies
-    // 5. Implement rate limiting
-    // 6. Add 2FA if needed
+    const user = dummyUsers.find(
+      (u) => u.email === email && u.password === password
+    );
 
-    // For now, this is a mock authentication
-    // Replace with your actual authentication logic
-    const validCredentials = {
-      email: 'admin@iqrolife.com',
-      password: 'admin123', // In production, this should be a hashed password
-    };
-
-    if (email === validCredentials.email && password === validCredentials.password) {
-      // Successful login
-      // In production, generate a proper JWT token or session
+    if (user) {
+      const { password: _, ...userWithoutPassword } = user;
+      
       const response = NextResponse.json(
         {
           success: true,
           message: 'Login berhasil',
-          user: {
-            email: email,
-            name: 'Admin Iqrolife',
-            role: 'admin',
-          },
+          user: userWithoutPassword,
         },
         { status: 200 }
       );
 
-      // Set a session cookie (in production, use proper session management)
-      response.cookies.set('auth-token', 'mock-token-' + Date.now(), {
+      response.cookies.set('auth-token', JSON.stringify(userWithoutPassword), {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 60 * 60 * 24 * 7,
         path: '/',
       });
 
       return response;
     } else {
-      // Invalid credentials
       return NextResponse.json(
         { error: 'Email atau password salah' },
         { status: 401 }
@@ -78,21 +95,23 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Optional: Add a GET method to check authentication status
 export async function GET(request: NextRequest) {
   try {
     const authToken = request.cookies.get('auth-token');
 
     if (authToken && authToken.value) {
-      // In production, validate the token properly
-      return NextResponse.json({
-        authenticated: true,
-        user: {
-          email: 'admin@iqrolife.com',
-          name: 'Admin Iqrolife',
-          role: 'admin',
-        },
-      });
+      try {
+        const user = JSON.parse(authToken.value);
+        return NextResponse.json({
+          authenticated: true,
+          user: user,
+        });
+      } catch {
+        return NextResponse.json(
+          { authenticated: false },
+          { status: 401 }
+        );
+      }
     }
 
     return NextResponse.json(
