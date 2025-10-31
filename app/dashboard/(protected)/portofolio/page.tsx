@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Dialog,
   DialogContent,
@@ -22,8 +23,22 @@ import {
   GraduationCap,
   Upload,
   Award,
-  Activity
+  Activity,
+  ChevronDown,
+  ChevronUp,
+  Mail,
+  Phone,
+  MapPin,
+  Home
 } from 'lucide-react';
+import { type UserRole } from '@/lib/auth-context';
+
+interface UserData {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+}
 
 interface PortfolioActivity {
   id: string;
@@ -43,6 +58,7 @@ interface StudentPortfolio {
   status: 'pending' | 'approved' | 'rejected' | 'enrolled';
   progress: number;
   parent: string;
+  parentEmail: string;
   email: string;
   phone: string;
   activities: PortfolioActivity[];
@@ -53,12 +69,50 @@ interface StudentPortfolio {
     healthCertificate: boolean;
     photo: boolean;
   };
+  formData?: {
+    birthDate: string;
+    age: number;
+    gender: string;
+    address: string;
+    previousSchool?: string;
+    parentName: string;
+    parentEmail: string;
+    parentPhone: string;
+  };
 }
 
 export default function PortofolioPage() {
+  const [user, setUser] = useState<UserData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPortfolio, setSelectedPortfolio] = useState<StudentPortfolio | null>(null);
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
+  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
+    registration: true,
+    form: false,
+    documents: false,
+    timeline: false,
+  });
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    try {
+      const response = await fetch('/api/dashboard/login');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.authenticated && data.user) {
+          setUser(data.user);
+        }
+      }
+    } catch (error) {
+      console.error('Auth check error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const [portfolios] = useState<StudentPortfolio[]>([
     {
@@ -70,6 +124,7 @@ export default function PortofolioPage() {
       status: 'enrolled',
       progress: 100,
       parent: 'Bapak Ahmad',
+      parentEmail: 'parent@iqrolife.com',
       email: 'ahmad@example.com',
       phone: '081234567890',
       documents: {
@@ -78,6 +133,16 @@ export default function PortofolioPage() {
         birthCertificate: true,
         healthCertificate: true,
         photo: true,
+      },
+      formData: {
+        birthDate: '2017-03-15',
+        age: 7,
+        gender: 'Laki-laki',
+        address: 'Jl. Merdeka No. 123, Jakarta Selatan',
+        previousSchool: 'TK Permata Hati',
+        parentName: 'Bapak Ahmad',
+        parentEmail: 'parent@iqrolife.com',
+        parentPhone: '081234567890',
       },
       activities: [
         {
@@ -131,6 +196,7 @@ export default function PortofolioPage() {
       status: 'pending',
       progress: 60,
       parent: 'Ibu Siti',
+      parentEmail: 'siti@example.com',
       email: 'siti@example.com',
       phone: '081234567891',
       documents: {
@@ -139,6 +205,16 @@ export default function PortofolioPage() {
         birthCertificate: true,
         healthCertificate: false,
         photo: false,
+      },
+      formData: {
+        birthDate: '2014-08-20',
+        age: 10,
+        gender: 'Perempuan',
+        address: 'Jl. Kemang Raya No. 45, Jakarta Selatan',
+        previousSchool: 'SD Harapan Bangsa',
+        parentName: 'Ibu Siti',
+        parentEmail: 'siti@example.com',
+        parentPhone: '081234567891',
       },
       activities: [
         {
@@ -176,6 +252,7 @@ export default function PortofolioPage() {
       status: 'approved',
       progress: 80,
       parent: 'Ibu Rina',
+      parentEmail: 'rina@example.com',
       email: 'rizki@example.com',
       phone: '081234567892',
       documents: {
@@ -184,6 +261,15 @@ export default function PortofolioPage() {
         birthCertificate: true,
         healthCertificate: true,
         photo: true,
+      },
+      formData: {
+        birthDate: '2019-05-10',
+        age: 5,
+        gender: 'Laki-laki',
+        address: 'Jl. Sudirman No. 78, Jakarta Pusat',
+        parentName: 'Ibu Rina',
+        parentEmail: 'rina@example.com',
+        parentPhone: '081234567892',
       },
       activities: [
         {
@@ -222,11 +308,21 @@ export default function PortofolioPage() {
     },
   ]);
 
-  const filteredPortfolios = portfolios.filter(portfolio =>
-    portfolio.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    portfolio.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    portfolio.parent.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter portfolios for parent role
+  const displayedPortfolios = user?.role === 'parent'
+    ? portfolios.filter(p => p.parentEmail === user?.email)
+    : portfolios.filter(portfolio =>
+        portfolio.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        portfolio.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        portfolio.parent.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+  const toggleSection = (section: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -295,17 +391,320 @@ export default function PortofolioPage() {
     setIsDetailDialogOpen(true);
   };
 
-  return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-3xl font-bold text-gray-900">Portofolio Peserta Didik</h2>
-          <p className="text-gray-600 mt-1">
-            Timeline dan progress pendaftaran peserta didik
-          </p>
-        </div>
-      </div>
+  // Parent View - Accordion Style
+  const ParentPortfolioView = ({ portfolio }: { portfolio: StudentPortfolio }) => (
+    <div className="space-y-4">
+      {/* Header Card */}
+      <Card className="border-2 border-brand-emerald">
+        <CardContent className="p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-brand-emerald to-brand-cyan rounded-full flex items-center justify-center text-white font-bold text-2xl">
+                {portfolio.studentName.split(' ').map(n => n[0]).join('').toUpperCase()}
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">{portfolio.studentName}</h2>
+                <p className="text-gray-600">{portfolio.studentId}</p>
+              </div>
+            </div>
+            <span className={`px-4 py-2 rounded-full text-sm font-medium border ${getStatusColor(portfolio.status)}`}>
+              {getStatusText(portfolio.status)}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            <div>
+              <p className="text-sm text-gray-600">Program</p>
+              <p className="font-semibold text-gray-900">{portfolio.program}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Progress</p>
+              <div className="flex items-center gap-2">
+                <div className="flex-1 bg-gray-200 rounded-full h-2">
+                  <div
+                    className={`h-2 rounded-full ${
+                      portfolio.progress === 100
+                        ? 'bg-green-600'
+                        : portfolio.progress >= 60
+                        ? 'bg-blue-600'
+                        : 'bg-yellow-600'
+                    }`}
+                    style={{ width: `${portfolio.progress}%` }}
+                  />
+                </div>
+                <span className="text-sm font-semibold text-gray-700">{portfolio.progress}%</span>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
+      {/* Section 1: Pendaftaran */}
+      <Card>
+        <CardHeader
+          className="cursor-pointer hover:bg-gray-50 transition-colors"
+          onClick={() => toggleSection('registration')}
+        >
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-brand-emerald/10 rounded-lg flex items-center justify-center">
+                <User className="w-5 h-5 text-brand-emerald" />
+              </div>
+              <span>1. Pendaftaran</span>
+            </CardTitle>
+            {expandedSections.registration ? (
+              <ChevronUp className="w-5 h-5 text-gray-500" />
+            ) : (
+              <ChevronDown className="w-5 h-5 text-gray-500" />
+            )}
+          </div>
+        </CardHeader>
+        {expandedSections.registration && (
+          <CardContent className="pt-0">
+            <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+              <div>
+                <Label className="text-gray-600">Tanggal Pendaftaran</Label>
+                <p className="font-medium text-gray-900">
+                  {new Date(portfolio.registrationDate).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </p>
+              </div>
+              <div>
+                <Label className="text-gray-600">ID Pendaftaran</Label>
+                <p className="font-medium text-gray-900">{portfolio.studentId}</p>
+              </div>
+              <div>
+                <Label className="text-gray-600">Email</Label>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-gray-500" />
+                  <p className="font-medium text-gray-900">{portfolio.email}</p>
+                </div>
+              </div>
+              <div>
+                <Label className="text-gray-600">No. Telepon</Label>
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-gray-500" />
+                  <p className="font-medium text-gray-900">{portfolio.phone}</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        )}
+      </Card>
+
+      {/* Section 2: Isi Formulir */}
+      <Card>
+        <CardHeader
+          className="cursor-pointer hover:bg-gray-50 transition-colors"
+          onClick={() => toggleSection('form')}
+        >
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                <FileText className="w-5 h-5 text-blue-600" />
+              </div>
+              <span>2. Isi Formulir</span>
+            </CardTitle>
+            {expandedSections.form ? (
+              <ChevronUp className="w-5 h-5 text-gray-500" />
+            ) : (
+              <ChevronDown className="w-5 h-5 text-gray-500" />
+            )}
+          </div>
+        </CardHeader>
+        {expandedSections.form && portfolio.formData && (
+          <CardContent className="pt-0">
+            <div className="space-y-4">
+              {/* Data Pribadi */}
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  Data Pribadi Murid
+                </h4>
+                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <Label className="text-gray-600">Nama Lengkap</Label>
+                    <p className="font-medium text-gray-900">{portfolio.studentName}</p>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">Tanggal Lahir</Label>
+                    <p className="font-medium text-gray-900">
+                      {new Date(portfolio.formData.birthDate).toLocaleDateString('id-ID', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </p>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">Usia</Label>
+                    <p className="font-medium text-gray-900">{portfolio.formData.age} tahun</p>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">Jenis Kelamin</Label>
+                    <p className="font-medium text-gray-900">{portfolio.formData.gender}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <Label className="text-gray-600 flex items-center gap-2">
+                      <MapPin className="w-4 h-4" />
+                      Alamat
+                    </Label>
+                    <p className="font-medium text-gray-900">{portfolio.formData.address}</p>
+                  </div>
+                  {portfolio.formData.previousSchool && (
+                    <div className="col-span-2">
+                      <Label className="text-gray-600 flex items-center gap-2">
+                        <Home className="w-4 h-4" />
+                        Asal Sekolah
+                      </Label>
+                      <p className="font-medium text-gray-900">{portfolio.formData.previousSchool}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Data Orang Tua */}
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  Data Orang Tua/Wali
+                </h4>
+                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <Label className="text-gray-600">Nama Orang Tua</Label>
+                    <p className="font-medium text-gray-900">{portfolio.formData.parentName}</p>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">Email</Label>
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-4 h-4 text-gray-500" />
+                      <p className="font-medium text-gray-900">{portfolio.formData.parentEmail}</p>
+                    </div>
+                  </div>
+                  <div className="col-span-2">
+                    <Label className="text-gray-600">No. Telepon</Label>
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-gray-500" />
+                      <p className="font-medium text-gray-900">{portfolio.formData.parentPhone}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        )}
+      </Card>
+
+      {/* Section 3: Dokumen */}
+      <Card>
+        <CardHeader
+          className="cursor-pointer hover:bg-gray-50 transition-colors"
+          onClick={() => toggleSection('documents')}
+        >
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                <Upload className="w-5 h-5 text-purple-600" />
+              </div>
+              <span>3. Upload Dokumen</span>
+            </CardTitle>
+            {expandedSections.documents ? (
+              <ChevronUp className="w-5 h-5 text-gray-500" />
+            ) : (
+              <ChevronDown className="w-5 h-5 text-gray-500" />
+            )}
+          </div>
+        </CardHeader>
+        {expandedSections.documents && (
+          <CardContent className="pt-0">
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { key: 'formData', label: 'Formulir Pendaftaran' },
+                { key: 'paymentProof', label: 'Bukti Transfer' },
+                { key: 'birthCertificate', label: 'Akta Kelahiran' },
+                { key: 'healthCertificate', label: 'Surat Keterangan Sehat' },
+                { key: 'photo', label: 'Pas Foto' },
+              ].map((doc) => (
+                <div
+                  key={doc.key}
+                  className={`p-3 rounded-lg border flex items-center gap-3 ${
+                    portfolio.documents[doc.key as keyof typeof portfolio.documents]
+                      ? 'bg-green-50 border-green-200'
+                      : 'bg-gray-50 border-gray-200'
+                  }`}
+                >
+                  {portfolio.documents[doc.key as keyof typeof portfolio.documents] ? (
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  ) : (
+                    <XCircle className="w-5 h-5 text-gray-400" />
+                  )}
+                  <span className="text-sm font-medium text-gray-700">{doc.label}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        )}
+      </Card>
+
+      {/* Section 4: Timeline */}
+      <Card>
+        <CardHeader
+          className="cursor-pointer hover:bg-gray-50 transition-colors"
+          onClick={() => toggleSection('timeline')}
+        >
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                <Calendar className="w-5 h-5 text-orange-600" />
+              </div>
+              <span>4. Timeline Aktivitas</span>
+            </CardTitle>
+            {expandedSections.timeline ? (
+              <ChevronUp className="w-5 h-5 text-gray-500" />
+            ) : (
+              <ChevronDown className="w-5 h-5 text-gray-500" />
+            )}
+          </div>
+        </CardHeader>
+        {expandedSections.timeline && (
+          <CardContent className="pt-0">
+            <div className="space-y-4">
+              {portfolio.activities.map((activity, index) => (
+                <div key={activity.id} className="flex gap-4">
+                  <div className="flex flex-col items-center">
+                    <div className="w-10 h-10 bg-white border-2 border-brand-emerald rounded-full flex items-center justify-center">
+                      {getActivityIcon(activity.type)}
+                    </div>
+                    {index < portfolio.activities.length - 1 && (
+                      <div className="w-0.5 h-full bg-gray-200 my-1" />
+                    )}
+                  </div>
+                  <div className="flex-1 pb-6">
+                    <div className="bg-white border rounded-lg p-4 hover:shadow-md transition-shadow">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-semibold text-gray-900">{activity.title}</h4>
+                          {getActivityStatusIcon(activity.status)}
+                        </div>
+                        <span className="text-xs text-gray-500">{activity.date}</span>
+                      </div>
+                      <p className="text-sm text-gray-600">{activity.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        )}
+      </Card>
+    </div>
+  );
+
+  // Admin/Staff/Teacher View - Table
+  const AdminTableView = () => (
+    <>
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card>
@@ -415,7 +814,7 @@ export default function PortofolioPage() {
                 </tr>
               </thead>
               <tbody>
-                {filteredPortfolios.map((portfolio) => (
+                {displayedPortfolios.map((portfolio) => (
                   <tr key={portfolio.id} className="border-b hover:bg-gray-50">
                     <td className="py-4 px-4">
                       <div>
@@ -482,129 +881,127 @@ export default function PortofolioPage() {
           </div>
         </CardContent>
       </Card>
+    </>
+  );
 
-      {/* Detail Dialog */}
-      <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Detail Portofolio Peserta Didik</DialogTitle>
-          </DialogHeader>
-          {selectedPortfolio && (
-            <div className="space-y-6 py-4">
-              {/* Student Info */}
-              <div className="grid grid-cols-2 gap-4 p-4 bg-gradient-to-r from-brand-emerald/10 to-brand-cyan/10 rounded-lg border border-brand-emerald/20">
-                <div>
-                  <p className="text-sm text-gray-600">Nama Lengkap</p>
-                  <p className="font-semibold text-gray-900">{selectedPortfolio.studentName}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">ID Murid</p>
-                  <p className="font-semibold text-gray-900">{selectedPortfolio.studentId}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Program</p>
-                  <p className="font-semibold text-gray-900">{selectedPortfolio.program}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Tanggal Daftar</p>
-                  <p className="font-semibold text-gray-900">
-                    {new Date(selectedPortfolio.registrationDate).toLocaleDateString('id-ID', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Orang Tua</p>
-                  <p className="font-semibold text-gray-900">{selectedPortfolio.parent}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Status</p>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium border inline-block ${getStatusColor(selectedPortfolio.status)}`}>
-                    {getStatusText(selectedPortfolio.status)}
-                  </span>
-                </div>
-              </div>
+  if (isLoading || !user) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-brand-emerald border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
-              {/* Documents Checklist */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-brand-emerald" />
-                  Kelengkapan Dokumen
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { key: 'formData', label: 'Formulir Pendaftaran' },
-                    { key: 'paymentProof', label: 'Bukti Transfer' },
-                    { key: 'birthCertificate', label: 'Akta Kelahiran' },
-                    { key: 'healthCertificate', label: 'Surat Keterangan Sehat' },
-                    { key: 'photo', label: 'Pas Foto' },
-                  ].map((doc) => (
-                    <div
-                      key={doc.key}
-                      className={`p-3 rounded-lg border flex items-center gap-3 ${
-                        selectedPortfolio.documents[doc.key as keyof typeof selectedPortfolio.documents]
-                          ? 'bg-green-50 border-green-200'
-                          : 'bg-gray-50 border-gray-200'
-                      }`}
-                    >
-                      {selectedPortfolio.documents[doc.key as keyof typeof selectedPortfolio.documents] ? (
-                        <CheckCircle className="w-5 h-5 text-green-600" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-gray-400" />
-                      )}
-                      <span className="text-sm font-medium text-gray-700">{doc.label}</span>
-                    </div>
-                  ))}
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {user.role === 'parent' ? 'Portofolio Anak' : 'Portofolio Peserta Didik'}
+          </h2>
+          <p className="text-gray-600 mt-1">
+            {user.role === 'parent' 
+              ? 'Timeline dan progress pendaftaran anak Anda'
+              : 'Timeline dan progress pendaftaran peserta didik'}
+          </p>
+        </div>
+      </div>
+
+      {user.role === 'parent' ? (
+        displayedPortfolios.length > 0 ? (
+          <ParentPortfolioView portfolio={displayedPortfolios[0]} />
+        ) : (
+          <Card>
+            <CardContent className="p-12 text-center">
+              <GraduationCap className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Belum Ada Pendaftaran
+              </h3>
+              <p className="text-gray-600">
+                Anda belum memiliki data pendaftaran anak. Silakan melakukan pendaftaran terlebih dahulu.
+              </p>
+            </CardContent>
+          </Card>
+        )
+      ) : (
+        <AdminTableView />
+      )}
+
+      {/* Detail Dialog for Admin/Staff/Teacher */}
+      {user.role !== 'parent' && (
+        <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Detail Portofolio Peserta Didik</DialogTitle>
+            </DialogHeader>
+            {selectedPortfolio && (
+              <div className="space-y-6 py-4">
+                <div className="grid grid-cols-2 gap-4 p-4 bg-gradient-to-r from-brand-emerald/10 to-brand-cyan/10 rounded-lg border border-brand-emerald/20">
+                  <div>
+                    <p className="text-sm text-gray-600">Nama Lengkap</p>
+                    <p className="font-semibold text-gray-900">{selectedPortfolio.studentName}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">ID Murid</p>
+                    <p className="font-semibold text-gray-900">{selectedPortfolio.studentId}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Program</p>
+                    <p className="font-semibold text-gray-900">{selectedPortfolio.program}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Status</p>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium border inline-block ${getStatusColor(selectedPortfolio.status)}`}>
+                      {getStatusText(selectedPortfolio.status)}
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Timeline */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-brand-emerald" />
-                  Timeline Aktivitas
-                </h3>
-                <div className="space-y-4">
-                  {selectedPortfolio.activities.map((activity, index) => (
-                    <div key={activity.id} className="flex gap-4">
-                      {/* Timeline Line */}
-                      <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 bg-white border-2 border-brand-emerald rounded-full flex items-center justify-center">
-                          {getActivityIcon(activity.type)}
-                        </div>
-                        {index < selectedPortfolio.activities.length - 1 && (
-                          <div className="w-0.5 h-full bg-gray-200 my-1" />
-                        )}
-                      </div>
-
-                      {/* Activity Content */}
-                      <div className="flex-1 pb-6">
-                        <div className="bg-white border rounded-lg p-4 hover:shadow-md transition-shadow">
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                              <h4 className="font-semibold text-gray-900">{activity.title}</h4>
-                              {getActivityStatusIcon(activity.status)}
-                            </div>
-                            <span className="text-xs text-gray-500">{activity.date}</span>
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-brand-emerald" />
+                    Timeline Aktivitas
+                  </h3>
+                  <div className="space-y-4">
+                    {selectedPortfolio.activities.map((activity, index) => (
+                      <div key={activity.id} className="flex gap-4">
+                        <div className="flex flex-col items-center">
+                          <div className="w-10 h-10 bg-white border-2 border-brand-emerald rounded-full flex items-center justify-center">
+                            {getActivityIcon(activity.type)}
                           </div>
-                          <p className="text-sm text-gray-600">{activity.description}</p>
+                          {index < selectedPortfolio.activities.length - 1 && (
+                            <div className="w-0.5 h-full bg-gray-200 my-1" />
+                          )}
+                        </div>
+                        <div className="flex-1 pb-6">
+                          <div className="bg-white border rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-semibold text-gray-900">{activity.title}</h4>
+                                {getActivityStatusIcon(activity.status)}
+                              </div>
+                              <span className="text-xs text-gray-500">{activity.date}</span>
+                            </div>
+                            <p className="text-sm text-gray-600">{activity.description}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
+            )}
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setIsDetailDialogOpen(false)}>
+                Tutup
+              </Button>
             </div>
-          )}
-          <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsDetailDialogOpen(false)}>
-              Tutup
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
