@@ -38,6 +38,9 @@ export default function CalonMuridPage() {
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [isCreateUserDialogOpen, setIsCreateUserDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [editFormData, setEditFormData] = useState<Student | null>(null);
   const [students, setStudents] = useState<Student[]>([
     {
       id: '1',
@@ -168,6 +171,42 @@ export default function CalonMuridPage() {
     if (selectedStudent) {
       alert(`User berhasil dibuat!\n\nNama: ${selectedStudent.name}\nEmail: ${selectedStudent.email}\nRole: Parent\nPassword: (dikirim via email)`);
       setIsCreateUserDialogOpen(false);
+      setSelectedStudent(null);
+    }
+  };
+
+  const handleEdit = (student: Student) => {
+    setEditFormData({ ...student });
+    setIsEditDialogOpen(true);
+  };
+
+  const handleEditInputChange = (field: keyof Student, value: string) => {
+    if (editFormData) {
+      setEditFormData({ ...editFormData, [field]: value });
+    }
+  };
+
+  const confirmEdit = () => {
+    if (editFormData) {
+      setStudents(students.map(s => 
+        s.id === editFormData.id ? editFormData : s
+      ));
+      alert(`Data ${editFormData.name} berhasil diupdate!`);
+      setIsEditDialogOpen(false);
+      setEditFormData(null);
+    }
+  };
+
+  const handleDelete = (student: Student) => {
+    setSelectedStudent(student);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (selectedStudent) {
+      setStudents(students.filter(s => s.id !== selectedStudent.id));
+      alert(`Data ${selectedStudent.name} berhasil dihapus!`);
+      setIsDeleteDialogOpen(false);
       setSelectedStudent(null);
     }
   };
@@ -308,6 +347,7 @@ export default function CalonMuridPage() {
                           variant="ghost" 
                           className="text-green-600 hover:text-green-700"
                           title="Edit"
+                          onClick={() => handleEdit(student)}
                         >
                           <Edit className="w-4 h-4" />
                         </Button>
@@ -316,6 +356,7 @@ export default function CalonMuridPage() {
                           variant="ghost" 
                           className="text-red-600 hover:text-red-700"
                           title="Hapus"
+                          onClick={() => handleDelete(student)}
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -510,6 +551,199 @@ export default function CalonMuridPage() {
             >
               <UserPlus className="w-4 h-4 mr-2" />
               Buat User
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Edit Data Calon Murid</DialogTitle>
+          </DialogHeader>
+          {editFormData && (
+            <div className="space-y-4 py-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-name">Nama Lengkap</Label>
+                  <Input
+                    id="edit-name"
+                    value={editFormData.name}
+                    onChange={(e) => handleEditInputChange('name', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-gender">Jenis Kelamin</Label>
+                  <select
+                    id="edit-gender"
+                    value={editFormData.gender}
+                    onChange={(e) => handleEditInputChange('gender', e.target.value)}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  >
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-birthDate">Tanggal Lahir</Label>
+                  <Input
+                    id="edit-birthDate"
+                    type="date"
+                    value={editFormData.birthDate}
+                    onChange={(e) => handleEditInputChange('birthDate', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-age">Usia</Label>
+                  <Input
+                    id="edit-age"
+                    type="number"
+                    value={editFormData.age}
+                    onChange={(e) => handleEditInputChange('age', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-parent">Nama Orang Tua</Label>
+                  <Input
+                    id="edit-parent"
+                    value={editFormData.parent}
+                    onChange={(e) => handleEditInputChange('parent', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-phone">No. Telepon</Label>
+                  <Input
+                    id="edit-phone"
+                    value={editFormData.phone}
+                    onChange={(e) => handleEditInputChange('phone', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-email">Email</Label>
+                  <Input
+                    id="edit-email"
+                    type="email"
+                    value={editFormData.email}
+                    onChange={(e) => handleEditInputChange('email', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-program">Program</Label>
+                  <select
+                    id="edit-program"
+                    value={editFormData.program}
+                    onChange={(e) => handleEditInputChange('program', e.target.value)}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  >
+                    <option value="KBTK">KBTK</option>
+                    <option value="Kelas Eksplorasi">Kelas Eksplorasi</option>
+                    <option value="Kelas Pra Aqil Baligh">Kelas Pra Aqil Baligh</option>
+                    <option value="Kelas Aqil Baligh">Kelas Aqil Baligh</option>
+                  </select>
+                </div>
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="edit-address">Alamat</Label>
+                  <textarea
+                    id="edit-address"
+                    value={editFormData.address}
+                    onChange={(e) => handleEditInputChange('address', e.target.value)}
+                    rows={3}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-previousSchool">Asal Sekolah</Label>
+                  <Input
+                    id="edit-previousSchool"
+                    value={editFormData.previousSchool || ''}
+                    onChange={(e) => handleEditInputChange('previousSchool', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-status">Status</Label>
+                  <select
+                    id="edit-status"
+                    value={editFormData.status}
+                    onChange={(e) => handleEditInputChange('status', e.target.value)}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="approved">Disetujui</option>
+                    <option value="rejected">Ditolak</option>
+                  </select>
+                </div>
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="edit-notes">Catatan</Label>
+                  <textarea
+                    id="edit-notes"
+                    value={editFormData.notes || ''}
+                    onChange={(e) => handleEditInputChange('notes', e.target.value)}
+                    rows={2}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+              Batal
+            </Button>
+            <Button 
+              className="bg-brand-emerald hover:bg-brand-emerald/90"
+              onClick={confirmEdit}
+            >
+              Simpan Perubahan
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Konfirmasi Hapus</DialogTitle>
+          </DialogHeader>
+          {selectedStudent && (
+            <div className="space-y-4 py-4">
+              <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                <p className="text-sm text-red-800 mb-3">
+                  Apakah Anda yakin ingin menghapus data calon murid berikut?
+                </p>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Nama:</span>
+                    <span className="font-medium">{selectedStudent.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Orang Tua:</span>
+                    <span className="font-medium">{selectedStudent.parent}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Program:</span>
+                    <span className="font-medium">{selectedStudent.program}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+                <p className="text-xs text-yellow-800">
+                  <strong>Perhatian:</strong> Data yang sudah dihapus tidak dapat dikembalikan.
+                </p>
+              </div>
+            </div>
+          )}
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+              Batal
+            </Button>
+            <Button 
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={confirmDelete}
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Hapus Data
             </Button>
           </div>
         </DialogContent>
