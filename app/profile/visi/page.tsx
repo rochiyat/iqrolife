@@ -30,36 +30,39 @@ export default function VisiPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+      <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-white to-brand-sky/10">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
-          <div className="text-center mb-12">
-            <Skeleton className="h-12 w-80 mx-auto mb-6" />
-          </div>
+          <div className="max-w-5xl mx-auto">
+            {/* Vision Header Skeleton */}
+            <Skeleton className="h-24 w-full rounded-t-lg mb-0" />
 
-          <div className="max-w-3xl mx-auto">
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-              <CardContent className="p-8">
-                <Skeleton className="h-6 w-full mb-4" />
-                <Skeleton className="h-6 w-5/6 mb-6" />
+            {/* Vision Statement Skeleton */}
+            <div className="bg-gray-50 py-8 px-8 border-x-2 border-gray-200">
+              <Skeleton className="h-6 w-3/4 mx-auto mb-3" />
+              <Skeleton className="h-6 w-2/3 mx-auto" />
+            </div>
 
-                <div className="space-y-6 mt-8">
-                  <Skeleton className="h-6 w-32 mb-4" />
-                  <div className="space-y-4">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <div key={i} className="flex items-start gap-4">
-                        <Skeleton className="w-12 h-12 rounded-full flex-shrink-0" />
-                        <div className="flex-1">
-                          <Skeleton className="h-5 w-32 mb-2" />
-                          <Skeleton className="h-4 w-full" />
-                          <Skeleton className="h-4 w-3/4" />
-                        </div>
-                      </div>
-                    ))}
+            {/* Three Pillars Skeleton */}
+            <div className="grid md:grid-cols-3 gap-6 mt-12 mb-8">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="bg-white border-2 border-gray-200 shadow-lg rounded-lg overflow-hidden"
+                >
+                  <Skeleton className="h-16 w-full" />
+                  <div className="p-6">
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-5/6 mb-2" />
+                    <Skeleton className="h-4 w-4/5" />
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              ))}
+            </div>
+
+            {/* Pilar Strategi Skeleton */}
+            <Skeleton className="h-20 w-full rounded-lg mt-12" />
           </div>
         </main>
         <FoundationFooter />
@@ -69,11 +72,13 @@ export default function VisiPage() {
 
   if (!visiData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+      <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-white to-brand-sky/10">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="text-center">
-            <h1 className="text-4xl font-bold">Error loading page</h1>
+            <h1 className="text-4xl font-bold text-gray-800">
+              Error loading page
+            </h1>
           </div>
         </main>
         <FoundationFooter />
@@ -82,50 +87,114 @@ export default function VisiPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-white to-brand-sky/10">
       <FoundationHeader />
       <main className="container mx-auto px-4 py-16">
         <AnimatedSection>
-          <h1 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-            {visiData.title}
-          </h1>
-        </AnimatedSection>
+          <div className="max-w-5xl mx-auto">
+            {/* Vision Header */}
+            <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white py-6 px-8 rounded-t-lg text-center shadow-lg">
+              <h1 className="text-4xl font-bold">Vision</h1>
+            </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-3xl mx-auto"
-        >
-          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-            <CardContent className="p-8">
-              <blockquote className="text-xl text-gray-700 text-center italic leading-relaxed mb-6">
-                "{visiData.quote}"
-              </blockquote>
+            {/* Vision Statement */}
+            <div className="bg-gray-50 py-8 px-8 border-x-2 border-b-2 border-gray-200 rounded-b-lg shadow-lg">
+              <p className="text-center text-gray-800 text-lg leading-relaxed">
+                Terbentuknya ekosistem pendidikan berbasis komunitas
+                <br />
+                dan selaras fitrah pada Tahun 2035
+              </p>
+            </div>
 
-              <div className="space-y-6 mt-8">
-                <h2 className="text-xl font-semibold text-blue-800">
-                  Penjelasan Visi:
-                </h2>
-                <div className="space-y-4">
-                  {visiData.explanation.map((item: any, index: number) => (
-                    <div key={index} className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                        <span className="text-2xl">{item.icon}</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-lg mb-2">
-                          {item.title}
-                        </h3>
-                        <p className="text-gray-700">{item.description}</p>
-                      </div>
+            {/* Arrow Divider - Triangle pointing up */}
+            <div className="flex justify-center mt-8 mb-8 relative z-10">
+              <div className="w-0 h-0 border-l-[40px] border-l-transparent border-r-[40px] border-r-transparent border-b-[30px] border-b-amber-700"></div>
+            </div>
+
+            {/* Three Pillars */}
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              {/* Sekolah */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <Card className="bg-white border-2 border-gray-200 shadow-lg h-full">
+                  <CardContent className="p-0">
+                    <div className="bg-gradient-to-r from-green-700 to-green-800 text-white py-4 px-6 text-center">
+                      <h2 className="text-2xl font-bold">Sekolah</h2>
                     </div>
-                  ))}
-                </div>
+                    <div className="p-6">
+                      <p className="text-gray-700 leading-relaxed">
+                        Mengembangkan pendekatan pendidikan selaras fitrah
+                        berupa 7 Pendidikan Holistik yang terstruktur dan teruji
+                        sesuai dengan fase dan kebutuhan tumbuh kembang
+                        anak-anak hingga menuju usia 15 Tahun.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Keluarga */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <Card className="bg-white border-2 border-gray-200 shadow-lg h-full">
+                  <CardContent className="p-0">
+                    <div className="bg-gradient-to-r from-green-700 to-green-800 text-white py-4 px-6 text-center">
+                      <h2 className="text-2xl font-bold">Keluarga</h2>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-gray-700 leading-relaxed">
+                        Menghadirkan program pembelajaran dan meningkatkan
+                        keterlibatan orang tua (Ayah & Ibu) yang terintegrasi
+                        dengan tahapan pembelajaran dan tumbuh kembang anak.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Masyarakat */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <Card className="bg-white border-2 border-gray-200 shadow-lg h-full">
+                  <CardContent className="p-0">
+                    <div className="bg-gradient-to-r from-green-700 to-green-800 text-white py-4 px-6 text-center">
+                      <h2 className="text-2xl font-bold">Masyarakat</h2>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-gray-700 leading-relaxed">
+                        Mengintegrasikan program pembelajaran dan keterikatan
+                        orang tua dan anak dengan situasi, kondisi dan
+                        permasalahan yang terjadi pada masyarakat sehingga
+                        dihasilkan pembelajaran yang berdampak
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+
+            {/* Pilar Strategi */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="mt-12"
+            >
+              <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white py-6 px-8 rounded-lg text-center shadow-lg">
+                <h2 className="text-3xl font-bold">Pilar Strategi</h2>
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+            </motion.div>
+          </div>
+        </AnimatedSection>
       </main>
       <FoundationFooter />
     </div>

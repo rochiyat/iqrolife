@@ -70,16 +70,17 @@ export async function GET() {
       title: 'Sekolah',
       items: [
         {
-          title: 'KB-TK Iqrolife',
-          href: '/school/kbtk',
+          title: 'Kelas Siap Sekolah',
+          href: '/program/school',
         },
       ],
     },
     contact: {
       title: 'Kontak',
-      address: 'Jl. Raya Bogor No. 123, Kota Bogor',
+      address:
+        'Cimanggu Hejo, Kedung Waringin, Kec. Tanah Sereal, Kota Bogor, Jawa Barat 17540',
       phone: '+62813-1522-5557',
-      email: 'info@iqrolife.org',
+      email: 'iqrolife@gmail.com',
       social: {
         facebook: 'https://facebook.com/iqrolife',
         instagram: 'https://instagram.com/iqrolife',

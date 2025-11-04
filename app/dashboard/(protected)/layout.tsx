@@ -3,18 +3,18 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { 
-  LayoutDashboard, 
-  Users, 
-  UserCog, 
-  FileText, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Users,
+  UserCog,
+  FileText,
+  Settings,
   LogOut,
   Menu,
   X,
   GraduationCap,
   Menu as MenuIcon,
-  Briefcase
+  Briefcase,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -130,15 +130,15 @@ export default function DashboardLayout({
       },
     ];
 
-    return items.filter(item => item.show);
+    return items.filter((item) => item.show);
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-100 via-cyan-50 to-lime-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-sky/30 via-brand-lime/20 to-brand-emerald/30">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-brand-emerald border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-brand-gray">Loading...</p>
+          <p className="text-brand-gray font-medium">Loading Dashboard...</p>
         </div>
       </div>
     );
@@ -149,30 +149,43 @@ export default function DashboardLayout({
   const navItems = getNavItems();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-brand-sky/10 to-brand-lime/10">
       {/* Top Navigation */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <header className="bg-gradient-to-r from-brand-emerald to-brand-cyan border-b-4 border-brand-lime sticky top-0 z-30 shadow-lg">
         <div className="px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="lg:hidden"
+              className="lg:hidden text-white hover:bg-white/20"
             >
-              {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isSidebarOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </Button>
-            <h1 className="text-xl font-bold text-brand-emerald">Dashboard Iqrolife</h1>
+            <h1 className="text-xl font-bold text-white flex items-center gap-2">
+              <span className="text-2xl">🎓</span>
+              Dashboard Iqrolife
+            </h1>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-medium text-gray-900">{user.name}</p>
-              <p className="text-xs text-gray-500 capitalize">{user.role}</p>
+              <p className="text-sm font-medium text-white">{user.name}</p>
+              <p className="text-xs text-brand-lime capitalize font-semibold">
+                {user.role}
+              </p>
             </div>
-            <Avatar>
-              <AvatarFallback className="bg-brand-emerald text-white">
-                {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+            <Avatar className="ring-2 ring-brand-lime">
+              <AvatarFallback className="bg-gradient-to-br from-brand-lime to-brand-coral text-brand-warm-brown font-bold">
+                {user.name
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')
+                  .toUpperCase()}
               </AvatarFallback>
             </Avatar>
           </div>
@@ -181,11 +194,15 @@ export default function DashboardLayout({
 
       <div className="flex">
         {/* Sidebar */}
-        <aside 
+        <aside
           className={`
             fixed lg:sticky top-[57px] left-0 h-[calc(100vh-57px)] 
-            bg-white border-r border-gray-200 transition-transform duration-300 z-20
-            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+            bg-gradient-to-b from-white to-brand-sky/20 border-r-4 border-brand-lime/30 transition-transform duration-300 z-20 shadow-xl
+            ${
+              isSidebarOpen
+                ? 'translate-x-0'
+                : '-translate-x-full lg:translate-x-0'
+            }
             w-64
           `}
         >
@@ -193,16 +210,17 @@ export default function DashboardLayout({
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
-              
+
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={`
-                    flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
-                    ${isActive 
-                      ? 'bg-brand-emerald text-white' 
-                      : 'text-gray-700 hover:bg-gray-100'
+                    flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300
+                    ${
+                      isActive
+                        ? 'bg-gradient-to-r from-brand-emerald to-brand-cyan text-white shadow-lg scale-105 font-bold'
+                        : 'text-brand-gray hover:bg-gradient-to-r hover:from-brand-lime/20 hover:to-brand-sky/20 hover:scale-102 hover:shadow-md'
                     }
                   `}
                 >
@@ -211,10 +229,10 @@ export default function DashboardLayout({
                 </Link>
               );
             })}
-            
+
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-brand-coral hover:bg-brand-coral/10 hover:scale-102 transition-all duration-300 font-medium border-2 border-transparent hover:border-brand-coral/30"
             >
               <LogOut className="w-5 h-5" />
               <span className="font-medium">Logout</span>
@@ -223,14 +241,12 @@ export default function DashboardLayout({
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
-          {children}
-        </main>
+        <main className="flex-1 p-6">{children}</main>
       </div>
 
       {/* Mobile overlay */}
       {isSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-10 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
