@@ -102,36 +102,47 @@ export default function FoundationLanding() {
         <FoundationHeader />
         <main>
           <SkeletonFoundationHero />
-          <section className="py-16 bg-gradient-to-br from-blue-50 to-green-50">
+          <section className="py-16 bg-gradient-to-br from-brand-sky/20 to-brand-lime/10">
             <div className="container mx-auto px-4">
               <div className="text-center mb-8">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-green-600 rounded-full mx-auto mb-4 animate-pulse"></div>
-                <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-blue-600 rounded-full mx-auto mb-4 animate-pulse delay-300"></div>
+                <div className="w-64 h-10 bg-gradient-to-r from-brand-emerald to-brand-cyan rounded-lg mx-auto mb-4 animate-pulse"></div>
               </div>
-              <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              <div className="max-w-6xl mx-auto space-y-8">
+                {/* Purpose Skeleton - Full Width */}
                 <div className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-lg p-8">
                   <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-blue-600 rounded-full mx-auto mb-4 animate-pulse"></div>
-                    <div className="w-32 h-8 mx-auto mb-4 bg-gradient-to-r from-blue-600 to-blue-800 animate-pulse"></div>
+                    <div className="w-16 h-16 bg-brand-warm-brown rounded-full mx-auto mb-4 animate-pulse"></div>
+                    <div className="w-32 h-8 mx-auto mb-4 bg-gradient-to-r from-brand-warm-brown to-brand-dark-brown rounded animate-pulse"></div>
                   </div>
                   <div className="space-y-3">
-                    <div className="h-4 w-full bg-gray-300 animate-pulse"></div>
-                    <div className="h-4 w-5/6 bg-gray-300 animate-pulse"></div>
-                    <div className="h-4 w-4/5 bg-gray-300 animate-pulse"></div>
+                    <div className="h-4 w-full bg-gray-300 rounded animate-pulse"></div>
+                    <div className="h-4 w-5/6 mx-auto bg-gray-300 rounded animate-pulse"></div>
                   </div>
                 </div>
+
+                {/* Mission Skeleton - Full Width */}
                 <div className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-lg p-8">
                   <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-green-600 rounded-full mx-auto mb-4 animate-pulse"></div>
-                    <div className="w-32 h-8 mx-auto mb-6 bg-gradient-to-r from-green-600 to-green-800 animate-pulse"></div>
+                    <div className="w-16 h-16 bg-brand-emerald rounded-full mx-auto mb-4 animate-pulse"></div>
+                    <div className="w-24 h-8 mx-auto mb-4 bg-gradient-to-r from-brand-emerald to-brand-cyan rounded animate-pulse"></div>
                   </div>
-                  <div className="space-y-4">
-                    {Array.from({ length: 4 }).map((_, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 animate-pulse"></div>
-                        <div className="h-4 flex-1 bg-gray-300 animate-pulse"></div>
-                      </div>
-                    ))}
+                  <div className="space-y-3">
+                    <div className="h-4 w-full bg-gray-300 rounded animate-pulse"></div>
+                    <div className="h-4 w-5/6 mx-auto bg-gray-300 rounded animate-pulse"></div>
+                    <div className="h-4 w-4/5 mx-auto bg-gray-300 rounded animate-pulse"></div>
+                  </div>
+                </div>
+
+                {/* Vision Skeleton - Full Width */}
+                <div className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-lg p-8">
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-brand-cyan rounded-full mx-auto mb-4 animate-pulse"></div>
+                    <div className="w-24 h-8 mx-auto mb-6 bg-gradient-to-r from-brand-cyan to-brand-emerald rounded animate-pulse"></div>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="h-4 w-full bg-gray-300 rounded animate-pulse"></div>
+                    <div className="h-4 w-5/6 mx-auto bg-gray-300 rounded animate-pulse"></div>
+                    <div className="h-4 w-4/5 mx-auto bg-gray-300 rounded animate-pulse"></div>
                   </div>
                 </div>
               </div>
@@ -719,37 +730,54 @@ export default function FoundationLanding() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
               {programs.map((program, index) => {
                 const isGradient = program.color.includes('from-');
-                const bgClass = isGradient ? `bg-gradient-to-br ${program.color}` : `bg-${program.color}`;
-                const textClass = isGradient ? 'text-brand-emerald' : `text-${program.color}`;
-                
+                const bgClass = isGradient
+                  ? `bg-gradient-to-br ${program.color}`
+                  : `bg-${program.color}`;
+                const textClass = isGradient
+                  ? 'text-brand-emerald'
+                  : `text-${program.color}`;
+
                 return (
-                <AnimatedSection key={program.id} delay={0.1 + index * 0.1}>
-                  <Link href={program.href}>
-                    <Card className={`bg-white/80 backdrop-blur-sm border-2 border-${program.borderColor}/20 hover:border-${program.borderColor}/40 hover:shadow-xl transition-all duration-300 h-full group ${program.fullWidth ? 'md:col-span-2 lg:col-span-3' : ''}`}>
-                      <CardContent className="p-6 h-full flex flex-col">
-                        <div className="mb-4">
-                          <motion.div
-                            whileHover={{ scale: 1.1, rotate: 5 }}
-                            transition={{ duration: 0.3 }}
-                            className={`w-14 h-14 ${bgClass} rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg`}
+                  <AnimatedSection key={program.id} delay={0.1 + index * 0.1}>
+                    <Link href={program.href}>
+                      <Card
+                        className={`bg-white/80 backdrop-blur-sm border-2 border-${
+                          program.borderColor
+                        }/20 hover:border-${
+                          program.borderColor
+                        }/40 hover:shadow-xl transition-all duration-300 h-full group ${
+                          program.fullWidth ? 'md:col-span-2 lg:col-span-3' : ''
+                        }`}
+                      >
+                        <CardContent className="p-6 h-full flex flex-col">
+                          <div className="mb-4">
+                            <motion.div
+                              whileHover={{ scale: 1.1, rotate: 5 }}
+                              transition={{ duration: 0.3 }}
+                              className={`w-14 h-14 ${bgClass} rounded-full flex items-center justify-center mb-4 group-hover:shadow-lg`}
+                            >
+                              <ProgramIcon iconName={program.icon} />
+                            </motion.div>
+                            <h3
+                              className={`font-bold text-xl ${textClass} mb-2 group-hover:opacity-80 transition-all`}
+                            >
+                              {program.title}
+                            </h3>
+                          </div>
+                          <p className="text-brand-gray leading-relaxed flex-grow">
+                            {program.desc}
+                          </p>
+                          <span
+                            className={`mt-4 inline-block text-sm font-medium ${textClass} group-hover:translate-x-1 transition-transform`}
                           >
-                            <ProgramIcon iconName={program.icon} />
-                          </motion.div>
-                          <h3 className={`font-bold text-xl ${textClass} mb-2 group-hover:opacity-80 transition-all`}>
-                            {program.title}
-                          </h3>
-                        </div>
-                        <p className="text-brand-gray leading-relaxed flex-grow">
-                          {program.desc}
-                        </p>
-                        <span className={`mt-4 inline-block text-sm font-medium ${textClass} group-hover:translate-x-1 transition-transform`}>
-                          Pelajari lebih lanjut →
-                        </span>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </AnimatedSection>
-              )})}
+                            Pelajari lebih lanjut →
+                          </span>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  </AnimatedSection>
+                );
+              })}
             </div>
           </div>
         </section>
