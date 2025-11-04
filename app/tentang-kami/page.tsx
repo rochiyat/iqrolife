@@ -47,15 +47,26 @@ export default function Page() {
             </div>
           </div>
           <div className="mt-16">
-            <div className="grid gap-6 md:grid-cols-3">
-              {Array.from({ length: 3 }).map((_, i) => (
+            <div className="text-center mb-12">
+              <Skeleton className="h-10 w-96 mx-auto mb-4" />
+              <Skeleton className="h-6 w-2/3 mx-auto" />
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {Array.from({ length: 7 }).map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-lg border bg-card p-5 shadow-sm"
+                  className={`rounded-lg border bg-card p-6 shadow-sm ${
+                    i === 6 ? 'md:col-span-2 lg:col-span-3' : ''
+                  }`}
                 >
-                  <Skeleton className="h-6 w-24 mb-2" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-3/4 mt-2" />
+                  <div className="flex items-start gap-4">
+                    <Skeleton className="h-12 w-12 rounded-full flex-shrink-0" />
+                    <div className="flex-1">
+                      <Skeleton className="h-6 w-3/4 mb-2" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-5/6 mt-2" />
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -124,20 +135,134 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="border-t bg-muted/30">
-          <div className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-            <div className="grid gap-6 md:grid-cols-3">
-              {aboutData.values.map((item: any) => (
-                <div
-                  key={item.title}
-                  className="rounded-lg border bg-card p-5 shadow-sm transition-transform duration-300 hover:-translate-y-1"
-                >
-                  <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description}
-                  </p>
+        <section className="border-t bg-gradient-to-br from-brand-lime/5 to-brand-emerald/5">
+          <div className="mx-auto max-w-7xl px-4 py-10 md:px-6 md:py-14">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-brand-warm-brown to-brand-emerald bg-clip-text text-transparent">
+                7 Dimensi Pendidikan Holistik
+              </h2>
+              <p className="text-brand-gray max-w-2xl mx-auto">
+                Pendekatan komprehensif yang mengintegrasikan berbagai aspek
+                perkembangan anak sesuai dengan tahapan usia mereka.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-white/80 backdrop-blur-sm border-2 border-brand-emerald/20 hover:border-brand-emerald/40 hover:shadow-xl transition-all duration-300 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-brand-emerald rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-lg">1</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-brand-emerald mb-2">
+                      Pendidikan Iman, Islam & Ihsan
+                    </h3>
+                    <p className="text-sm text-brand-gray">
+                      Membangun fondasi spiritual dan keimanan yang kuat sejak
+                      dini
+                    </p>
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              <div className="bg-white/80 backdrop-blur-sm border-2 border-brand-cyan/20 hover:border-brand-cyan/40 hover:shadow-xl transition-all duration-300 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-lg">2</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-brand-cyan mb-2">
+                      Pendidikan Ego, Sosial & Adab
+                    </h3>
+                    <p className="text-sm text-brand-gray">
+                      Mengembangkan karakter, etika sosial, dan adab mulia
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/80 backdrop-blur-sm border-2 border-brand-lime/20 hover:border-brand-lime/40 hover:shadow-xl transition-all duration-300 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-brand-lime rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-lg">3</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-brand-warm-brown mb-2">
+                      Pendidikan Emosi & Manajemen Konflik
+                    </h3>
+                    <p className="text-sm text-brand-gray">
+                      Mengelola emosi secara sehat dan menyelesaikan konflik
+                      dengan bijak
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/80 backdrop-blur-sm border-2 border-brand-coral/20 hover:border-brand-coral/40 hover:shadow-xl transition-all duration-300 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-brand-coral rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-lg">4</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-brand-coral mb-2">
+                      Stimulasi Sensorik-Motorik & Pendidikan Jasmani
+                    </h3>
+                    <p className="text-sm text-brand-gray">
+                      Mengoptimalkan perkembangan fisik dan keterampilan motorik
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/80 backdrop-blur-sm border-2 border-brand-warm-brown/20 hover:border-brand-warm-brown/40 hover:shadow-xl transition-all duration-300 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-brand-warm-brown rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-lg">5</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-brand-warm-brown mb-2">
+                      Pendidikan Intelektual & Learning Agility
+                    </h3>
+                    <p className="text-sm text-brand-gray">
+                      Mengasah kemampuan berpikir kritis dan adaptif dalam
+                      belajar
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/80 backdrop-blur-sm border-2 border-brand-emerald/20 hover:border-brand-emerald/40 hover:shadow-xl transition-all duration-300 rounded-lg p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-brand-emerald rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-lg">6</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-brand-emerald mb-2">
+                      Pendidikan Bakat, Keterampilan & Peran
+                    </h3>
+                    <p className="text-sm text-brand-gray">
+                      Menggali dan mengembangkan potensi unik setiap individu
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/80 backdrop-blur-sm border-2 border-brand-cyan/20 hover:border-brand-cyan/40 hover:shadow-xl transition-all duration-300 rounded-lg p-6 md:col-span-2 lg:col-span-3">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-brand-cyan rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-lg">7</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-brand-cyan mb-2">
+                      Pendidikan Seksual, Generatif & Keberlanjutan Peradaban
+                    </h3>
+                    <p className="text-sm text-brand-gray">
+                      Memahami fitrah seksualitas dengan sehat dan kontribusi
+                      positif bagi peradaban
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
