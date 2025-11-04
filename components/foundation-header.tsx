@@ -13,6 +13,28 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { useTheme } from '@/lib/theme-provider';
+import { Moon, Sun } from 'lucide-react';
+
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={toggleTheme}
+      className="text-brand-off-white hover:text-brand-lime hover:bg-brand-lime/10 transition-all duration-300"
+      aria-label="Toggle theme"
+    >
+      {theme === 'light' ? (
+        <Moon className="h-5 w-5" />
+      ) : (
+        <Sun className="h-5 w-5" />
+      )}
+    </Button>
+  );
+}
 
 const foundationNav = [
   { href: '/', label: 'Beranda' },
@@ -77,7 +99,7 @@ export function FoundationHeader() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-6">
           {foundationNav.map((item) => {
             if (item.children) {
               return (
@@ -120,6 +142,7 @@ export function FoundationHeader() {
               </Link>
             );
           })}
+          <ThemeToggle />
           <Link href="/dashboard/login">
             <Button
               variant="outline"
@@ -221,13 +244,16 @@ export function FoundationHeader() {
                       </Link>
                     );
                   })}
-                  <Link
-                    href="/dashboard/login"
-                    onClick={() => setOpen(false)}
-                    className="rounded-md px-3 py-3 text-base font-semibold transition-all duration-300 bg-brand-lime/20 hover:bg-brand-lime/30 text-brand-emerald mt-2"
-                  >
-                    🔐 Login
-                  </Link>
+                  <div className="flex items-center gap-2 mt-4 pt-4 border-t border-brand-lime/30">
+                    <ThemeToggle />
+                    <Link
+                      href="/dashboard/login"
+                      onClick={() => setOpen(false)}
+                      className="flex-1 rounded-md px-3 py-3 text-center text-base font-semibold transition-all duration-300 bg-brand-lime/20 hover:bg-brand-lime/30 text-brand-emerald"
+                    >
+                      🔐 Login
+                    </Link>
+                  </div>
                 </div>
               </div>
             </SheetContent>

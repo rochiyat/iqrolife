@@ -60,24 +60,36 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
+  /* Dark mode IqroLife Brand Colors - adjusted for dark backgrounds */
+  --brand-emerald: oklch(0.65 0.14 163); /* Lighter emerald */
+  --brand-sky: oklch(0.75 0.10 225); /* Slightly darker sky */
+  --brand-lime: oklch(0.78 0.14 115); /* Slightly darker lime */
+  --brand-warm-brown: oklch(0.55 0.10 55); /* Lighter warm brown */
+  --brand-cyan: oklch(0.72 0.11 195); /* Lighter cyan */
+  --brand-coral: oklch(0.72 0.15 25); /* Lighter coral */
+  --brand-off-white: oklch(0.95 0.005 260); /* Slightly darker off-white */
+  --brand-gray: oklch(0.65 0.01 260); /* Lighter gray */
+  --brand-dark-brown: oklch(0.85 0.02 45); /* Much lighter for text */
+
+  /* Dark mode semantic tokens */
+  --background: oklch(0.15 0.02 260); /* Dark background */
+  --foreground: oklch(0.95 0.005 260); /* Light text */
+  --card: oklch(0.20 0.02 260); /* Dark card */
+  --card-foreground: oklch(0.95 0.005 260);
+  --popover: oklch(0.18 0.02 260);
+  --popover-foreground: oklch(0.95 0.005 260);
+  --primary: var(--brand-emerald);
+  --primary-foreground: oklch(0.15 0.02 260);
+  --secondary: var(--brand-coral);
+  --secondary-foreground: oklch(0.15 0.02 260);
+  --muted: oklch(0.25 0.02 260);
+  --muted-foreground: var(--brand-gray);
+  --accent: var(--brand-lime);
+  --accent-foreground: oklch(0.15 0.02 260);
+  --destructive: oklch(0.65 0.25 27);
+  --destructive-foreground: oklch(0.95 0 0);
+  --border: oklch(0.30 0.03 163);
+  --input: oklch(0.28 0.02 163);
   --ring: oklch(0.439 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);

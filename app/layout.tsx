@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { Suspense } from 'react';
+import { ThemeProvider } from '@/lib/theme-provider';
 import './globals.css';
 
 const inter = Inter({
@@ -29,15 +30,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/logo-iqrolife.png" type="image/png" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('iqrolife-theme');
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
       </head>
       <body
         className={`font-sans ${inter.variable} ${poppins.variable} antialiased`}
       >
-        <Suspense fallback={null}>{children}</Suspense>
-        <Analytics />
+        <ThemeProvider>
+          <Suspense fallback={null}>{children}</Suspense>
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
