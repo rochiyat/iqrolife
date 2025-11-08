@@ -1,17 +1,80 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { AnimatedSection } from '@/components/animated-section';
 import { Card, CardContent } from '@/components/ui/card';
 import { FoundationHeader } from '@/components/foundation-header';
 import FoundationFooter from '@/components/foundation-footer';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton-loading';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { CheckCircle, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 export default function MentoringAyahPage() {
   const [mentoringAyahData, setMentoringAyahData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+
+  const programs = ['Dadventure: MInsoc Bareng Anak', 'Bulutangkis Bersama'];
+
+  const galleryImages = [
+    {
+      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=600&fit=crop',
+      alt: 'Dadventure bersama anak',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1609220136736-443140cffec6?w=800&h=600&fit=crop',
+      alt: 'Kegiatan MInsoc ayah dan anak',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&h=600&fit=crop',
+      alt: 'Bulutangkis bersama',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&h=600&fit=crop',
+      alt: 'Olahraga ayah dan anak',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=600&fit=crop',
+      alt: 'Mentoring ayah',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=800&h=600&fit=crop',
+      alt: 'Diskusi ayah',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1560785477-d43d2b34e0df?w=800&h=600&fit=crop',
+      alt: 'Aktivitas outdoor ayah anak',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=600&fit=crop',
+      alt: 'Workshop ayah',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&h=600&fit=crop',
+      alt: 'Kegiatan bersama ayah',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&h=600&fit=crop',
+      alt: 'Sesi mentoring ayah',
+    },
+  ];
+
+  const handlePrevImage = () => {
+    if (selectedImage !== null) {
+      setSelectedImage(
+        selectedImage === 0 ? galleryImages.length - 1 : selectedImage - 1
+      );
+    }
+  };
+
+  const handleNextImage = () => {
+    if (selectedImage !== null) {
+      setSelectedImage(
+        selectedImage === galleryImages.length - 1 ? 0 : selectedImage + 1
+      );
+    }
+  };
 
   useEffect(() => {
     const fetchMentoringAyahData = async () => {
@@ -29,81 +92,48 @@ export default function MentoringAyahPage() {
     fetchMentoringAyahData();
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImage !== null) {
+        if (e.key === 'ArrowLeft') handlePrevImage();
+        if (e.key === 'ArrowRight') handleNextImage();
+        if (e.key === 'Escape') setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage, galleryImages.length]);
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50">
+      <div>
         <FoundationHeader />
-        <main className="container mx-auto px-4 py-16">
-          <div className="text-center mb-12">
-            <Skeleton className="h-12 w-64 mx-auto mb-4" />
-            <Skeleton className="h-6 w-96 mx-auto mb-6" />
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <Card
-                key={i}
-                className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <Skeleton className="w-12 h-12 rounded-full flex-shrink-0" />
-                    <div>
-                      <Skeleton className="h-5 w-32 mb-1" />
-                      <Skeleton className="h-4 w-20" />
-                    </div>
-                  </div>
-                  <Skeleton className="h-4 w-full mb-4" />
-                  <div className="space-y-3">
-                    <Skeleton className="h-4 w-20" />
-                    <div className="space-y-2">
-                      {Array.from({ length: 3 }).map((_, j) => (
-                        <div key={j} className="flex items-center gap-2">
-                          <Skeleton className="w-1.5 h-1.5 rounded-full" />
-                          <Skeleton className="h-4 w-24" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-16 max-w-3xl mx-auto">
+        <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+          <nav className="text-sm text-muted-foreground mb-4">
+            <Skeleton className="h-4 w-16 inline-block" />
+            <Skeleton className="h-4 w-2 inline-block mx-2" />
+            <Skeleton className="h-4 w-24 inline-block" />
+          </nav>
+          <div className="mt-8">
             <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
               <CardContent className="p-8">
-                <Skeleton className="h-8 w-32 mx-auto mb-8" />
-                <div className="grid gap-8">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i}>
-                      <Skeleton className="h-6 w-48 mb-4" />
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        {Array.from({ length: 3 }).map((_, j) => (
-                          <div key={j} className="p-3 rounded-lg text-center">
-                            <Skeleton className="h-4 w-full" />
-                          </div>
-                        ))}
-                      </div>
+                <Skeleton className="h-10 w-3/4 mb-6" />
+                <Skeleton className="h-6 w-full mb-4" />
+                <Skeleton className="h-6 w-5/6 mb-8" />
+                <Skeleton className="h-8 w-48 mb-4" />
+                <div className="space-y-3">
+                  {Array.from({ length: 2 }).map((_, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <Skeleton className="w-5 h-5 rounded-full" />
+                      <Skeleton className="h-4 w-48" />
                     </div>
                   ))}
-
-                  <div className="mt-8 p-4 rounded-lg">
-                    <Skeleton className="h-5 w-24 mb-2" />
-                    <div className="space-y-2">
-                      {Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="flex items-center gap-2">
-                          <Skeleton className="w-4 h-4" />
-                          <Skeleton className="h-4 w-32" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
-        </main>
+        </section>
         <FoundationFooter />
       </div>
     );
@@ -111,126 +141,161 @@ export default function MentoringAyahPage() {
 
   if (!mentoringAyahData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50">
+      <div>
         <FoundationHeader />
-        <main className="container mx-auto px-4 py-16">
+        <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
           <div className="text-center">
-            <h1 className="text-4xl font-bold">Error loading page</h1>
+            <h1 className="text-3xl font-semibold">Error loading page</h1>
           </div>
-        </main>
+        </section>
         <FoundationFooter />
       </div>
     );
   }
 
-  const activities = mentoringAyahData.activities;
-  const benefits = mentoringAyahData.benefits;
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50">
-      <FoundationHeader />
-      <main className="container mx-auto px-4 py-16">
-        <AnimatedSection>
-          <h1 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
-            {mentoringAyahData.title}
-          </h1>
-          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-            {mentoringAyahData.subtitle}
-          </p>
-        </AnimatedSection>
+    <div>
+      <main>
+        <FoundationHeader />
+        <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+          <nav className="text-sm text-muted-foreground">
+            <Link href="/program" className="hover:text-primary">
+              Program
+            </Link>
+            <span className="mx-2">/</span>
+            <span className="text-foreground">Mentoring Ayah</span>
+          </nav>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {activities.map((activity: any, index: number) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-            >
-              <Card className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                      <span className="text-2xl">{activity.icon}</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-blue-800">
-                        {activity.title}
-                      </h3>
-                      <p className="text-sm text-emerald-600">
-                        {activity.schedule}
+          <div className="mt-8">
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+              <CardContent className="p-8">
+                <h1 className="text-3xl font-bold mb-6 text-primary">
+                  {mentoringAyahData.title}
+                </h1>
+
+                <div className="mb-8">
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Program pendampingan intensif dan berkelanjutan untuk Ayah
+                    Iqrolife guna memastikan keterlibatan dan keselarasan peran
+                    Ayah pada proses pengasuhan dan pendidikan anak.
+                  </p>
+                </div>
+
+                <div>
+                  <h2 className="text-2xl font-semibold mb-4 text-foreground">
+                    Program yang sudah berjalan
+                  </h2>
+                  <ul className="space-y-3">
+                    {programs.map((program, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-muted-foreground">{program}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-8 flex gap-3">
+                  <Link href="/contact">
+                    <Button>Hubungi Kami</Button>
+                  </Link>
+                  <Link href="/program">
+                    <Button variant="outline">Lihat Program Lain</Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Gallery Section */}
+          <div className="mt-12">
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+              <CardContent className="p-8">
+                <h2 className="text-2xl font-bold mb-6 text-primary">
+                  Galeri Kegiatan
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {galleryImages.map((image, index) => (
+                    <div key={index} className="group cursor-pointer">
+                      <div
+                        className="relative aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
+                        onClick={() => setSelectedImage(index)}
+                      >
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <p className="mt-2 text-sm text-center text-muted-foreground line-clamp-2">
+                        {image.alt}
                       </p>
                     </div>
-                  </div>
-                  <p className="text-gray-600 mb-4">{activity.description}</p>
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-blue-700">Kegiatan:</h4>
-                    <ul className="space-y-2">
-                      {activity.topics.map((topic: string, i: number) => (
-                        <li
-                          key={i}
-                          className="flex items-center gap-2 text-gray-700"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                          {topic}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-16 max-w-3xl mx-auto"
-        >
-          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold text-center mb-8 text-emerald-800">
-                Manfaat Bergabung
-              </h2>
-              <div className="grid gap-8">
-                {benefits.map((benefit: any, index: number) => (
-                  <div key={index}>
-                    <h3 className="font-semibold text-lg mb-4 text-emerald-700">
-                      {benefit.title}
-                    </h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      {benefit.points.map((point: string, i: number) => (
-                        <div
-                          key={i}
-                          className="p-3 rounded-lg bg-emerald-50/50 text-center"
-                        >
-                          <span className="text-emerald-800 text-sm">
-                            {point}
-                          </span>
-                        </div>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+          {/* Image Modal */}
+          {selectedImage !== null && (
+            <div
+              className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+              onClick={() => setSelectedImage(null)}
+            >
+              <button
+                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+                onClick={() => setSelectedImage(null)}
+              >
+                <X className="w-8 h-8" />
+              </button>
+
+              <button
+                className="absolute left-4 text-white hover:text-gray-300 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrevImage();
+                }}
+              >
+                <ChevronLeft className="w-12 h-12" />
+              </button>
+
+              <button
+                className="absolute right-4 text-white hover:text-gray-300 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNextImage();
+                }}
+              >
+                <ChevronRight className="w-12 h-12" />
+              </button>
+
+              <div
+                className="relative max-w-5xl max-h-[90vh] w-full h-full flex flex-col items-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="relative w-full h-full">
+                  <Image
+                    src={galleryImages[selectedImage].src}
+                    alt={galleryImages[selectedImage].alt}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="mt-4 text-center">
+                  <p className="text-white text-lg font-medium">
+                    {galleryImages[selectedImage].alt}
+                  </p>
+                </div>
               </div>
 
-              <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-                <h3 className="font-semibold text-blue-800 mb-2">
-                  Cara Bergabung:
-                </h3>
-                <ol className="list-decimal list-inside space-y-2 text-gray-700">
-                  {mentoringAyahData.joinSteps.map(
-                    (step: string, index: number) => (
-                      <li key={index}>{step}</li>
-                    )
-                  )}
-                </ol>
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black/50 px-3 py-1 rounded">
+                {selectedImage + 1} / {galleryImages.length}
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+            </div>
+          )}
+        </section>
       </main>
       <FoundationFooter />
     </div>
