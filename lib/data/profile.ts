@@ -83,19 +83,19 @@ export const purposeData = {
       icon: '🎓',
       title: 'Pendidikan Peradaban',
       description:
-        'Membangun sistem pendidikan yang tidak hanya fokus pada akademik, tetapi membentuk karakter dan peradaban yang bermartabat.',
+        'Hadirnya ekosistem pendidikan yang mampu mengembangan manusia yang selaras fitrah dan tumbuh secara paripurna pada aspek jiwa, akal dan fisik untuk menemukan misi kehidupannya masing-masing.',
     },
     {
       icon: '✨',
       title: 'Menyukseskan',
       description:
-        'Mengembangkan potensi optimal setiap individu untuk mencapai kesuksesan dalam berbagai aspek kehidupan.',
+        'Bertemunya kesuksesan di dunia dengan misi kehidupan yang Alloh titipkan berdasarkan potensi dan fitrahnya masing-masing.',
     },
     {
       icon: '😊',
       title: 'Membahagiakan',
       description:
-        'Menciptakan suasana pembelajaran yang menyenangkan dan membawa kebahagiaan sejati bagi seluruh komunitas.',
+        'Sukses yang sesuai dengan misi kehidupan merupakan sukses yang memberikan ketenangan dan kebahagiaan, menjadi bagian dari ibadah seorang hamba ke Tuhan nya.',
     },
   ],
 };
