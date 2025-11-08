@@ -1,7 +1,7 @@
 export const sejarahData = {
   title: 'Sejarah Iqrolife Community',
   subtitle:
-    'Perjalanan kami dalam membangun komunitas yang saling menguatkan, berbagi, dan tumbuh bersama.',
+    'Berawal dari sebuah keyakinan, setiap keberadaan menuntut peran. Setiap peran memiliki tugas & tanggung jawab. Kesuksesan kita, tergantung dari bagaimana tugas dan tanggung jawab kita benar-benar diselesaikan.\n\nSudahkah kita bertanya dan mendalami keberadaan dan peran kita sebagai manusia dan orang tua dari manusia?\n\nIqro = Membaca, Life = Kehidupan. \n\nIqrolife merupakan komunitas pembelajaran keluarga yang bertujuan membantu masing-masing keluarga untuk menemukan misi serta visi kehidupannya.\n\nBerdiri Tahun 2022 dimulai dari kebutuhan belajar dan berkomunitas, untuk saling berbagi cerita dan saling menguatkan sebagai orang tua.',
   milestones: [
     {
       year: '2022',
