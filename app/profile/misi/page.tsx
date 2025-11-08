@@ -39,28 +39,21 @@ export default function MisiPage() {
 
           <div className="max-w-6xl mx-auto">
             <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-              {/* Top Section Skeleton */}
-              <div className="bg-gray-100 rounded-xl p-6 mb-8">
-                <Skeleton className="h-8 w-64 mx-auto mb-6" />
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  {Array.from({ length: 4 }).map((_, i) => (
-                    <Skeleton key={i} className="h-20 w-full rounded-lg" />
-                  ))}
+              {/* Diagram Skeleton */}
+              <div className="mb-8">
+                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-gray-200">
+                  <Skeleton className="w-full h-96" />
                 </div>
               </div>
 
-              {/* Middle Section Skeleton */}
-              <div className="flex justify-start mb-8 ml-0 md:ml-12">
-                <Skeleton className="h-20 w-48 rounded-lg" />
-              </div>
-
-              {/* Bottom Section Skeleton */}
-              <div className="bg-gray-100 rounded-xl p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                  <Skeleton className="h-16 w-64 mx-auto rounded-lg" />
-                  <Skeleton className="h-16 w-64 mx-auto rounded-lg" />
-                </div>
-                <Skeleton className="h-8 w-96 mx-auto mt-6" />
+              {/* Legend Skeleton */}
+              <div className="flex flex-wrap gap-4 justify-center">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <Skeleton className="w-12 h-0.5" />
+                    <Skeleton className="h-4 w-20" />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -104,147 +97,21 @@ export default function MisiPage() {
         >
           {/* Diagram Container */}
           <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-            {/* Top Section - Iqrolife Community */}
-            <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-xl p-6 mb-8">
-              <h2 className="text-center text-xl font-bold text-gray-800 mb-6">
-                Iqrolife Community
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
-                {/* KBTK Iqrolife */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="relative"
-                >
-                  <div className="bg-gradient-to-br from-green-700 to-green-800 text-white p-4 rounded-lg shadow-lg text-center font-semibold">
-                    KBTK Iqrolife
-                  </div>
-                  {/* Arrow down */}
-                  <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full h-12 w-0.5 bg-green-700"></div>
-                </motion.div>
-
-                {/* Kelas Eksplorasi */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="relative"
-                >
-                  <div className="bg-gradient-to-br from-green-700 to-green-800 text-white p-4 rounded-lg shadow-lg text-center font-semibold">
-                    Kelas Eksplorasi
-                  </div>
-                  {/* Arrow down */}
-                  <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full h-12 w-0.5 bg-orange-500"></div>
-                </motion.div>
-
-                {/* Kelas Aqil Baligh */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="relative"
-                >
-                  <div className="bg-gradient-to-br from-green-700 to-green-800 text-white p-4 rounded-lg shadow-lg text-center font-semibold">
-                    Kelas Aqil Baligh
-                  </div>
-                  {/* Arrow down */}
-                  <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full h-12 w-0.5 bg-orange-500"></div>
-                </motion.div>
-
-                {/* Kelas Belajar Orang Tua */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="relative"
-                >
-                  <div className="bg-gradient-to-br from-green-700 to-green-800 text-white p-4 rounded-lg shadow-lg text-center font-semibold">
-                    Kelas Belajar
-                    <br />
-                    Orang Tua
-                  </div>
-                  {/* Arrow down */}
-                  <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full h-12 w-0.5 bg-orange-500"></div>
-                </motion.div>
+            {/* Iqrolife Community Diagram */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mb-8"
+            >
+              <div className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-brand-lime/20">
+                <img
+                  src="/diagram-misi-iqrolife.jpg"
+                  alt="Diagram Ekosistem Iqrolife Community - Alur Program dari KBTK, Kelas Eksplorasi, Kelas Aqil Baligh, Kelas Belajar Orang Tua menuju Sesi Refleksi dan Mentoring Ibu & Ayah untuk Pembinaan dan Kaderisasi berbasis Keluarga"
+                  className="w-full h-auto"
+                />
               </div>
-            </div>
-
-            {/* Middle Section - Sesi Refleksi */}
-            <div className="flex justify-start mb-8 ml-0 md:ml-12">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7 }}
-                className="relative"
-              >
-                <div className="bg-gradient-to-br from-green-700 to-green-800 text-white p-4 rounded-lg shadow-lg text-center font-semibold w-48">
-                  Sesi Refleksi
-                  <br />
-                  Orang Tua
-                </div>
-                {/* Arrow down */}
-                <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-full h-24 w-0.5 bg-red-500"></div>
-              </motion.div>
-            </div>
-
-            {/* Connecting Lines - Hidden on mobile */}
-            <div className="hidden md:block relative h-32 mb-8">
-              {/* Horizontal line from Sesi Refleksi */}
-              <div className="absolute left-12 top-0 w-[calc(50%-3rem)] h-0.5 bg-red-500"></div>
-
-              {/* Horizontal lines from top boxes */}
-              <div className="absolute left-[calc(25%-1rem)] top-0 w-[calc(50%+2rem)] h-0.5 bg-orange-500"></div>
-
-              {/* Vertical lines down to mentoring */}
-              <div className="absolute left-[calc(50%-8rem)] top-0 h-32 w-0.5 bg-orange-500"></div>
-              <div className="absolute left-[calc(50%+8rem)] top-0 h-32 w-0.5 bg-orange-500"></div>
-
-              {/* Arrow from right side */}
-              <div className="absolute right-0 top-16 w-[calc(25%)] h-0.5 bg-gray-400"></div>
-              <div className="absolute right-0 top-16 h-16 w-0.5 bg-gray-400"></div>
-            </div>
-
-            {/* Bottom Section - Mentoring */}
-            <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-xl p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                {/* Mentoring Ibu */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                  className="flex justify-center"
-                >
-                  <div className="bg-gradient-to-br from-green-700 to-green-800 text-white p-4 rounded-lg shadow-lg text-center font-semibold w-64">
-                    Mentoring Ibu
-                  </div>
-                </motion.div>
-
-                {/* Mentoring Ayah */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 }}
-                  className="flex justify-center"
-                >
-                  <div className="bg-gradient-to-br from-green-700 to-green-800 text-white p-4 rounded-lg shadow-lg text-center font-semibold w-64">
-                    Mentoring Ayah
-                  </div>
-                </motion.div>
-              </div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.0 }}
-                className="text-center mt-6"
-              >
-                <p className="text-lg font-bold text-gray-800">
-                  Pembinaan dan Kaderisasi berbasis Keluarga
-                </p>
-              </motion.div>
-            </div>
+            </motion.div>
 
             {/* Legend */}
             <div className="mt-8 flex flex-wrap gap-4 justify-center text-sm">
