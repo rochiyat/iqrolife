@@ -1,15 +1,16 @@
 export const schoolData = {
-  title: 'Kelas Siap Sekolah - KBTK Iqrolife',
+  title: 'Kelas Siap Sekolah',
   subtitle:
     'Program pendidikan anak usia dini yang fokus pada pengembangan karakter dan kecerdasan majemuk dalam suasana belajar yang menyenangkan.',
   description:
     "Membangun generasi berkarakter Qur'ani dengan program Islamic Leadership, Green School, dan Tahfidz yang terintegrasi dalam pembelajaran holistik.",
   badge: 'PPDB 2025/2026',
   hero: {
-    title: '🎒 Kelas Siap Sekolah Iqrolife 🎒',
-    subtitle: 'Pendidikan Peradaban: Menyukseskan dan Membahagiakan Anak',
+    title: '🎒 Kelas Siap Sekolah 🎒',
+    subtitle:
+      'Program pendidikan anak usia dini yang fokus pada pengembangan karakter dan kecerdasan majemuk dalam suasana belajar yang menyenangkan.',
     description:
-      'Bergabunglah dengan KBTK Iqrolife dan wujudkan masa depan gemilang putra-putri Anda bersama kami! ✨',
+      'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya. \n\nSejak 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah mulai dari KB, TK A dan TK B. ✨',
   },
   visionMission: {
     title: 'Purpose, Visi & Misi',

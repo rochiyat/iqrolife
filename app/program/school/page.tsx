@@ -138,11 +138,11 @@ export default function SchoolPage() {
                 {schoolData.hero?.title || schoolData.title}
               </h1>
               {schoolData.hero?.subtitle && (
-                <p className="text-xl md:text-2xl font-semibold text-gray-800 mb-4 animate-fade-in-up">
+                <p className="text-center text-gray-700 max-w-3xl mx-auto mb-6 text-lg font-medium animate-fade-in-up whitespace-pre-line leading-relaxed">
                   {schoolData.hero.subtitle}
                 </p>
               )}
-              <p className="text-center text-gray-600 max-w-3xl mx-auto mb-8 text-lg animate-fade-in-up">
+              <p className="text-center text-gray-600 max-w-3xl mx-auto mb-8 text-lg animate-fade-in-up whitespace-pre-line">
                 {schoolData.hero?.description || schoolData.description}
               </p>
             </div>
@@ -162,7 +162,10 @@ export default function SchoolPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
               >
-                <Card className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                <Card
+                  className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
                   <CardContent className="p-6">
                     <div className="flex items-center gap-4 mb-4">
                       <div className="w-16 h-16 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 flex items-center justify-center flex-shrink-0">
