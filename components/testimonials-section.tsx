@@ -140,7 +140,55 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto relative">
+          {/* Previous Button */}
+          <button
+            onClick={() =>
+              setCurrentTestimonial(
+                (prev) => (prev - 1 + testimonials.length) % testimonials.length
+              )
+            }
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 border-yellow-300 flex items-center justify-center text-gray-700 hover:bg-yellow-50 hover:scale-110 transition-all duration-300 group"
+            aria-label="Previous testimonial"
+          >
+            <svg
+              className="w-6 h-6 group-hover:scale-125 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+
+          {/* Next Button */}
+          <button
+            onClick={() =>
+              setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+            }
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 border-yellow-300 flex items-center justify-center text-gray-700 hover:bg-yellow-50 hover:scale-110 transition-all duration-300 group"
+            aria-label="Next testimonial"
+          >
+            <svg
+              className="w-6 h-6 group-hover:scale-125 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+
           <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-2 border-yellow-200 hover:shadow-2xl transition-all duration-500 animate-scale-in">
             <CardContent className="p-8">
               <div className="flex flex-col md:flex-row items-center gap-6">
