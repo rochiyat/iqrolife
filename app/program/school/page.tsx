@@ -276,6 +276,42 @@ export default function SchoolPage() {
           </AnimatedSection>
         </section>
 
+        {/* Why Choose Section */}
+        {schoolData.whyChoose && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center mb-12 text-green-700 animate-bounce-gentle">
+              {schoolData.whyChoose.title}
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {schoolData.whyChoose.items.map((item: any, index: number) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                >
+                  <Card className="h-full bg-gradient-to-br from-green-600 to-green-700 border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up">
+                    <CardContent className="p-8 text-center h-full flex flex-col">
+                      <div className="text-5xl mb-4">{item.icon}</div>
+                      <h3 className="text-xl font-bold text-white mb-4">
+                        {item.title}
+                      </h3>
+                      <p className="text-white/95 leading-relaxed flex-grow">
+                        {item.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
         {/* Programs Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">

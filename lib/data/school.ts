@@ -24,6 +24,29 @@ export const schoolData = {
       'Mengenalkan anak akan pentingnya konservasi lingkungan',
     ],
   },
+  whyChoose: {
+    title: 'Mengapa Memilih Kelas Siap Sekolah Iqrolife?',
+    items: [
+      {
+        icon: '🎯',
+        title: 'Pendekatan Holistik',
+        description:
+          'Gagasan 7 Pendidikan Holistik dengan pendekatan Play Based Learning dan dampak atau output pembelajaran yang terukur',
+      },
+      {
+        icon: '👨‍👩‍👧',
+        title: 'Pendampingan Intensif',
+        description:
+          'Pendampingan intensif dan diskusi berkelanjutan guna terus memonitor tumbuh kembang anak.',
+      },
+      {
+        icon: '🌱',
+        title: 'Ekosistem Pendidikan',
+        description:
+          'Ekosistem pendidikan berupa ruang pembelajaran dan mentoring untuk Orang Tua, Ayah dan Bunda, sehingga bisa sejalan dengan kebutuhan tumbuh kembang anak',
+      },
+    ],
+  },
   programs: [
     {
       title: 'IMAN',
