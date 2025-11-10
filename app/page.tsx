@@ -479,7 +479,8 @@ export default function FoundationLanding() {
                       perjalanan panjang menemukan misi hidup, menjawab kenapa
                       kami dilahirkan. Sukses yang sejalan dengan misi hidup
                       adalah sukses yang mampu menjawab ekspektasi Allah SWT
-                      menciptakan, sehingga akan muncul kesejatian kebahagiaan.
+                      sebagai Dzat yang menciptakan menciptakan, sehingga akan
+                      muncul kesejatian kebahagiaan.
                     </motion.p>
                   </CardContent>
                 </Card>
@@ -664,45 +665,6 @@ export default function FoundationLanding() {
                       </div>
                     </CardContent>
                   </Card>
-                </div>
-              </AnimatedSection>
-
-              <AnimatedSection delay={0.4}>
-                <div className="mt-12 bg-gradient-to-r from-brand-emerald/10 to-brand-cyan/10 rounded-2xl p-8 border-2 border-brand-lime/30">
-                  <div className="text-center">
-                    <h3 className="text-xl font-bold text-brand-emerald mb-4">
-                      Tahapan Usia dalam Pendidikan Holistik
-                    </h3>
-                    <div className="grid md:grid-cols-3 gap-6 mt-6">
-                      <div className="bg-white/80 rounded-xl p-6 border-2 border-brand-lime/20">
-                        <div className="text-3xl font-bold text-brand-emerald mb-2">
-                          0-6
-                        </div>
-                        <div className="text-sm text-brand-gray">Tahun</div>
-                        <p className="text-sm text-brand-gray mt-3">
-                          Fase fondasi: Internalisasi nilai & kepahiawaan
-                        </p>
-                      </div>
-                      <div className="bg-white/80 rounded-xl p-6 border-2 border-brand-cyan/20">
-                        <div className="text-3xl font-bold text-brand-cyan mb-2">
-                          7-10
-                        </div>
-                        <div className="text-sm text-brand-gray">Tahun</div>
-                        <p className="text-sm text-brand-gray mt-3">
-                          Fase eksplorasi: Sosialisasi & internalisasi konsep
-                        </p>
-                      </div>
-                      <div className="bg-white/80 rounded-xl p-6 border-2 border-brand-coral/20">
-                        <div className="text-3xl font-bold text-brand-coral mb-2">
-                          11-15
-                        </div>
-                        <div className="text-sm text-brand-gray">Tahun</div>
-                        <p className="text-sm text-brand-gray mt-3">
-                          Fase konfirmasi: Pendalaman & kontribusi sosial
-                        </p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </AnimatedSection>
             </div>

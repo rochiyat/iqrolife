@@ -151,7 +151,7 @@ export default function FoundationFooter() {
           <div className="md:col-span-4 lg:col-span-1">
             <div className="flex items-center gap-3">
               <img
-                src={footerData?.about.logo || '/iqrolife-logo.jpg'}
+                src={footerData?.about.logo || '/logo-iqrolife.png'}
                 alt="Logo Iqrolife Community"
                 className="h-9 w-9 rounded-md"
               />

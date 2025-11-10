@@ -96,9 +96,13 @@ export default function SejarahPage() {
           <h1 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
             {sejarahData.title}
           </h1>
-          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
-            {sejarahData.subtitle}
-          </p>
+          <div className="text-center text-gray-600 max-w-3xl mx-auto mb-12 space-y-4">
+            {sejarahData.subtitle.split('\n\n').map((paragraph, index) => (
+              <p key={index} className="leading-relaxed">
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </AnimatedSection>
 
         <div className="max-w-4xl mx-auto space-y-12">

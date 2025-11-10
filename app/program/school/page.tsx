@@ -11,6 +11,133 @@ import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton-loading';
 import { CheckCircle, Calendar, Users, Book } from 'lucide-react';
 
+// Carousel Component (reusable for Facilities and Activities)
+function ImageCarousel({
+  items,
+  colorTheme = 'purple',
+}: {
+  items: any[];
+  colorTheme?: 'purple' | 'orange' | 'green';
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % items.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [items.length]);
+
+  const themeColors = {
+    purple: {
+      border: 'border-purple-300',
+      hover: 'hover:bg-purple-50',
+      dot: 'bg-purple-600',
+    },
+    orange: {
+      border: 'border-orange-300',
+      hover: 'hover:bg-orange-50',
+      dot: 'bg-orange-600',
+    },
+    green: {
+      border: 'border-green-300',
+      hover: 'hover:bg-green-50',
+      dot: 'bg-green-600',
+    },
+  };
+
+  const theme = themeColors[colorTheme];
+
+  return (
+    <div className="max-w-4xl mx-auto relative">
+      {/* Previous Button */}
+      <button
+        onClick={() =>
+          setCurrentIndex((prev) => (prev - 1 + items.length) % items.length)
+        }
+        className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 ${theme.border} flex items-center justify-center text-gray-700 ${theme.hover} hover:scale-110 transition-all duration-300 group`}
+        aria-label="Previous"
+      >
+        <svg
+          className="w-6 h-6 group-hover:scale-125 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+
+      {/* Next Button */}
+      <button
+        onClick={() => setCurrentIndex((prev) => (prev + 1) % items.length)}
+        className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 ${theme.border} flex items-center justify-center text-gray-700 ${theme.hover} hover:scale-110 transition-all duration-300 group`}
+        aria-label="Next"
+      >
+        <svg
+          className="w-6 h-6 group-hover:scale-125 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+
+      <Card className="bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-500 animate-scale-in overflow-hidden p-6">
+        <div
+          className="relative h-[500px] cursor-pointer group overflow-hidden rounded-lg"
+          onClick={() => setCurrentIndex((prev) => (prev + 1) % items.length)}
+        >
+          <Image
+            src={items[currentIndex].image}
+            alt={items[currentIndex].title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/40 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">
+              {items[currentIndex].title}
+            </h3>
+            <p className="text-sm text-white/90">
+              {items[currentIndex].description}
+            </p>
+          </div>
+          <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-white/40 to-transparent pointer-events-none" />
+          <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-white/40 to-transparent pointer-events-none" />
+        </div>
+      </Card>
+
+      <div className="flex justify-center mt-8 gap-3">
+        {items.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => setCurrentIndex(index)}
+            className={`w-4 h-4 rounded-full transition-all duration-300 animate-pulse border-0 cursor-pointer ${
+              index === currentIndex
+                ? `${theme.dot} scale-125`
+                : 'bg-gray-300 hover:bg-gray-400'
+            }`}
+            aria-label={`Item ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function SchoolPage() {
   const [schoolData, setSchoolData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -138,21 +265,57 @@ export default function SchoolPage() {
                 {schoolData.hero?.title || schoolData.title}
               </h1>
               {schoolData.hero?.subtitle && (
-                <p className="text-xl md:text-2xl font-semibold text-gray-800 mb-4 animate-fade-in-up">
+                <p className="text-center text-gray-700 max-w-3xl mx-auto mb-6 text-lg font-medium animate-fade-in-up whitespace-pre-line leading-relaxed">
                   {schoolData.hero.subtitle}
                 </p>
               )}
-              <p className="text-center text-gray-600 max-w-3xl mx-auto mb-8 text-lg animate-fade-in-up">
+              <p className="text-center text-gray-600 max-w-3xl mx-auto mb-8 text-lg animate-fade-in-up whitespace-pre-line">
                 {schoolData.hero?.description || schoolData.description}
               </p>
             </div>
           </AnimatedSection>
         </section>
 
+        {/* Why Choose Section */}
+        {schoolData.whyChoose && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center mb-12 text-green-700 animate-bounce-gentle">
+              {schoolData.whyChoose.title}
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {schoolData.whyChoose.items.map((item: any, index: number) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                >
+                  <Card className="h-full bg-gradient-to-br from-green-600 to-green-700 border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up">
+                    <CardContent className="p-8 text-center h-full flex flex-col">
+                      <div className="text-5xl mb-4">{item.icon}</div>
+                      <h3 className="text-xl font-bold text-white mb-4">
+                        {item.title}
+                      </h3>
+                      <p className="text-white/95 leading-relaxed flex-grow">
+                        {item.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
         {/* Programs Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
-            Program Unggulan
+            Output Pembelajaran
           </h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {programs.map((program: any, index: number) => (
@@ -162,7 +325,10 @@ export default function SchoolPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
               >
-                <Card className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                <Card
+                  className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
                   <CardContent className="p-6">
                     <div className="flex items-center gap-4 mb-4">
                       <div className="w-16 h-16 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 flex items-center justify-center flex-shrink-0">
@@ -191,6 +357,77 @@ export default function SchoolPage() {
           </div>
         </section>
 
+        {/* Levels Section */}
+        {schoolData.levels && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
+              Level Pendidikan
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {schoolData.levels.map((level: any, index: number) => (
+                <Card
+                  key={index}
+                  className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="relative h-48">
+                    <Image
+                      src={level.image}
+                      alt={level.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-3xl">{level.icon}</span>
+                      <h3 className="font-bold text-xl text-green-700">
+                        {level.title}
+                      </h3>
+                    </div>
+                    <div className="mb-3">
+                      <p className="text-sm font-semibold text-orange-600">
+                        {level.age}
+                        {level.capacity && ` • ${level.capacity}`}
+                      </p>
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {level.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
+        {/* Facilities Section */}
+        {schoolData.facilities && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+              {schoolData.facilities.title}
+            </h2>
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in-up">
+              {schoolData.facilities.description}
+            </p>
+
+            <ImageCarousel
+              items={schoolData.facilities.items}
+              colorTheme="purple"
+            />
+          </motion.section>
+        )}
+
         {/* Activities Section */}
         {schoolData.activities && (
           <motion.section
@@ -205,33 +442,27 @@ export default function SchoolPage() {
             <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in-up">
               {schoolData.activities.description}
             </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              {schoolData.activities.items.map(
-                (activity: any, index: number) => (
-                  <Card
-                    key={index}
-                    className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="relative h-48">
-                      <Image
-                        src={activity.image}
-                        alt={activity.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-lg mb-2 text-pink-700">
-                        {activity.title}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        {activity.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                )
-              )}
+
+            {/* Aktivitas Tahunan */}
+            <div className="mb-16">
+              <h3 className="text-2xl font-bold text-center mb-8 text-orange-700">
+                Aktivitas Tahunan
+              </h3>
+              <ImageCarousel
+                items={schoolData.activities.tahunan}
+                colorTheme="orange"
+              />
+            </div>
+
+            {/* Aktivitas Harian */}
+            <div>
+              <h3 className="text-2xl font-bold text-center mb-8 text-green-700">
+                Aktivitas Harian
+              </h3>
+              <ImageCarousel
+                items={schoolData.activities.harian}
+                colorTheme="green"
+              />
             </div>
           </motion.section>
         )}

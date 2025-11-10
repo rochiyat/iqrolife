@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton-loading';
 
 export default function GallerySection() {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [galleryData, setGalleryData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,6 +26,15 @@ export default function GallerySection() {
 
     fetchGalleryData();
   }, []);
+
+  useEffect(() => {
+    if (galleryData && galleryData.images) {
+      const timer = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % galleryData.images.length);
+      }, 5000);
+      return () => clearInterval(timer);
+    }
+  }, [galleryData]);
 
   if (loading) {
     return (
@@ -76,83 +85,99 @@ export default function GallerySection() {
           <p className="text-xl text-gray-600">{galleryData.subtitle}</p>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {galleryImages.map((image: any, index: number) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <Card
-                className="overflow-hidden cursor-pointer group"
-                onClick={() => setSelectedImage(index)}
-              >
-                <div className="aspect-[4/3] relative">
-                  <Image
-                    src={image.src || '/placeholder.svg'}
-                    alt={image.alt}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                      <h3 className="font-semibold text-lg">{image.alt}</h3>
-                      <p className="text-sm text-white/90">{image.caption}</p>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Lightbox */}
-        {selectedImage !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
+        <div className="max-w-4xl mx-auto relative">
+          {/* Previous Button */}
+          <button
+            onClick={() =>
+              setCurrentIndex(
+                (prev) =>
+                  (prev - 1 + galleryImages.length) % galleryImages.length
+              )
+            }
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 border-brand-emerald/30 flex items-center justify-center text-gray-700 hover:bg-brand-emerald/10 hover:scale-110 transition-all duration-300 group"
+            aria-label="Previous image"
           >
-            <motion.div
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              className="relative max-w-4xl w-full"
-              onClick={(e) => e.stopPropagation()}
+            <svg
+              className="w-6 h-6 group-hover:scale-125 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+
+          {/* Next Button */}
+          <button
+            onClick={() =>
+              setCurrentIndex((prev) => (prev + 1) % galleryImages.length)
+            }
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 border-brand-emerald/30 flex items-center justify-center text-gray-700 hover:bg-brand-emerald/10 hover:scale-110 transition-all duration-300 group"
+            aria-label="Next image"
+          >
+            <svg
+              className="w-6 h-6 group-hover:scale-125 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+
+          <Card className="bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-500 animate-scale-in overflow-hidden p-6">
+            <div
+              className="relative h-[500px] cursor-pointer group overflow-hidden rounded-lg"
+              onClick={() =>
+                setCurrentIndex((prev) => (prev + 1) % galleryImages.length)
+              }
             >
               <Image
-                src={galleryImages[selectedImage].src}
-                alt={galleryImages[selectedImage].alt}
-                width={1200}
-                height={800}
-                className="w-full h-auto rounded-lg"
+                src={galleryImages[currentIndex].src || '/placeholder.svg'}
+                alt={galleryImages[currentIndex].alt}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <button
-                type="button"
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 text-white w-10 h-10 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 transition-colors border-0 cursor-pointer"
-                aria-label="Close gallery"
-              >
-                ✕
-              </button>
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent rounded-b-lg">
-                <h3 className="text-white font-semibold text-lg">
-                  {galleryImages[selectedImage].alt}
+              <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/40 to-transparent pointer-events-none" />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-center">
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {galleryImages[currentIndex].alt}
                 </h3>
-                <p className="text-white/90">
-                  {galleryImages[selectedImage].caption}
+                <p className="text-sm text-white/90">
+                  {galleryImages[currentIndex].caption}
                 </p>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
+              <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-white/40 to-transparent pointer-events-none" />
+              <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-white/40 to-transparent pointer-events-none" />
+            </div>
+          </Card>
+
+          <div className="flex justify-center mt-8 gap-3">
+            {galleryImages.map((_: any, index: number) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => setCurrentIndex(index)}
+                className={`w-4 h-4 rounded-full transition-all duration-300 animate-pulse border-0 cursor-pointer ${
+                  index === currentIndex
+                    ? 'bg-brand-emerald scale-125'
+                    : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+                aria-label={`Image ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
