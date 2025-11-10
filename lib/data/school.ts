@@ -1,16 +1,16 @@
 export const schoolData = {
   title: 'Kelas Siap Sekolah',
   subtitle:
-    'Program pendidikan anak usia dini yang fokus pada pengembangan karakter dan kecerdasan majemuk dalam suasana belajar yang menyenangkan.',
+    'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
   description:
-    "Membangun generasi berkarakter Qur'ani dengan program Islamic Leadership, Green School, dan Tahfidz yang terintegrasi dalam pembelajaran holistik.",
+    'Sejak 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah mulai dari KB, TK A dan TK B. ✨',
   badge: 'PPDB 2025/2026',
   hero: {
     title: '🎒 Kelas Siap Sekolah 🎒',
     subtitle:
-      'Program pendidikan anak usia dini yang fokus pada pengembangan karakter dan kecerdasan majemuk dalam suasana belajar yang menyenangkan.',
+      'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
     description:
-      'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya. \n\nSejak 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah mulai dari KB, TK A dan TK B. ✨',
+      'Sejak 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah mulai dari KB, TK A dan TK B. ✨',
   },
   visionMission: {
     title: 'Purpose, Visi & Misi',
@@ -26,46 +26,40 @@ export const schoolData = {
   },
   programs: [
     {
-      title: 'Program Pembentukan Karakter',
-      description:
-        'Pembentukan karakter islami dan pengembangan nilai-nilai moral sejak dini.',
-      icon: '🌟',
+      title: 'IMAN',
+      description: 'Membangun fondasi keimanan yang kuat sejak dini.',
+      icon: '🕌',
       details: [
-        'Pembiasaan adab islami',
-        'Pengenalan nilai-nilai moral',
-        'Aktivitas pembiasaan mandiri',
+        'Kesiapan untuk siap Perintah Ibadah selanjutnya',
+        'Mengenal Huruf Hijaiyah',
+        'Menghafal Surat pendek dan doa harian dengan penuh suka cita',
       ],
     },
     {
-      title: 'Pengembangan Motorik',
-      description:
-        'Aktivitas yang mendukung perkembangan motorik halus dan kasar.',
-      icon: '🎨',
+      title: 'INDIVIDUALITAS',
+      description: 'Mengembangkan kepribadian unik setiap anak.',
+      icon: '⭐',
       details: [
-        'Kegiatan seni dan kerajinan',
-        'Permainan fisik terstruktur',
-        'Latihan koordinasi tubuh',
+        'Merasa diterima dan diakui secara special (sehat mental)',
+        'Kesiapan untuk bersosial di tahapan Pendidikan selanjutnya',
       ],
     },
     {
-      title: 'Stimulasi Kognitif',
-      description:
-        'Program pembelajaran yang merangsang perkembangan kognitif anak.',
-      icon: '🧩',
+      title: 'EMOSI',
+      description: 'Mengelola dan memahami emosi dengan baik.',
+      icon: '💝',
       details: [
-        'Pengenalan huruf dan angka',
-        'Aktivitas pemecahan masalah',
-        'Permainan edukatif',
+        'Mengenal ragam emosi yang terjadi pada dirinya',
+        'Dapat mengekspresikan ragam emosi yang dirasakan',
+        'Kesiapan mengelola emosi di usia selanjutnya',
       ],
     },
     {
-      title: 'Pengembangan Sosial',
-      description: 'Aktivitas yang membangun kemampuan sosial dan komunikasi.',
-      icon: '👥',
+      title: 'KESIAPAN BELAJAR',
+      description: 'Persiapan optimal untuk jenjang pendidikan selanjutnya.',
+      icon: '📚',
       details: [
-        'Bermain kelompok',
-        'Aktivitas bercerita',
-        'Pembelajaran kolaboratif',
+        'Kesiapan belajar ke jenjang Pendidikan selanjutnya (Motorik, Bahasa, Kognitif)',
       ],
     },
   ],

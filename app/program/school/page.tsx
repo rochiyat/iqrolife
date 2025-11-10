@@ -152,7 +152,7 @@ export default function SchoolPage() {
         {/* Programs Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
-            Program Unggulan
+            Output Pembelajaran
           </h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {programs.map((program: any, index: number) => (
