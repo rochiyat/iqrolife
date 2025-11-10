@@ -2,6 +2,7 @@
 
 import FoundationFooter from '@/components/foundation-footer';
 import FoundationHeader from '@/components/foundation-header';
+import GallerySection from '@/components/gallery-section';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton-loading';
@@ -266,6 +267,8 @@ export default function Page() {
             </div>
           </div>
         </section>
+
+        <GallerySection />
       </main>
       <FoundationFooter />
     </div>
