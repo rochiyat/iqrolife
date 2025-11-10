@@ -23,43 +23,43 @@ export default function FamilyTalentDiscoveryPage() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200',
       alt: 'Workshop bakat keluarga',
     },
     {
-      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=1200',
       alt: 'Konsultasi talents mapping',
     },
     {
-      src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200',
       alt: 'Kegiatan mengenal bakat',
     },
     {
-      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200',
       alt: 'Sesi talents discovery',
     },
     {
-      src: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=1200',
       alt: 'Workshop keluarga',
     },
     {
-      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200',
       alt: 'Konsultasi keluarga',
     },
     {
-      src: 'https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1200',
       alt: 'Aktivitas bakat keluarga',
     },
     {
-      src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200',
       alt: 'Kegiatan talents mapping',
     },
     {
-      src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200',
       alt: 'Sesi workshop',
     },
     {
-      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200',
       alt: 'Kegiatan family talent discovery',
     },
   ];

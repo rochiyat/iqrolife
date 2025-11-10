@@ -28,43 +28,43 @@ export default function Page() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200',
       alt: 'Anak-anak dalam kegiatan kelas eksplorasi',
     },
     {
-      src: 'https://images.unsplash.com/photo-1622737133809-d95047b9e673?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1622737133809-d95047b9e673?w=1200',
       alt: 'Kegiatan belajar bersama',
     },
     {
-      src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200',
       alt: 'Aktivitas kreatif anak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=1200',
       alt: 'Eksplorasi museum',
     },
     {
-      src: 'https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=1200',
       alt: 'Kegiatan outdoor',
     },
     {
-      src: 'https://images.unsplash.com/photo-1560785477-d43d2b34e0df?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1560785477-d43d2b34e0df?w=1200',
       alt: 'Crafting class',
     },
     {
-      src: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=1200',
       alt: 'Kegiatan seni',
     },
     {
-      src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200',
       alt: 'Belajar bersama ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=1200',
       alt: 'Aktivitas membatik',
     },
     {
-      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200',
       alt: 'Pop up book activity',
     },
   ];

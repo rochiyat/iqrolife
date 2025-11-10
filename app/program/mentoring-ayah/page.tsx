@@ -19,43 +19,43 @@ export default function MentoringAyahPage() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200',
       alt: 'Dadventure bersama anak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1609220136736-443140cffec6?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1609220136736-443140cffec6?w=1200',
       alt: 'Kegiatan MInsoc ayah dan anak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=1200',
       alt: 'Bulutangkis bersama',
     },
     {
-      src: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=1200',
       alt: 'Olahraga ayah dan anak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200',
       alt: 'Mentoring ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=1200',
       alt: 'Diskusi ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1560785477-d43d2b34e0df?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1560785477-d43d2b34e0df?w=1200',
       alt: 'Aktivitas outdoor ayah anak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200',
       alt: 'Workshop ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=1200',
       alt: 'Kegiatan bersama ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200',
       alt: 'Sesi mentoring ayah',
     },
   ];

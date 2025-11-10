@@ -19,43 +19,43 @@ export default function MentoringIbuPage() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200',
       alt: 'Rahima Iqrolife gathering',
     },
     {
-      src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1200',
       alt: 'Mentoring ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=1200',
       alt: 'Diskusi ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200',
       alt: 'Workshop ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200',
       alt: 'Kegiatan Rahima',
     },
     {
-      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=1200',
       alt: 'Sesi sharing ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200',
       alt: 'Pendampingan ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200',
       alt: 'Belajar bersama ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1200',
       alt: 'Kegiatan mentoring',
     },
     {
-      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop',
+      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200',
       alt: 'Komunitas ibu',
     },
   ];
