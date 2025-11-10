@@ -96,28 +96,88 @@ export const schoolData = {
     title: 'Aktivitas Pembelajaran',
     description:
       'Berbagai kegiatan yang dirancang untuk mengembangkan potensi siswa secara optimal',
-    items: [
+    tahunan: [
       {
         image: '/kelas-bermain.png',
-        title: 'Pembelajaran Interaktif',
-        description:
-          'Siswa belajar dengan metode yang menyenangkan dan interaktif',
+        title: 'Family Project',
+        description: 'Kegiatan bersama keluarga untuk mempererat hubungan',
       },
       {
         image: '/placeholder-nzl00.png',
-        title: 'Eksperimen Sains',
-        description:
-          'Praktik langsung untuk memahami konsep sains dengan lebih baik',
+        title: 'Kunjungan Edukasi',
+        description: 'Kunjungan ke tempat edukatif untuk menambah wawasan',
       },
       {
         image: '/placeholder-p0atk.png',
-        title: "Pembelajaran Al-Qur'an",
-        description: "Menumbuhkan kecintaan terhadap Al-Qur'an sejak dini",
+        title: 'Hari Bersama Ayah',
+        description: 'Kegiatan khusus bersama ayah untuk bonding',
       },
       {
         image: '/placeholder-bp0kl.png',
-        title: 'Kegiatan Outdoor',
-        description: 'Pembelajaran di luar kelas untuk mengenal lingkungan',
+        title: 'Main Bersama Ibu',
+        description: 'Aktivitas bermain bersama ibu yang menyenangkan',
+      },
+      {
+        image: '/kelas-bermain.png',
+        title: 'Eksplorasi Air (Renang)',
+        description: 'Kegiatan berenang untuk pengembangan motorik',
+      },
+      {
+        image: '/placeholder-nzl00.png',
+        title: 'Kelas Belajar Orang Tua',
+        description: 'Workshop dan pembelajaran untuk orang tua',
+      },
+      {
+        image: '/placeholder-p0atk.png',
+        title: 'Pertemuan Orang Tua dan Guru',
+        description: 'Dialog dan koordinasi perkembangan anak',
+      },
+      {
+        image: '/placeholder-bp0kl.png',
+        title: 'Kegiatan Tahunan Lainnya',
+        description: 'Berbagai kegiatan spesial sepanjang tahun',
+      },
+    ],
+    harian: [
+      {
+        image: '/kelas-bermain.png',
+        title: 'Eksplorasi Lingkungan Sekolah',
+        description: 'Memberi makan ayam, menyiram tanaman dan bermain bebas',
+      },
+      {
+        image: '/placeholder-nzl00.png',
+        title: 'Circle Time',
+        description: 'Berdoa & dialog iman',
+      },
+      {
+        image: '/placeholder-p0atk.png',
+        title: 'Area Multisensory',
+        description: 'Bergerak dan kegiatan stimulasi semua indera',
+      },
+      {
+        image: '/placeholder-bp0kl.png',
+        title: 'Kudapan Pagi',
+        description: 'Kudapan pagi dan mencuci dan merapikan wadah kudapan',
+      },
+      {
+        image: '/kelas-bermain.png',
+        title: 'Berkisah / Pembelajaran Al Quran',
+        description: 'Membaca buku atau pembelajaran Al Quran',
+      },
+      {
+        image: '/placeholder-nzl00.png',
+        title: 'Kegiatan Tematik',
+        description: 'Kegiatan sesuai tema setiap bulannya',
+      },
+      {
+        image: '/placeholder-p0atk.png',
+        title: 'Circle Time',
+        description: 'Refleksi, berdoa dan pulang',
+      },
+      {
+        image: '/placeholder-bp0kl.png',
+        title: 'Kegiatan Harian Lainnya',
+        description: 'Rutinitas pembelajaran sehari-hari',
       },
     ],
   },

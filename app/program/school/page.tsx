@@ -257,33 +257,75 @@ export default function SchoolPage() {
             <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in-up">
               {schoolData.activities.description}
             </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              {schoolData.activities.items.map(
-                (activity: any, index: number) => (
-                  <Card
-                    key={index}
-                    className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="relative h-48">
-                      <Image
-                        src={activity.image}
-                        alt={activity.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-lg mb-2 text-pink-700">
-                        {activity.title}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        {activity.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                )
-              )}
+
+            {/* Aktivitas Tahunan */}
+            <div className="mb-12">
+              <h3 className="text-2xl font-bold text-center mb-8 text-orange-700">
+                Aktivitas Tahunan
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                {schoolData.activities.tahunan.map(
+                  (activity: any, index: number) => (
+                    <Card
+                      key={index}
+                      className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="relative h-48">
+                        <Image
+                          src={activity.image}
+                          alt={activity.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-lg mb-2 text-pink-700">
+                          {activity.title}
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          {activity.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  )
+                )}
+              </div>
+            </div>
+
+            {/* Aktivitas Harian */}
+            <div>
+              <h3 className="text-2xl font-bold text-center mb-8 text-green-700">
+                Aktivitas Harian
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                {schoolData.activities.harian.map(
+                  (activity: any, index: number) => (
+                    <Card
+                      key={index}
+                      className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="relative h-48">
+                        <Image
+                          src={activity.image}
+                          alt={activity.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-lg mb-2 text-blue-700">
+                          {activity.title}
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          {activity.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  )
+                )}
+              </div>
             </div>
           </motion.section>
         )}
