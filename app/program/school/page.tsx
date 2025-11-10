@@ -72,9 +72,9 @@ function FacilitiesCarousel({ facilities }: { facilities: any[] }) {
         </svg>
       </button>
 
-      <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-2 border-purple-200 hover:shadow-2xl transition-all duration-500 animate-scale-in overflow-hidden">
+      <Card className="bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-500 animate-scale-in overflow-hidden p-6">
         <div
-          className="relative h-[500px] cursor-pointer group"
+          className="relative h-[500px] cursor-pointer group overflow-hidden rounded-lg"
           onClick={() =>
             setCurrentFacility((prev) => (prev + 1) % facilities.length)
           }
@@ -85,6 +85,7 @@ function FacilitiesCarousel({ facilities }: { facilities: any[] }) {
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/40 to-transparent pointer-events-none" />
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-center">
             <h3 className="text-xl font-bold text-white mb-2">
               {facilities[currentFacility].title}
@@ -93,6 +94,8 @@ function FacilitiesCarousel({ facilities }: { facilities: any[] }) {
               {facilities[currentFacility].description}
             </p>
           </div>
+          <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-white/40 to-transparent pointer-events-none" />
+          <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-white/40 to-transparent pointer-events-none" />
         </div>
       </Card>
 
