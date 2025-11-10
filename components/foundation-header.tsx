@@ -62,9 +62,9 @@ export function FoundationHeader() {
           aria-label="Iqrolife Community - Beranda"
         >
           <img
-            src="/iqrolife-logo.jpg"
+            src="/logo-iqrolife.png"
             alt="Logo Iqrolife"
-            className="h-9 w-9 rounded-md ring-1 ring-border group-hover:scale-105 transition-transform duration-200"
+            className="h-9 w-9 rounded-md group-hover:scale-105 transition-transform duration-200"
           />
           <div className="flex flex-col">
             <span className="text-base font-bold leading-none text-brand-off-white md:text-lg group-hover:text-brand-lime transition-colors duration-300">
@@ -166,9 +166,9 @@ export function FoundationHeader() {
               <div className="flex items-center justify-between pb-4 border-b border-brand-lime/30">
                 <div className="flex items-center gap-3">
                   <img
-                    src="/iqrolife-logo.jpg"
+                    src="/iqrolife-logo.png"
                     alt="Logo Iqrolife"
-                    className="h-7 w-7 rounded-md ring-1 ring-brand-lime/30"
+                    className="h-7 w-7 rounded-md"
                   />
                   <span className="text-sm font-bold text-brand-emerald">
                     Iqrolife Community
