@@ -78,7 +78,7 @@ export async function GET() {
     contact: {
       title: 'Kontak',
       address:
-        'Cimanggu Hejo, Kedung Waringin, Kec. Tanah Sereal, Kota Bogor, Jawa Barat 17540',
+        'Gg. Haji Soleh No. 1A RT 01/06 Kel. Kedung Waringin Kec. Tanah Sareal, Kota Bogor 16163',
       phone: '+62813-1522-5557',
       email: 'iqrolife@gmail.com',
       social: {
