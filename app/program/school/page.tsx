@@ -11,28 +11,52 @@ import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton-loading';
 import { CheckCircle, Calendar, Users, Book } from 'lucide-react';
 
-// Facilities Carousel Component
-function FacilitiesCarousel({ facilities }: { facilities: any[] }) {
-  const [currentFacility, setCurrentFacility] = useState(0);
+// Carousel Component (reusable for Facilities and Activities)
+function ImageCarousel({
+  items,
+  colorTheme = 'purple',
+}: {
+  items: any[];
+  colorTheme?: 'purple' | 'orange' | 'green';
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentFacility((prev) => (prev + 1) % facilities.length);
+      setCurrentIndex((prev) => (prev + 1) % items.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [facilities.length]);
+  }, [items.length]);
+
+  const themeColors = {
+    purple: {
+      border: 'border-purple-300',
+      hover: 'hover:bg-purple-50',
+      dot: 'bg-purple-600',
+    },
+    orange: {
+      border: 'border-orange-300',
+      hover: 'hover:bg-orange-50',
+      dot: 'bg-orange-600',
+    },
+    green: {
+      border: 'border-green-300',
+      hover: 'hover:bg-green-50',
+      dot: 'bg-green-600',
+    },
+  };
+
+  const theme = themeColors[colorTheme];
 
   return (
     <div className="max-w-4xl mx-auto relative">
       {/* Previous Button */}
       <button
         onClick={() =>
-          setCurrentFacility(
-            (prev) => (prev - 1 + facilities.length) % facilities.length
-          )
+          setCurrentIndex((prev) => (prev - 1 + items.length) % items.length)
         }
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 border-purple-300 flex items-center justify-center text-gray-700 hover:bg-purple-50 hover:scale-110 transition-all duration-300 group"
-        aria-label="Previous facility"
+        className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 ${theme.border} flex items-center justify-center text-gray-700 ${theme.hover} hover:scale-110 transition-all duration-300 group`}
+        aria-label="Previous"
       >
         <svg
           className="w-6 h-6 group-hover:scale-125 transition-transform"
@@ -51,11 +75,9 @@ function FacilitiesCarousel({ facilities }: { facilities: any[] }) {
 
       {/* Next Button */}
       <button
-        onClick={() =>
-          setCurrentFacility((prev) => (prev + 1) % facilities.length)
-        }
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 border-purple-300 flex items-center justify-center text-gray-700 hover:bg-purple-50 hover:scale-110 transition-all duration-300 group"
-        aria-label="Next facility"
+        onClick={() => setCurrentIndex((prev) => (prev + 1) % items.length)}
+        className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 ${theme.border} flex items-center justify-center text-gray-700 ${theme.hover} hover:scale-110 transition-all duration-300 group`}
+        aria-label="Next"
       >
         <svg
           className="w-6 h-6 group-hover:scale-125 transition-transform"
@@ -75,23 +97,21 @@ function FacilitiesCarousel({ facilities }: { facilities: any[] }) {
       <Card className="bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-500 animate-scale-in overflow-hidden p-6">
         <div
           className="relative h-[500px] cursor-pointer group overflow-hidden rounded-lg"
-          onClick={() =>
-            setCurrentFacility((prev) => (prev + 1) % facilities.length)
-          }
+          onClick={() => setCurrentIndex((prev) => (prev + 1) % items.length)}
         >
           <Image
-            src={facilities[currentFacility].image}
-            alt={facilities[currentFacility].title}
+            src={items[currentIndex].image}
+            alt={items[currentIndex].title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/40 to-transparent pointer-events-none" />
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-center">
             <h3 className="text-xl font-bold text-white mb-2">
-              {facilities[currentFacility].title}
+              {items[currentIndex].title}
             </h3>
             <p className="text-sm text-white/90">
-              {facilities[currentFacility].description}
+              {items[currentIndex].description}
             </p>
           </div>
           <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-white/40 to-transparent pointer-events-none" />
@@ -100,17 +120,17 @@ function FacilitiesCarousel({ facilities }: { facilities: any[] }) {
       </Card>
 
       <div className="flex justify-center mt-8 gap-3">
-        {facilities.map((_, index) => (
+        {items.map((_, index) => (
           <button
             key={index}
             type="button"
-            onClick={() => setCurrentFacility(index)}
+            onClick={() => setCurrentIndex(index)}
             className={`w-4 h-4 rounded-full transition-all duration-300 animate-pulse border-0 cursor-pointer ${
-              index === currentFacility
-                ? 'bg-purple-600 scale-125'
+              index === currentIndex
+                ? `${theme.dot} scale-125`
                 : 'bg-gray-300 hover:bg-gray-400'
             }`}
-            aria-label={`Facility ${index + 1}`}
+            aria-label={`Item ${index + 1}`}
           />
         ))}
       </div>
@@ -365,7 +385,10 @@ export default function SchoolPage() {
               {schoolData.facilities.description}
             </p>
 
-            <FacilitiesCarousel facilities={schoolData.facilities.items} />
+            <ImageCarousel
+              items={schoolData.facilities.items}
+              colorTheme="purple"
+            />
           </motion.section>
         )}
 
@@ -385,38 +408,14 @@ export default function SchoolPage() {
             </p>
 
             {/* Aktivitas Tahunan */}
-            <div className="mb-12">
+            <div className="mb-16">
               <h3 className="text-2xl font-bold text-center mb-8 text-orange-700">
                 Aktivitas Tahunan
               </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                {schoolData.activities.tahunan.map(
-                  (activity: any, index: number) => (
-                    <Card
-                      key={index}
-                      className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <div className="relative h-48">
-                        <Image
-                          src={activity.image}
-                          alt={activity.title}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-lg mb-2 text-pink-700">
-                          {activity.title}
-                        </h3>
-                        <p className="text-sm text-gray-600">
-                          {activity.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  )
-                )}
-              </div>
+              <ImageCarousel
+                items={schoolData.activities.tahunan}
+                colorTheme="orange"
+              />
             </div>
 
             {/* Aktivitas Harian */}
@@ -424,34 +423,10 @@ export default function SchoolPage() {
               <h3 className="text-2xl font-bold text-center mb-8 text-green-700">
                 Aktivitas Harian
               </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                {schoolData.activities.harian.map(
-                  (activity: any, index: number) => (
-                    <Card
-                      key={index}
-                      className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <div className="relative h-48">
-                        <Image
-                          src={activity.image}
-                          alt={activity.title}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-lg mb-2 text-blue-700">
-                          {activity.title}
-                        </h3>
-                        <p className="text-sm text-gray-600">
-                          {activity.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  )
-                )}
-              </div>
+              <ImageCarousel
+                items={schoolData.activities.harian}
+                colorTheme="green"
+              />
             </div>
           </motion.section>
         )}
