@@ -194,6 +194,55 @@ export default function SchoolPage() {
           </div>
         </section>
 
+        {/* Levels Section */}
+        {schoolData.levels && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
+              Level Pendidikan
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {schoolData.levels.map((level: any, index: number) => (
+                <Card
+                  key={index}
+                  className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="relative h-48">
+                    <Image
+                      src={level.image}
+                      alt={level.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-3xl">{level.icon}</span>
+                      <h3 className="font-bold text-xl text-green-700">
+                        {level.title}
+                      </h3>
+                    </div>
+                    <div className="mb-3">
+                      <p className="text-sm font-semibold text-orange-600">
+                        {level.age}
+                        {level.capacity && ` • ${level.capacity}`}
+                      </p>
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {level.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
         {/* Activities Section */}
         {schoolData.activities && (
           <motion.section

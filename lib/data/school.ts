@@ -63,6 +63,35 @@ export const schoolData = {
       ],
     },
   ],
+  levels: [
+    {
+      title: 'Kelompok Bermain',
+      age: 'Usia mulai 4 tahun',
+      capacity: '10 anak',
+      description:
+        'Kelompok bermain untuk anak usia mulai 4 tahun yang terdiri dari 10 anak yang didesain untuk memberikan pengalaman bermain yang menyenangkan, menumbuhkan rasa cinta terhadap Rabbnya, serta mengembangkan keterampilan sosial motorik dan kognitif dasar.',
+      icon: '🎈',
+      image: '/kelas-bermain.png',
+    },
+    {
+      title: 'Taman Kanak-Kanak A',
+      age: 'Usia mulai 5 tahun',
+      capacity: 'Maksimal 10 anak',
+      description:
+        'Taman Kanak – Kanak A untuk usia mulai 5 tahun yang terdiri dari maksimal 10 anak yang didesain sebagai lingkungan pendidikan awal dengan menyediakan lingkungan belajar terstruktur, dimana anak-anak dapat menumbuhkan kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi dan kognitif melalui kegiatan bermain yang belajar.',
+      icon: '🌟',
+      image: '/tk-a.png',
+    },
+    {
+      title: 'Taman Kanak-Kanak B',
+      age: 'Usia mulai 6 tahun',
+      capacity: '',
+      description:
+        'Taman Kanak – kanak B untuk usia mulai 6 tahun, merupakan tahap pendidikan awal yang memfokuskan pada pengembangan keterampilan akademis dasar, keterampilan sosial, kemandirian melalui proses pembelajaran yang menyenangkan.',
+      icon: '🎓',
+      image: '/tk-b.png',
+    },
+  ],
   activities: {
     title: 'Aktivitas Pembelajaran',
     description:
