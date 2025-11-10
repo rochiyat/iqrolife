@@ -220,11 +220,11 @@ export const schoolData = {
     ],
   },
   ppdb: {
-    title: '📚 Program & Biaya Pendidikan 📚',
-    level: 'KBTK Iqrolife',
+    title: '📚 Biaya Pendidikan 📚',
+    level: 'Kelas Siap Sekolah',
     age: '3-6 tahun',
-    fee: 'Rp 15.000.000',
-    note: '*Biaya per tahun',
+    fee: 'Rp 6.500.000',
+    note: '*Biaya per awal masuk',
   },
   requirements: {
     title: '📋 Persyaratan Pendaftaran 📋',
@@ -241,22 +241,22 @@ export const schoolData = {
     items: [
       {
         phase: 'Pendaftaran',
-        date: 'Januari - Maret 2025',
+        date: 'November - Desember 2025',
         description: 'Pengisian formulir dan pengumpulan berkas',
       },
       {
-        phase: 'Tes Masuk',
-        date: 'April 2025',
-        description: 'Tes akademik dan wawancara',
+        phase: 'Observasi',
+        date: 'Desember 2025',
+        description: 'Pengecekan motorik dan wawancara',
       },
       {
         phase: 'Pengumuman',
-        date: 'Mei 2025',
+        date: 'Desember 2025',
         description: 'Pengumuman hasil seleksi',
       },
       {
         phase: 'Daftar Ulang',
-        date: 'Juni 2025',
+        date: 'Desember 2025 - Januari 2026',
         description: 'Pembayaran dan daftar ulang',
       },
     ],
@@ -290,7 +290,7 @@ export const schoolData = {
     ],
   },
   cta: {
-    title: '🎉 Siap Bergabung dengan KBTK Iqrolife? 🎉',
+    title: '🎉 Siap Bergabung dengan Kelas Siap Sekolah Iqrolife? 🎉',
     description:
       'Hubungi kami untuk informasi lebih lanjut atau langsung daftar online untuk masa depan cerah anak Anda!',
     button: {
@@ -302,6 +302,6 @@ export const schoolData = {
       href: 'https://wa.me/6281315225557',
     },
     requirements: ['Usia 3-6 tahun', 'Fotokopi akte kelahiran', 'Fotokopi KK'],
-    registrationTime: ['Senin - Jumat', '08.00 - 15.00 WIB', 'Sepanjang tahun'],
+    registrationTime: ['Senin - Jumat', '08.00 - 14.00 WIB', 'Weekday'],
   },
 };
