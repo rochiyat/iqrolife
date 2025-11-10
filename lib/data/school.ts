@@ -92,6 +92,44 @@ export const schoolData = {
       image: '/tk-b.png',
     },
   ],
+  facilities: {
+    title: 'Fasilitas Pembelajaran',
+    description:
+      'Fasilitas lengkap dan nyaman untuk mendukung proses belajar mengajar yang optimal',
+    items: [
+      {
+        image: '/fasilitas-pembelajaran/1.jpg',
+        title: 'Ruang Kelas Nyaman',
+        description:
+          'Ruang kelas yang dirancang khusus untuk kenyamanan belajar anak',
+      },
+      {
+        image: '/fasilitas-pembelajaran/2.jpg',
+        title: 'Area Bermain',
+        description: 'Area bermain yang aman dan menyenangkan untuk anak-anak',
+      },
+      {
+        image: '/fasilitas-pembelajaran/3.jpg',
+        title: 'Perpustakaan',
+        description: 'Koleksi buku yang lengkap untuk menumbuhkan minat baca',
+      },
+      {
+        image: '/fasilitas-pembelajaran/4.jpg',
+        title: 'Ruang Seni',
+        description: 'Ruang khusus untuk mengembangkan kreativitas anak',
+      },
+      {
+        image: '/fasilitas-pembelajaran/5.jpg',
+        title: 'Taman Bermain',
+        description: 'Taman yang asri untuk eksplorasi alam',
+      },
+      {
+        image: '/fasilitas-pembelajaran/6.jpg',
+        title: 'Ruang Multifungsi',
+        description: 'Ruang serbaguna untuk berbagai kegiatan pembelajaran',
+      },
+    ],
+  },
   activities: {
     title: 'Aktivitas Pembelajaran',
     description:

@@ -11,6 +11,110 @@ import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton-loading';
 import { CheckCircle, Calendar, Users, Book } from 'lucide-react';
 
+// Facilities Carousel Component
+function FacilitiesCarousel({ facilities }: { facilities: any[] }) {
+  const [currentFacility, setCurrentFacility] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentFacility((prev) => (prev + 1) % facilities.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [facilities.length]);
+
+  return (
+    <div className="max-w-4xl mx-auto relative">
+      {/* Previous Button */}
+      <button
+        onClick={() =>
+          setCurrentFacility(
+            (prev) => (prev - 1 + facilities.length) % facilities.length
+          )
+        }
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 border-purple-300 flex items-center justify-center text-gray-700 hover:bg-purple-50 hover:scale-110 transition-all duration-300 group"
+        aria-label="Previous facility"
+      >
+        <svg
+          className="w-6 h-6 group-hover:scale-125 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+
+      {/* Next Button */}
+      <button
+        onClick={() =>
+          setCurrentFacility((prev) => (prev + 1) % facilities.length)
+        }
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 w-12 h-12 rounded-full bg-white shadow-lg border-2 border-purple-300 flex items-center justify-center text-gray-700 hover:bg-purple-50 hover:scale-110 transition-all duration-300 group"
+        aria-label="Next facility"
+      >
+        <svg
+          className="w-6 h-6 group-hover:scale-125 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+
+      <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-2 border-purple-200 hover:shadow-2xl transition-all duration-500 animate-scale-in overflow-hidden">
+        <div
+          className="relative h-[500px] cursor-pointer group"
+          onClick={() =>
+            setCurrentFacility((prev) => (prev + 1) % facilities.length)
+          }
+        >
+          <Image
+            src={facilities[currentFacility].image}
+            alt={facilities[currentFacility].title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">
+              {facilities[currentFacility].title}
+            </h3>
+            <p className="text-sm text-white/90">
+              {facilities[currentFacility].description}
+            </p>
+          </div>
+        </div>
+      </Card>
+
+      <div className="flex justify-center mt-8 gap-3">
+        {facilities.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => setCurrentFacility(index)}
+            className={`w-4 h-4 rounded-full transition-all duration-300 animate-pulse border-0 cursor-pointer ${
+              index === currentFacility
+                ? 'bg-purple-600 scale-125'
+                : 'bg-gray-300 hover:bg-gray-400'
+            }`}
+            aria-label={`Facility ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function SchoolPage() {
   const [schoolData, setSchoolData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -240,6 +344,25 @@ export default function SchoolPage() {
                 </Card>
               ))}
             </div>
+          </motion.section>
+        )}
+
+        {/* Facilities Section */}
+        {schoolData.facilities && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+              {schoolData.facilities.title}
+            </h2>
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in-up">
+              {schoolData.facilities.description}
+            </p>
+
+            <FacilitiesCarousel facilities={schoolData.facilities.items} />
           </motion.section>
         )}
 
