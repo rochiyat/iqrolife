@@ -17,10 +17,10 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Sekolah Iqrolife Bogor - Sekolah Berbasis Fitrah #1 di Kota Bogor',
+  title: 'Iqrolife Community',
   description:
-    "Sekolah Berbasis Fitrah terpadu dengan program Islamic Leadership, Green School, dan Tahfidz. Membangun generasi Qur'ani yang berkarakter, kreatif, dan berprestasi.",
-  keywords: 'sekolah berbasis fitrah, sekolah bogor, green school',
+    'Komunitas pendidikan berbasis fitrah dengan 7 pendekatan pendidikan yang holistik guna mengembangkan manusia yang paripurna dari 3 aspek: jiwa, fisik dan akal. Iqrolife hadir dengan ekosistem pendidikan untuk semua komponen keluarga: Ayah, Ibu dan Anak dengan program-program yang terstruktur dan terukur.',
+  keywords: 'iqrolife, komunitas, pendidikan, keluarga, sekolah, fitrah',
 };
 
 export default function RootLayout({
