@@ -246,29 +246,6 @@ export default function TestimonialsSection() {
             ))}
           </div>
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
-          <div className="text-center animate-bounce-gentle">
-            <div className="text-4xl font-bold text-primary mb-2">150+</div>
-            <div className="text-gray-600">Siswa Bahagia</div>
-            <div className="text-2xl">😊</div>
-          </div>
-          <div className="text-center animate-bounce-gentle delay-200">
-            <div className="text-4xl font-bold text-primary mb-2">98%</div>
-            <div className="text-gray-600">Orang Tua Puas</div>
-            <div className="text-2xl">👨‍👩‍👧‍👦</div>
-          </div>
-          <div className="text-center animate-bounce-gentle delay-300">
-            <div className="text-4xl font-bold text-primary mb-2">15+</div>
-            <div className="text-gray-600">Guru Berpengalaman</div>
-            <div className="text-2xl">👩‍🏫</div>
-          </div>
-          <div className="text-center animate-bounce-gentle delay-500">
-            <div className="text-4xl font-bold text-primary mb-2">5</div>
-            <div className="text-gray-600">Tahun Berpengalaman</div>
-            <div className="text-2xl">🏆</div>
-          </div>
-        </div>
       </div>
     </section>
   );

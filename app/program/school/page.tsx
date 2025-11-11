@@ -566,47 +566,6 @@ export default function SchoolPage() {
           </motion.section>
         )}
 
-        {/* Gallery Section */}
-        {schoolData.gallery && (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="mb-16"
-          >
-            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
-              {schoolData.gallery.title}
-            </h2>
-            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in-up">
-              {schoolData.gallery.description}
-            </p>
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {schoolData.gallery.items.map((item: any, index: number) => (
-                <Card
-                  key={index}
-                  className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="relative h-64">
-                    <Image
-                      src={item.image}
-                      alt={item.imageAlt}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-semibold text-lg mb-2 text-orange-700">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-gray-600">{item.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </motion.section>
-        )}
-
         {/* CTA Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}

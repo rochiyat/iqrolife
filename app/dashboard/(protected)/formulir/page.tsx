@@ -866,7 +866,7 @@ export default function FormulirPage() {
                   required
                 >
                   <option value="">Pilih program</option>
-                  <option value="KBTK">KBTK (Kelompok Bermain & TK)</option>
+                  <option value="KBTK">Kelas Siap Sekolah</option>
                   <option value="Kelas Eksplorasi">Kelas Eksplorasi</option>
                   <option value="Kelas Pra Aqil Baligh">
                     Kelas Pra Aqil Baligh
