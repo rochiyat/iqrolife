@@ -159,44 +159,24 @@ export const schoolData = {
       'Berbagai kegiatan yang dirancang untuk mengembangkan potensi siswa secara optimal',
     tahunan: [
       {
-        image: '/kelas-bermain.png',
+        image: '/siap-sekolah/tahunan/1.jpg',
         title: 'Family Project',
         description: 'Kegiatan bersama keluarga untuk mempererat hubungan',
       },
       {
-        image: '/placeholder-nzl00.png',
+        image: '/siap-sekolah/tahunan/2.jpg',
         title: 'Kunjungan Edukasi',
         description: 'Kunjungan ke tempat edukatif untuk menambah wawasan',
       },
       {
-        image: '/placeholder-p0atk.png',
+        image: '/siap-sekolah/tahunan/3.jpg',
         title: 'Hari Bersama Ayah',
         description: 'Kegiatan khusus bersama ayah untuk bonding',
       },
       {
-        image: '/placeholder-bp0kl.png',
+        image: '/siap-sekolah/tahunan/4.jpg',
         title: 'Main Bersama Ibu',
         description: 'Aktivitas bermain bersama ibu yang menyenangkan',
-      },
-      {
-        image: '/kelas-bermain.png',
-        title: 'Eksplorasi Air (Renang)',
-        description: 'Kegiatan berenang untuk pengembangan motorik',
-      },
-      {
-        image: '/placeholder-nzl00.png',
-        title: 'Kelas Belajar Orang Tua',
-        description: 'Workshop dan pembelajaran untuk orang tua',
-      },
-      {
-        image: '/placeholder-p0atk.png',
-        title: 'Pertemuan Orang Tua dan Guru',
-        description: 'Dialog dan koordinasi perkembangan anak',
-      },
-      {
-        image: '/placeholder-bp0kl.png',
-        title: 'Kegiatan Tahunan Lainnya',
-        description: 'Berbagai kegiatan spesial sepanjang tahun',
       },
     ],
     harian: [
