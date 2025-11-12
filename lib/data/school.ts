@@ -88,31 +88,31 @@ export const schoolData = {
   ],
   levels: [
     {
-      title: 'Kelas Bermain',
+      title: 'Kelas Bermain (KB-KSS)',
       age: 'Usia mulai 4 tahun',
       capacity: '10 anak',
       description:
         'Kelas bermain untuk anak usia mulai 4 tahun yang terdiri dari 10 anak yang didesain untuk memberikan pengalaman bermain yang menyenangkan, menumbuhkan rasa cinta terhadap Rabbnya, serta mengembangkan keterampilan sosial motorik dan kognitif dasar.',
       icon: '🎈',
-      image: '/kelas-bermain.png',
+      image: '/siap-sekolah/level/kb-kss.jpg',
     },
     {
-      title: 'Siap Sekolah - A (SS-A)',
+      title: 'Siap Sekolah - A (KSS-A)',
       age: 'Usia mulai 5 tahun',
       capacity: 'Maksimal 10 anak',
       description:
-        'Siap Sekolah A (SS-A) untuk usia mulai 5 tahun yang terdiri dari maksimal 10 anak yang didesain sebagai lingkungan pendidikan awal dengan menyediakan lingkungan belajar terstruktur, dimana anak-anak dapat menumbuhkan kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi dan kognitif melalui kegiatan bermain yang belajar.',
+        'Siap Sekolah A (KSS-A) untuk usia mulai 5 tahun yang terdiri dari maksimal 10 anak yang didesain sebagai lingkungan pendidikan awal dengan menyediakan lingkungan belajar terstruktur, dimana anak-anak dapat menumbuhkan kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi dan kognitif melalui kegiatan bermain yang belajar.',
       icon: '🌟',
-      image: '/tk-a.png',
+      image: '/siap-sekolah/level/kss-a.jpg',
     },
     {
-      title: 'Siap Sekolah - B (SS-B)',
+      title: 'Siap Sekolah - B (KSS-B)',
       age: 'Usia mulai 6 tahun',
       capacity: '',
       description:
-        'Siap Sekolah B (SS-B) untuk usia mulai 6 tahun, merupakan tahap pendidikan awal yang memfokuskan pada pengembangan keterampilan akademis dasar, keterampilan sosial, kemandirian melalui proses pembelajaran yang menyenangkan.',
+        'Siap Sekolah B (KSS-B) untuk usia mulai 6 tahun, merupakan tahap pendidikan awal yang memfokuskan pada pengembangan keterampilan akademis dasar, keterampilan sosial, kemandirian melalui proses pembelajaran yang menyenangkan.',
       icon: '🎓',
-      image: '/tk-b.png',
+      image: '/siap-sekolah/level/kss-b.jpg',
     },
   ],
   facilities: {
