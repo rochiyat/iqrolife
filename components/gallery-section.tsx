@@ -6,83 +6,69 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton-loading';
 
+const galleryImages = [
+  {
+    src: '/gallery/1.JPG',
+    alt: 'Kegiatan Komunitas 1',
+    caption: 'Momen berharga bersama komunitas',
+  },
+  {
+    src: '/gallery/2.JPG',
+    alt: 'Kegiatan Komunitas 2',
+    caption: 'Aktivitas pembelajaran yang menyenangkan',
+  },
+  {
+    src: '/gallery/3.JPG',
+    alt: 'Kegiatan Komunitas 3',
+    caption: 'Tumbuh dan berkembang bersama',
+  },
+  {
+    src: '/gallery/4.JPG',
+    alt: 'Kegiatan Komunitas 4',
+    caption: 'Membangun karakter melalui kegiatan',
+  },
+  {
+    src: '/gallery/5.JPG',
+    alt: 'Kegiatan Komunitas 5',
+    caption: 'Kebersamaan dalam belajar',
+  },
+  {
+    src: '/gallery/6.JPG',
+    alt: 'Kegiatan Komunitas 6',
+    caption: 'Eksplorasi dan kreativitas',
+  },
+  {
+    src: '/gallery/7.JPG',
+    alt: 'Kegiatan Komunitas 7',
+    caption: 'Pengalaman belajar yang bermakna',
+  },
+  {
+    src: '/gallery/8.JPG',
+    alt: 'Kegiatan Komunitas 8',
+    caption: 'Senyum dan kebahagiaan bersama',
+  },
+];
+
 export default function GallerySection() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [galleryData, setGalleryData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchGalleryData = async () => {
-      try {
-        const response = await fetch('/api/gallery');
-        const data = await response.json();
-        setGalleryData(data);
-      } catch (error) {
-        console.error('Error fetching gallery data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGalleryData();
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % galleryImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
   }, []);
-
-  useEffect(() => {
-    if (galleryData && galleryData.images) {
-      const timer = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % galleryData.images.length);
-      }, 5000);
-      return () => clearInterval(timer);
-    }
-  }, [galleryData]);
-
-  if (loading) {
-    return (
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <Skeleton className="h-10 w-64 mx-auto mb-4" />
-            <Skeleton className="h-6 w-96 mx-auto" />
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <div className="aspect-[4/3] relative">
-                  <Skeleton className="w-full h-full" />
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!galleryData) {
-    return (
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Error loading gallery
-            </h2>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  const galleryImages = galleryData.images;
 
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            {galleryData.title}
+            Galeri Kegiatan
           </h2>
-          <p className="text-xl text-gray-600">{galleryData.subtitle}</p>
+          <p className="text-xl text-gray-600">
+            Dokumentasi kegiatan dan momen berharga komunitas kami
+          </p>
         </div>
 
         <div className="max-w-4xl mx-auto relative">
