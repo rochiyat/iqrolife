@@ -127,7 +127,7 @@ export default function Page() {
             <div className="order-1 md:order-2">
               <div className="rounded-lg border bg-card p-4 shadow-sm transition-transform duration-300 hover:-translate-y-1">
                 <img
-                  src={aboutData.hero.image}
+                  src="/gallery/1.JPG"
                   alt={aboutData.hero.imageAlt}
                   className="h-auto w-full rounded-md"
                 />

@@ -88,31 +88,31 @@ export const schoolData = {
   ],
   levels: [
     {
-      title: 'Kelompok Bermain',
+      title: 'Kelas Bermain (KB-KSS)',
       age: 'Usia mulai 4 tahun',
       capacity: '10 anak',
       description:
-        'Kelompok bermain untuk anak usia mulai 4 tahun yang terdiri dari 10 anak yang didesain untuk memberikan pengalaman bermain yang menyenangkan, menumbuhkan rasa cinta terhadap Rabbnya, serta mengembangkan keterampilan sosial motorik dan kognitif dasar.',
+        'Kelas bermain untuk anak usia mulai 4 tahun yang terdiri dari 10 anak yang didesain untuk memberikan pengalaman bermain yang menyenangkan, menumbuhkan rasa cinta terhadap Rabbnya, serta mengembangkan keterampilan sosial motorik dan kognitif dasar.',
       icon: '🎈',
-      image: '/kelas-bermain.png',
+      image: '/siap-sekolah/level/kb-kss.jpg',
     },
     {
-      title: 'Taman Kanak-Kanak A',
+      title: 'Siap Sekolah - A (KSS-A)',
       age: 'Usia mulai 5 tahun',
       capacity: 'Maksimal 10 anak',
       description:
-        'Taman Kanak – Kanak A untuk usia mulai 5 tahun yang terdiri dari maksimal 10 anak yang didesain sebagai lingkungan pendidikan awal dengan menyediakan lingkungan belajar terstruktur, dimana anak-anak dapat menumbuhkan kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi dan kognitif melalui kegiatan bermain yang belajar.',
+        'Siap Sekolah A (KSS-A) untuk usia mulai 5 tahun yang terdiri dari maksimal 10 anak yang didesain sebagai lingkungan pendidikan awal dengan menyediakan lingkungan belajar terstruktur, dimana anak-anak dapat menumbuhkan kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi dan kognitif melalui kegiatan bermain yang belajar.',
       icon: '🌟',
-      image: '/tk-a.png',
+      image: '/siap-sekolah/level/kss-a.jpg',
     },
     {
-      title: 'Taman Kanak-Kanak B',
+      title: 'Siap Sekolah - B (KSS-B)',
       age: 'Usia mulai 6 tahun',
       capacity: '',
       description:
-        'Taman Kanak – kanak B untuk usia mulai 6 tahun, merupakan tahap pendidikan awal yang memfokuskan pada pengembangan keterampilan akademis dasar, keterampilan sosial, kemandirian melalui proses pembelajaran yang menyenangkan.',
+        'Siap Sekolah B (KSS-B) untuk usia mulai 6 tahun, merupakan tahap pendidikan awal yang memfokuskan pada pengembangan keterampilan akademis dasar, keterampilan sosial, kemandirian melalui proses pembelajaran yang menyenangkan.',
       icon: '🎓',
-      image: '/tk-b.png',
+      image: '/siap-sekolah/level/kss-b.jpg',
     },
   ],
   facilities: {
@@ -159,44 +159,24 @@ export const schoolData = {
       'Berbagai kegiatan yang dirancang untuk mengembangkan potensi siswa secara optimal',
     tahunan: [
       {
-        image: '/kelas-bermain.png',
+        image: '/siap-sekolah/tahunan/1.jpg',
         title: 'Family Project',
         description: 'Kegiatan bersama keluarga untuk mempererat hubungan',
       },
       {
-        image: '/placeholder-nzl00.png',
+        image: '/siap-sekolah/tahunan/2.jpg',
         title: 'Kunjungan Edukasi',
         description: 'Kunjungan ke tempat edukatif untuk menambah wawasan',
       },
       {
-        image: '/placeholder-p0atk.png',
+        image: '/siap-sekolah/tahunan/3.jpg',
         title: 'Hari Bersama Ayah',
         description: 'Kegiatan khusus bersama ayah untuk bonding',
       },
       {
-        image: '/placeholder-bp0kl.png',
+        image: '/siap-sekolah/tahunan/4.jpg',
         title: 'Main Bersama Ibu',
         description: 'Aktivitas bermain bersama ibu yang menyenangkan',
-      },
-      {
-        image: '/kelas-bermain.png',
-        title: 'Eksplorasi Air (Renang)',
-        description: 'Kegiatan berenang untuk pengembangan motorik',
-      },
-      {
-        image: '/placeholder-nzl00.png',
-        title: 'Kelas Belajar Orang Tua',
-        description: 'Workshop dan pembelajaran untuk orang tua',
-      },
-      {
-        image: '/placeholder-p0atk.png',
-        title: 'Pertemuan Orang Tua dan Guru',
-        description: 'Dialog dan koordinasi perkembangan anak',
-      },
-      {
-        image: '/placeholder-bp0kl.png',
-        title: 'Kegiatan Tahunan Lainnya',
-        description: 'Berbagai kegiatan spesial sepanjang tahun',
       },
     ],
     harian: [
@@ -264,13 +244,13 @@ export const schoolData = {
     items: [
       {
         phase: 'Pendaftaran',
-        date: 'November - Desember 2025',
+        date: 'Desember 2025',
         description: 'Pengisian formulir dan pengumpulan berkas',
       },
       {
         phase: 'Observasi',
         date: 'Desember 2025',
-        description: 'Pengecekan motorik dan wawancara',
+        description: 'Obersevasi dan wawancara',
       },
       {
         phase: 'Pengumuman',
