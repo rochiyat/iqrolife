@@ -464,9 +464,6 @@ export default function CalonMuridPage() {
                     Kontak
                   </th>
                   <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Program
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
                     Status
                   </th>
                   <th className="text-left py-3 px-4 font-semibold text-gray-700">
@@ -488,7 +485,6 @@ export default function CalonMuridPage() {
                         <div className="text-gray-500">{student.email}</div>
                       </div>
                     </td>
-                    <td className="py-3 px-4">{student.program}</td>
                     <td className="py-3 px-4">
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
@@ -581,113 +577,182 @@ export default function CalonMuridPage() {
 
       {/* Detail Dialog */}
       <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Detail Calon Murid</DialogTitle>
           </DialogHeader>
           {selectedStudent && (
-            <div className="space-y-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-gray-600">Nama Lengkap</Label>
-                  <p className="font-medium">{selectedStudent.name}</p>
-                </div>
-                <div>
-                  <Label className="text-gray-600">Jenis Kelamin</Label>
-                  <p className="font-medium">{selectedStudent.gender}</p>
-                </div>
-                <div>
-                  <Label className="text-gray-600">Tanggal Lahir</Label>
-                  <p className="font-medium">
-                    {new Date(selectedStudent.birthDate).toLocaleDateString(
-                      'id-ID'
-                    )}
-                  </p>
-                </div>
-                <div>
-                  <Label className="text-gray-600">Usia</Label>
-                  <p className="font-medium">{selectedStudent.age} tahun</p>
-                </div>
-                <div>
-                  <Label className="text-gray-600">Nama Orang Tua</Label>
-                  <p className="font-medium">{selectedStudent.parent}</p>
-                </div>
-                <div>
-                  <Label className="text-gray-600">No. Telepon</Label>
-                  <p className="font-medium">{selectedStudent.phone}</p>
-                </div>
-                <div>
-                  <Label className="text-gray-600">Email</Label>
-                  <p className="font-medium">{selectedStudent.email}</p>
-                </div>
-                <div>
-                  <Label className="text-gray-600">Program</Label>
-                  <p className="font-medium">{selectedStudent.program}</p>
-                </div>
-                <div className="col-span-2">
-                  <Label className="text-gray-600">Alamat</Label>
-                  <p className="font-medium">{selectedStudent.address}</p>
-                </div>
-                {selectedStudent.previousSchool && (
-                  <div className="col-span-2">
-                    <Label className="text-gray-600">Asal Sekolah</Label>
+            <div className="space-y-6 py-4">
+              {/* Data Anak */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-orange-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                  Data Anak
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-gray-600">Nama Lengkap</Label>
+                    <p className="font-medium">{selectedStudent.name}</p>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">Jenis Kelamin</Label>
+                    <p className="font-medium">{selectedStudent.gender}</p>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">Tanggal Lahir</Label>
                     <p className="font-medium">
-                      {selectedStudent.previousSchool}
+                      {new Date(selectedStudent.birthDate).toLocaleDateString(
+                        'id-ID'
+                      )}
                     </p>
                   </div>
-                )}
-                <div className="col-span-2">
-                  <Label className="text-gray-600">Tanggal Pendaftaran</Label>
-                  <p className="font-medium">
-                    {new Date(
-                      selectedStudent.registrationDate
-                    ).toLocaleDateString('id-ID')}
-                  </p>
-                </div>
-                <div className="col-span-2">
-                  <Label className="text-gray-600">Status</Label>
-                  <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                      selectedStudent.status
-                    )}`}
-                  >
-                    {getStatusText(selectedStudent.status)}
-                  </span>
-                </div>
-                {selectedStudent.notes && (
-                  <div className="col-span-2">
-                    <Label className="text-gray-600">Catatan</Label>
-                    <p className="font-medium">{selectedStudent.notes}</p>
+                  <div>
+                    <Label className="text-gray-600">Usia</Label>
+                    <p className="font-medium">{selectedStudent.age} tahun</p>
                   </div>
-                )}
-                {selectedStudent.paymentProof && (
-                  <div className="col-span-2">
-                    <Label className="text-gray-600 flex items-center gap-2">
-                      <FileImage className="w-4 h-4" />
-                      Bukti Transfer Pendaftaran
-                    </Label>
-                    <div className="mt-2 border rounded-lg overflow-hidden">
-                      <img
-                        src={selectedStudent.paymentProof}
-                        alt="Bukti Transfer"
-                        className="w-full h-auto max-h-96 object-contain bg-gray-50"
-                      />
+                  {selectedStudent.previousSchool && (
+                    <div className="col-span-2">
+                      <Label className="text-gray-600">Asal Sekolah/TK</Label>
+                      <p className="font-medium">
+                        {selectedStudent.previousSchool}
+                      </p>
                     </div>
-                    <a
-                      href={selectedStudent.paymentProof}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-brand-emerald hover:text-brand-emerald/80 mt-2"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Lihat gambar full size
-                    </a>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
+
+              {/* Data Orang Tua */}
+              <div className="space-y-4 pt-4 border-t">
+                <h3 className="text-lg font-semibold text-pink-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    />
+                  </svg>
+                  Data Orang Tua/Wali
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-gray-600">Nama Orang Tua/Wali</Label>
+                    <p className="font-medium">{selectedStudent.parent}</p>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">
+                      No. Telepon/WhatsApp
+                    </Label>
+                    <p className="font-medium">{selectedStudent.phone}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <Label className="text-gray-600">Email</Label>
+                    <p className="font-medium">{selectedStudent.email}</p>
+                  </div>
+                  <div className="col-span-2">
+                    <Label className="text-gray-600">Alamat Lengkap</Label>
+                    <p className="font-medium">{selectedStudent.address}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Status & Catatan */}
+              <div className="space-y-4 pt-4 border-t">
+                <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  Status & Catatan
+                </h3>
+
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-gray-600">Status Pendaftaran</Label>
+                    <div className="mt-1">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                          selectedStudent.status
+                        )}`}
+                      >
+                        {getStatusText(selectedStudent.status)}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">Tanggal Pendaftaran</Label>
+                    <p className="font-medium">
+                      {new Date(
+                        selectedStudent.registrationDate
+                      ).toLocaleDateString('id-ID')}
+                    </p>
+                  </div>
+                  {selectedStudent.notes && (
+                    <div>
+                      <Label className="text-gray-600">Catatan</Label>
+                      <p className="font-medium">{selectedStudent.notes}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Bukti Transfer */}
+              {selectedStudent.paymentProof && (
+                <div className="space-y-4 pt-4 border-t">
+                  <h3 className="text-lg font-semibold text-blue-800 flex items-center gap-2">
+                    <FileImage className="w-5 h-5" />
+                    Bukti Transfer Pendaftaran
+                  </h3>
+
+                  <div className="mt-2 border rounded-lg overflow-hidden">
+                    <img
+                      src={selectedStudent.paymentProof}
+                      alt="Bukti Transfer"
+                      className="w-full h-auto max-h-96 object-contain bg-gray-50"
+                    />
+                  </div>
+                  <a
+                    href={selectedStudent.paymentProof}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-brand-emerald hover:text-brand-emerald/80"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Lihat gambar full size
+                  </a>
+                </div>
+              )}
             </div>
           )}
-          <div className="flex justify-end gap-2">
+          <div className="flex justify-end gap-2 pt-4 border-t">
             <Button
               variant="outline"
               onClick={() => setIsDetailDialogOpen(false)}
@@ -934,12 +999,6 @@ export default function CalonMuridPage() {
                     <span className="text-gray-600">Orang Tua:</span>
                     <span className="font-medium">
                       {selectedStudent.parent}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Program:</span>
-                    <span className="font-medium">
-                      {selectedStudent.program}
                     </span>
                   </div>
                 </div>
