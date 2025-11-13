@@ -34,7 +34,6 @@ interface Student {
   email: string;
   address: string;
   previousSchool?: string;
-  program: string;
   status: 'pending' | 'approved' | 'rejected';
   registrationDate: string;
   notes?: string;
@@ -62,7 +61,6 @@ export default function CalonMuridPage() {
     noTelepon: '',
     email: '',
     alamat: '',
-    program: 'KBTK',
     status: 'pending',
     catatan: '',
   });
@@ -80,7 +78,6 @@ export default function CalonMuridPage() {
       email: 'ahmad@example.com',
       address: 'Jl. Merdeka No. 123, Jakarta Selatan',
       previousSchool: 'TK Permata Hati',
-      program: 'KBTK',
       status: 'approved',
       registrationDate: '2024-10-15',
       notes: 'Anak aktif dan suka belajar',
@@ -98,7 +95,6 @@ export default function CalonMuridPage() {
       email: 'siti@example.com',
       address: 'Jl. Kemang Raya No. 45, Jakarta Selatan',
       previousSchool: 'SD Harapan Bangsa',
-      program: 'Kelas Pra Aqil Baligh',
       status: 'pending',
       registrationDate: '2024-10-20',
       paymentProof:
@@ -114,7 +110,6 @@ export default function CalonMuridPage() {
       phone: '081234567892',
       email: 'rizki@example.com',
       address: 'Jl. Sudirman No. 78, Jakarta Pusat',
-      program: 'KBTK',
       status: 'approved',
       registrationDate: '2024-10-18',
       notes: 'Belum pernah sekolah sebelumnya',
@@ -132,7 +127,6 @@ export default function CalonMuridPage() {
       email: 'yusuf@example.com',
       address: 'Jl. Gatot Subroto No. 99, Jakarta Selatan',
       previousSchool: 'PAUD Ceria',
-      program: 'KBTK',
       status: 'pending',
       registrationDate: '2024-10-22',
       paymentProof:
@@ -149,7 +143,6 @@ export default function CalonMuridPage() {
       email: 'aminah@example.com',
       address: 'Jl. Thamrin No. 112, Jakarta Pusat',
       previousSchool: 'SD Islam Terpadu',
-      program: 'Kelas Eksplorasi',
       status: 'approved',
       registrationDate: '2024-10-19',
       notes: 'Hafal 5 juz Al-Quran',
@@ -288,7 +281,6 @@ export default function CalonMuridPage() {
       formData.append('email', addFormData.email);
       formData.append('alamat', addFormData.alamat);
       formData.append('asalSekolah', addFormData.asalSekolah);
-      formData.append('program', addFormData.program);
       formData.append('status', addFormData.status);
       formData.append('catatan', addFormData.catatan);
 
@@ -328,7 +320,6 @@ export default function CalonMuridPage() {
           email: addFormData.email,
           address: addFormData.alamat,
           previousSchool: addFormData.asalSekolah || undefined,
-          program: addFormData.program,
           status: addFormData.status as 'pending' | 'approved' | 'rejected',
           registrationDate: new Date().toISOString().split('T')[0],
           notes: addFormData.catatan || undefined,
@@ -347,7 +338,6 @@ export default function CalonMuridPage() {
           noTelepon: '',
           email: '',
           alamat: '',
-          program: 'KBTK',
           status: 'pending',
           catatan: '',
         });
@@ -377,7 +367,7 @@ export default function CalonMuridPage() {
         </div>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-brand-emerald hover:bg-brand-emerald/90">
+            <Button className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors">
               <Plus className="w-4 h-4 mr-2" />
               Tambah Calon Murid
             </Button>
@@ -439,7 +429,7 @@ export default function CalonMuridPage() {
                       Jenis Kelamin <span className="text-red-500">*</span>
                     </Label>
                     <select
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
                       value={addFormData.jenisKelamin}
                       onChange={(e) =>
                         handleAddInputChange('jenisKelamin', e.target.value)
@@ -537,7 +527,7 @@ export default function CalonMuridPage() {
                   <textarea
                     rows={3}
                     placeholder="Masukkan alamat lengkap"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
                     value={addFormData.alamat}
                     onChange={(e) =>
                       handleAddInputChange('alamat', e.target.value)
@@ -567,26 +557,9 @@ export default function CalonMuridPage() {
                 </h3>
 
                 <div className="space-y-2">
-                  <Label>Program</Label>
-                  <select
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
-                    value={addFormData.program}
-                    onChange={(e) =>
-                      handleAddInputChange('program', e.target.value)
-                    }
-                  >
-                    <option value="KBTK">KBTK</option>
-                    <option value="Kelas Pra Aqil Baligh">
-                      Kelas Pra Aqil Baligh
-                    </option>
-                    <option value="Kelas Eksplorasi">Kelas Eksplorasi</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
                   <Label>Status Pendaftaran</Label>
                   <select
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
                     value={addFormData.status}
                     onChange={(e) =>
                       handleAddInputChange('status', e.target.value)
@@ -603,7 +576,7 @@ export default function CalonMuridPage() {
                   <textarea
                     rows={2}
                     placeholder="Tambahkan catatan atau informasi tambahan"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
                     value={addFormData.catatan}
                     onChange={(e) =>
                       handleAddInputChange('catatan', e.target.value)
@@ -642,11 +615,12 @@ export default function CalonMuridPage() {
                 variant="outline"
                 onClick={() => setIsAddDialogOpen(false)}
                 disabled={isSubmitting}
+                className="hover:bg-gray-200 hover:border-gray-400 cursor-pointer transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Batal
               </Button>
               <Button
-                className="bg-brand-emerald hover:bg-brand-emerald/90"
+                className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                 onClick={handleAddSubmit}
                 disabled={isSubmitting}
               >
@@ -734,7 +708,7 @@ export default function CalonMuridPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-blue-600 hover:text-blue-700"
+                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors"
                           title="Lihat Detail"
                           onClick={() => handleViewDetail(student)}
                         >
@@ -743,7 +717,7 @@ export default function CalonMuridPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-purple-600 hover:text-purple-700"
+                          className="text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors"
                           title="Buat User"
                           onClick={() => handleCreateUser(student)}
                         >
@@ -752,7 +726,7 @@ export default function CalonMuridPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-green-600 hover:text-green-700"
+                          className="text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors"
                           title="Edit"
                           onClick={() => handleEdit(student)}
                         >
@@ -761,7 +735,7 @@ export default function CalonMuridPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-red-600 hover:text-red-700"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer transition-colors"
                           title="Hapus"
                           onClick={() => handleDelete(student)}
                         >
@@ -978,7 +952,7 @@ export default function CalonMuridPage() {
                     href={selectedStudent.paymentProof}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-brand-emerald hover:text-brand-emerald/80"
+                    className="inline-flex items-center gap-2 text-sm text-brand-emerald hover:text-emerald-700 cursor-pointer transition-colors"
                   >
                     <ExternalLink className="w-4 h-4" />
                     Lihat gambar full size
@@ -991,6 +965,7 @@ export default function CalonMuridPage() {
             <Button
               variant="outline"
               onClick={() => setIsDetailDialogOpen(false)}
+              className="hover:bg-gray-200 hover:border-gray-400 cursor-pointer transition-colors"
             >
               Tutup
             </Button>
@@ -1044,11 +1019,12 @@ export default function CalonMuridPage() {
             <Button
               variant="outline"
               onClick={() => setIsCreateUserDialogOpen(false)}
+              className="hover:bg-gray-200 hover:border-gray-400 cursor-pointer transition-colors"
             >
               Batal
             </Button>
             <Button
-              className="bg-brand-emerald hover:bg-brand-emerald/90"
+              className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors"
               onClick={confirmCreateUser}
             >
               <UserPlus className="w-4 h-4 mr-2" />
@@ -1085,7 +1061,7 @@ export default function CalonMuridPage() {
                     onChange={(e) =>
                       handleEditInputChange('gender', e.target.value)
                     }
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
                   >
                     <option value="Laki-laki">Laki-laki</option>
                     <option value="Perempuan">Perempuan</option>
@@ -1153,7 +1129,7 @@ export default function CalonMuridPage() {
                       handleEditInputChange('address', e.target.value)
                     }
                     rows={3}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
                   />
                 </div>
                 <div className="space-y-2">
@@ -1174,7 +1150,7 @@ export default function CalonMuridPage() {
                     onChange={(e) =>
                       handleEditInputChange('status', e.target.value)
                     }
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
                   >
                     <option value="pending">Pending</option>
                     <option value="approved">Disetujui</option>
@@ -1190,7 +1166,7 @@ export default function CalonMuridPage() {
                       handleEditInputChange('notes', e.target.value)
                     }
                     rows={2}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
                   />
                 </div>
               </div>
@@ -1200,11 +1176,12 @@ export default function CalonMuridPage() {
             <Button
               variant="outline"
               onClick={() => setIsEditDialogOpen(false)}
+              className="hover:bg-gray-200 hover:border-gray-400 cursor-pointer transition-colors"
             >
               Batal
             </Button>
             <Button
-              className="bg-brand-emerald hover:bg-brand-emerald/90"
+              className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors"
               onClick={confirmEdit}
             >
               Simpan Perubahan
@@ -1250,11 +1227,12 @@ export default function CalonMuridPage() {
             <Button
               variant="outline"
               onClick={() => setIsDeleteDialogOpen(false)}
+              className="hover:bg-gray-200 hover:border-gray-400 cursor-pointer transition-colors"
             >
               Batal
             </Button>
             <Button
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-red-600 hover:bg-red-700 text-white cursor-pointer transition-colors"
               onClick={confirmDelete}
             >
               <Trash2 className="w-4 h-4 mr-2" />
