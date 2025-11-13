@@ -93,6 +93,12 @@ export default function DashboardLayout({
         show: permissions.canManageStudents,
       },
       {
+        label: 'Formulir List',
+        icon: FileText,
+        href: '/dashboard/formulir-list',
+        show: permissions.canManageFormsList,
+      },
+      {
         label: 'Users',
         icon: Users,
         href: '/dashboard/users',
