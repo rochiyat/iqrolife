@@ -362,7 +362,7 @@ export default function CalonMuridPage() {
                 </div>
               </div>
 
-              {/* Program & Status */}
+              {/* Status & Catatan */}
               <div className="space-y-4 pt-4 border-t">
                 <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2">
                   <svg
@@ -375,40 +375,19 @@ export default function CalonMuridPage() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                     />
                   </svg>
-                  Program & Status
+                  Status & Catatan
                 </h3>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>
-                      Program <span className="text-red-500">*</span>
-                    </Label>
-                    <select
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
-                      required
-                    >
-                      <option value="">Pilih program</option>
-                      <option value="KBTK">KBTK</option>
-                      <option value="Kelas Eksplorasi">Kelas Eksplorasi</option>
-                      <option value="Kelas Pra Aqil Baligh">
-                        Kelas Pra Aqil Baligh
-                      </option>
-                      <option value="Kelas Aqil Baligh">
-                        Kelas Aqil Baligh
-                      </option>
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Status Pendaftaran</Label>
-                    <select className="w-full border border-gray-300 rounded-md px-3 py-2">
-                      <option value="pending">Pending</option>
-                      <option value="approved">Disetujui</option>
-                      <option value="rejected">Ditolak</option>
-                    </select>
-                  </div>
+                <div className="space-y-2">
+                  <Label>Status Pendaftaran</Label>
+                  <select className="w-full border border-gray-300 rounded-md px-3 py-2">
+                    <option value="pending">Pending</option>
+                    <option value="approved">Disetujui</option>
+                    <option value="rejected">Ditolak</option>
+                  </select>
                 </div>
 
                 <div className="space-y-2">
@@ -854,7 +833,7 @@ export default function CalonMuridPage() {
                     }
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 col-span-2">
                   <Label htmlFor="edit-email">Email</Label>
                   <Input
                     id="edit-email"
@@ -864,24 +843,6 @@ export default function CalonMuridPage() {
                       handleEditInputChange('email', e.target.value)
                     }
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-program">Program</Label>
-                  <select
-                    id="edit-program"
-                    value={editFormData.program}
-                    onChange={(e) =>
-                      handleEditInputChange('program', e.target.value)
-                    }
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
-                  >
-                    <option value="KBTK">KBTK</option>
-                    <option value="Kelas Eksplorasi">Kelas Eksplorasi</option>
-                    <option value="Kelas Pra Aqil Baligh">
-                      Kelas Pra Aqil Baligh
-                    </option>
-                    <option value="Kelas Aqil Baligh">Kelas Aqil Baligh</option>
-                  </select>
                 </div>
                 <div className="space-y-2 col-span-2">
                   <Label htmlFor="edit-address">Alamat</Label>
