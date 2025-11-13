@@ -102,7 +102,10 @@ export function useAuth() {
   return context;
 }
 
-export function hasPermission(userRole: UserRole, requiredRoles: UserRole[]): boolean {
+export function hasPermission(
+  userRole: UserRole,
+  requiredRoles: UserRole[]
+): boolean {
   return requiredRoles.includes(userRole);
 }
 
@@ -113,6 +116,7 @@ export const rolePermissions = {
     canManageRoles: true,
     canManageStudents: true,
     canManageForms: true,
+    canManageFormsList: true,
     canManageSettings: true,
     canManageMenu: true,
     canViewPortfolio: true,
@@ -123,6 +127,7 @@ export const rolePermissions = {
     canManageRoles: false,
     canManageStudents: true,
     canManageForms: true,
+    canManageFormsList: true,
     canManageSettings: false,
     canManageMenu: false,
     canViewPortfolio: true,
@@ -133,6 +138,7 @@ export const rolePermissions = {
     canManageRoles: false,
     canManageStudents: true,
     canManageForms: false,
+    canManageFormsList: true,
     canManageSettings: false,
     canManageMenu: false,
     canViewPortfolio: true,
@@ -143,6 +149,7 @@ export const rolePermissions = {
     canManageRoles: false,
     canManageStudents: false,
     canManageForms: true,
+    canManageFormsList: false,
     canManageSettings: false,
     canManageMenu: false,
     canViewPortfolio: true,
@@ -150,8 +157,18 @@ export const rolePermissions = {
 };
 
 export const roleMenuAccess = {
-  superadmin: ['home', 'calon-murid', 'users', 'roles', 'menu', 'formulir', 'portofolio', 'settings'],
-  staff: ['home', 'calon-murid', 'formulir', 'portofolio'],
-  teacher: ['home', 'calon-murid', 'portofolio'],
+  superadmin: [
+    'home',
+    'calon-murid',
+    'formulir-list',
+    'users',
+    'roles',
+    'menu',
+    'formulir',
+    'portofolio',
+    'settings',
+  ],
+  staff: ['home', 'calon-murid', 'formulir-list', 'formulir', 'portofolio'],
+  teacher: ['home', 'calon-murid', 'formulir-list', 'portofolio'],
   parent: ['home', 'formulir', 'portofolio'],
 };

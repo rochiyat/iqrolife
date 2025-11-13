@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { uploadToCloudinary } from '@/lib/cloudinary';
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,6 +41,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Upload bukti transfer to Cloudinary
+    let cloudinaryResult;
+    if (buktiTransfer) {
+      const bytes = await buktiTransfer.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      // Generate unique public_id
+      const timestamp = Date.now();
+      const sanitizedName = namaLengkap
+        .replace(/[^a-zA-Z0-9]/g, '_')
+        .toLowerCase();
+      const publicId = `registration_${sanitizedName}_${timestamp}`;
+
+      cloudinaryResult = await uploadToCloudinary(buffer, 'registrations', {
+        public_id: publicId,
+        resource_type: 'auto',
+      });
+    }
+
     // Create registration data object
     const registrationData = {
       namaLengkap,
@@ -53,53 +71,32 @@ export async function POST(request: NextRequest) {
       alamat,
       asalSekolah,
       catatan,
+      buktiTransferUrl: cloudinaryResult?.secure_url || '',
+      buktiTransferPublicId: cloudinaryResult?.public_id || '',
       timestamp: new Date().toISOString(),
     };
-
-    // Save file to public/uploads directory
-    let fileName = '';
-    if (buktiTransfer) {
-      const bytes = await buktiTransfer.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-
-      // Generate unique filename
-      const timestamp = Date.now();
-      const originalName = buktiTransfer.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-      fileName = `${timestamp}_${originalName}`;
-
-      // Ensure uploads directory exists
-      const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'registrations');
-      try {
-        await mkdir(uploadsDir, { recursive: true });
-      } catch (error) {
-        // Directory might already exist, ignore error
-      }
-
-      const filePath = path.join(uploadsDir, fileName);
-      await writeFile(filePath, buffer);
-    }
 
     // Here you would typically:
     // 1. Save to database
     // 2. Send email notification to admin
     // 3. Send confirmation email to parent
-    // For now, we'll just log the data and return success
 
-    console.log('New Registration:', {
-      ...registrationData,
-      buktiTransferPath: `/uploads/registrations/${fileName}`,
-    });
+    console.log('New Registration:', registrationData);
 
-    // In production, you might want to:
-    // - Save to database
-    // - Send notification email
-    // - Add to CRM system
-    // - etc.
+    // TODO: Save to database
+    // await db.registration.create({ data: registrationData });
+
+    // TODO: Send notification emails
+    // await sendAdminNotification(registrationData);
+    // await sendParentConfirmation(email, registrationData);
 
     return NextResponse.json({
       success: true,
       message: 'Pendaftaran berhasil diterima',
       registrationId: `REG-${Date.now()}`,
+      data: {
+        buktiTransferUrl: cloudinaryResult?.secure_url,
+      },
     });
   } catch (error) {
     console.error('Registration error:', error);
