@@ -50,6 +50,24 @@ export default function CalonMuridPage() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [editFormData, setEditFormData] = useState<Student | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Add form state
+  const [addFormData, setAddFormData] = useState({
+    namaLengkap: '',
+    tanggalLahir: '',
+    jenisKelamin: '',
+    asalSekolah: '',
+    namaOrangTua: '',
+    noTelepon: '',
+    email: '',
+    alamat: '',
+    program: 'KBTK',
+    status: 'pending',
+    catatan: '',
+  });
+  const [buktiTransferFile, setBuktiTransferFile] = useState<File | null>(null);
+
   const [students, setStudents] = useState<Student[]>([
     {
       id: '1',
@@ -228,6 +246,126 @@ export default function CalonMuridPage() {
     }
   };
 
+  const handleAddInputChange = (field: string, value: string) => {
+    setAddFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Ukuran file maksimal 5MB');
+        return;
+      }
+      setBuktiTransferFile(file);
+    }
+  };
+
+  const handleAddSubmit = async () => {
+    // Validate required fields
+    if (
+      !addFormData.namaLengkap ||
+      !addFormData.tanggalLahir ||
+      !addFormData.jenisKelamin ||
+      !addFormData.namaOrangTua ||
+      !addFormData.noTelepon ||
+      !addFormData.email ||
+      !addFormData.alamat
+    ) {
+      alert('Mohon lengkapi semua field yang wajib diisi!');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('namaLengkap', addFormData.namaLengkap);
+      formData.append('tanggalLahir', addFormData.tanggalLahir);
+      formData.append('jenisKelamin', addFormData.jenisKelamin);
+      formData.append('namaOrangTua', addFormData.namaOrangTua);
+      formData.append('noTelepon', addFormData.noTelepon);
+      formData.append('email', addFormData.email);
+      formData.append('alamat', addFormData.alamat);
+      formData.append('asalSekolah', addFormData.asalSekolah);
+      formData.append('program', addFormData.program);
+      formData.append('status', addFormData.status);
+      formData.append('catatan', addFormData.catatan);
+
+      if (buktiTransferFile) {
+        formData.append('buktiTransfer', buktiTransferFile);
+      }
+
+      const response = await fetch('/api/dashboard/calon-murid', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Calculate age
+        const birthDate = new Date(addFormData.tanggalLahir);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (
+          monthDiff < 0 ||
+          (monthDiff === 0 && today.getDate() < birthDate.getDate())
+        ) {
+          age--;
+        }
+
+        // Add to students list
+        const newStudent: Student = {
+          id: `temp-${Date.now()}`,
+          name: addFormData.namaLengkap,
+          birthDate: addFormData.tanggalLahir,
+          age,
+          gender: addFormData.jenisKelamin,
+          parent: addFormData.namaOrangTua,
+          phone: addFormData.noTelepon,
+          email: addFormData.email,
+          address: addFormData.alamat,
+          previousSchool: addFormData.asalSekolah || undefined,
+          program: addFormData.program,
+          status: addFormData.status as 'pending' | 'approved' | 'rejected',
+          registrationDate: new Date().toISOString().split('T')[0],
+          notes: addFormData.catatan || undefined,
+          paymentProof: result.data?.paymentProof || undefined,
+        };
+
+        setStudents([newStudent, ...students]);
+
+        // Reset form
+        setAddFormData({
+          namaLengkap: '',
+          tanggalLahir: '',
+          jenisKelamin: '',
+          asalSekolah: '',
+          namaOrangTua: '',
+          noTelepon: '',
+          email: '',
+          alamat: '',
+          program: 'KBTK',
+          status: 'pending',
+          catatan: '',
+        });
+        setBuktiTransferFile(null);
+
+        setIsAddDialogOpen(false);
+        alert('Data calon murid berhasil ditambahkan!');
+      } else {
+        alert(result.error || 'Gagal menambahkan data calon murid');
+      }
+    } catch (error) {
+      console.error('Error adding student:', error);
+      alert('Terjadi kesalahan saat menambahkan data');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -272,7 +410,14 @@ export default function CalonMuridPage() {
                   <Label>
                     Nama Lengkap Anak <span className="text-red-500">*</span>
                   </Label>
-                  <Input placeholder="Masukkan nama lengkap anak" required />
+                  <Input
+                    placeholder="Masukkan nama lengkap anak"
+                    value={addFormData.namaLengkap}
+                    onChange={(e) =>
+                      handleAddInputChange('namaLengkap', e.target.value)
+                    }
+                    required
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -280,7 +425,14 @@ export default function CalonMuridPage() {
                     <Label>
                       Tanggal Lahir <span className="text-red-500">*</span>
                     </Label>
-                    <Input type="date" required />
+                    <Input
+                      type="date"
+                      value={addFormData.tanggalLahir}
+                      onChange={(e) =>
+                        handleAddInputChange('tanggalLahir', e.target.value)
+                      }
+                      required
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label>
@@ -288,6 +440,10 @@ export default function CalonMuridPage() {
                     </Label>
                     <select
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      value={addFormData.jenisKelamin}
+                      onChange={(e) =>
+                        handleAddInputChange('jenisKelamin', e.target.value)
+                      }
                       required
                     >
                       <option value="">Pilih jenis kelamin</option>
@@ -299,7 +455,13 @@ export default function CalonMuridPage() {
 
                 <div className="space-y-2">
                   <Label>Asal Sekolah/TK (jika ada)</Label>
-                  <Input placeholder="Masukkan asal sekolah/TK" />
+                  <Input
+                    placeholder="Masukkan asal sekolah/TK"
+                    value={addFormData.asalSekolah}
+                    onChange={(e) =>
+                      handleAddInputChange('asalSekolah', e.target.value)
+                    }
+                  />
                 </div>
               </div>
 
@@ -326,7 +488,14 @@ export default function CalonMuridPage() {
                   <Label>
                     Nama Orang Tua/Wali <span className="text-red-500">*</span>
                   </Label>
-                  <Input placeholder="Masukkan nama orang tua/wali" required />
+                  <Input
+                    placeholder="Masukkan nama orang tua/wali"
+                    value={addFormData.namaOrangTua}
+                    onChange={(e) =>
+                      handleAddInputChange('namaOrangTua', e.target.value)
+                    }
+                    required
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -335,7 +504,15 @@ export default function CalonMuridPage() {
                       No. Telepon/WhatsApp{' '}
                       <span className="text-red-500">*</span>
                     </Label>
-                    <Input type="tel" placeholder="08xx-xxxx-xxxx" required />
+                    <Input
+                      type="tel"
+                      placeholder="08xx-xxxx-xxxx"
+                      value={addFormData.noTelepon}
+                      onChange={(e) =>
+                        handleAddInputChange('noTelepon', e.target.value)
+                      }
+                      required
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label>
@@ -344,6 +521,10 @@ export default function CalonMuridPage() {
                     <Input
                       type="email"
                       placeholder="email@example.com"
+                      value={addFormData.email}
+                      onChange={(e) =>
+                        handleAddInputChange('email', e.target.value)
+                      }
                       required
                     />
                   </div>
@@ -357,6 +538,10 @@ export default function CalonMuridPage() {
                     rows={3}
                     placeholder="Masukkan alamat lengkap"
                     className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    value={addFormData.alamat}
+                    onChange={(e) =>
+                      handleAddInputChange('alamat', e.target.value)
+                    }
                     required
                   />
                 </div>
@@ -382,8 +567,31 @@ export default function CalonMuridPage() {
                 </h3>
 
                 <div className="space-y-2">
+                  <Label>Program</Label>
+                  <select
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    value={addFormData.program}
+                    onChange={(e) =>
+                      handleAddInputChange('program', e.target.value)
+                    }
+                  >
+                    <option value="KBTK">KBTK</option>
+                    <option value="Kelas Pra Aqil Baligh">
+                      Kelas Pra Aqil Baligh
+                    </option>
+                    <option value="Kelas Eksplorasi">Kelas Eksplorasi</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
                   <Label>Status Pendaftaran</Label>
-                  <select className="w-full border border-gray-300 rounded-md px-3 py-2">
+                  <select
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    value={addFormData.status}
+                    onChange={(e) =>
+                      handleAddInputChange('status', e.target.value)
+                    }
+                  >
                     <option value="pending">Pending</option>
                     <option value="approved">Disetujui</option>
                     <option value="rejected">Ditolak</option>
@@ -396,6 +604,10 @@ export default function CalonMuridPage() {
                     rows={2}
                     placeholder="Tambahkan catatan atau informasi tambahan"
                     className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    value={addFormData.catatan}
+                    onChange={(e) =>
+                      handleAddInputChange('catatan', e.target.value)
+                    }
                   />
                 </div>
               </div>
@@ -409,7 +621,16 @@ export default function CalonMuridPage() {
 
                 <div className="space-y-2">
                   <Label>Upload Bukti Transfer</Label>
-                  <Input type="file" accept="image/*,application/pdf" />
+                  <Input
+                    type="file"
+                    accept="image/*,application/pdf"
+                    onChange={handleFileChange}
+                  />
+                  {buktiTransferFile && (
+                    <p className="text-xs text-green-600">
+                      File terpilih: {buktiTransferFile.name}
+                    </p>
+                  )}
                   <p className="text-xs text-gray-500">
                     Format: PNG, JPG, PDF (Maks. 5MB)
                   </p>
@@ -420,12 +641,26 @@ export default function CalonMuridPage() {
               <Button
                 variant="outline"
                 onClick={() => setIsAddDialogOpen(false)}
+                disabled={isSubmitting}
               >
                 Batal
               </Button>
-              <Button className="bg-brand-emerald hover:bg-brand-emerald/90">
-                <Plus className="w-4 h-4 mr-2" />
-                Simpan Data
+              <Button
+                className="bg-brand-emerald hover:bg-brand-emerald/90"
+                onClick={handleAddSubmit}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="animate-spin mr-2">⏳</span>
+                    Menyimpan...
+                  </>
+                ) : (
+                  <>
+                    <Plus className="w-4 h-4 mr-2" />
+                    Simpan Data
+                  </>
+                )}
               </Button>
             </div>
           </DialogContent>
