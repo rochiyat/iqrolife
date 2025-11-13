@@ -4,31 +4,31 @@ export const sejarahData = {
     'Berawal dari sebuah keyakinan, setiap keberadaan menuntut peran. Setiap peran memiliki tugas & tanggung jawab. Kesuksesan kita, tergantung dari bagaimana tugas dan tanggung jawab kita benar-benar diselesaikan.\n\nSudahkah kita bertanya dan mendalami keberadaan dan peran kita sebagai manusia dan orang tua dari manusia?\n\nIqro = Membaca, Life = Kehidupan. \n\nIqrolife merupakan komunitas pembelajaran keluarga yang bertujuan membantu masing-masing keluarga untuk menemukan misi serta visi kehidupannya.\n\nBerdiri Tahun 2022 dimulai dari kebutuhan belajar dan berkomunitas, untuk saling berbagi cerita dan saling menguatkan sebagai orang tua.',
   milestones: [
     {
-      year: '2022',
-      title: 'Awal Mula Komunitas dan Kebersamaan',
+      year: '2022-2023',
+      title: 'Benih Kebaikan',
       description:
-        'Pada tahun 2022, Iqrolife bermula dari sebuah kebutuhan sederhana: ruang untuk belajar dan berkomunitas. Kami mencari tempat di mana para orang tua dapat saling berbagi cerita, tawa, dan tantangan, serta saling menguatkan. Gambar pertama ini menangkap esensi awal kami – sekelompok kecil orang tua dan anak-anak berkumpul di ruang terbuka, mungkin di taman bermain atau halaman, dengan ekspresi ceria. Ini adalah momen-momen pertama pembangunan fondasi komunitas kami, menciptakan ikatan yang akan terus tumbuh.',
+        'Iqrolife berdiri sebagai ruang belajar beberapa keluarga yang memiliki fase kehidupan, concern dan pandangan yang sama terkait pengasuhan. Mendalami Fitrah Based Eduction bersama, berbagi cerita dan inspirasi untuk saling menguatkan sebagai Ayah, Bunda dan Keluarga.',
       image: '/placeholder.jpg',
     },
     {
-      year: '2023',
-      title: 'Pertumbuhan dan Persahabatan yang Kokoh',
+      year: '2023-2024',
+      title: 'Tumbuh Bersama',
       description:
-        'Setahun kemudian, komunitas Iqrolife telah berkembang. Gambar kedua menunjukkan peningkatan jumlah anggota, dengan lebih banyak keluarga bergabung dalam perjalanan ini. Mereka berkumpul di ruang hijau yang luas, mungkin di area piknik atau taman, menandakan pertumbuhan yang sehat dan lingkungan yang semakin mendukung. Senyum di wajah para orang tua dan anak-anak mencerminkan persahabatan yang semakin kokoh, berbagi kebahagiaan dan dukungan dalam setiap langkah pengasuhan. Momen ini adalah bukti nyata dari visi kami untuk saling menguatkan.',
+        'Semakin banyak keluarga yang berminat untuk bergabung pada kegiatan-kegiatan Iqrolife. Iqrolife mulai menjalankan program rutin dan terbuka untuk keluarga lain, termasuk membuka Kelas Bermain dengan jumlah peserta sekian orarng.',
       image: '/school-building-exterior.png',
     },
     {
-      year: '2024',
-      title: 'Perayaan dan Kenangan Indah',
+      year: '2024-2025',
+      title: 'Menguatkan Fondasi',
       description:
-        'Pada tahun 2024, Iqrolife merayakan kebersamaan yang lebih besar dan penuh warna. Gambar ketiga menunjukkan sebuah acara yang lebih terorganisir, mungkin perayaan ulang tahun komunitas atau acara khusus lainnya, dengan dekorasi balon dan suasana meriah. Anak-anak dan orang tua berkumpul di dalam ruangan, menciptakan kenangan indah bersama. Ini adalah refleksi dari semangat komunitas yang dinamis, di mana setiap momen dirayakan dengan sukacita dan kebersamaan, memperkuat ikatan emosional di antara para anggota.',
+        'Iqrolife menyadari bahwa gerakan kebaikan ini butuh terus ditularkan dengan mengajak semakin banyak keluarga untuk menjadi bagian dari kepengurusan atau keluarga Iqrolife. Pada tahun ini Iqrolife membuka kepengurusan dengan melalukan open rekrutmen. Bergabung beberapa keluarga dan pengembangan struktur kepengurusan yang lebih lengkap, mulai dari Ketua, Sekretaris. Bendahara, Divisi Kelas Eksplorasi, Kelas Bermain, Kelas Aqil Baligh, Kelas Belajar Orang Tua.',
       image: '/kelas-bermain.png',
     },
     {
-      year: '2025',
-      title: 'Dampak dan Semangat untuk Berbagi',
+      year: '2025-2026',
+      title: 'Ekspansi dan Memberi Manfaat',
       description:
-        'Memasuki tahun 2025, Iqrolife tidak hanya tumbuh dalam jumlah, tetapi juga dalam dampak dan semangat berbagi. Gambar terakhir menunjukkan komunitas yang lebih besar lagi, berkumpul di luar ruangan dengan sebuah spanduk yang mungkin menampilkan nama atau moto komunitas. Ini bisa jadi acara sosial, kegiatan amal, atau inisiatif lain yang menunjukkan bahwa Iqrolife tidak hanya fokus pada internal, tetapi juga mulai berbagi kebaikan dengan lingkungan sekitar. Kebersamaan yang erat dan semangat gotong royong terpancar jelas, menunjukkan bahwa komunitas kami terus berkembang, tidak hanya untuk anggotanya tetapi juga untuk dampak yang lebih luas.',
+        'Iqrolife terus memperluas kebermanfaatan, dengan mendirikan Yayasan Tumbuh Bersama Iqrolife dengan menghadirkan Kelas Siap Sekolah dengan 7 Pendidikan Holistik. Kelas Siap Sekolah dengan 7 Pendidikan Holistik merupakan bentuk komitmen Iqrolife untuk mengembangkan ekosistem pendidikan mulai dari membangun sekolah, pengembangan keluarga dan keterlibatan aktif masyarakat pada tahun 2035.',
       image: '/keluarga-belajar.jpg',
     },
   ],
