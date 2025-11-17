@@ -1,0 +1,35 @@
+name: Sync to Iqrolife Repository
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name "Rochiyat"
+          git config --global user.email "rochiyat@gmail.com"
+      
+      - name: Add target repository as remote
+        run: |
+          git remote add target https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/iqrolife/iqrolife.git
+      
+      - name: Push to target repository
+        run: |
+          git push target main --force
+      
+      - name: Notify completion
+        if: success()
+        run: echo "✅ Successfully synced to iqrolife/iqrolife"
