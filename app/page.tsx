@@ -254,7 +254,7 @@ export default function FoundationLanding() {
                       <motion.img
                         whileHover={{ scale: 1.02 }}
                         transition={{ duration: 0.3 }}
-                        src="/gallery/1.JPG"
+                        src="/gallery/gallery-008.jpg"
                         alt={hero.image.alt}
                         className="rounded-2xl shadow-lg w-full"
                       />

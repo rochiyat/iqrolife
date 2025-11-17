@@ -8,43 +8,103 @@ import { Skeleton } from '@/components/ui/skeleton-loading';
 
 const galleryImages = [
   {
-    src: '/gallery/1.JPG',
-    alt: 'Kegiatan Komunitas 1',
+    src: '/gallery/gallery-001.jpg',
+    alt: 'Kegiatan Komunitas',
     caption: 'Momen berharga bersama komunitas',
   },
   {
-    src: '/gallery/2.JPG',
-    alt: 'Kegiatan Komunitas 2',
+    src: '/gallery/gallery-003.jpg',
+    alt: 'Aktivitas Pembelajaran',
     caption: 'Aktivitas pembelajaran yang menyenangkan',
   },
   {
-    src: '/gallery/3.JPG',
-    alt: 'Kegiatan Komunitas 3',
-    caption: 'Tumbuh dan berkembang bersama',
+    src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-005.jpg',
+    alt: 'Family Camp',
+    caption: 'Kebersamaan keluarga dalam Family Camp',
   },
   {
-    src: '/gallery/4.JPG',
-    alt: 'Kegiatan Komunitas 4',
-    caption: 'Membangun karakter melalui kegiatan',
+    src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-008.jpg',
+    alt: 'Minggu Bersama Ayah',
+    caption: 'Quality time ayah dan anak',
   },
   {
-    src: '/gallery/5.JPG',
-    alt: 'Kegiatan Komunitas 5',
+    src: '/gallery/gallery-005.jpg',
+    alt: 'Kebersamaan Belajar',
     caption: 'Kebersamaan dalam belajar',
   },
   {
-    src: '/gallery/6.JPG',
-    alt: 'Kegiatan Komunitas 6',
-    caption: 'Eksplorasi dan kreativitas',
+    src: '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-003.jpg',
+    alt: 'Kelas Bermain',
+    caption: 'Bermain sambil belajar di Kelas Bermain',
   },
   {
-    src: '/gallery/7.JPG',
-    alt: 'Kegiatan Komunitas 7',
+    src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-006.jpg',
+    alt: 'Jelajah Museum',
+    caption: 'Eksplorasi pengetahuan di museum',
+  },
+  {
+    src: '/gallery/gallery-007.jpg',
+    alt: 'Pengalaman Bermakna',
     caption: 'Pengalaman belajar yang bermakna',
   },
   {
-    src: '/gallery/8.JPG',
-    alt: 'Kegiatan Komunitas 8',
+    src: '/program/kelas-belajar-orang-tua/fbe/fbe-004.jpg',
+    alt: 'Fitrah Based Education',
+    caption: 'Workshop FBE untuk orang tua',
+  },
+  {
+    src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-007.jpg',
+    alt: 'Magang Kuliner',
+    caption: 'Belajar keterampilan kuliner',
+  },
+  {
+    src: '/program/kelas-eksplorasi/jelajah-air/jelajah-air-002.jpg',
+    alt: 'Jelajah Air',
+    caption: 'Petualangan seru di Jelajah Air',
+  },
+  {
+    src: '/program/kelas-siap-sekolah/siap-sekolah-002.jpg',
+    alt: 'Kelas Siap Sekolah',
+    caption: 'Persiapan memasuki jenjang sekolah',
+  },
+  {
+    src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-011.jpg',
+    alt: 'Family Camp Activities',
+    caption: 'Aktivitas seru di Family Camp',
+  },
+  {
+    src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-015.jpg',
+    alt: 'Bonding Ayah dan Anak',
+    caption: 'Mempererat ikatan ayah dan anak',
+  },
+  {
+    src: '/gallery/gallery-006.jpg',
+    alt: 'Kreativitas Anak',
+    caption: 'Eksplorasi dan kreativitas',
+  },
+  {
+    src: '/program/kelas-siap-sekolah/level/level-002.jpg',
+    alt: 'Program Level',
+    caption: 'Pembelajaran bertahap sesuai level',
+  },
+  {
+    src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-009.jpg',
+    alt: 'Eksplorasi Museum',
+    caption: 'Mengenal sejarah dan budaya',
+  },
+  {
+    src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-003.jpg',
+    alt: 'Praktik Kuliner',
+    caption: 'Mengasah keterampilan memasak',
+  },
+  {
+    src: '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-006.jpg',
+    alt: 'Bermain dan Belajar',
+    caption: 'Tumbuh kembang melalui bermain',
+  },
+  {
+    src: '/gallery/gallery-008.jpg',
+    alt: 'Kebahagiaan Bersama',
     caption: 'Senyum dan kebahagiaan bersama',
   },
 ];
