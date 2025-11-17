@@ -94,7 +94,7 @@ export const schoolData = {
       description:
         'Kelas bermain untuk anak usia mulai 4 tahun yang terdiri dari 10 anak yang didesain untuk memberikan pengalaman bermain yang menyenangkan, menumbuhkan rasa cinta terhadap Rabbnya, serta mengembangkan keterampilan sosial motorik dan kognitif dasar.',
       icon: '🎈',
-      image: '/siap-sekolah/level/kb-kss.jpg',
+      image: '/program/kelas-siap-sekolah/level/level-001.jpg',
     },
     {
       title: 'Siap Sekolah - A (KSS-A)',
@@ -103,7 +103,7 @@ export const schoolData = {
       description:
         'Siap Sekolah A (KSS-A) untuk usia mulai 5 tahun yang terdiri dari maksimal 10 anak yang didesain sebagai lingkungan pendidikan awal dengan menyediakan lingkungan belajar terstruktur, dimana anak-anak dapat menumbuhkan kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi dan kognitif melalui kegiatan bermain yang belajar.',
       icon: '🌟',
-      image: '/siap-sekolah/level/kss-a.jpg',
+      image: '/program/kelas-siap-sekolah/level/level-002.jpg',
     },
     {
       title: 'Siap Sekolah - B (KSS-B)',
@@ -112,42 +112,48 @@ export const schoolData = {
       description:
         'Siap Sekolah B (KSS-B) untuk usia mulai 6 tahun, merupakan tahap pendidikan awal yang memfokuskan pada pengembangan keterampilan akademis dasar, keterampilan sosial, kemandirian melalui proses pembelajaran yang menyenangkan.',
       icon: '🎓',
-      image: '/siap-sekolah/level/kss-b.jpg',
+      image: '/program/kelas-siap-sekolah/level/level-003.jpg',
     },
   ],
   facilities: {
     title: 'Fasilitas Pembelajaran',
     description:
-      'Fasilitas lengkap dan nyaman untuk mendukung proses belajar mengajar yang optimal',
+      'Rencana Fasilitas pembelajaran yang dirancang untuk mendukung proses belajar mengajar yang optimal',
     items: [
       {
-        image: '/fasilitas-pembelajaran/1.jpg',
+        image:
+          '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-001.jpg',
         title: 'Ruang Kelas Nyaman',
         description:
           'Ruang kelas yang dirancang khusus untuk kenyamanan belajar anak',
       },
       {
-        image: '/fasilitas-pembelajaran/2.jpg',
+        image:
+          '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-002.jpg',
         title: 'Area Bermain',
         description: 'Area bermain yang aman dan menyenangkan untuk anak-anak',
       },
       {
-        image: '/fasilitas-pembelajaran/3.jpg',
+        image:
+          '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-003.jpg',
         title: 'Perpustakaan',
         description: 'Koleksi buku yang lengkap untuk menumbuhkan minat baca',
       },
       {
-        image: '/fasilitas-pembelajaran/4.jpg',
+        image:
+          '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-004.jpg',
         title: 'Ruang Seni',
         description: 'Ruang khusus untuk mengembangkan kreativitas anak',
       },
       {
-        image: '/fasilitas-pembelajaran/5.jpg',
+        image:
+          '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-005.jpg',
         title: 'Taman Bermain',
         description: 'Taman yang asri untuk eksplorasi alam',
       },
       {
-        image: '/fasilitas-pembelajaran/6.jpg',
+        image:
+          '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-006.jpg',
         title: 'Ruang Multifungsi',
         description: 'Ruang serbaguna untuk berbagai kegiatan pembelajaran',
       },
@@ -157,68 +163,48 @@ export const schoolData = {
     title: 'Aktivitas Pembelajaran',
     description:
       'Berbagai kegiatan yang dirancang untuk mengembangkan potensi siswa secara optimal',
-    tahunan: [
+    items: [
       {
-        image: '/siap-sekolah/tahunan/1.jpg',
-        title: 'Family Project',
-        description: 'Kegiatan bersama keluarga untuk mempererat hubungan',
-      },
-      {
-        image: '/siap-sekolah/tahunan/2.jpg',
-        title: 'Kunjungan Edukasi',
-        description: 'Kunjungan ke tempat edukatif untuk menambah wawasan',
-      },
-      {
-        image: '/siap-sekolah/tahunan/3.jpg',
-        title: 'Hari Bersama Ayah',
-        description: 'Kegiatan khusus bersama ayah untuk bonding',
-      },
-      {
-        image: '/siap-sekolah/tahunan/4.jpg',
-        title: 'Main Bersama Ibu',
-        description: 'Aktivitas bermain bersama ibu yang menyenangkan',
-      },
-    ],
-    harian: [
-      {
-        image: '/kelas-bermain.png',
+        image:
+          '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-001.jpg',
         title: 'Eksplorasi Lingkungan Sekolah',
         description: 'Memberi makan ayam, menyiram tanaman dan bermain bebas',
       },
       {
-        image: '/placeholder-nzl00.png',
+        image:
+          '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-002.jpg',
         title: 'Circle Time',
         description: 'Berdoa & dialog iman',
       },
       {
-        image: '/placeholder-p0atk.png',
+        image:
+          '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-003.jpg',
         title: 'Area Multisensory',
         description: 'Bergerak dan kegiatan stimulasi semua indera',
       },
       {
-        image: '/placeholder-bp0kl.png',
-        title: 'Kudapan Pagi',
-        description: 'Kudapan pagi dan mencuci dan merapikan wadah kudapan',
+        image:
+          '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-004.jpg',
+        title: 'Kumpul Bareng',
+        description: 'Kumpul bareng keluarga dan bersama anak-anak',
       },
       {
-        image: '/kelas-bermain.png',
-        title: 'Berkisah / Pembelajaran Al Quran',
-        description: 'Membaca buku atau pembelajaran Al Quran',
+        image:
+          '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-005.jpg',
+        title: 'Berkisah',
+        description: 'Berkisah bersama anak-anak',
       },
       {
-        image: '/placeholder-nzl00.png',
+        image:
+          '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-006.jpg',
         title: 'Kegiatan Tematik',
         description: 'Kegiatan sesuai tema setiap bulannya',
       },
       {
-        image: '/placeholder-p0atk.png',
-        title: 'Circle Time',
-        description: 'Refleksi, berdoa dan pulang',
-      },
-      {
-        image: '/placeholder-bp0kl.png',
-        title: 'Kegiatan Harian Lainnya',
-        description: 'Rutinitas pembelajaran sehari-hari',
+        image:
+          '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-007.jpg',
+        title: 'Aktivitas Bermain dan Belajar',
+        description: 'Rutinitas pembelajaran sehari-hari yang menyenangkan',
       },
     ],
   },

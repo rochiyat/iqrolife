@@ -56,7 +56,7 @@ export default function MentoringAyahPage() {
     },
     {
       src: '/program/mentoring-ayah/mentoring-ayah-010.jpg',
-      alt: 'Obrolan Ayah',
+      alt: 'Obrolan Ayah' /*  */,
     },
   ];
 
