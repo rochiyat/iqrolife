@@ -28,44 +28,44 @@ export default function Page() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200',
-      alt: 'Anak-anak dalam kegiatan kelas eksplorasi',
+      src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-003.jpg',
+      alt: 'Jelajah Museum - Mengenal Sejarah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1622737133809-d95047b9e673?w=1200',
-      alt: 'Kegiatan belajar bersama',
+      src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-007.jpg',
+      alt: 'Minggu Bersama Ayah - Quality Time',
     },
     {
-      src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200',
-      alt: 'Aktivitas kreatif anak',
+      src: '/program/kelas-eksplorasi/jelajah-air/jelajah-air-001.jpg',
+      alt: 'Jelajah Air - Petualangan Seru',
     },
     {
-      src: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=1200',
-      alt: 'Eksplorasi museum',
+      src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-008.jpg',
+      alt: 'Eksplorasi Museum - Belajar Budaya',
     },
     {
-      src: 'https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=1200',
-      alt: 'Kegiatan outdoor',
+      src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-012.jpg',
+      alt: 'Kegiatan Outdoor Bersama Ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1560785477-d43d2b34e0df?w=1200',
-      alt: 'Crafting class',
+      src: '/program/kelas-eksplorasi/jelajah-air/jelajah-air-004.jpg',
+      alt: 'Jelajah Air - Mengenal Ekosistem',
     },
     {
-      src: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=1200',
-      alt: 'Kegiatan seni',
+      src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-005.jpg',
+      alt: 'Museum Tour - Edukasi Interaktif',
     },
     {
-      src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200',
-      alt: 'Belajar bersama ayah',
+      src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-016.jpg',
+      alt: 'Bonding Ayah dan Anak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=1200',
-      alt: 'Aktivitas membatik',
+      src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-010.jpg',
+      alt: 'Jelajah Museum - Eksplorasi Pengetahuan',
     },
     {
-      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200',
-      alt: 'Pop up book activity',
+      src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-019.jpg',
+      alt: 'Minggu Bersama Ayah - Aktivitas Seru',
     },
   ];
 
