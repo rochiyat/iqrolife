@@ -19,44 +19,44 @@ export default function MentoringAyahPage() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200',
-      alt: 'Dadventure bersama anak',
+      src: '/program/mentoring-ayah/mentoring-ayah-001.jpg',
+      alt: 'Mentoring Ayah - Sesi Diskusi',
     },
     {
-      src: 'https://images.unsplash.com/photo-1609220136736-443140cffec6?w=1200',
-      alt: 'Kegiatan MInsoc ayah dan anak',
+      src: '/program/mentoring-ayah/mentoring-ayah-002.jpg',
+      alt: 'Kegiatan Mentoring Ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=1200',
-      alt: 'Bulutangkis bersama',
+      src: '/program/mentoring-ayah/mentoring-ayah-003.jpg',
+      alt: 'Workshop Pengasuhan Ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=1200',
-      alt: 'Olahraga ayah dan anak',
+      src: '/program/mentoring-ayah/mentoring-ayah-004.jpg',
+      alt: 'Dadventure - Aktivitas Ayah dan Anak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200',
-      alt: 'Mentoring ayah',
+      src: '/program/mentoring-ayah/mentoring-ayah-005.jpg',
+      alt: 'Sesi Mentoring Intensif',
     },
     {
-      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=1200',
-      alt: 'Diskusi ayah',
+      src: '/program/mentoring-ayah/mentoring-ayah-006.jpg',
+      alt: 'Kegiatan Bersama Ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1560785477-d43d2b34e0df?w=1200',
-      alt: 'Aktivitas outdoor ayah anak',
+      src: '/program/mentoring-ayah/mentoring-ayah-007.jpg',
+      alt: 'Diskusi Peran Ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200',
-      alt: 'Workshop ayah',
+      src: '/program/mentoring-ayah/mentoring-ayah-008.jpg',
+      alt: 'Aktivitas Outdoor Ayah dan Anak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=1200',
-      alt: 'Kegiatan bersama ayah',
+      src: '/program/mentoring-ayah/mentoring-ayah-009.jpg',
+      alt: 'Program Pendampingan Ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200',
-      alt: 'Sesi mentoring ayah',
+      src: '/program/mentoring-ayah/mentoring-ayah-010.jpg',
+      alt: 'Obrolan Ayah',
     },
   ];
 
