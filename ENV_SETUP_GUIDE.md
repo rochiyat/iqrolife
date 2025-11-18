@@ -39,7 +39,7 @@ npm run dev
 
 ```env
 # Aiven PostgreSQL Database URL
-DATABASE_URL="postgres://avnadmin:AVNS_BEzKY3t2ydzg2y1jZyV@pg-18928b1b-houseofbaituna.l.aivencloud.com:16855/defaultdb?sslmode=require"
+DATABASE_URL="postgres://username:password@host:port/database?sslmode=require"
 
 # NextAuth Secret (generate with: openssl rand -base64 32)
 NEXTAUTH_SECRET="your-nextauth-secret-change-this-in-production"
