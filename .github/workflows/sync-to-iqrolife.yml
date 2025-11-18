@@ -14,7 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       
       - name: Configure Git
@@ -22,14 +21,25 @@ jobs:
           git config --global user.name "Rochiyat"
           git config --global user.email "rochiyat@gmail.com"
       
+      - name: Create fresh branch without history
+        run: |
+          # Create orphan branch (no history)
+          git checkout --orphan clean-main
+          
+          # Add all current files
+          git add -A
+          
+          # Create initial commit
+          git commit -m "Clean repository without sensitive data"
+      
       - name: Add target repository as remote
         run: |
-          git remote add target https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/iqrolife/iqrolife.git
+          git remote add target https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/iqrolife/iqrolife.git || true
       
       - name: Push to target repository
         run: |
-          git push target main:main --force
+          git push target clean-main:main --force
       
       - name: Notify completion
         if: success()
-        run: echo "✅ Successfully synced to iqrolife/iqrolife"
+        run: echo "✅ Successfully synced to iqrolife/iqrolife with clean history"
