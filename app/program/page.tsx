@@ -91,11 +91,6 @@ export default function Page() {
               <p className="mt-3 leading-relaxed text-muted-foreground">
                 {programsData.hero.description}
               </p>
-              <div className="mt-6">
-                <Button className="transition-transform hover:-translate-y-0.5">
-                  {programsData.hero.button.text}
-                </Button>
-              </div>
             </div>
             <div className="rounded-lg border bg-card p-4 shadow-sm transition-transform duration-300 hover:-translate-y-1">
               <img
