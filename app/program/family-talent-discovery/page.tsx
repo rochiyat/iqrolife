@@ -200,7 +200,7 @@ export default function FamilyTalentDiscoveryPage() {
                 </div>
 
                 <div className="mt-8 flex gap-3">
-                  <Link href="/contact">
+                  <Link href="/kontak">
                     <Button>Hubungi Kami</Button>
                   </Link>
                   <Link href="/program">
