@@ -43,7 +43,9 @@ export default function RegistrationPage() {
   >('idle');
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -144,8 +146,8 @@ export default function RegistrationPage() {
               🎒 Daftar KBTK Iqrolife 🎒
             </h1>
             <p className="text-center text-gray-600 max-w-3xl mx-auto mb-4 text-lg">
-              Bergabunglah dengan keluarga besar Iqrolife dan wujudkan masa depan
-              gemilang putra-putri Anda! ✨
+              Bergabunglah dengan keluarga besar Iqrolife dan wujudkan masa
+              depan gemilang putra-putri Anda! ✨
             </p>
             <Link href="/program/school">
               <Button
@@ -287,7 +289,8 @@ export default function RegistrationPage() {
 
                   <div>
                     <Label htmlFor="namaOrangTua" className="text-gray-700">
-                      Nama Orang Tua/Wali <span className="text-red-500">*</span>
+                      Nama Orang Tua/Wali{' '}
+                      <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="namaOrangTua"
@@ -303,7 +306,8 @@ export default function RegistrationPage() {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="noTelepon" className="text-gray-700">
-                        No. Telepon/WhatsApp <span className="text-red-500">*</span>
+                        No. Telepon/WhatsApp{' '}
+                        <span className="text-red-500">*</span>
                       </Label>
                       <div className="relative">
                         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -369,16 +373,17 @@ export default function RegistrationPage() {
                       Informasi Pembayaran:
                     </p>
                     <ul className="text-sm text-blue-700 space-y-1">
-                      <li>• Bank: BCA</li>
-                      <li>• No. Rekening: 1234567890</li>
-                      <li>• Atas Nama: Yayasan Iqrolife</li>
-                      <li>• Biaya Pendaftaran: Rp 500.000</li>
+                      <li>• Bank: BSI</li>
+                      <li>• No. Rekening: 7016179838</li>
+                      <li>• Atas Nama: Agista Rosiana</li>
+                      <li>• Biaya Pendaftaran: Rp 250.000</li>
                     </ul>
                   </div>
 
                   <div>
                     <Label htmlFor="buktiTransfer" className="text-gray-700">
-                      Upload Bukti Transfer <span className="text-red-500">*</span>
+                      Upload Bukti Transfer{' '}
+                      <span className="text-red-500">*</span>
                     </Label>
                     <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-purple-400 transition-colors">
                       <div className="space-y-2 text-center">
@@ -428,9 +433,9 @@ export default function RegistrationPage() {
                                 {buktiTransfer?.name}
                               </p>
                               <p className="text-sm text-gray-600">
-                                {(buktiTransfer?.size || 0 / 1024 / 1024).toFixed(
-                                  2
-                                )}{' '}
+                                {(
+                                  buktiTransfer?.size || 0 / 1024 / 1024
+                                ).toFixed(2)}{' '}
                                 MB
                               </p>
                             </div>
