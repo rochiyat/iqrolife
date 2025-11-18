@@ -1,30 +1,109 @@
-# Next.js 14 app clone
+# Iqrolife Community Website
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/rochiyats-projects/v0-next-js-14-app-clone)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/9hMPn8LvvRx)
+> Platform digital untuk Komunitas Iqrolife - Pendidikan berbasis fitrah dengan pendekatan holistik untuk mengembangkan manusia paripurna.
 
-## Overview
+## 🌟 Tentang Iqrolife
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+Iqrolife adalah komunitas pendidikan berbasis fitrah yang menghadirkan 7 dimensi pendidikan holistik untuk mengembangkan manusia paripurna dari 3 aspek: jiwa, fisik, dan akal. Kami menyediakan ekosistem pendidikan lengkap untuk seluruh komponen keluarga: Ayah, Ibu, dan Anak.
 
-## Deployment
+## ✨ Fitur Utama
 
-Your project is live at:
+- 🎓 **Program Pendidikan Lengkap** - Kelas Siap Sekolah, Kelas Eksplorasi, Kelas Aqil Baligh
+- 👨‍👩‍👧 **Program Keluarga** - Family Camp, Family Talent Discovery, Mentoring Ayah & Ibu
+- 📚 **7 Dimensi Pendidikan Holistik** - Pendekatan komprehensif untuk perkembangan anak
+- 🖼️ **Galeri Kegiatan** - Dokumentasi momen berharga komunitas
+- 💬 **Testimoni** - Pengalaman nyata dari orang tua dan alumni
+- 📞 **Kontak & Pendaftaran** - Sistem pendaftaran online yang mudah
 
-**[https://vercel.com/rochiyats-projects/v0-next-js-14-app-clone](https://vercel.com/rochiyats-projects/v0-next-js-14-app-clone)**
+## 🚀 Tech Stack
 
-## Build your app
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI Components:** Radix UI, Shadcn/ui
+- **Animation:** Framer Motion
+- **Database:** PostgreSQL (Aiven)
+- **Deployment:** Vercel
+- **Image Storage:** Cloudinary
 
-Continue building your app on:
+## 📦 Installation
 
-**[https://v0.app/chat/projects/9hMPn8LvvRx](https://v0.app/chat/projects/9hMPn8LvvRx)**
+```bash
+# Clone repository
+git clone https://github.com/iqrolife/iqrolife.git
 
-## How It Works
+# Install dependencies
+npm install
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+# Setup environment variables
+cp .env.example .env.local
+
+# Run development server
+npm run dev
+```
+
+## 🔧 Environment Variables
+
+Buat file `.env.local` dengan variabel berikut:
+
+```env
+# Database
+DATABASE_URL=your_database_url
+
+# Cloudinary (optional)
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
+## 📁 Struktur Project
+
+```
+iqrolife/
+├── app/                    # Next.js App Router
+│   ├── api/               # API Routes
+│   ├── program/           # Program pages
+│   ├── profile/           # Profile pages
+│   └── page.tsx           # Homepage
+├── components/            # React components
+│   ├── ui/               # UI components
+│   └── ...               # Feature components
+├── lib/                   # Utilities & helpers
+│   ├── data/             # Static data
+│   └── utils/            # Utility functions
+├── public/               # Static assets
+│   ├── gallery/          # Gallery images
+│   └── program/          # Program images
+└── .github/              # GitHub workflows
+```
+
+## 🎨 Design System
+
+Website ini menggunakan design system yang konsisten dengan:
+- **Color Palette:** Brand colors (Emerald, Cyan, Lime, Coral, Warm Brown)
+- **Typography:** Inter & Poppins fonts
+- **Components:** Reusable UI components dengan Radix UI
+- **Animations:** Smooth transitions dengan Framer Motion
+
+## 🤝 Contributing
+
+Kontribusi sangat diterima! Silakan buat Pull Request atau buka Issue untuk diskusi.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 📞 Kontak
+
+- **Website:** [iqrolife.com](https://iqrolife.id)
+- **Email:** info@iqrolife.id
+- **WhatsApp:** +62 813-1522-5557
+
+---
+
+**Dibuat dengan ❤️ oleh Tim Iqrolife**
