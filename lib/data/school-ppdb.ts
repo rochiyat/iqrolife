@@ -1,7 +1,7 @@
 export const schoolPPDBData = {
   hero: {
-    badge: 'PPDB 2025/2026',
-    title: '🎒 Penerimaan Peserta Didik Baru 🎒',
+    badge: 'Kelas Siap Sekolah (KSS) 2026/2027',
+    title: '🎒 Penerimaan Kelas Siap Sekolah 🎒',
     description:
       'Bergabunglah dengan Sekolah Iqrolife dan wujudkan masa depan gemilang putra-putri Anda bersama kami! ✨',
     buttonText: '🚀 Daftar Sekarang 🚀',
@@ -33,7 +33,7 @@ export const schoolPPDBData = {
     ],
   },
   timeline: {
-    title: '📅 Timeline PPDB 📅',
+    title: '📅 Timeline KKS 📅',
     items: [
       {
         phase: 'Pendaftaran',

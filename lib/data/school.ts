@@ -4,7 +4,7 @@ export const schoolData = {
     'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
   description:
     'Sejak 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah mulai dari KB, TK A dan TK B. ✨',
-  badge: 'PPDB 2025/2026',
+  badge: 'KKS 2026/2027',
   hero: {
     title: '🎒 Kelas Siap Sekolah 🎒',
     subtitle:
@@ -97,7 +97,7 @@ export const schoolData = {
       image: '/program/kelas-siap-sekolah/level/level-001.jpg',
     },
     {
-      title: 'Siap Sekolah - A (KSS-A)',
+      title: 'Kelas Siap Sekolah - A (KSS-A)',
       age: 'Usia mulai 5 tahun',
       capacity: 'Maksimal 10 anak',
       description:
@@ -106,7 +106,7 @@ export const schoolData = {
       image: '/program/kelas-siap-sekolah/level/level-002.jpg',
     },
     {
-      title: 'Siap Sekolah - B (KSS-B)',
+      title: 'Kelas Siap Sekolah - B (KSS-B)',
       age: 'Usia mulai 6 tahun',
       capacity: '',
       description:
@@ -226,7 +226,7 @@ export const schoolData = {
     ],
   },
   timeline: {
-    title: '📅 Timeline PPDB 2025/2026 📅',
+    title: '📅 Timeline KKS 2026/2027 📅',
     items: [
       {
         phase: 'Pendaftaran',
