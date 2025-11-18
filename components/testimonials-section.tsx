@@ -108,7 +108,10 @@ export default function TestimonialsSection() {
   const testimonials = testimonialsData.items;
 
   return (
-    <section className="py-16 bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 relative overflow-hidden">
+    <section
+      id="testimoni"
+      className="py-16 bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 relative overflow-hidden"
+    >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 left-10 text-4xl animate-bounce">
           ⭐

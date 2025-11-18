@@ -76,7 +76,10 @@ export default function VisionMissionSection() {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-brand-sky/20 to-brand-lime/10 overflow-hidden">
+    <section
+      id="visi-misi"
+      className="py-16 bg-gradient-to-br from-brand-sky/20 to-brand-lime/10 overflow-hidden"
+    >
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent">

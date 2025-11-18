@@ -51,11 +51,11 @@ export default function MentoringIbuPage() {
       alt: 'Kegiatan Bersama Ibu',
     },
     {
-      src: '/program/mentoring-ibu/mentoring-ibu-003.jpg',
+      src: '/program/mentoring-ibu/mentoring-ibu-009.jpg',
       alt: 'Rahima - Kebersamaan Ibu',
     },
     {
-      src: '/program/mentoring-ibu/mentoring-ibu-006.jpg',
+      src: '/program/mentoring-ibu/mentoring-ibu-010.jpg',
       alt: 'Program Pendampingan Ibu',
     },
   ];

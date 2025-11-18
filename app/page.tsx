@@ -95,6 +95,13 @@ export default function FoundationLanding() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    // Scroll to top when page loads, unless there's a hash in URL
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   // Show beautiful skeleton loading state
   if (isLoading) {
     return (
@@ -185,7 +192,10 @@ export default function FoundationLanding() {
       <FoundationHeader />
       <main suppressHydrationWarning={true}>
         {/* Hero */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-emerald-50">
+        <section
+          id="beranda"
+          className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-emerald-50"
+        >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -287,7 +297,10 @@ export default function FoundationLanding() {
         <VisionMissionSection />
 
         {/* Nilai-Nilai Komunitas */}
-        <section className="py-16 bg-gradient-to-br from-brand-off-white to-brand-sky/10">
+        <section
+          id="nilai-komunitas"
+          className="py-16 bg-gradient-to-br from-brand-off-white to-brand-sky/10"
+        >
           <div className="container mx-auto px-4">
             <AnimatedSection>
               <div className="text-center mb-12">
@@ -490,7 +503,10 @@ export default function FoundationLanding() {
         </section>
 
         {/* 7 Pendidikan Holistik */}
-        <section className="py-16 bg-gradient-to-br from-brand-lime/5 to-brand-emerald/5">
+        <section
+          id="pendidikan-holistik"
+          className="py-16 bg-gradient-to-br from-brand-lime/5 to-brand-emerald/5"
+        >
           <div className="container mx-auto px-4">
             <AnimatedSection>
               <div className="text-center mb-12">
