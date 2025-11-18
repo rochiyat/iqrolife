@@ -27,44 +27,44 @@ export default function Page() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=600&fit=crop',
-      alt: 'Family Camp bersama',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-002.jpg',
+      alt: 'Family Camp - Kebersamaan Keluarga',
     },
     {
-      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=800&h=600&fit=crop',
-      alt: 'FBE Series workshop',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-001.jpg',
+      alt: 'FBE Series - Workshop Orang Tua',
     },
     {
-      src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop',
-      alt: 'Ngariung di Saung',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-006.jpg',
+      alt: 'Family Camp - Aktivitas Bersama',
     },
     {
-      src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=600&fit=crop',
-      alt: 'Webinar pengembangan bakat anak',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-003.jpg',
+      alt: 'Fitrah Based Education Workshop',
     },
     {
-      src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
-      alt: 'Kegiatan ragam aktivitas anak',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-009.jpg',
+      alt: 'Family Camp - Bonding Keluarga',
     },
     {
-      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=600&fit=crop',
-      alt: 'PureTalk session',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-005.jpg',
+      alt: 'Sesi Pembelajaran FBE',
     },
     {
-      src: 'https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=800&h=600&fit=crop',
-      alt: 'Workshop pengasuhan',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-012.jpg',
+      alt: 'Family Camp - Kegiatan Outdoor',
     },
     {
-      src: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=800&h=600&fit=crop',
-      alt: 'Diskusi pendidikan holistik',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-007.jpg',
+      alt: 'Workshop Pendidikan Holistik',
     },
     {
-      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&h=600&fit=crop',
-      alt: 'Sesi belajar orang tua',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-014.jpg',
+      alt: 'Family Camp - Momen Kebersamaan',
     },
     {
-      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop',
-      alt: 'Kegiatan keluarga',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-008.jpg',
+      alt: 'Diskusi Pengasuhan Berbasis Fitrah',
     },
   ];
 

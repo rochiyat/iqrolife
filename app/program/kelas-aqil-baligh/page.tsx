@@ -19,44 +19,44 @@ export default function KelasAqilBalighPage() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?w=800&h=600&fit=crop',
-      alt: 'Kegiatan pemuda peduli',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-001.jpg',
+      alt: 'Magang Kuliner - Persiapan Bahan',
     },
     {
-      src: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=600&fit=crop',
-      alt: 'Aksi sosial pemuda',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-002.jpg',
+      alt: 'Praktik Memasak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=600&fit=crop',
-      alt: 'Magang kuliner',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-003.jpg',
+      alt: 'Belajar Teknik Kuliner',
     },
     {
-      src: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&h=600&fit=crop',
-      alt: 'Pembelajaran kuliner',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-004.jpg',
+      alt: 'Pelatihan Kuliner Profesional',
     },
     {
-      src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=600&fit=crop',
-      alt: 'Kegiatan sosial masyarakat',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-005.jpg',
+      alt: 'Mengasah Keterampilan Memasak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=600&fit=crop',
-      alt: 'Pemuda beraksi',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-006.jpg',
+      alt: 'Praktik Kuliner Bersama',
     },
     {
-      src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop',
-      alt: 'Praktik kuliner',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-007.jpg',
+      alt: 'Pembelajaran Kuliner',
     },
     {
-      src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop',
-      alt: 'Kegiatan amal kebaikan',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-008.jpg',
+      alt: 'Magang Kuliner - Presentasi Hasil',
     },
     {
-      src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop',
-      alt: 'Pelatihan kuliner',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-009.jpg',
+      alt: 'Kegiatan Magang Kuliner',
     },
     {
-      src: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&h=600&fit=crop',
-      alt: 'Keterlibatan sosial pemuda',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-010.jpg',
+      alt: 'Praktik Keterampilan Kuliner',
     },
   ];
 

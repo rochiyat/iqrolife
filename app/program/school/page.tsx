@@ -375,12 +375,13 @@ export default function SchoolPage() {
                   className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="relative h-48">
+                  <div className="relative h-64 flex items-center justify-center bg-gray-50 p-4">
                     <Image
                       src={level.image}
                       alt={level.title}
-                      fill
-                      className="object-cover"
+                      width={300}
+                      height={200}
+                      className="object-contain max-h-full"
                     />
                   </div>
                   <CardContent className="p-6">
@@ -443,27 +444,10 @@ export default function SchoolPage() {
               {schoolData.activities.description}
             </p>
 
-            {/* Aktivitas Tahunan */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold text-center mb-8 text-orange-700">
-                Aktivitas Tahunan
-              </h3>
-              <ImageCarousel
-                items={schoolData.activities.tahunan}
-                colorTheme="orange"
-              />
-            </div>
-
-            {/* Aktivitas Harian */}
-            <div>
-              <h3 className="text-2xl font-bold text-center mb-8 text-green-700">
-                Aktivitas Harian
-              </h3>
-              <ImageCarousel
-                items={schoolData.activities.harian}
-                colorTheme="green"
-              />
-            </div>
+            <ImageCarousel
+              items={schoolData.activities.items}
+              colorTheme="green"
+            />
           </motion.section>
         )}
 

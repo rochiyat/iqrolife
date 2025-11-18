@@ -161,23 +161,21 @@ export function FoundationHeader() {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-[84%] sm:w-[380px] flex flex-col"
+              className="w-[84%] sm:w-[380px] flex flex-col p-0"
             >
-              <div className="flex items-center justify-between pb-4 border-b border-brand-lime/30">
-                <div className="flex items-center gap-3">
-                  <img
-                    src="/iqrolife-logo.png"
-                    alt="Logo Iqrolife"
-                    className="h-7 w-7 rounded-md"
-                  />
-                  <span className="text-sm font-bold text-brand-emerald">
-                    Iqrolife Community
-                  </span>
-                </div>
+              <div className="flex items-center gap-3 px-6 py-4 border-b border-brand-lime/30">
+                <img
+                  src="/logo-iqrolife.png"
+                  alt="Logo Iqrolife"
+                  className="h-8 w-8 rounded-md"
+                />
+                <span className="text-base font-bold text-brand-emerald">
+                  Iqrolife Community
+                </span>
               </div>
 
-              <div className="mt-6 flex-1 overflow-y-auto">
-                <div className="flex flex-col gap-1 pb-6">
+              <div className="flex-1 overflow-y-auto px-6 py-6">
+                <div className="flex flex-col gap-1">
                   {foundationNav.map((item) => {
                     if (item.children) {
                       return (

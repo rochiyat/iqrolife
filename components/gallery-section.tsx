@@ -8,44 +8,79 @@ import { Skeleton } from '@/components/ui/skeleton-loading';
 
 const galleryImages = [
   {
-    src: '/gallery/1.JPG',
-    alt: 'Kegiatan Komunitas 1',
-    caption: 'Momen berharga bersama komunitas',
+    src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-008.jpg',
+    alt: 'Minggu Bersama Ayah',
+    caption: 'Quality time ayah dan anak dalam kegiatan outdoor',
   },
   {
-    src: '/gallery/2.JPG',
-    alt: 'Kegiatan Komunitas 2',
-    caption: 'Aktivitas pembelajaran yang menyenangkan',
+    src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-005.jpg',
+    alt: 'Family Camp',
+    caption: 'Kebersamaan keluarga dalam Family Camp',
   },
   {
-    src: '/gallery/3.JPG',
-    alt: 'Kegiatan Komunitas 3',
-    caption: 'Tumbuh dan berkembang bersama',
+    src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-012.jpg',
+    alt: 'Aktivitas Ayah dan Anak',
+    caption: 'Membangun bonding melalui kegiatan bersama',
   },
   {
-    src: '/gallery/4.JPG',
-    alt: 'Kegiatan Komunitas 4',
-    caption: 'Membangun karakter melalui kegiatan',
+    src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-009.jpg',
+    alt: 'Kegiatan Family Camp',
+    caption: 'Momen berharga bersama keluarga',
   },
   {
-    src: '/gallery/5.JPG',
-    alt: 'Kegiatan Komunitas 5',
-    caption: 'Kebersamaan dalam belajar',
+    src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-015.jpg',
+    alt: 'Eksplorasi Bersama Ayah',
+    caption: 'Petualangan seru ayah dan anak',
   },
   {
-    src: '/gallery/6.JPG',
-    alt: 'Kegiatan Komunitas 6',
-    caption: 'Eksplorasi dan kreativitas',
+    src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-011.jpg',
+    alt: 'Family Camp Activities',
+    caption: 'Aktivitas edukatif untuk seluruh keluarga',
   },
   {
-    src: '/gallery/7.JPG',
-    alt: 'Kegiatan Komunitas 7',
-    caption: 'Pengalaman belajar yang bermakna',
+    src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-019.jpg',
+    alt: 'Kebersamaan Ayah dan Anak',
+    caption: 'Mempererat ikatan ayah dan anak',
   },
   {
-    src: '/gallery/8.JPG',
-    alt: 'Kegiatan Komunitas 8',
-    caption: 'Senyum dan kebahagiaan bersama',
+    src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-014.jpg',
+    alt: 'Momen Family Camp',
+    caption: 'Pengalaman bermakna bersama keluarga',
+  },
+  {
+    src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-006.jpg',
+    alt: 'Jelajah Museum',
+    caption: 'Eksplorasi pengetahuan dan budaya di museum',
+  },
+  {
+    src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-009.jpg',
+    alt: 'Kunjungan Museum',
+    caption: 'Belajar sejarah dengan cara yang menyenangkan',
+  },
+  {
+    src: '/program/family-talent-discovery/family-talent-discovery-002.jpg',
+    alt: 'Family Talent Discovery',
+    caption: 'Menggali potensi dan bakat keluarga',
+  },
+  {
+    src: '/program/family-talent-discovery/family-talent-discovery-005.jpg',
+    alt: 'Workshop Bakat Keluarga',
+    caption: 'Menemukan misi hidup bersama keluarga',
+  },
+  {
+    src: '/program/mentoring-ayah/mentoring-ayah-004.jpg',
+    alt: 'Mentoring Ayah',
+    caption: 'Pendampingan intensif untuk para ayah',
+  },
+  {
+    src: '/program/mentoring-ibu/mentoring-ibu-003.jpg',
+    alt: 'Rahima Iqrolife',
+    caption: 'Komunitas ibu yang saling mendukung',
+  },
+  {
+    src: '/gallery/gallery-008.jpg',
+    alt: 'Kebahagiaan Bersama',
+    caption: 'Senyum dan kebahagiaan dalam komunitas Iqrolife',
   },
 ];
 
@@ -60,7 +95,7 @@ export default function GallerySection() {
   }, []);
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section id="galeri" className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -123,7 +158,7 @@ export default function GallerySection() {
 
           <Card className="bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-500 animate-scale-in overflow-hidden p-6">
             <div
-              className="relative h-[500px] cursor-pointer group overflow-hidden rounded-lg"
+              className="relative h-[500px] cursor-pointer group overflow-hidden rounded-lg flex items-center justify-center bg-gray-50"
               onClick={() =>
                 setCurrentIndex((prev) => (prev + 1) % galleryImages.length)
               }
@@ -132,7 +167,7 @@ export default function GallerySection() {
                 src={galleryImages[currentIndex].src || '/placeholder.svg'}
                 alt={galleryImages[currentIndex].alt}
                 fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                className="object-contain transition-transform duration-300"
               />
               <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/40 to-transparent pointer-events-none" />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-center">
