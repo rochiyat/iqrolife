@@ -97,11 +97,13 @@ export default function SejarahPage() {
             {sejarahData.title}
           </h1>
           <div className="text-center text-gray-600 max-w-3xl mx-auto mb-12 space-y-4">
-            {sejarahData.subtitle.split('\n\n').map((paragraph, index) => (
-              <p key={index} className="leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
+            {sejarahData.subtitle
+              .split('\n\n')
+              .map((paragraph: string, index: number) => (
+                <p key={index} className="leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
           </div>
         </AnimatedSection>
 

@@ -7,29 +7,29 @@ export const sejarahData = {
       year: '2022-2023',
       title: 'Benih Kebaikan',
       description:
-        'Iqrolife berdiri sebagai ruang belajar beberapa keluarga yang memiliki fase kehidupan, concern dan pandangan yang sama terkait pengasuhan. Mendalami Fitrah Based Eduction bersama, berbagi cerita dan inspirasi untuk saling menguatkan sebagai Ayah, Bunda dan Keluarga.',
-      image: '/placeholder.jpg',
+        'Iqrolife berdiri sebagai ruang belajar beberapa keluarga yang memiliki fase kehidupan, concern dan pandangan yang sama terkait pengasuhan. Mendalami Fitrah Based Eduction bersama, berbagi cerita dan inspirasi untuk saling menguatkan sebagai Ayah, Bunda dan Keluarga. Kelas Bermain dengan jumlah peserta 12 orang',
+      image: '/profiles/sejarah/sejarah-004.jpg',
     },
     {
       year: '2023-2024',
       title: 'Tumbuh Bersama',
       description:
-        'Semakin banyak keluarga yang berminat untuk bergabung pada kegiatan-kegiatan Iqrolife. Iqrolife mulai menjalankan program rutin dan terbuka untuk keluarga lain, termasuk membuka Kelas Bermain dengan jumlah peserta sekian orarng.',
-      image: '/school-building-exterior.png',
+        'Semakin banyak keluarga yang berminat untuk bergabung pada kegiatan-kegiatan Iqrolife. Iqrolife mulai menjalankan program rutin dan terbuka untuk keluarga lain, termasuk membuka Kelas Bermain dengan jumlah peserta 23 orang.',
+      image: '/profiles/sejarah/sejarah-008.jpg',
     },
     {
       year: '2024-2025',
       title: 'Menguatkan Fondasi',
       description:
-        'Iqrolife menyadari bahwa gerakan kebaikan ini butuh terus ditularkan dengan mengajak semakin banyak keluarga untuk menjadi bagian dari kepengurusan atau keluarga Iqrolife. Pada tahun ini Iqrolife membuka kepengurusan dengan melalukan open rekrutmen. Bergabung beberapa keluarga dan pengembangan struktur kepengurusan yang lebih lengkap, mulai dari Ketua, Sekretaris. Bendahara, Divisi Kelas Eksplorasi, Kelas Bermain, Kelas Aqil Baligh, Kelas Belajar Orang Tua.',
-      image: '/kelas-bermain.png',
+        'Iqrolife menyadari bahwa gerakan kebaikan ini butuh terus ditularkan dengan mengajak semakin banyak keluarga untuk menjadi bagian dari kepengurusan atau keluarga Iqrolife. Pada tahun ini Iqrolife membuka kepengurusan dengan melalukan open rekrutmen. Bergabung beberapa keluarga dan pengembangan struktur kepengurusan yang lebih lengkap, mulai dari Ketua, Sekretaris. Bendahara, Divisi Kelas Eksplorasi, Kelas Bermain, Kelas Aqil Baligh, Kelas Belajar Orang Tua. Kelas Bermain dengan jumlah peserta 26 orang',
+      image: '/profiles/sejarah/sejarah-001.jpg',
     },
     {
       year: '2025-2026',
       title: 'Ekspansi dan Memberi Manfaat',
       description:
-        'Iqrolife terus memperluas kebermanfaatan, dengan mendirikan Yayasan Tumbuh Bersama Iqrolife dengan menghadirkan Kelas Siap Sekolah dengan 7 Pendidikan Holistik. Kelas Siap Sekolah dengan 7 Pendidikan Holistik merupakan bentuk komitmen Iqrolife untuk mengembangkan ekosistem pendidikan mulai dari membangun sekolah, pengembangan keluarga dan keterlibatan aktif masyarakat pada tahun 2035.',
-      image: '/keluarga-belajar.jpg',
+        'Iqrolife terus memperluas kebermanfaatan, dengan mendirikan Yayasan Tumbuh Bersama Iqrolife dengan menghadirkan Kelas Siap Sekolah dengan 7 Pendidikan Holistik. Kelas Siap Sekolah dengan 7 Pendidikan Holistik merupakan bentuk komitmen Iqrolife untuk mengembangkan ekosistem pendidikan mulai dari membangun sekolah, pengembangan keluarga dan keterlibatan aktif masyarakat pada tahun 2035. Kelas Bermain dengan jumlah peserta 26 orang',
+      image: '/profiles/sejarah/sejarah-002.jpg',
     },
   ],
 };
