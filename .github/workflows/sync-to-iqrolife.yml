@@ -3,7 +3,7 @@ name: Sync to Iqrolife Repository
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
       
       - name: Push to target repository
         run: |
-          git push target master:main --force
+          git push target main:main --force
       
       - name: Notify completion
         if: success()
