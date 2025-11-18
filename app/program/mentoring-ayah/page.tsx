@@ -19,44 +19,44 @@ export default function MentoringAyahPage() {
 
   const galleryImages = [
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-001.jpg',
+      src: '/program/mentoring-ayah/mentoring/mentoring-003.jpg',
       alt: 'Mentoring Ayah - Sesi Diskusi',
     },
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-002.jpg',
-      alt: 'Kegiatan Mentoring Ayah',
+      src: '/program/mentoring-ayah/minisoccer/minisoccer-005.jpg',
+      alt: 'Dadventure - Mini Soccer Bersama Ayah',
     },
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-003.jpg',
-      alt: 'Workshop Pengasuhan Ayah',
+      src: '/program/mentoring-ayah/bulutangkis/bulutangkis-002.jpg',
+      alt: 'Bulutangkis Bersama Ayah dan Anak',
     },
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-004.jpg',
-      alt: 'Dadventure - Aktivitas Ayah dan Anak',
+      src: '/program/mentoring-ayah/mentoring/mentoring-007.jpg',
+      alt: 'Diskusi Peran Ayah dalam Keluarga',
     },
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-005.jpg',
-      alt: 'Sesi Mentoring Intensif',
+      src: '/program/mentoring-ayah/minisoccer/minisoccer-008.jpg',
+      alt: 'Kegiatan Olahraga Mini Soccer Bersama Anak',
     },
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-006.jpg',
-      alt: 'Kegiatan Bersama Ayah',
+      src: '/program/mentoring-ayah/mentoring/mentoring-005.jpg',
+      alt: 'Sesi Mentoring Intensif Ayah',
     },
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-007.jpg',
-      alt: 'Diskusi Peran Ayah',
+      src: '/program/mentoring-ayah/mentoring/mentoring-004.jpg',
+      alt: 'Ruang Para Ayah Berkumpul',
     },
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-008.jpg',
-      alt: 'Aktivitas Outdoor Ayah dan Anak',
+      src: '/program/mentoring-ayah/mentoring/mentoring-009.jpg',
+      alt: 'Diskusi Peran Ayah dalam Keluarga',
     },
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-009.jpg',
-      alt: 'Program Pendampingan Ayah',
+      src: '/program/mentoring-ayah/minisoccer/minisoccer-003.jpg',
+      alt: 'Dadventure - Bermain Mini Soccer Bareng Anak',
     },
     {
-      src: '/program/mentoring-ayah/mentoring-ayah-010.jpg',
-      alt: 'Obrolan Ayah' /*  */,
+      src: '/program/mentoring-ayah/mentoring/mentoring-010.jpg',
+      alt: 'Komunitas Ayah Iqrolife',
     },
   ];
 
@@ -196,7 +196,7 @@ export default function MentoringAyahPage() {
                 </div>
 
                 <div className="mt-8 flex gap-3">
-                  <Link href="/contact">
+                  <Link href="/kontak">
                     <Button>Hubungi Kami</Button>
                   </Link>
                   <Link href="/program">

@@ -5,8 +5,8 @@ export const programsData = {
     title: 'Program',
     description:
       'Program kami berfokus pada penguatan keluarga, guru, dan komunitas agar anak tumbuh dalam ekosistem yang sehat.',
-    image: '/parenting-program.jpg',
-    imageAlt: 'Ilustrasi kegiatan program keluarga',
+    image: '/program/kelas-belajar-orang-tua/family-camp/family-camp-002.jpg',
+    imageAlt: 'Kegiatan Family Camp - Kebersamaan Keluarga',
     button: {
       text: 'Konsultasi Program',
       href: '/kontak',

@@ -18,7 +18,7 @@ const galleryImages = [
     caption: 'Kebersamaan keluarga dalam Family Camp',
   },
   {
-    src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-012.jpg',
+    src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-007.jpg',
     alt: 'Aktivitas Ayah dan Anak',
     caption: 'Membangun bonding melalui kegiatan bersama',
   },
@@ -28,9 +28,9 @@ const galleryImages = [
     caption: 'Momen berharga bersama keluarga',
   },
   {
-    src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-015.jpg',
-    alt: 'Eksplorasi Bersama Ayah',
-    caption: 'Petualangan seru ayah dan anak',
+    src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-003.jpg',
+    alt: 'Eksplorasi Museum Layang Layang',
+    caption: 'Petualangan seru anak di museum',
   },
   {
     src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-011.jpg',
@@ -43,19 +43,19 @@ const galleryImages = [
     caption: 'Mempererat ikatan ayah dan anak',
   },
   {
-    src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-014.jpg',
-    alt: 'Momen Family Camp',
-    caption: 'Pengalaman bermakna bersama keluarga',
+    src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-001.jpg',
+    alt: 'Momen Magang Kuliner',
+    caption: 'Belajar keterampilan kuliner',
   },
   {
-    src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-006.jpg',
-    alt: 'Jelajah Museum',
-    caption: 'Eksplorasi pengetahuan dan budaya di museum',
+    src: '/program/mentoring-ayah/minisoccer/minisoccer-001.jpg',
+    alt: 'Mini Soccer',
+    caption: 'Main Mini Soccer Bareng Ayah dan Anak',
   },
   {
-    src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-009.jpg',
-    alt: 'Kunjungan Museum',
-    caption: 'Belajar sejarah dengan cara yang menyenangkan',
+    src: '/program/mentoring-ibu/mentoring-ibu-004.jpg',
+    alt: 'Mentoring Ibu',
+    caption: 'Pendampingan intensif untuk para ibu',
   },
   {
     src: '/program/family-talent-discovery/family-talent-discovery-002.jpg',
@@ -64,18 +64,18 @@ const galleryImages = [
   },
   {
     src: '/program/family-talent-discovery/family-talent-discovery-005.jpg',
-    alt: 'Workshop Bakat Keluarga',
+    alt: 'Family Talent Discovery',
     caption: 'Menemukan misi hidup bersama keluarga',
   },
   {
-    src: '/program/mentoring-ayah/mentoring-ayah-004.jpg',
-    alt: 'Mentoring Ayah',
-    caption: 'Pendampingan intensif untuk para ayah',
+    src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-004.jpg',
+    alt: 'Family Camp',
+    caption: 'Keseruan Permainan bersama keluarga',
   },
   {
-    src: '/program/mentoring-ibu/mentoring-ibu-003.jpg',
-    alt: 'Rahima Iqrolife',
-    caption: 'Komunitas ibu yang saling mendukung',
+    src: '/program/kelas-belajar-orang-tua/fbe/fbe-005.jpg',
+    alt: 'Family Based Education',
+    caption: 'Kegiatan Family Based Education',
   },
   {
     src: '/gallery/gallery-008.jpg',
@@ -167,7 +167,7 @@ export default function GallerySection() {
                 src={galleryImages[currentIndex].src || '/placeholder.svg'}
                 alt={galleryImages[currentIndex].alt}
                 fill
-                className="object-contain transition-transform duration-300"
+                className="object-cover transition-transform duration-300"
               />
               <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/40 to-transparent pointer-events-none" />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-center">

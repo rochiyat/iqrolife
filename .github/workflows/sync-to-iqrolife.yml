@@ -21,16 +21,19 @@ jobs:
           git config --global user.name "Rochiyat"
           git config --global user.email "rochiyat@gmail.com"
       
-      - name: Create fresh branch without history
+      - name: Prepare clean branch
         run: |
-          # Create orphan branch (no history)
+          # Delete clean-main branch if exists
+          git branch -D clean-main 2>/dev/null || true
+          
+          # Create fresh orphan branch (no history)
           git checkout --orphan clean-main
           
           # Add all current files
           git add -A
           
           # Create initial commit
-          git commit -m "Clean repository without sensitive data"
+          git commit -m "Clean repository without sensitive data - $(date '+%Y-%m-%d %H:%M:%S')"
       
       - name: Add target repository as remote
         run: |
@@ -38,7 +41,7 @@ jobs:
       
       - name: Push to target repository
         run: |
-          git push target clean-main:main --force
+          git push target clean-main:sandbox --force
       
       - name: Notify completion
         if: success()
