@@ -71,7 +71,7 @@ export function FoundationHeader() {
               Iqrolife Community
             </span>
             <span className="text-sm text-brand-lime md:text-base">
-              Profesional • Kekeluargaan
+              Fitrah - Bertahap - Paripurna - Sukses & Bahagia
             </span>
           </div>
         </Link>

@@ -20,7 +20,7 @@ export default function MentoringAyahPage() {
   const galleryImages = [
     {
       src: '/program/mentoring-ayah/mentoring-ayah-001.jpg',
-      alt: 'Mentoring Ayah - Sesi Diskusi',
+      alt: 'Diskusi Ke Ayah an',
     },
     {
       src: '/program/mentoring-ayah/mentoring-ayah-002.jpg',
@@ -28,11 +28,11 @@ export default function MentoringAyahPage() {
     },
     {
       src: '/program/mentoring-ayah/mentoring-ayah-003.jpg',
-      alt: 'Workshop Pengasuhan Ayah',
+      alt: 'Diskusi Pengasuhan',
     },
     {
       src: '/program/mentoring-ayah/mentoring-ayah-004.jpg',
-      alt: 'Dadventure - Aktivitas Ayah dan Anak',
+      alt: 'Ruang Ayah',
     },
     {
       src: '/program/mentoring-ayah/mentoring-ayah-005.jpg',
@@ -40,7 +40,7 @@ export default function MentoringAyahPage() {
     },
     {
       src: '/program/mentoring-ayah/mentoring-ayah-006.jpg',
-      alt: 'Kegiatan Bersama Ayah',
+      alt: 'Kegiatan Mentoring Ayah',
     },
     {
       src: '/program/mentoring-ayah/mentoring-ayah-007.jpg',
@@ -48,7 +48,7 @@ export default function MentoringAyahPage() {
     },
     {
       src: '/program/mentoring-ayah/mentoring-ayah-008.jpg',
-      alt: 'Aktivitas Outdoor Ayah dan Anak',
+      alt: 'Ayah Berkumupul',
     },
     {
       src: '/program/mentoring-ayah/mentoring-ayah-009.jpg',
