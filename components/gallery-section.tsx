@@ -167,7 +167,7 @@ export default function GallerySection() {
                 src={galleryImages[currentIndex].src || '/placeholder.svg'}
                 alt={galleryImages[currentIndex].alt}
                 fill
-                className="object-contain transition-transform duration-300"
+                className="object-cover transition-transform duration-300"
               />
               <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/40 to-transparent pointer-events-none" />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-center">
