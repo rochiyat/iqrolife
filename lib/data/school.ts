@@ -238,8 +238,7 @@ export const schoolData = {
       'Fotokopi Akta Kelahiran',
       'Fotokopi Kartu Keluarga',
       'Pas Foto 3x4 (4 lembar)',
-      'Surat Keterangan Sehat dari Dokter',
-      'Formulir Pendaftaran yang telah diisi',
+      'Mengisi Formulir Pendaftaran',
     ],
   },
   timeline: {
@@ -280,7 +279,13 @@ export const schoolData = {
       text: '💬 Hubungi via WhatsApp',
       href: 'https://wa.me/6281315225557',
     },
-    requirements: ['Usia 3-6 tahun', 'Fotokopi akte kelahiran', 'Fotokopi KK'],
+    requirements: [
+      'Usia 3 - 7 tahun',
+      'Fotokopi Akte Kelahiran',
+      'Fotokopi Kartu Keluarga',
+      'Pas Foto 3x4 (4 lembar)',
+      'Mengisi Formulir Pendaftaran',
+    ],
     registrationTime: ['Senin - Jumat', '08.00 - 14.00 WIB', 'Weekday'],
   },
 };
