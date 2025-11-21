@@ -181,6 +181,48 @@ export const schoolData = {
       image: '/program/kelas-siap-sekolah/level/level-003.jpg',
     },
   ],
+  yearlyActivities: {
+    title: 'Aktivitas Tahunan KKS',
+    description:
+      'Kegiatan tahunan yang dirancang untuk melibatkan keluarga dalam proses pembelajaran',
+    activities: [
+      {
+        no: 1,
+        name: 'Family Project',
+        frequency: '1 kali dalam satu tahun',
+      },
+      {
+        no: 2,
+        name: 'Kunjungan Edukasi',
+        frequency: '2 kali dalam satu tahun',
+      },
+      {
+        no: 3,
+        name: 'Hari Bersama Ayah',
+        frequency: '2 kali dalam satu tahun',
+      },
+      {
+        no: 4,
+        name: 'Main Bersama Ibu',
+        frequency: '1 kali dalam satu bulan',
+      },
+      {
+        no: 5,
+        name: 'Eksplorasi Air (Renang)',
+        frequency: '4 kali dalam satu tahun',
+      },
+      {
+        no: 6,
+        name: 'Kelas Belajar Orang Tua',
+        frequency: '4 kali dalam satu tahun',
+      },
+      {
+        no: 7,
+        name: 'Pertemuan Orang Tua dan Guru',
+        frequency: '3 kali dalam satu tahun',
+      },
+    ],
+  },
   facilities: {
     title: 'Fasilitas Pembelajaran',
     description:
