@@ -97,6 +97,52 @@ export const schoolData = {
       ],
     },
   ],
+  dailySchedule: {
+    title: 'Aktivitas Harian KSS',
+    description: 'Jadwal kegiatan harian untuk Kelas Siap Sekolah',
+    schedule: [
+      {
+        time: '08.00',
+        activity: 'Masuk Sekolah',
+        description: '',
+      },
+      {
+        time: '08.00 – 08.30',
+        activity: 'Eksplorasi lingkungan sekolah.',
+        description: 'Memberi makan ayam, menyiram tanaman dan bermain bebas.',
+      },
+      {
+        time: '08.30 – 09.00',
+        activity: 'Circle Time',
+        description: 'Berdoa dan Dialog Iman',
+      },
+      {
+        time: '09.00 – 09.30',
+        activity: 'Area Multisensory',
+        description: 'Bergerak dan kegiatan stimulasi semua indera',
+      },
+      {
+        time: '09.30 – 10.00',
+        activity: 'Kudapan Pagi',
+        description: 'Kudapan pagi dan mencuci dan merapikan wadah kudapan.',
+      },
+      {
+        time: '10.00 – 10.30',
+        activity: 'Berkisah / Pembelajaran Al Quran',
+        description: 'Membaca buku atau pembelajaran alquran',
+      },
+      {
+        time: '10.30 – 11.30',
+        activity: 'Kegiatan Tematik',
+        description: 'Kegiatan sesuai tema setiap bulannya',
+      },
+      {
+        time: '11.30 – 11.45',
+        activity: 'Circle Time',
+        description: 'Refleksi, Berdoa dan Pulang',
+      },
+    ],
+  },
   levels: [
     {
       title: 'Kelas Bermain (KB)',

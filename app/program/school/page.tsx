@@ -480,6 +480,67 @@ export default function SchoolPage() {
           </motion.section>
         )}
 
+        {/* Daily Schedule Section */}
+        {schoolData.dailySchedule && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+              {schoolData.dailySchedule.title}
+            </h2>
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              {schoolData.dailySchedule.description}
+            </p>
+
+            <div className="max-w-5xl mx-auto">
+              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-gradient-to-r from-yellow-400 to-yellow-500">
+                        <th className="px-6 py-4 text-left text-white font-bold">
+                          Waktu
+                        </th>
+                        <th className="px-6 py-4 text-left text-white font-bold">
+                          Aktivitas
+                        </th>
+                        <th className="px-6 py-4 text-left text-white font-bold">
+                          Keterangan
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {schoolData.dailySchedule.schedule.map(
+                        (item: any, index: number) => (
+                          <tr
+                            key={index}
+                            className={`border-b ${
+                              index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                            } hover:bg-yellow-50 transition-colors`}
+                          >
+                            <td className="px-6 py-4 font-semibold text-gray-700 whitespace-nowrap">
+                              {item.time}
+                            </td>
+                            <td className="px-6 py-4 text-gray-800">
+                              {item.activity}
+                            </td>
+                            <td className="px-6 py-4 text-gray-600">
+                              {item.description}
+                            </td>
+                          </tr>
+                        )
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+            </div>
+          </motion.section>
+        )}
+
         {/* Facilities Section */}
         {schoolData.facilities && (
           <motion.section
