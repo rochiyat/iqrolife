@@ -220,7 +220,7 @@ export default function SchoolPage() {
       <FoundationHeader />
       <main className="container mx-auto px-4 py-16">
         {/* Hero Section */}
-        <section className="mb-16 relative overflow-hidden">
+        <section className="mb-16 relative overflow-hidden bg-white/40 backdrop-blur-sm rounded-3xl p-8 shadow-sm">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-10 left-10 text-4xl animate-bounce">
               🎓
@@ -282,7 +282,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-green-50/60 to-emerald-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-12 text-green-700 animate-bounce-gentle">
               {schoolData.whyChoose.title}
@@ -318,7 +318,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-purple-50/60 to-pink-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
               {schoolData.curriculum.title}
@@ -381,7 +381,7 @@ export default function SchoolPage() {
         )}
 
         {/* Programs Section */}
-        <section className="mb-16">
+        <section className="mb-16 bg-gradient-to-br from-orange-50/60 to-amber-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm">
           <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
             Output Pembelajaran
           </h2>
@@ -431,7 +431,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-blue-50/60 to-cyan-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
               Level Pendidikan
@@ -486,7 +486,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-yellow-50/60 to-orange-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
               {schoolData.dailySchedule.title}
@@ -547,7 +547,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.33 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-rose-50/60 to-pink-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
               {schoolData.yearlyActivities.title}
@@ -608,7 +608,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-indigo-50/60 to-purple-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
               {schoolData.facilities.title}
@@ -630,7 +630,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-teal-50/60 to-green-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
               {schoolData.activities.title}
@@ -652,7 +652,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-violet-50/60 to-fuchsia-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-8 text-purple-800">
               {schoolData.ppdb.title}
@@ -689,7 +689,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-sky-50/60 to-blue-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {schoolData.requirements && (
