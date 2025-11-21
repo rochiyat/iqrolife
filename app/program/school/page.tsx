@@ -220,7 +220,7 @@ export default function SchoolPage() {
       <FoundationHeader />
       <main className="container mx-auto px-4 py-16">
         {/* Hero Section */}
-        <section className="mb-16 relative overflow-hidden">
+        <section className="mb-16 relative overflow-hidden bg-white/40 backdrop-blur-sm rounded-3xl p-8 shadow-sm">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-10 left-10 text-4xl animate-bounce">
               🎓
@@ -282,7 +282,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-green-50/60 to-emerald-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-12 text-green-700 animate-bounce-gentle">
               {schoolData.whyChoose.title}
@@ -312,8 +312,76 @@ export default function SchoolPage() {
           </motion.section>
         )}
 
+        {/* Curriculum Focus Section */}
+        {schoolData.curriculum && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mb-16 bg-gradient-to-br from-purple-50/60 to-pink-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+          >
+            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+              {schoolData.curriculum.title}
+            </h2>
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              {schoolData.curriculum.subtitle}
+            </p>
+
+            <div className="max-w-5xl mx-auto">
+              <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+                {/* Left Side - Curriculum Items */}
+                <div className="flex flex-col gap-4 w-full md:w-auto">
+                  {schoolData.curriculum.items.map(
+                    (item: string, index: number) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                        className="bg-white border-2 border-cyan-400 rounded-2xl px-6 py-4 text-center shadow-md hover:shadow-lg transition-all duration-300"
+                      >
+                        <p className="font-medium text-gray-800">{item}</p>
+                      </motion.div>
+                    )
+                  )}
+                </div>
+
+                {/* Arrow */}
+                <div className="text-gray-400 text-4xl hidden md:block">➜</div>
+
+                {/* Center - Method */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  className="bg-gradient-to-br from-green-500 to-green-600 rounded-3xl px-12 py-16 shadow-xl"
+                >
+                  <p className="text-white text-2xl font-bold text-center leading-tight">
+                    {schoolData.curriculum.method}
+                  </p>
+                </motion.div>
+
+                {/* Arrow */}
+                <div className="text-gray-400 text-4xl hidden md:block">➜</div>
+
+                {/* Right Side - Output */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                  className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl px-12 py-16 shadow-xl"
+                >
+                  <p className="text-white text-2xl font-bold text-center leading-tight">
+                    {schoolData.curriculum.output}
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </motion.section>
+        )}
+
         {/* Programs Section */}
-        <section className="mb-16">
+        <section className="mb-16 bg-gradient-to-br from-orange-50/60 to-amber-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm">
           <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
             Output Pembelajaran
           </h2>
@@ -363,12 +431,12 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-blue-50/60 to-cyan-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
               Level Pendidikan
             </h2>
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
               {schoolData.levels.map((level: any, index: number) => (
                 <Card
                   key={index}
@@ -394,15 +462,142 @@ export default function SchoolPage() {
                     <div className="mb-3">
                       <p className="text-sm font-semibold text-orange-600">
                         {level.age}
-                        {level.capacity && ` • ${level.capacity}`}
                       </p>
+                      {level.capacity && (
+                        <p className="text-xs font-medium text-purple-600 mt-1">
+                          {level.capacity}
+                        </p>
+                      )}
                     </div>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {level.description}
-                    </p>
+                    <p
+                      className="text-sm text-gray-600 leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: level.description }}
+                    />
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </motion.section>
+        )}
+
+        {/* Daily Schedule Section */}
+        {schoolData.dailySchedule && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mb-16 bg-gradient-to-br from-yellow-50/60 to-orange-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+          >
+            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+              {schoolData.dailySchedule.title}
+            </h2>
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              {schoolData.dailySchedule.description}
+            </p>
+
+            <div className="max-w-5xl mx-auto">
+              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-gradient-to-r from-yellow-400 to-yellow-500">
+                        <th className="px-6 py-4 text-left text-white font-bold">
+                          Waktu
+                        </th>
+                        <th className="px-6 py-4 text-left text-white font-bold">
+                          Aktivitas
+                        </th>
+                        <th className="px-6 py-4 text-left text-white font-bold">
+                          Keterangan
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {schoolData.dailySchedule.schedule.map(
+                        (item: any, index: number) => (
+                          <tr
+                            key={index}
+                            className={`border-b ${
+                              index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                            } hover:bg-yellow-50 transition-colors`}
+                          >
+                            <td className="px-6 py-4 font-semibold text-gray-700 whitespace-nowrap">
+                              {item.time}
+                            </td>
+                            <td className="px-6 py-4 text-gray-800">
+                              {item.activity}
+                            </td>
+                            <td className="px-6 py-4 text-gray-600">
+                              {item.description}
+                            </td>
+                          </tr>
+                        )
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+            </div>
+          </motion.section>
+        )}
+
+        {/* Yearly Activities Section */}
+        {schoolData.yearlyActivities && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.33 }}
+            className="mb-16 bg-gradient-to-br from-rose-50/60 to-pink-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+          >
+            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+              {schoolData.yearlyActivities.title}
+            </h2>
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              {schoolData.yearlyActivities.description}
+            </p>
+
+            <div className="max-w-5xl mx-auto">
+              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-gradient-to-r from-yellow-400 to-yellow-500">
+                        <th className="px-6 py-4 text-center text-white font-bold">
+                          No
+                        </th>
+                        <th className="px-6 py-4 text-left text-white font-bold">
+                          Kegiatan
+                        </th>
+                        <th className="px-6 py-4 text-left text-white font-bold">
+                          Ritme
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {schoolData.yearlyActivities.activities.map(
+                        (item: any, index: number) => (
+                          <tr
+                            key={index}
+                            className={`border-b ${
+                              index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                            } hover:bg-yellow-50 transition-colors`}
+                          >
+                            <td className="px-6 py-4 text-center font-semibold text-gray-700">
+                              {item.no}
+                            </td>
+                            <td className="px-6 py-4 text-gray-800">
+                              {item.name}
+                            </td>
+                            <td className="px-6 py-4 text-gray-600">
+                              {item.frequency}
+                            </td>
+                          </tr>
+                        )
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
             </div>
           </motion.section>
         )}
@@ -413,7 +608,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-indigo-50/60 to-purple-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
               {schoolData.facilities.title}
@@ -435,7 +630,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-teal-50/60 to-green-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
               {schoolData.activities.title}
@@ -457,29 +652,34 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-violet-50/60 to-fuchsia-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <Card className="bg-gradient-to-r from-blue-100 to-purple-100 border-0 shadow-lg max-w-3xl mx-auto">
-              <CardContent className="p-8 text-center">
-                <h2 className="text-2xl font-bold mb-4 text-purple-800">
-                  {schoolData.ppdb.title}
-                </h2>
-                <div className="bg-white/80 rounded-lg p-6 mb-4">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">
-                    {schoolData.ppdb.level}
-                  </div>
-                  <div className="text-xl text-gray-700 mb-2">
-                    Usia: {schoolData.ppdb.age}
-                  </div>
-                  <div className="text-2xl font-bold text-orange-600 mb-1">
-                    {schoolData.ppdb.fee}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {schoolData.ppdb.note}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <h2 className="text-3xl font-bold text-center mb-8 text-purple-800">
+              {schoolData.ppdb.title}
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {schoolData.ppdb.items.map((item: any, index: number) => (
+                <Card
+                  key={index}
+                  className="bg-gradient-to-r from-blue-100 to-purple-100 border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <CardContent className="p-8 text-center">
+                    <div className="bg-white/80 rounded-lg p-6">
+                      <div className="text-3xl font-bold text-blue-600 mb-2">
+                        {item.level}
+                      </div>
+                      <div className="text-xl text-gray-700 mb-2">
+                        Usia: {item.age}
+                      </div>
+                      <div className="text-2xl font-bold text-orange-600 mb-1">
+                        {item.fee}
+                      </div>
+                      <div className="text-sm text-gray-600">{item.note}</div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </motion.section>
         )}
 
@@ -489,7 +689,7 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="mb-16"
+            className="mb-16 bg-gradient-to-br from-sky-50/60 to-blue-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {schoolData.requirements && (
@@ -583,40 +783,6 @@ export default function SchoolPage() {
                     </button>
                   </a>
                 )}
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left max-w-2xl mx-auto">
-                <div className="bg-white/80 rounded-lg p-4">
-                  <h4 className="font-semibold text-orange-700 mb-3 flex items-center gap-2">
-                    <Users className="w-5 h-5" />
-                    Persyaratan:
-                  </h4>
-                  <ul className="space-y-2 text-gray-600">
-                    {schoolData.cta.requirements.map(
-                      (req: string, i: number) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
-                          {req}
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
-                <div className="bg-white/80 rounded-lg p-4">
-                  <h4 className="font-semibold text-purple-700 mb-3 flex items-center gap-2">
-                    <Calendar className="w-5 h-5" />
-                    Waktu Pendaftaran:
-                  </h4>
-                  <ul className="space-y-2 text-gray-600">
-                    {schoolData.cta.registrationTime.map(
-                      (time: string, i: number) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                          {time}
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
               </div>
             </CardContent>
           </Card>

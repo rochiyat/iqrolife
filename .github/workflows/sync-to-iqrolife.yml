@@ -41,7 +41,7 @@ jobs:
       
       - name: Push to target repository
         run: |
-          git push target clean-main:main --force
+          git push target clean-main:sandbox --force
       
       - name: Notify completion
         if: success()

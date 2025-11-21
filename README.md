@@ -100,8 +100,8 @@ This project is licensed under the MIT License.
 
 ## 📞 Kontak
 
-- **Website:** [iqrolife.com](https://iqrolife.id)
-- **Email:** info@iqrolife.id
+- **Website:** [iqrolife.id](https://iqrolife.id)
+- **Email:** iqrolife@gmail.com
 - **WhatsApp:** +62 813-1522-5557
 
 ---

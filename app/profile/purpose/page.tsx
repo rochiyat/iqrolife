@@ -30,31 +30,34 @@ export default function PurposePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-violet-50 to-indigo-50">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="text-center mb-12">
-            <Skeleton className="h-12 w-80 mx-auto mb-6" />
+            <Skeleton className="h-12 w-80 mx-auto mb-6 bg-gradient-to-r from-purple-300 to-indigo-300" />
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-purple-200 shadow-xl">
               <CardContent className="p-8">
-                <Skeleton className="h-6 w-full mb-4" />
-                <Skeleton className="h-6 w-5/6 mb-6" />
+                <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-purple-200 to-violet-200" />
+                <Skeleton className="h-6 w-5/6 mb-6 bg-gradient-to-r from-violet-200 to-indigo-200" />
 
                 <div className="space-y-6 mt-8">
-                  <Skeleton className="h-6 w-full mb-4" />
-                  <Skeleton className="h-6 w-4/5 mb-6" />
-                  
+                  <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-indigo-200 to-purple-200" />
+                  <Skeleton className="h-6 w-4/5 mb-6 bg-gradient-to-r from-purple-200 to-pink-200" />
+
                   <div className="space-y-4">
                     {Array.from({ length: 3 }).map((_, i) => (
-                      <div key={i} className="flex items-start gap-4">
-                        <Skeleton className="w-12 h-12 rounded-full flex-shrink-0" />
+                      <div
+                        key={i}
+                        className="flex items-start gap-4 bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-lg"
+                      >
+                        <Skeleton className="w-12 h-12 rounded-full flex-shrink-0 bg-gradient-to-br from-purple-300 to-indigo-300" />
                         <div className="flex-1">
-                          <Skeleton className="h-5 w-32 mb-2" />
-                          <Skeleton className="h-4 w-full" />
-                          <Skeleton className="h-4 w-3/4" />
+                          <Skeleton className="h-5 w-32 mb-2 bg-gradient-to-r from-purple-300 to-violet-300" />
+                          <Skeleton className="h-4 w-full mb-2 bg-gray-200" />
+                          <Skeleton className="h-4 w-3/4 bg-gray-200" />
                         </div>
                       </div>
                     ))}

@@ -74,8 +74,8 @@ const galleryImages = [
   },
   {
     src: '/program/kelas-belajar-orang-tua/fbe/fbe-005.jpg',
-    alt: 'Family Based Education',
-    caption: 'Kegiatan Family Based Education',
+    alt: 'Fitrah Based Education',
+    caption: 'Sharing Session - Fitrah Based Education',
   },
   {
     src: '/gallery/gallery-008.jpg',

@@ -29,43 +29,43 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div>
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
         <FoundationHeader />
         <main className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <div className="grid items-center gap-8 md:grid-cols-2">
+          <div className="grid items-center gap-8 md:grid-cols-2 bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-lg mb-16">
             <div className="order-2 md:order-1 space-y-6">
-              <Skeleton className="h-12 w-3/4" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
-              <Skeleton className="h-4 w-4/5" />
+              <Skeleton className="h-12 w-3/4 bg-gradient-to-r from-indigo-300 to-purple-300" />
+              <Skeleton className="h-4 w-full bg-gradient-to-r from-purple-200 to-pink-200" />
+              <Skeleton className="h-4 w-5/6 bg-gradient-to-r from-pink-200 to-rose-200" />
+              <Skeleton className="h-4 w-4/5 bg-gradient-to-r from-rose-200 to-orange-200" />
               <div className="flex gap-3">
-                <Skeleton className="h-10 w-32" />
-                <Skeleton className="h-10 w-32" />
+                <Skeleton className="h-10 w-32 bg-gradient-to-r from-indigo-300 to-purple-300" />
+                <Skeleton className="h-10 w-32 bg-gray-200" />
               </div>
             </div>
             <div className="order-1 md:order-2">
-              <Skeleton className="h-64 w-full rounded-lg" />
+              <Skeleton className="h-64 w-full rounded-lg bg-gradient-to-br from-indigo-200 to-purple-200" />
             </div>
           </div>
           <div className="mt-16">
             <div className="text-center mb-12">
-              <Skeleton className="h-10 w-96 mx-auto mb-4" />
-              <Skeleton className="h-6 w-2/3 mx-auto" />
+              <Skeleton className="h-10 w-96 mx-auto mb-4 bg-gradient-to-r from-purple-300 to-pink-300" />
+              <Skeleton className="h-6 w-2/3 mx-auto bg-gradient-to-r from-pink-200 to-rose-200" />
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: 7 }).map((_, i) => (
                 <div
                   key={i}
-                  className={`rounded-lg border bg-card p-6 shadow-sm ${
+                  className={`rounded-2xl bg-white/70 backdrop-blur-sm border-2 border-purple-200 p-6 shadow-md hover:shadow-lg transition-all ${
                     i === 6 ? 'md:col-span-2 lg:col-span-3' : ''
                   }`}
                 >
                   <div className="flex items-start gap-4">
-                    <Skeleton className="h-12 w-12 rounded-full flex-shrink-0" />
+                    <Skeleton className="h-12 w-12 rounded-full flex-shrink-0 bg-gradient-to-br from-indigo-300 to-purple-300" />
                     <div className="flex-1">
-                      <Skeleton className="h-6 w-3/4 mb-2" />
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-5/6 mt-2" />
+                      <Skeleton className="h-6 w-3/4 mb-2 bg-gradient-to-r from-purple-300 to-pink-300" />
+                      <Skeleton className="h-4 w-full mb-2 bg-gray-200" />
+                      <Skeleton className="h-4 w-5/6 bg-gray-200" />
                     </div>
                   </div>
                 </div>

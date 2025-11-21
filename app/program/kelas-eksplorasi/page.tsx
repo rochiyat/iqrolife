@@ -116,46 +116,52 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div>
+      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-sky-50 to-blue-50">
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <nav className="text-sm text-muted-foreground mb-4">
-            <Skeleton className="h-4 w-16 inline-block" />
-            <Skeleton className="h-4 w-2 inline-block mx-2" />
-            <Skeleton className="h-4 w-24 inline-block" />
+          <nav className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
+            <Skeleton className="h-4 w-16 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-2 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-32 inline-block bg-gray-300" />
           </nav>
-
-          <div className="mt-4 grid items-start gap-8 md:grid-cols-2">
-            <div>
-              <Skeleton className="h-10 w-3/4 mb-3" />
-              <Skeleton className="h-6 w-full mb-2" />
-              <Skeleton className="h-6 w-5/6 mb-4" />
-              <ul className="mt-6 space-y-2">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <Skeleton className="w-1.5 h-1.5 rounded-full mt-2" />
-                    <Skeleton className="h-4 w-32" />
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 flex gap-3">
-                <Skeleton className="h-10 w-24" />
-                <Skeleton className="h-10 w-20" />
-              </div>
-            </div>
-            <div className="rounded-lg border bg-card p-4 shadow-sm">
-              <Skeleton className="h-48 w-full" />
-            </div>
+          <div className="mt-8">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-cyan-200 shadow-xl">
+              <CardContent className="p-8">
+                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-cyan-300 to-sky-300" />
+                <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-sky-200 to-blue-200" />
+                <Skeleton className="h-6 w-5/6 mb-8 bg-gradient-to-r from-blue-200 to-indigo-200" />
+                <Skeleton className="h-8 w-48 mb-4 bg-gradient-to-r from-cyan-400 to-sky-400" />
+                <div className="space-y-3">
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <Skeleton className="w-5 h-5 rounded-full bg-cyan-300" />
+                      <Skeleton className="h-4 w-64 bg-gray-200" />
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 flex gap-3">
+                  <Skeleton className="h-10 w-32 bg-gradient-to-r from-cyan-300 to-sky-300" />
+                  <Skeleton className="h-10 w-36 bg-gray-200" />
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="rounded-lg border bg-card p-5">
-                <Skeleton className="h-6 w-3/4 mb-2" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-2/3" />
-              </div>
-            ))}
+          {/* Gallery Skeleton */}
+          <div className="mt-12">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-cyan-200 shadow-xl">
+              <CardContent className="p-8">
+                <Skeleton className="h-8 w-48 mb-6 bg-gradient-to-r from-cyan-300 to-sky-300" />
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="aspect-square rounded-lg bg-gradient-to-br from-cyan-200 to-blue-200" />
+                      <Skeleton className="h-4 w-full mt-2 bg-gray-200" />
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
         <FoundationFooter />
