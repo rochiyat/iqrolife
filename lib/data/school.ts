@@ -176,7 +176,7 @@ export const schoolData = {
         image:
           '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-001.jpg',
         title: 'Eksplorasi Lingkungan Sekolah',
-        description: 'Memberi makan ayam, menyiram tanaman dan bermain bebas',
+        description: 'Bertemu dengan warga di lingkungan sekitar',
       },
       {
         image:
@@ -205,7 +205,7 @@ export const schoolData = {
       {
         image:
           '/program/kelas-siap-sekolah/kelas-bermain/kelas-bermain-006.jpg',
-        title: 'Kegiatan Tematik',
+        title: 'Kegiatan Bakti Sosial',
         description: 'Kegiatan sesuai tema setiap bulannya',
       },
       {
