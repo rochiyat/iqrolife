@@ -784,40 +784,6 @@ export default function SchoolPage() {
                   </a>
                 )}
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left max-w-2xl mx-auto">
-                <div className="bg-white/80 rounded-lg p-4">
-                  <h4 className="font-semibold text-orange-700 mb-3 flex items-center gap-2">
-                    <Users className="w-5 h-5" />
-                    Persyaratan:
-                  </h4>
-                  <ul className="space-y-2 text-gray-600">
-                    {schoolData.cta.requirements.map(
-                      (req: string, i: number) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
-                          {req}
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
-                <div className="bg-white/80 rounded-lg p-4">
-                  <h4 className="font-semibold text-purple-700 mb-3 flex items-center gap-2">
-                    <Calendar className="w-5 h-5" />
-                    Waktu Pendaftaran:
-                  </h4>
-                  <ul className="space-y-2 text-gray-600">
-                    {schoolData.cta.registrationTime.map(
-                      (time: string, i: number) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                          {time}
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </motion.section>
