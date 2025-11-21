@@ -243,27 +243,27 @@ export const schoolData = {
     ],
   },
   timeline: {
-    title: '📅 Timeline KKS 2026/2027 📅',
+    title: '📅 Timeline Pembukaan KKS 2026/2027 📅',
     items: [
       {
         phase: 'Pendaftaran',
-        date: 'Desember 2025',
-        description: 'Pengisian formulir dan pengumpulan berkas',
+        date: '30 November - 14 Desember 2025',
+        description: 'Pengisian Formulir dan Pengumpulan Berkas',
       },
       {
-        phase: 'Observasi',
-        date: 'Desember 2025',
-        description: 'Obersevasi dan wawancara',
+        phase: 'Observasi dan Wawancara',
+        date: '20 - 21 Desember 2025',
+        description: 'Obersevasi Anak dan Wawancara Orang Tua',
       },
       {
         phase: 'Pengumuman',
-        date: 'Desember 2025',
-        description: 'Pengumuman hasil seleksi',
+        date: '23 Desember 2025',
+        description: 'Pengumuman Hasil Seleksi',
       },
       {
         phase: 'Daftar Ulang',
-        date: 'Desember 2025 - Januari 2026',
-        description: 'Pembayaran dan daftar ulang',
+        date: '23 Desember 2025 - 31 Januari 2026',
+        description: 'Pembayaran dan Daftar Ulang',
       },
     ],
   },
