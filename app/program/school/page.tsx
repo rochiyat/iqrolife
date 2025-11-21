@@ -368,7 +368,7 @@ export default function SchoolPage() {
             <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
               Level Pendidikan
             </h2>
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
               {schoolData.levels.map((level: any, index: number) => (
                 <Card
                   key={index}
@@ -397,9 +397,10 @@ export default function SchoolPage() {
                         {level.capacity && ` • ${level.capacity}`}
                       </p>
                     </div>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {level.description}
-                    </p>
+                    <p
+                      className="text-sm text-gray-600 leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: level.description }}
+                    />
                   </CardContent>
                 </Card>
               ))}

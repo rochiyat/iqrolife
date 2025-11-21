@@ -88,29 +88,38 @@ export const schoolData = {
   ],
   levels: [
     {
-      title: 'Kelas Bermain (KB-KSS)',
+      title: 'Kelas Bermain (KB)',
+      age: 'Usia mulai 3 - 4 tahun',
+      capacity: '10 anak + 10 ibu',
+      description:
+        'Kelas bermain untuk anak <strong>usia mulai 3-4 tahun</strong> yang <strong>dibersamai oleh ibu/ayahnya</strong>, terdiri dari 10 anak+ 10 ibu yang dilaksanakan <strong>setiap seminggu sekali</strong>. Kelas didesain untuk memberikan <strong>pengalaman bermain bersama orang tua yang menyenangkan</strong>, menumbuhkan rasa cinta terhadap Rabbnya, serta menstimulasi sensori.',
+      icon: '🎈',
+      image: '/profiles/sejarah/sejarah-004.jpg',
+    },
+    {
+      title: 'Kelas Siap Sekolah 1 (KSS 1)',
       age: 'Usia mulai 4 tahun',
       capacity: '10 anak',
       description:
-        'Kelas bermain untuk anak usia mulai 4 tahun yang terdiri dari 10 anak yang didesain untuk memberikan pengalaman bermain yang menyenangkan, menumbuhkan rasa cinta terhadap Rabbnya, serta mengembangkan keterampilan sosial motorik dan kognitif dasar.',
-      icon: '🎈',
-      image: '/program/kelas-siap-sekolah/level/level-001.jpg',
-    },
-    {
-      title: 'Kelas Siap Sekolah - A (KSS-A)',
-      age: 'Usia mulai 5 tahun',
-      capacity: 'Maksimal 10 anak',
-      description:
-        'Siap Sekolah A (KSS-A) untuk usia mulai 5 tahun yang terdiri dari maksimal 10 anak yang didesain sebagai lingkungan pendidikan awal dengan menyediakan lingkungan belajar terstruktur, dimana anak-anak dapat menumbuhkan kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi dan kognitif melalui kegiatan bermain yang belajar.',
+        'Kelas Siap Sekolah A untuk usia mulai 4 tahun yang terdiri dari maksimal 10 anak setiap kelasnya. Kelas dilaksanakan <strong>selama 3 hari disekolah dan 2 hari homekeeping dirumah.</strong><br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan belajar terstruktur</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi sensori melalui pembelajaran berbasis bermain.</strong>',
       icon: '🌟',
       image: '/program/kelas-siap-sekolah/level/level-002.jpg',
     },
     {
-      title: 'Kelas Siap Sekolah - B (KSS-B)',
-      age: 'Usia mulai 6 tahun',
-      capacity: '',
+      title: 'Kelas Siap Sekolah 2 (KSS 2)',
+      age: 'Usia mulai 5 tahun',
+      capacity: '10 anak',
       description:
-        'Siap Sekolah B (KSS-B) untuk usia mulai 6 tahun, merupakan tahap pendidikan awal yang memfokuskan pada pengembangan keterampilan akademis dasar, keterampilan sosial, kemandirian melalui proses pembelajaran yang menyenangkan.',
+        'Kelas Siap Sekolah A untuk usia mulai 5 tahun yang terdiri dari maksimal 10 anak setiap kelasnya. Kelas dilaksanakan <strong>selama 5 hari disekolah.</strong><br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan belajar terstruktur</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi sensori melalui pembelajaran berbasis bermain.</strong>',
+      icon: '✨',
+      image: '/program/kelas-siap-sekolah/level/level-002.jpg',
+    },
+    {
+      title: 'Kelas Siap Sekolah 3 (KSS 3)',
+      age: 'Usia mulai 5 tahun 6 bulan',
+      capacity: '10 anak',
+      description:
+        'Kelas Siap Sekolah A untuk usia mulai 5 tahun 6 bulan yang terdiri dari maksimal 10 anak setiap kelasnya. <br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan belajar terstruktur</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi perkembangan sensori serta kognitif melalui pembelajaran berbasis bermain.</strong>',
       icon: '🎓',
       image: '/program/kelas-siap-sekolah/level/level-003.jpg',
     },
@@ -123,39 +132,38 @@ export const schoolData = {
       {
         image:
           '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-001.jpg',
-        title: 'Ruang Kelas Nyaman',
-        description:
-          'Ruang kelas yang dirancang khusus untuk kenyamanan belajar anak',
+        title: 'Playground',
+        description: 'Salah satu tempat bermain stimulasi sensori anak',
       },
       {
         image:
           '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-002.jpg',
-        title: 'Area Bermain',
-        description: 'Area bermain yang aman dan menyenangkan untuk anak-anak',
+        title: 'Outdoor Area',
+        description: 'Ruang eksplorasi merawat hewan',
       },
       {
         image:
           '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-003.jpg',
-        title: 'Perpustakaan',
-        description: 'Koleksi buku yang lengkap untuk menumbuhkan minat baca',
+        title: 'Outdoor Area',
+        description: 'Ruang terbuka untuk ekplorasi anak',
       },
       {
         image:
           '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-004.jpg',
-        title: 'Ruang Seni',
-        description: 'Ruang khusus untuk mengembangkan kreativitas anak',
+        title: 'Ruang Kelas',
+        description: 'Tempat ekplorasi didalam ruangan',
       },
       {
         image:
           '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-005.jpg',
-        title: 'Taman Bermain',
-        description: 'Taman yang asri untuk eksplorasi alam',
+        title: 'Ruang Kelas',
+        description: 'Tempat belajar yang aman dan nyaman',
       },
       {
         image:
           '/program/kelas-siap-sekolah/fasilitas-pembelajaran/fasilitas-pembelajaran-006.jpg',
-        title: 'Ruang Multifungsi',
-        description: 'Ruang serbaguna untuk berbagai kegiatan pembelajaran',
+        title: 'Ruang Kelas',
+        description: 'Tempat belajar yang aman dan nyaman',
       },
     ],
   },
