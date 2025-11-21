@@ -107,26 +107,47 @@ export default function MentoringIbuPage() {
 
   if (loading) {
     return (
-      <div>
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-red-50">
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <nav className="text-sm text-muted-foreground mb-4">
-            <Skeleton className="h-4 w-16 inline-block" />
-            <Skeleton className="h-4 w-2 inline-block mx-2" />
-            <Skeleton className="h-4 w-24 inline-block" />
+          <nav className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
+            <Skeleton className="h-4 w-16 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-2 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-32 inline-block bg-gray-300" />
           </nav>
           <div className="mt-8">
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-pink-200 shadow-xl">
               <CardContent className="p-8">
-                <Skeleton className="h-10 w-3/4 mb-6" />
-                <Skeleton className="h-6 w-full mb-4" />
-                <Skeleton className="h-6 w-5/6 mb-8" />
-                <Skeleton className="h-8 w-48 mb-4" />
+                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-pink-300 to-rose-300" />
+                <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-rose-200 to-red-200" />
+                <Skeleton className="h-6 w-5/6 mb-8 bg-gradient-to-r from-red-200 to-orange-200" />
+                <Skeleton className="h-8 w-48 mb-4 bg-gradient-to-r from-pink-400 to-rose-400" />
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <Skeleton className="w-5 h-5 rounded-full" />
-                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="w-5 h-5 rounded-full bg-pink-300" />
+                    <Skeleton className="h-4 w-32 bg-gray-200" />
                   </div>
+                </div>
+                <div className="mt-8 flex gap-3">
+                  <Skeleton className="h-10 w-32 bg-gradient-to-r from-pink-300 to-rose-300" />
+                  <Skeleton className="h-10 w-36 bg-gray-200" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Gallery Skeleton */}
+          <div className="mt-12">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-pink-200 shadow-xl">
+              <CardContent className="p-8">
+                <Skeleton className="h-8 w-48 mb-6 bg-gradient-to-r from-pink-300 to-rose-300" />
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="aspect-square rounded-lg bg-gradient-to-br from-pink-200 to-rose-200" />
+                      <Skeleton className="h-4 w-full mt-2 bg-gray-200" />
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
