@@ -267,34 +267,7 @@ export const schoolData = {
       },
     ],
   },
-  gallery: {
-    title: '😊 Anak-Anak Bahagia di Iqrolife 😊',
-    description:
-      'Lihat kegembiraan anak-anak yang sudah bergabung dengan keluarga besar Iqrolife',
-    items: [
-      {
-        title: '📖 Belajar Membaca',
-        description: 'Metode pembelajaran yang menyenangkan',
-        image:
-          'https://images.unsplash.com/photo-1622737133809-d95047b9e673?w=400&h=300&fit=crop',
-        imageAlt: 'Anak-anak KBTK sedang belajar membaca dengan gembira',
-      },
-      {
-        title: '🤝 Bermain Bersama',
-        description: 'Mengembangkan kemampuan sosial anak',
-        image:
-          'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
-        imageAlt: 'Anak-anak KBTK bermain dan belajar bersama',
-      },
-      {
-        title: '🎨 Aktivitas Kreatif',
-        description: 'Mengasah kreativitas dan imajinasi',
-        image:
-          'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=400&h=300&fit=crop',
-        imageAlt: 'Anak-anak KBTK dalam kegiatan pembelajaran kreatif',
-      },
-    ],
-  },
+
   cta: {
     title: '🎉 Siap Bergabung dengan Kelas Siap Sekolah Iqrolife? 🎉',
     description:
