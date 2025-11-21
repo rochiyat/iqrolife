@@ -99,11 +99,24 @@ export default function SejarahPage() {
           <div className="text-center text-gray-600 max-w-3xl mx-auto mb-12 space-y-4">
             {sejarahData.subtitle
               .split('\n\n')
-              .map((paragraph: string, index: number) => (
-                <p key={index} className="leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
+              .map((paragraph: string, index: number) => {
+                // Handle bold text with ** markers
+                const parts = paragraph.split(/(\*\*.*?\*\*)/g);
+                return (
+                  <p key={index} className="leading-relaxed">
+                    {parts.map((part, i) => {
+                      if (part.startsWith('**') && part.endsWith('**')) {
+                        return (
+                          <strong key={i} className="font-bold text-gray-800">
+                            {part.slice(2, -2)}
+                          </strong>
+                        );
+                      }
+                      return part;
+                    })}
+                  </p>
+                );
+              })}
           </div>
         </AnimatedSection>
 
