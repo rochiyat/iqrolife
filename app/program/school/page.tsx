@@ -464,27 +464,32 @@ export default function SchoolPage() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="mb-16"
           >
-            <Card className="bg-gradient-to-r from-blue-100 to-purple-100 border-0 shadow-lg max-w-3xl mx-auto">
-              <CardContent className="p-8 text-center">
-                <h2 className="text-2xl font-bold mb-4 text-purple-800">
-                  {schoolData.ppdb.title}
-                </h2>
-                <div className="bg-white/80 rounded-lg p-6 mb-4">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">
-                    {schoolData.ppdb.level}
-                  </div>
-                  <div className="text-xl text-gray-700 mb-2">
-                    Usia: {schoolData.ppdb.age}
-                  </div>
-                  <div className="text-2xl font-bold text-orange-600 mb-1">
-                    {schoolData.ppdb.fee}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {schoolData.ppdb.note}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <h2 className="text-3xl font-bold text-center mb-8 text-purple-800">
+              {schoolData.ppdb.title}
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {schoolData.ppdb.items.map((item: any, index: number) => (
+                <Card
+                  key={index}
+                  className="bg-gradient-to-r from-blue-100 to-purple-100 border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <CardContent className="p-8 text-center">
+                    <div className="bg-white/80 rounded-lg p-6">
+                      <div className="text-3xl font-bold text-blue-600 mb-2">
+                        {item.level}
+                      </div>
+                      <div className="text-xl text-gray-700 mb-2">
+                        Usia: {item.age}
+                      </div>
+                      <div className="text-2xl font-bold text-orange-600 mb-1">
+                        {item.fee}
+                      </div>
+                      <div className="text-sm text-gray-600">{item.note}</div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </motion.section>
         )}
 

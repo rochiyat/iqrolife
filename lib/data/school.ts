@@ -217,10 +217,20 @@ export const schoolData = {
   },
   ppdb: {
     title: '📚 Biaya Pendidikan 📚',
-    level: 'Kelas Bermain (KB)',
-    age: '3 - 4 tahun',
-    fee: 'Rp 985.000',
-    note: '*Biaya per awal masuk',
+    items: [
+      {
+        level: 'Kelas Bermain (KB)',
+        age: '3 - 4 tahun',
+        fee: 'Rp 985.000',
+        note: '*Biaya per awal masuk',
+      },
+      {
+        level: 'Kelas Siap Sekolah (KSS)',
+        age: '4 - 7 tahun',
+        fee: 'Rp 6.750.000',
+        note: '*Biaya per awal masuk',
+      },
+    ],
   },
   requirements: {
     title: '📋 Persyaratan Pendaftaran 📋',
