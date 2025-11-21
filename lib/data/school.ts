@@ -47,6 +47,18 @@ export const schoolData = {
       },
     ],
   },
+  curriculum: {
+    title: 'Fokus Kurikulum',
+    subtitle: 'Pendekatan pembelajaran yang terstruktur dan terukur',
+    items: [
+      'Stimulasi Sensori Motorik',
+      'Pendidikan Emosi',
+      'Pendidikan Individualitas',
+      'Pendidikan Iman',
+    ],
+    method: 'Play Based Learning',
+    output: 'Portfolio Sifat Unik Anak',
+  },
   programs: [
     {
       title: 'IMAN',

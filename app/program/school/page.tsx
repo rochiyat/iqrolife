@@ -312,6 +312,74 @@ export default function SchoolPage() {
           </motion.section>
         )}
 
+        {/* Curriculum Focus Section */}
+        {schoolData.curriculum && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+              {schoolData.curriculum.title}
+            </h2>
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              {schoolData.curriculum.subtitle}
+            </p>
+
+            <div className="max-w-5xl mx-auto">
+              <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+                {/* Left Side - Curriculum Items */}
+                <div className="flex flex-col gap-4 w-full md:w-auto">
+                  {schoolData.curriculum.items.map(
+                    (item: string, index: number) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                        className="bg-white border-2 border-cyan-400 rounded-2xl px-6 py-4 text-center shadow-md hover:shadow-lg transition-all duration-300"
+                      >
+                        <p className="font-medium text-gray-800">{item}</p>
+                      </motion.div>
+                    )
+                  )}
+                </div>
+
+                {/* Arrow */}
+                <div className="text-gray-400 text-4xl hidden md:block">➜</div>
+
+                {/* Center - Method */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  className="bg-gradient-to-br from-green-500 to-green-600 rounded-3xl px-12 py-16 shadow-xl"
+                >
+                  <p className="text-white text-2xl font-bold text-center leading-tight">
+                    {schoolData.curriculum.method}
+                  </p>
+                </motion.div>
+
+                {/* Arrow */}
+                <div className="text-gray-400 text-4xl hidden md:block">➜</div>
+
+                {/* Right Side - Output */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                  className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl px-12 py-16 shadow-xl"
+                >
+                  <p className="text-white text-2xl font-bold text-center leading-tight">
+                    {schoolData.curriculum.output}
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </motion.section>
+        )}
+
         {/* Programs Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
