@@ -30,28 +30,31 @@ export default function MisiPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-white to-brand-sky/10">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="text-center mb-12">
-            <Skeleton className="h-12 w-96 mx-auto mb-6" />
+            <Skeleton className="h-12 w-96 mx-auto mb-6 bg-gradient-to-r from-green-300 to-emerald-300" />
           </div>
 
           <div className="max-w-6xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12 border-2 border-green-200">
               {/* Diagram Skeleton */}
               <div className="mb-8">
-                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-gray-200">
-                  <Skeleton className="w-full h-96" />
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-xl overflow-hidden border-2 border-green-200">
+                  <Skeleton className="w-full h-96 bg-gradient-to-br from-green-200 to-emerald-200" />
                 </div>
               </div>
 
               {/* Legend Skeleton */}
               <div className="flex flex-wrap gap-4 justify-center">
                 {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    <Skeleton className="w-12 h-0.5" />
-                    <Skeleton className="h-4 w-20" />
+                  <div
+                    key={i}
+                    className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-lg"
+                  >
+                    <Skeleton className="w-12 h-0.5 bg-gradient-to-r from-green-300 to-emerald-300" />
+                    <Skeleton className="h-4 w-20 bg-gray-200" />
                   </div>
                 ))}
               </div>

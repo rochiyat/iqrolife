@@ -30,17 +30,17 @@ export default function VisiPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-white to-brand-sky/10">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="max-w-5xl mx-auto">
             {/* Vision Header Skeleton */}
-            <Skeleton className="h-24 w-full rounded-t-lg mb-0" />
+            <Skeleton className="h-24 w-full rounded-t-lg mb-0 bg-gradient-to-r from-orange-300 to-amber-300" />
 
             {/* Vision Statement Skeleton */}
-            <div className="bg-gray-50 py-8 px-8 border-x-2 border-gray-200">
-              <Skeleton className="h-6 w-3/4 mx-auto mb-3" />
-              <Skeleton className="h-6 w-2/3 mx-auto" />
+            <div className="bg-white/70 backdrop-blur-sm py-8 px-8 border-x-2 border-orange-200">
+              <Skeleton className="h-6 w-3/4 mx-auto mb-3 bg-gradient-to-r from-orange-200 to-amber-200" />
+              <Skeleton className="h-6 w-2/3 mx-auto bg-gradient-to-r from-amber-200 to-yellow-200" />
             </div>
 
             {/* Three Pillars Skeleton */}
@@ -48,21 +48,21 @@ export default function VisiPage() {
               {Array.from({ length: 3 }).map((_, i) => (
                 <div
                   key={i}
-                  className="bg-white border-2 border-gray-200 shadow-lg rounded-lg overflow-hidden"
+                  className="bg-white/80 backdrop-blur-sm border-2 border-orange-200 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-all"
                 >
-                  <Skeleton className="h-16 w-full" />
+                  <Skeleton className="h-16 w-full bg-gradient-to-r from-orange-300 to-amber-300" />
                   <div className="p-6">
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-5/6 mb-2" />
-                    <Skeleton className="h-4 w-4/5" />
+                    <Skeleton className="h-4 w-full mb-2 bg-gray-200" />
+                    <Skeleton className="h-4 w-full mb-2 bg-gray-200" />
+                    <Skeleton className="h-4 w-5/6 mb-2 bg-gray-200" />
+                    <Skeleton className="h-4 w-4/5 bg-gray-200" />
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Pilar Strategi Skeleton */}
-            <Skeleton className="h-20 w-full rounded-lg mt-12" />
+            <Skeleton className="h-20 w-full rounded-lg mt-12 bg-gradient-to-r from-orange-200 to-amber-200" />
           </div>
         </main>
         <FoundationFooter />

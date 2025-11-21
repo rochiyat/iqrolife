@@ -24,43 +24,43 @@ export default function FamilyTalentDiscoveryPage() {
   const galleryImages = [
     {
       src: '/program/family-talent-discovery/family-talent-discovery-001.jpg',
-      alt: 'Workshop Mengenal Bakat Keluarga',
+      alt: 'Mengenal Bakat Keluarga',
     },
     {
       src: '/program/family-talent-discovery/family-talent-discovery-002.jpg',
-      alt: 'Konsultasi Talents Mapping',
+      alt: 'Foto Bersama Peserta, Pembicara dan Panitia',
     },
     {
       src: '/program/family-talent-discovery/family-talent-discovery-003.jpg',
-      alt: 'Sesi Family Talent Discovery',
+      alt: 'Sesi Tanya Jawab',
     },
     {
       src: '/program/family-talent-discovery/family-talent-discovery-004.jpg',
-      alt: 'Kegiatan Mengenal Potensi Keluarga',
+      alt: 'Pemaparan Potensi Bakat Keluarga',
     },
     {
       src: '/program/family-talent-discovery/family-talent-discovery-005.jpg',
-      alt: 'Workshop Bakat dan Misi Hidup',
+      alt: 'Foto Bersama Para Pembicara',
     },
     {
       src: '/program/family-talent-discovery/family-talent-discovery-006.jpg',
-      alt: 'Aktivitas Talents Discovery',
+      alt: 'Pemberian Hadiah',
     },
     {
       src: '/program/family-talent-discovery/family-talent-discovery-007.jpg',
-      alt: 'Sesi Konsultasi Keluarga',
+      alt: 'Keseruan Pemberian Hadiah',
     },
     {
       src: '/program/family-talent-discovery/family-talent-discovery-008.jpg',
-      alt: 'Kegiatan Menggali Bakat Anak',
+      alt: 'Bazaar di Kegiatan',
     },
     {
       src: '/program/family-talent-discovery/family-talent-discovery-009.jpg',
-      alt: 'Workshop Potensi Keluarga',
+      alt: 'Para Peserta',
     },
     {
       src: '/program/family-talent-discovery/family-talent-discovery-010.jpg',
-      alt: 'Program Family Talent Discovery',
+      alt: 'Pemaparan Pembawa Acara',
     },
   ];
 
