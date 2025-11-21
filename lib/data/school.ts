@@ -4,13 +4,13 @@ export const schoolData = {
     'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
   description:
     'Sejak 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah mulai dari KB, TK A dan TK B. ✨',
-  badge: 'KKS 2026/2027',
+  badge: 'Pembukaan KKS 2026-2027',
   hero: {
-    title: '🎒 Kelas Siap Sekolah 🎒',
+    title: '🎒 Kelas Siap Sekolah IQROLIFE 🎒',
     subtitle:
-      'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
+      'Pendidikan pra sekolah yang mencakup pendidikan iman, Pendidikan ego/individualitas, Pendidikan emosi dan Stimulasi sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
     description:
-      'Sejak 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah mulai dari KB, TK A dan TK B. ✨',
+      'Sejak tahun 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah ✨',
   },
   visionMission: {
     title: 'Purpose, Visi & Misi',
@@ -53,9 +53,8 @@ export const schoolData = {
       description: 'Membangun fondasi keimanan yang kuat sejak dini.',
       icon: '🕌',
       details: [
+        'Menumbuhkan rasa cinta kepada Allah lewat aktivitas sehari hari',
         'Kesiapan untuk siap Perintah Ibadah selanjutnya',
-        'Mengenal Huruf Hijaiyah',
-        'Menghafal Surat pendek dan doa harian dengan penuh suka cita',
       ],
     },
     {
@@ -218,9 +217,9 @@ export const schoolData = {
   },
   ppdb: {
     title: '📚 Biaya Pendidikan 📚',
-    level: 'Kelas Siap Sekolah',
-    age: '3-6 tahun',
-    fee: 'Rp 6.500.000',
+    level: 'Kelas Bermain (KB)',
+    age: '3 - 4 tahun',
+    fee: 'Rp 985.000',
     note: '*Biaya per awal masuk',
   },
   requirements: {

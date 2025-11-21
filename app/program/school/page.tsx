@@ -394,8 +394,12 @@ export default function SchoolPage() {
                     <div className="mb-3">
                       <p className="text-sm font-semibold text-orange-600">
                         {level.age}
-                        {level.capacity && ` • ${level.capacity}`}
                       </p>
+                      {level.capacity && (
+                        <p className="text-xs font-medium text-purple-600 mt-1">
+                          {level.capacity}
+                        </p>
+                      )}
                     </div>
                     <p
                       className="text-sm text-gray-600 leading-relaxed"
