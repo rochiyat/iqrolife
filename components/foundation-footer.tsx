@@ -36,10 +36,8 @@ interface FooterData {
     phone: string;
     email: string;
     social: {
-      facebook: string;
       instagram: string;
       youtube: string;
-      twitter: string;
     };
   };
   copyright: {
@@ -215,16 +213,6 @@ export default function FoundationFooter() {
               <li>Telepon: {footerData?.contact.phone}</li>
               <li>Alamat: {footerData?.contact.address}</li>
               <li className="pt-2 flex gap-4">
-                {footerData?.contact.social.facebook && (
-                  <a
-                    href={footerData.contact.social.facebook}
-                    className="hover:text-brand-emerald transition-colors duration-300"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Facebook
-                  </a>
-                )}
                 {footerData?.contact.social.instagram && (
                   <a
                     href={footerData.contact.social.instagram}

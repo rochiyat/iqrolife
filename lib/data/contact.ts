@@ -11,10 +11,8 @@ export const contactData = {
     hours: 'Senin - Jumat: 07.30 - 15.00 WIB',
   },
   social: {
-    facebook: 'https://facebook.com/iqrolife',
     instagram: 'https://instagram.com/iqrolife',
     youtube: 'https://youtube.com/@iqrolife',
-    twitter: 'https://twitter.com/iqrolife',
   },
   map: {
     latitude: -6.569644,

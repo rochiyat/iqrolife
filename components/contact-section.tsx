@@ -17,10 +17,8 @@ interface ContactData {
     hours: string;
   };
   social: {
-    facebook: string;
     instagram: string;
     youtube: string;
-    twitter: string;
   };
   map: {
     latitude: number;

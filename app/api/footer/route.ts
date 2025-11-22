@@ -82,10 +82,8 @@ export async function GET() {
       phone: '+62813-1522-5557',
       email: 'iqrolife@gmail.com',
       social: {
-        facebook: 'https://facebook.com/iqrolife',
-        instagram: 'https://instagram.com/iqrolife',
-        youtube: 'https://youtube.com/@iqrolife',
-        twitter: 'https://twitter.com/iqrolife',
+        instagram: 'https://instagram.com/iqrolife.id',
+        youtube: 'https://youtube.com/@KELUARGAIQROLIFE',
       },
     },
     copyright: {
