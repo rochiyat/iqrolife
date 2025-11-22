@@ -166,6 +166,19 @@
       radial-gradient(circle at 80% 20%, rgba(242, 205, 91, 0.08) 0%, transparent 50%),
       radial-gradient(circle at 40% 40%, rgba(76, 170, 222, 0.05) 0%, transparent 50%);
   }
+  
+  /* Ensure all interactive elements have pointer cursor */
+  button,
+  a,
+  [role="button"],
+  [type="button"],
+  [type="submit"],
+  [type="reset"],
+  label[for],
+  select,
+  summary {
+    cursor: pointer;
+  }
 }
 
 /* Added playful animations for child-friendly interactions */
