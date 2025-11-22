@@ -12,9 +12,8 @@ export default function Footer() {
   useEffect(() => {
     const fetchFooterData = async () => {
       try {
-        const response = await fetch('/api/school/footer');
-        const data = await response.json();
-        setFooterData(data);
+        // API endpoint removed - school folder deleted
+        setFooterData(null);
       } catch (error) {
         console.error('Error fetching footer data:', error);
       } finally {
@@ -44,18 +43,18 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
+    <footer className="bg-gradient-to-br from-[#4caade] via-[#3a8fc7] to-[#4caade] text-white relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-10 w-8 h-8 bg-fun-yellow/20 rounded-full animate-bounce opacity-50">
+        <div className="absolute top-10 left-10 w-8 h-8 bg-[#f2cd5b]/30 rounded-full animate-bounce opacity-50">
           ⭐
         </div>
-        <div className="absolute top-20 right-20 w-6 h-6 bg-fun-pink/20 rounded-full animate-pulse opacity-50">
+        <div className="absolute top-20 right-20 w-6 h-6 bg-[#f2cd5b]/30 rounded-full animate-pulse opacity-50">
           🌟
         </div>
-        <div className="absolute bottom-20 left-20 w-10 h-10 bg-fun-blue/20 rounded-full animate-float opacity-50">
+        <div className="absolute bottom-20 left-20 w-10 h-10 bg-white/20 rounded-full animate-float opacity-50">
           🎈
         </div>
-        <div className="absolute bottom-10 right-10 w-4 h-4 bg-fun-green/20 rounded-full animate-wiggle opacity-50">
+        <div className="absolute bottom-10 right-10 w-4 h-4 bg-[#f2cd5b]/30 rounded-full animate-wiggle opacity-50">
           ✨
         </div>
       </div>
@@ -69,13 +68,13 @@ export default function Footer() {
                 alt="Sekolah Iqrolife Logo"
                 width={40}
                 height={40}
-                className="rounded-full hover:scale-110 transition-transform duration-300"
+                className="rounded-full hover:scale-110 transition-transform duration-300 bg-white p-1"
               />
-              <span className="text-xl font-bold bg-gradient-to-r from-fun-yellow to-fun-orange bg-clip-text text-transparent">
+              <span className="text-xl font-bold text-[#f2cd5b]">
                 {footerData.brand.name}
               </span>
             </div>
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-white/90 leading-relaxed">
               {footerData.brand.description}
             </p>
           </div>
@@ -112,20 +111,20 @@ export default function Footer() {
             <h3 className="text-lg font-bold mb-4 flex items-center">
               📞 Kontak Kami
             </h3>
-            <div className="space-y-3 text-gray-300">
-              <div className="flex items-start gap-3 hover:text-fun-blue transition-colors duration-300">
+            <div className="space-y-3 text-white/90">
+              <div className="flex items-start gap-3 hover:text-[#f2cd5b] transition-colors duration-300">
                 <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
                 <span className="text-sm">{footerData.contact.address}</span>
               </div>
-              <div className="flex items-center gap-3 hover:text-fun-green transition-colors duration-300">
+              <div className="flex items-center gap-3 hover:text-[#f2cd5b] transition-colors duration-300">
                 <Phone className="w-5 h-5 flex-shrink-0" />
                 <span className="text-sm">{footerData.contact.phone}</span>
               </div>
-              <div className="flex items-center gap-3 hover:text-fun-orange transition-colors duration-300">
+              <div className="flex items-center gap-3 hover:text-[#f2cd5b] transition-colors duration-300">
                 <Mail className="w-5 h-5 flex-shrink-0" />
                 <span className="text-sm">{footerData.contact.email}</span>
               </div>
-              <div className="flex items-start gap-3 hover:text-fun-pink transition-colors duration-300">
+              <div className="flex items-start gap-3 hover:text-[#f2cd5b] transition-colors duration-300">
                 <Clock className="w-5 h-5 mt-1 flex-shrink-0" />
                 <span className="text-sm">{footerData.contact.hours}</span>
               </div>
@@ -133,8 +132,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-          <p className="text-gray-400 flex items-center justify-center gap-2">
+        <div className="border-t border-white/20 mt-12 pt-8 text-center">
+          <p className="text-white/80 flex items-center justify-center gap-2">
             © 2025 Sekolah Iqrolife Bogor. All rights reserved.
             <span className="animate-pulse">💖</span>
           </p>

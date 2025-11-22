@@ -29,35 +29,38 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <main>
           <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
             <div className="text-center mb-10">
-              <Skeleton className="h-10 w-64 mx-auto mb-4" />
-              <Skeleton className="h-6 w-96 mx-auto" />
+              <Skeleton className="h-10 w-64 mx-auto mb-4 bg-gradient-to-r from-blue-300 to-cyan-300" />
+              <Skeleton className="h-6 w-96 mx-auto bg-gradient-to-r from-cyan-200 to-teal-200" />
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2">
-              <Card className="p-6 shadow-lg bg-white/80 backdrop-blur-sm">
+              <Card className="p-6 shadow-xl bg-white/80 backdrop-blur-sm border-2 border-blue-200">
                 <div className="space-y-6">
                   {Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i}>
-                      <Skeleton className="h-5 w-16 mb-2" />
-                      <Skeleton className="h-4 w-full" />
+                    <div
+                      key={i}
+                      className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg"
+                    >
+                      <Skeleton className="h-5 w-16 mb-2 bg-gradient-to-r from-blue-300 to-cyan-300" />
+                      <Skeleton className="h-4 w-full bg-gray-200" />
                       {i === 3 && (
                         <div className="space-y-1 mt-2">
-                          <Skeleton className="h-4 w-32" />
+                          <Skeleton className="h-4 w-32 bg-gray-200" />
                         </div>
                       )}
                     </div>
                   ))}
-                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-10 w-full bg-gradient-to-r from-blue-300 to-cyan-300" />
                 </div>
               </Card>
 
-              <Card className="shadow-lg overflow-hidden bg-white/80 backdrop-blur-sm">
-                <Skeleton className="h-96 w-full" />
+              <Card className="shadow-xl overflow-hidden bg-white/80 backdrop-blur-sm border-2 border-cyan-200">
+                <Skeleton className="h-96 w-full bg-gradient-to-br from-blue-200 to-cyan-200" />
               </Card>
             </div>
           </section>
@@ -88,10 +91,10 @@ export default function Page() {
       <main>
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold md:text-4xl bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold md:text-4xl bg-gradient-to-r from-[#4caade] to-[#f2cd5b] bg-clip-text text-transparent">
               {contactData?.title || 'Hubungi Kami'}
             </h1>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+            <p className="mt-3 text-gray-700 max-w-2xl mx-auto">
               {contactData?.subtitle ||
                 'Jika Anda memiliki pertanyaan atau ingin mengetahui lebih lanjut tentang program-program kami, silakan hubungi kami melalui kontak di bawah ini.'}
             </p>
@@ -165,7 +168,7 @@ export default function Page() {
           <Button
             asChild
             size="lg"
-            className="bg-brand-emerald hover:bg-brand-cyan text-white shadow-lg transition-all duration-300 hover:scale-105"
+            className="bg-[#4caade] hover:bg-[#3a8fc7] text-white shadow-lg transition-all duration-300 hover:scale-105"
           >
             <a
               href={`https://wa.me/${contactData?.office.whatsapp.replace(

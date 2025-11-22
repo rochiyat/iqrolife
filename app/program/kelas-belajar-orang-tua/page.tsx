@@ -27,44 +27,44 @@ export default function Page() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=600&fit=crop',
-      alt: 'Family Camp bersama',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-002.jpg',
+      alt: 'Family Camp - Kebersamaan Keluarga',
     },
     {
-      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=800&h=600&fit=crop',
-      alt: 'FBE Series workshop',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-001.jpg',
+      alt: 'FBE Series - Workshop Orang Tua',
     },
     {
-      src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop',
-      alt: 'Ngariung di Saung',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-006.jpg',
+      alt: 'Family Camp - Aktivitas Bersama',
     },
     {
-      src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=600&fit=crop',
-      alt: 'Webinar pengembangan bakat anak',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-003.jpg',
+      alt: 'Fitrah Based Education Workshop',
     },
     {
-      src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop',
-      alt: 'Kegiatan ragam aktivitas anak',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-009.jpg',
+      alt: 'Family Camp - Bonding Keluarga',
     },
     {
-      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=600&fit=crop',
-      alt: 'PureTalk session',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-005.jpg',
+      alt: 'Sesi Pembelajaran FBE',
     },
     {
-      src: 'https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=800&h=600&fit=crop',
-      alt: 'Workshop pengasuhan',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-012.jpg',
+      alt: 'Family Camp - Kegiatan Outdoor',
     },
     {
-      src: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=800&h=600&fit=crop',
-      alt: 'Diskusi pendidikan holistik',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-007.jpg',
+      alt: 'Workshop Pendidikan Holistik',
     },
     {
-      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=800&h=600&fit=crop',
-      alt: 'Sesi belajar orang tua',
+      src: '/program/kelas-belajar-orang-tua/family-camp/family-camp-014.jpg',
+      alt: 'Family Camp - Momen Kebersamaan',
     },
     {
-      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop',
-      alt: 'Kegiatan keluarga',
+      src: '/program/kelas-belajar-orang-tua/fbe/fbe-008.jpg',
+      alt: 'Diskusi Pengasuhan Berbasis Fitrah',
     },
   ];
 
@@ -115,26 +115,47 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div>
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <nav className="text-sm text-muted-foreground mb-4">
-            <Skeleton className="h-4 w-16 inline-block" />
-            <Skeleton className="h-4 w-2 inline-block mx-2" />
-            <Skeleton className="h-4 w-32 inline-block" />
+          <nav className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
+            <Skeleton className="h-4 w-16 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-2 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-44 inline-block bg-gray-300" />
           </nav>
           <div className="mt-8">
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-orange-200 shadow-xl">
               <CardContent className="p-8">
-                <Skeleton className="h-10 w-3/4 mb-6" />
-                <Skeleton className="h-6 w-full mb-4" />
-                <Skeleton className="h-6 w-5/6 mb-8" />
-                <Skeleton className="h-8 w-48 mb-4" />
+                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-orange-300 to-amber-300" />
+                <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-amber-200 to-yellow-200" />
+                <Skeleton className="h-6 w-5/6 mb-8 bg-gradient-to-r from-yellow-200 to-orange-200" />
+                <Skeleton className="h-8 w-48 mb-4 bg-gradient-to-r from-orange-400 to-amber-400" />
                 <div className="space-y-3">
                   {Array.from({ length: 6 }).map((_, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <Skeleton className="w-5 h-5 rounded-full" />
-                      <Skeleton className="h-4 w-64" />
+                      <Skeleton className="w-5 h-5 rounded-full bg-orange-300" />
+                      <Skeleton className="h-4 w-64 bg-gray-200" />
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 flex gap-3">
+                  <Skeleton className="h-10 w-32 bg-gradient-to-r from-orange-300 to-amber-300" />
+                  <Skeleton className="h-10 w-36 bg-gray-200" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Gallery Skeleton */}
+          <div className="mt-12">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-orange-200 shadow-xl">
+              <CardContent className="p-8">
+                <Skeleton className="h-8 w-48 mb-6 bg-gradient-to-r from-orange-300 to-amber-300" />
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="aspect-square rounded-lg bg-gradient-to-br from-orange-200 to-amber-200" />
+                      <Skeleton className="h-4 w-full mt-2 bg-gray-200" />
                     </div>
                   ))}
                 </div>
@@ -205,7 +226,7 @@ export default function Page() {
                 </div>
 
                 <div className="mt-8 flex gap-3">
-                  <Link href="/contact">
+                  <Link href="/kontak">
                     <Button>Hubungi Kami</Button>
                   </Link>
                   <Link href="/program">

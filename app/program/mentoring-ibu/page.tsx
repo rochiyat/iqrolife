@@ -19,44 +19,44 @@ export default function MentoringIbuPage() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200',
-      alt: 'Rahima Iqrolife gathering',
+      src: '/program/mentoring-ibu/mentoring-ibu-001.jpg',
+      alt: 'Rahima Iqrolife - Gathering Ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1200',
-      alt: 'Mentoring ibu',
+      src: '/program/mentoring-ibu/mentoring-ibu-002.jpg',
+      alt: 'Mentoring Ibu - Sesi Diskusi',
     },
     {
-      src: 'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=1200',
-      alt: 'Diskusi ibu',
+      src: '/program/mentoring-ibu/mentoring-ibu-003.jpg',
+      alt: 'Kegiatan Rahima Iqrolife',
     },
     {
-      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200',
-      alt: 'Workshop ibu',
+      src: '/program/mentoring-ibu/mentoring-ibu-004.jpg',
+      alt: 'Pendampingan Ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200',
-      alt: 'Kegiatan Rahima',
+      src: '/program/mentoring-ibu/mentoring-ibu-005.jpg',
+      alt: 'Sesi Sharing Ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=1200',
-      alt: 'Sesi sharing ibu',
+      src: '/program/mentoring-ibu/mentoring-ibu-006.jpg',
+      alt: 'Mentoring Intensif Ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200',
-      alt: 'Pendampingan ibu',
+      src: '/program/mentoring-ibu/mentoring-ibu-007.jpg',
+      alt: 'Komunitas Ibu Iqrolife',
     },
     {
-      src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=1200',
-      alt: 'Belajar bersama ibu',
+      src: '/program/mentoring-ibu/mentoring-ibu-008.jpg',
+      alt: 'Kegiatan Bersama Ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1200',
-      alt: 'Kegiatan mentoring',
+      src: '/program/mentoring-ibu/mentoring-ibu-009.jpg',
+      alt: 'Rahima - Kebersamaan Ibu',
     },
     {
-      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200',
-      alt: 'Komunitas ibu',
+      src: '/program/mentoring-ibu/mentoring-ibu-010.jpg',
+      alt: 'Program Pendampingan Ibu',
     },
   ];
 
@@ -107,26 +107,47 @@ export default function MentoringIbuPage() {
 
   if (loading) {
     return (
-      <div>
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <nav className="text-sm text-muted-foreground mb-4">
-            <Skeleton className="h-4 w-16 inline-block" />
-            <Skeleton className="h-4 w-2 inline-block mx-2" />
-            <Skeleton className="h-4 w-24 inline-block" />
+          <nav className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
+            <Skeleton className="h-4 w-16 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-2 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-32 inline-block bg-gray-300" />
           </nav>
           <div className="mt-8">
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-[#4caade]/30 shadow-xl">
               <CardContent className="p-8">
-                <Skeleton className="h-10 w-3/4 mb-6" />
-                <Skeleton className="h-6 w-full mb-4" />
-                <Skeleton className="h-6 w-5/6 mb-8" />
-                <Skeleton className="h-8 w-48 mb-4" />
+                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-[#4caade]/50 to-[#f2cd5b]/50" />
+                <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-rose-200 to-red-200" />
+                <Skeleton className="h-6 w-5/6 mb-8 bg-gradient-to-r from-red-200 to-orange-200" />
+                <Skeleton className="h-8 w-48 mb-4 bg-gradient-to-r from-pink-400 to-rose-400" />
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <Skeleton className="w-5 h-5 rounded-full" />
-                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="w-5 h-5 rounded-full bg-pink-300" />
+                    <Skeleton className="h-4 w-32 bg-gray-200" />
                   </div>
+                </div>
+                <div className="mt-8 flex gap-3">
+                  <Skeleton className="h-10 w-32 bg-gradient-to-r from-pink-300 to-rose-300" />
+                  <Skeleton className="h-10 w-36 bg-gray-200" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Gallery Skeleton */}
+          <div className="mt-12">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-pink-200 shadow-xl">
+              <CardContent className="p-8">
+                <Skeleton className="h-8 w-48 mb-6 bg-gradient-to-r from-pink-300 to-rose-300" />
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="aspect-square rounded-lg bg-gradient-to-br from-pink-200 to-rose-200" />
+                      <Skeleton className="h-4 w-full mt-2 bg-gray-200" />
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -194,7 +215,7 @@ export default function MentoringIbuPage() {
                 </div>
 
                 <div className="mt-8 flex gap-3">
-                  <Link href="/contact">
+                  <Link href="/kontak">
                     <Button>Hubungi Kami</Button>
                   </Link>
                   <Link href="/program">

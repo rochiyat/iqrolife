@@ -13,9 +13,8 @@ export default function ActivitiesSection() {
   useEffect(() => {
     const fetchActivitiesData = async () => {
       try {
-        const response = await fetch('/api/school/activities');
-        const data = await response.json();
-        setActivitiesData(data);
+        // API endpoint removed - school folder deleted
+        setActivitiesData(null);
       } catch (error) {
         console.error('Error fetching activities data:', error);
       } finally {
@@ -45,13 +44,13 @@ export default function ActivitiesSection() {
   }
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gradient-to-br from-white via-[#4caade]/5 to-[#f2cd5b]/5">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-[#4caade] to-[#f2cd5b] bg-clip-text text-transparent mb-4">
             {activitiesData.title}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             {activitiesData.description}
           </p>
         </div>
@@ -79,7 +78,10 @@ export default function ActivitiesSection() {
         </div>
 
         <div className="text-center">
-          <Button asChild className="bg-pink-600 hover:bg-pink-700">
+          <Button
+            asChild
+            className="bg-[#4caade] hover:bg-[#3a8fc7] text-white shadow-lg"
+          >
             <a
               href={activitiesData.instagramUrl}
               target="_blank"

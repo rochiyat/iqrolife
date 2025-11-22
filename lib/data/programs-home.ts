@@ -81,7 +81,7 @@ export const programsHomeData = [
     borderColor: 'brand-cyan',
     age: 'Semua usia',
     type: 'service',
-    href: '/kontak',
+    href: '/program/family-talent-discovery',
     fullWidth: true,
   },
 ];

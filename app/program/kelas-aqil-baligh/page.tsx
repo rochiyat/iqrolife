@@ -19,44 +19,44 @@ export default function KelasAqilBalighPage() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?w=800&h=600&fit=crop',
-      alt: 'Kegiatan pemuda peduli',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-001.jpg',
+      alt: 'Magang Kuliner - Persiapan Bahan',
     },
     {
-      src: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=600&fit=crop',
-      alt: 'Aksi sosial pemuda',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-002.jpg',
+      alt: 'Praktik Memasak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=600&fit=crop',
-      alt: 'Magang kuliner',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-003.jpg',
+      alt: 'Belajar Teknik Kuliner',
     },
     {
-      src: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&h=600&fit=crop',
-      alt: 'Pembelajaran kuliner',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-004.jpg',
+      alt: 'Pelatihan Kuliner Profesional',
     },
     {
-      src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=600&fit=crop',
-      alt: 'Kegiatan sosial masyarakat',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-005.jpg',
+      alt: 'Mengasah Keterampilan Memasak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=600&fit=crop',
-      alt: 'Pemuda beraksi',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-006.jpg',
+      alt: 'Praktik Kuliner Bersama',
     },
     {
-      src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop',
-      alt: 'Praktik kuliner',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-007.jpg',
+      alt: 'Pembelajaran Kuliner',
     },
     {
-      src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop',
-      alt: 'Kegiatan amal kebaikan',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-008.jpg',
+      alt: 'Magang Kuliner - Presentasi Hasil',
     },
     {
-      src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop',
-      alt: 'Pelatihan kuliner',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-009.jpg',
+      alt: 'Kegiatan Magang Kuliner',
     },
     {
-      src: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&h=600&fit=crop',
-      alt: 'Keterlibatan sosial pemuda',
+      src: '/program/kelas-aqil-baligh/magang-kuliner/magang-kuliner-010.jpg',
+      alt: 'Praktik Keterampilan Kuliner',
     },
   ];
 
@@ -107,26 +107,47 @@ export default function KelasAqilBalighPage() {
 
   if (loading) {
     return (
-      <div>
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <nav className="text-sm text-muted-foreground mb-4">
-            <Skeleton className="h-4 w-16 inline-block" />
-            <Skeleton className="h-4 w-2 inline-block mx-2" />
-            <Skeleton className="h-4 w-24 inline-block" />
+          <nav className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
+            <Skeleton className="h-4 w-16 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-2 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-32 inline-block bg-gray-300" />
           </nav>
           <div className="mt-8">
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-[#4caade]/30 shadow-xl">
               <CardContent className="p-8">
-                <Skeleton className="h-10 w-3/4 mb-6" />
-                <Skeleton className="h-6 w-full mb-4" />
-                <Skeleton className="h-6 w-5/6 mb-8" />
-                <Skeleton className="h-8 w-48 mb-4" />
+                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-[#4caade]/50 to-[#f2cd5b]/50" />
+                <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-pink-200 to-rose-200" />
+                <Skeleton className="h-6 w-5/6 mb-8 bg-gradient-to-r from-rose-200 to-orange-200" />
+                <Skeleton className="h-8 w-48 mb-4 bg-gradient-to-r from-purple-400 to-pink-400" />
                 <div className="space-y-3">
                   {Array.from({ length: 2 }).map((_, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <Skeleton className="w-5 h-5 rounded-full" />
-                      <Skeleton className="h-4 w-48" />
+                      <Skeleton className="w-5 h-5 rounded-full bg-purple-300" />
+                      <Skeleton className="h-4 w-48 bg-gray-200" />
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 flex gap-3">
+                  <Skeleton className="h-10 w-32 bg-gradient-to-r from-purple-300 to-pink-300" />
+                  <Skeleton className="h-10 w-36 bg-gray-200" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Gallery Skeleton */}
+          <div className="mt-12">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-purple-200 shadow-xl">
+              <CardContent className="p-8">
+                <Skeleton className="h-8 w-48 mb-6 bg-gradient-to-r from-purple-300 to-pink-300" />
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="aspect-square rounded-lg bg-gradient-to-br from-purple-200 to-pink-200" />
+                      <Skeleton className="h-4 w-full mt-2 bg-gray-200" />
                     </div>
                   ))}
                 </div>
@@ -198,7 +219,7 @@ export default function KelasAqilBalighPage() {
                 </div>
 
                 <div className="mt-8 flex gap-3">
-                  <Link href="/contact">
+                  <Link href="/kontak">
                     <Button>Hubungi Kami</Button>
                   </Link>
                   <Link href="/program">

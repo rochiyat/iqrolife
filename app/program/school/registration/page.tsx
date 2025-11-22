@@ -43,7 +43,9 @@ export default function RegistrationPage() {
   >('idle');
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -141,11 +143,11 @@ export default function RegistrationPage() {
               Formulir Pendaftaran
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 bg-clip-text text-transparent animate-bounce-gentle">
-              🎒 Daftar KBTK Iqrolife 🎒
+              🎒 Kelas Siap Sekolah Iqrolife 🎒
             </h1>
-            <p className="text-center text-gray-600 max-w-3xl mx-auto mb-4 text-lg">
-              Bergabunglah dengan keluarga besar Iqrolife dan wujudkan masa depan
-              gemilang putra-putri Anda! ✨
+            <p className="text-center text-gray-700 max-w-3xl mx-auto mb-4 text-lg font-medium leading-relaxed">
+              Bergabunglah dengan keluarga besar Iqrolife dan wujudkan masa
+              depan gemilang putra-putri Anda! ✨
             </p>
             <Link href="/program/school">
               <Button
@@ -164,10 +166,30 @@ export default function RegistrationPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto relative"
         >
-          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-2xl">
-            <CardContent className="p-8">
+          {/* Decorative elements */}
+          <div className="absolute -top-6 -left-6 text-6xl animate-bounce-gentle opacity-70">
+            🎨
+          </div>
+          <div className="absolute -top-6 -right-6 text-6xl animate-pulse opacity-70">
+            ✏️
+          </div>
+          <div className="absolute -bottom-6 -left-6 text-6xl animate-float opacity-70">
+            📚
+          </div>
+          <div className="absolute -bottom-6 -right-6 text-6xl animate-bounce-gentle opacity-70">
+            🌈
+          </div>
+
+          <Card className="bg-white/90 backdrop-blur-sm border-4 border-gradient-to-r from-orange-200 via-pink-200 to-purple-200 shadow-2xl relative overflow-hidden">
+            {/* Decorative corner accents */}
+            <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-orange-200 to-transparent opacity-50"></div>
+            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-pink-200 to-transparent opacity-50"></div>
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-purple-200 to-transparent opacity-50"></div>
+            <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-blue-200 to-transparent opacity-50"></div>
+
+            <CardContent className="p-8 relative z-10">
               {submitStatus === 'success' && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -205,16 +227,21 @@ export default function RegistrationPage() {
                 </motion.div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Data Anak */}
-                <div className="space-y-4">
+                <div className="space-y-4 bg-gradient-to-br from-orange-50 to-pink-50 p-6 rounded-2xl border-2 border-orange-200 shadow-md">
                   <h2 className="text-2xl font-bold text-orange-800 flex items-center gap-2">
-                    <User className="w-6 h-6" />
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-pink-400 flex items-center justify-center">
+                      <User className="w-6 h-6 text-white" />
+                    </div>
                     Data Anak
                   </h2>
 
                   <div>
-                    <Label htmlFor="namaLengkap" className="text-gray-700">
+                    <Label
+                      htmlFor="namaLengkap"
+                      className="text-gray-700 font-semibold"
+                    >
                       Nama Lengkap Anak <span className="text-red-500">*</span>
                     </Label>
                     <Input
@@ -224,13 +251,16 @@ export default function RegistrationPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="Masukkan nama lengkap anak"
-                      className="mt-1"
+                      className="mt-1 border-2 focus:border-orange-400 transition-all"
                     />
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="tanggalLahir" className="text-gray-700">
+                      <Label
+                        htmlFor="tanggalLahir"
+                        className="text-gray-700 font-semibold"
+                      >
                         Tanggal Lahir <span className="text-red-500">*</span>
                       </Label>
                       <Input
@@ -240,12 +270,15 @@ export default function RegistrationPage() {
                         value={formData.tanggalLahir}
                         onChange={handleInputChange}
                         required
-                        className="mt-1"
+                        className="mt-1 border-2 focus:border-orange-400 transition-all"
                       />
                     </div>
 
                     <div>
-                      <Label htmlFor="jenisKelamin" className="text-gray-700">
+                      <Label
+                        htmlFor="jenisKelamin"
+                        className="text-gray-700 font-semibold"
+                      >
                         Jenis Kelamin <span className="text-red-500">*</span>
                       </Label>
                       <select
@@ -254,7 +287,7 @@ export default function RegistrationPage() {
                         value={formData.jenisKelamin}
                         onChange={handleInputChange}
                         required
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        className="mt-1 w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition-all"
                       >
                         <option value="">Pilih jenis kelamin</option>
                         <option value="Laki-laki">Laki-laki</option>
@@ -264,7 +297,10 @@ export default function RegistrationPage() {
                   </div>
 
                   <div>
-                    <Label htmlFor="asalSekolah" className="text-gray-700">
+                    <Label
+                      htmlFor="asalSekolah"
+                      className="text-gray-700 font-semibold"
+                    >
                       Asal Sekolah/TK (jika ada)
                     </Label>
                     <Input
@@ -273,21 +309,27 @@ export default function RegistrationPage() {
                       value={formData.asalSekolah}
                       onChange={handleInputChange}
                       placeholder="Masukkan asal sekolah/TK"
-                      className="mt-1"
+                      className="mt-1 border-2 focus:border-orange-400 transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Data Orang Tua */}
-                <div className="space-y-4 pt-6 border-t border-gray-200">
+                <div className="space-y-4 bg-gradient-to-br from-pink-50 to-purple-50 p-6 rounded-2xl border-2 border-pink-200 shadow-md">
                   <h2 className="text-2xl font-bold text-pink-800 flex items-center gap-2">
-                    <Home className="w-6 h-6" />
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-pink-400 to-purple-400 flex items-center justify-center">
+                      <Home className="w-6 h-6 text-white" />
+                    </div>
                     Data Orang Tua/Wali
                   </h2>
 
                   <div>
-                    <Label htmlFor="namaOrangTua" className="text-gray-700">
-                      Nama Orang Tua/Wali <span className="text-red-500">*</span>
+                    <Label
+                      htmlFor="namaOrangTua"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Nama Orang Tua/Wali{' '}
+                      <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="namaOrangTua"
@@ -296,14 +338,18 @@ export default function RegistrationPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="Masukkan nama orang tua/wali"
-                      className="mt-1"
+                      className="mt-1 border-2 focus:border-pink-400 transition-all"
                     />
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="noTelepon" className="text-gray-700">
-                        No. Telepon/WhatsApp <span className="text-red-500">*</span>
+                      <Label
+                        htmlFor="noTelepon"
+                        className="text-gray-700 font-semibold"
+                      >
+                        No. Telepon/WhatsApp{' '}
+                        <span className="text-red-500">*</span>
                       </Label>
                       <div className="relative">
                         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -315,13 +361,16 @@ export default function RegistrationPage() {
                           onChange={handleInputChange}
                           required
                           placeholder="08xx-xxxx-xxxx"
-                          className="mt-1 pl-10"
+                          className="mt-1 pl-10 border-2 focus:border-pink-400 transition-all"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <Label htmlFor="email" className="text-gray-700">
+                      <Label
+                        htmlFor="email"
+                        className="text-gray-700 font-semibold"
+                      >
                         Email <span className="text-red-500">*</span>
                       </Label>
                       <div className="relative">
@@ -334,14 +383,17 @@ export default function RegistrationPage() {
                           onChange={handleInputChange}
                           required
                           placeholder="email@example.com"
-                          className="mt-1 pl-10"
+                          className="mt-1 pl-10 border-2 focus:border-pink-400 transition-all"
                         />
                       </div>
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="alamat" className="text-gray-700">
+                    <Label
+                      htmlFor="alamat"
+                      className="text-gray-700 font-semibold"
+                    >
                       Alamat Lengkap <span className="text-red-500">*</span>
                     </Label>
                     <textarea
@@ -352,15 +404,17 @@ export default function RegistrationPage() {
                       required
                       rows={3}
                       placeholder="Masukkan alamat lengkap"
-                      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                      className="mt-1 w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-400 transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Upload Bukti Transfer */}
-                <div className="space-y-4 pt-6 border-t border-gray-200">
+                <div className="space-y-4 bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-2xl border-2 border-purple-200 shadow-md">
                   <h2 className="text-2xl font-bold text-purple-800 flex items-center gap-2">
-                    <Upload className="w-6 h-6" />
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 flex items-center justify-center">
+                      <Upload className="w-6 h-6 text-white" />
+                    </div>
                     Bukti Transfer Pendaftaran
                   </h2>
 
@@ -369,18 +423,22 @@ export default function RegistrationPage() {
                       Informasi Pembayaran:
                     </p>
                     <ul className="text-sm text-blue-700 space-y-1">
-                      <li>• Bank: BCA</li>
-                      <li>• No. Rekening: 1234567890</li>
-                      <li>• Atas Nama: Yayasan Iqrolife</li>
-                      <li>• Biaya Pendaftaran: Rp 500.000</li>
+                      <li>• Bank: BSI</li>
+                      <li>• No. Rekening: 7016179838</li>
+                      <li>• Atas Nama: Agista Rosiana</li>
+                      <li>• Biaya Pendaftaran: Rp 250.000</li>
                     </ul>
                   </div>
 
                   <div>
-                    <Label htmlFor="buktiTransfer" className="text-gray-700">
-                      Upload Bukti Transfer <span className="text-red-500">*</span>
+                    <Label
+                      htmlFor="buktiTransfer"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Upload Bukti Transfer{' '}
+                      <span className="text-red-500">*</span>
                     </Label>
-                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-purple-400 transition-colors">
+                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-purple-300 border-dashed rounded-lg hover:border-purple-500 hover:bg-purple-50/50 transition-all">
                       <div className="space-y-2 text-center">
                         <Upload className="mx-auto h-12 w-12 text-gray-400" />
                         <div className="flex text-sm text-gray-600">
@@ -428,9 +486,9 @@ export default function RegistrationPage() {
                                 {buktiTransfer?.name}
                               </p>
                               <p className="text-sm text-gray-600">
-                                {(buktiTransfer?.size || 0 / 1024 / 1024).toFixed(
-                                  2
-                                )}{' '}
+                                {(
+                                  buktiTransfer?.size || 0 / 1024 / 1024
+                                ).toFixed(2)}{' '}
                                 MB
                               </p>
                             </div>
@@ -454,14 +512,19 @@ export default function RegistrationPage() {
                 </div>
 
                 {/* Catatan Tambahan */}
-                <div className="space-y-4 pt-6 border-t border-gray-200">
+                <div className="space-y-4 bg-gradient-to-br from-blue-50 to-cyan-50 p-6 rounded-2xl border-2 border-blue-200 shadow-md">
                   <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                    <FileText className="w-6 h-6" />
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-white" />
+                    </div>
                     Catatan Tambahan
                   </h2>
 
                   <div>
-                    <Label htmlFor="catatan" className="text-gray-700">
+                    <Label
+                      htmlFor="catatan"
+                      className="text-gray-700 font-semibold"
+                    >
                       Catatan (Opsional)
                     </Label>
                     <textarea
@@ -471,17 +534,25 @@ export default function RegistrationPage() {
                       onChange={handleInputChange}
                       rows={3}
                       placeholder="Tambahkan catatan atau informasi tambahan jika ada"
-                      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+                      className="mt-1 w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400 transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-6">
+                <div className="pt-6 bg-gradient-to-br from-yellow-50 to-orange-50 p-6 rounded-2xl border-2 border-yellow-200 shadow-md">
+                  <div className="text-center mb-4">
+                    <p className="text-lg font-bold text-gray-800 mb-2">
+                      🎉 Siap Bergabung? 🎉
+                    </p>
+                    <p className="text-sm text-gray-600 font-medium">
+                      Klik tombol di bawah untuk mengirim pendaftaran Anda
+                    </p>
+                  </div>
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-orange-600 to-pink-600 hover:from-orange-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                    className="w-full py-6 text-lg font-bold bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 hover:from-orange-700 hover:via-pink-700 hover:to-purple-700 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 animate-pulse"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center justify-center gap-2">

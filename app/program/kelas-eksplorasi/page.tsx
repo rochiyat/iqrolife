@@ -28,44 +28,44 @@ export default function Page() {
 
   const galleryImages = [
     {
-      src: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200',
-      alt: 'Anak-anak dalam kegiatan kelas eksplorasi',
+      src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-003.jpg',
+      alt: 'Jelajah Museum - Mengenal Sejarah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1622737133809-d95047b9e673?w=1200',
-      alt: 'Kegiatan belajar bersama',
+      src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-007.jpg',
+      alt: 'Minggu Bersama Ayah - Quality Time',
     },
     {
-      src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200',
-      alt: 'Aktivitas kreatif anak',
+      src: '/program/kelas-eksplorasi/jelajah-air/jelajah-air-001.jpg',
+      alt: 'Jelajah Air - Petualangan Seru',
     },
     {
-      src: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=1200',
-      alt: 'Eksplorasi museum',
+      src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-008.jpg',
+      alt: 'Eksplorasi Museum - Belajar Budaya',
     },
     {
-      src: 'https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=1200',
-      alt: 'Kegiatan outdoor',
+      src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-012.jpg',
+      alt: 'Kegiatan Outdoor Bersama Ayah',
     },
     {
-      src: 'https://images.unsplash.com/photo-1560785477-d43d2b34e0df?w=1200',
-      alt: 'Crafting class',
+      src: '/program/kelas-eksplorasi/jelajah-air/jelajah-air-004.jpg',
+      alt: 'Jelajah Air - Mengenal Ekosistem',
     },
     {
-      src: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=1200',
-      alt: 'Kegiatan seni',
+      src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-005.jpg',
+      alt: 'Museum Tour - Edukasi Interaktif',
     },
     {
-      src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200',
-      alt: 'Belajar bersama ayah',
+      src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-016.jpg',
+      alt: 'Bonding Ayah dan Anak',
     },
     {
-      src: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=1200',
-      alt: 'Aktivitas membatik',
+      src: '/program/kelas-eksplorasi/jelajah-museum/jelajah-museum-010.jpg',
+      alt: 'Jelajah Museum - Eksplorasi Pengetahuan',
     },
     {
-      src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200',
-      alt: 'Pop up book activity',
+      src: '/program/kelas-eksplorasi/minggu-bersama-ayah/minggu-bersama-ayah-019.jpg',
+      alt: 'Minggu Bersama Ayah - Aktivitas Seru',
     },
   ];
 
@@ -116,46 +116,52 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div>
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-          <nav className="text-sm text-muted-foreground mb-4">
-            <Skeleton className="h-4 w-16 inline-block" />
-            <Skeleton className="h-4 w-2 inline-block mx-2" />
-            <Skeleton className="h-4 w-24 inline-block" />
+          <nav className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
+            <Skeleton className="h-4 w-16 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-2 inline-block bg-gray-300" />
+            <Skeleton className="h-4 w-32 inline-block bg-gray-300" />
           </nav>
-
-          <div className="mt-4 grid items-start gap-8 md:grid-cols-2">
-            <div>
-              <Skeleton className="h-10 w-3/4 mb-3" />
-              <Skeleton className="h-6 w-full mb-2" />
-              <Skeleton className="h-6 w-5/6 mb-4" />
-              <ul className="mt-6 space-y-2">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <Skeleton className="w-1.5 h-1.5 rounded-full mt-2" />
-                    <Skeleton className="h-4 w-32" />
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 flex gap-3">
-                <Skeleton className="h-10 w-24" />
-                <Skeleton className="h-10 w-20" />
-              </div>
-            </div>
-            <div className="rounded-lg border bg-card p-4 shadow-sm">
-              <Skeleton className="h-48 w-full" />
-            </div>
+          <div className="mt-8">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-[#4caade]/30 shadow-xl">
+              <CardContent className="p-8">
+                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-[#4caade]/50 to-[#f2cd5b]/50" />
+                <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-sky-200 to-blue-200" />
+                <Skeleton className="h-6 w-5/6 mb-8 bg-gradient-to-r from-blue-200 to-indigo-200" />
+                <Skeleton className="h-8 w-48 mb-4 bg-gradient-to-r from-cyan-400 to-sky-400" />
+                <div className="space-y-3">
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <Skeleton className="w-5 h-5 rounded-full bg-cyan-300" />
+                      <Skeleton className="h-4 w-64 bg-gray-200" />
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 flex gap-3">
+                  <Skeleton className="h-10 w-32 bg-gradient-to-r from-cyan-300 to-sky-300" />
+                  <Skeleton className="h-10 w-36 bg-gray-200" />
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="rounded-lg border bg-card p-5">
-                <Skeleton className="h-6 w-3/4 mb-2" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-2/3" />
-              </div>
-            ))}
+          {/* Gallery Skeleton */}
+          <div className="mt-12">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-cyan-200 shadow-xl">
+              <CardContent className="p-8">
+                <Skeleton className="h-8 w-48 mb-6 bg-gradient-to-r from-cyan-300 to-sky-300" />
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="aspect-square rounded-lg bg-gradient-to-br from-cyan-200 to-blue-200" />
+                      <Skeleton className="h-4 w-full mt-2 bg-gray-200" />
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
         <FoundationFooter />
@@ -221,7 +227,7 @@ export default function Page() {
                 </div>
 
                 <div className="mt-8 flex gap-3">
-                  <Link href="/contact">
+                  <Link href="/kontak">
                     <Button>Hubungi Kami</Button>
                   </Link>
                   <Link href="/program">

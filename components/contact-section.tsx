@@ -17,10 +17,8 @@ interface ContactData {
     hours: string;
   };
   social: {
-    facebook: string;
     instagram: string;
     youtube: string;
-    twitter: string;
   };
   map: {
     latitude: number;
@@ -82,7 +80,10 @@ export default function ContactSection() {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-brand-off-white to-brand-cyan/5">
+    <section
+      id="kontak"
+      className="py-16 bg-gradient-to-br from-brand-off-white to-brand-cyan/5"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent">

@@ -19,9 +19,8 @@ export default function ProgramsSection() {
   useEffect(() => {
     const fetchProgramsData = async () => {
       try {
-        const response = await fetch('/api/school/programs');
-        const data = await response.json();
-        setProgramsData(data);
+        // API endpoint removed - school folder deleted
+        setProgramsData(null);
       } catch (error) {
         console.error('Error fetching programs data:', error);
       } finally {
@@ -51,27 +50,27 @@ export default function ProgramsSection() {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-br from-fun-yellow/10 via-white to-fun-pink/10 relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-[#f2cd5b]/15 via-white to-[#4caade]/15 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 left-10 animate-float">
-          <Star className="w-6 h-6 text-fun-yellow/30" />
+          <Star className="w-6 h-6 text-[#f2cd5b]/40" />
         </div>
         <div className="absolute top-20 right-20 animate-bounce-gentle">
-          <Star className="w-8 h-8 text-fun-pink/30" />
+          <Star className="w-8 h-8 text-[#4caade]/40" />
         </div>
         <div className="absolute bottom-20 left-20 animate-wiggle">
-          <Star className="w-7 h-7 text-fun-blue/30" />
+          <Star className="w-7 h-7 text-[#f2cd5b]/40" />
         </div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6 animate-bounce-gentle">
-            <span className="bg-gradient-to-r from-fun-blue to-fun-purple bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#4caade] to-[#f2cd5b] bg-clip-text text-transparent">
               {programsData.title}
             </span>
             <br />
-            <span className="text-fun-orange">{programsData.subtitle}</span>
+            <span className="text-[#4caade]">{programsData.subtitle}</span>
           </h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto font-medium leading-relaxed">
             {programsData.description}

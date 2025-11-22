@@ -32,7 +32,7 @@ npm install pg dotenv bcrypt
 ### Step 2: Check Environment
 Verify `.env` has DATABASE_URL:
 ```env
-DATABASE_URL="postgres://avnadmin:AVNS_BEzKY3t2ydzg2y1jZyV@pg-18928b1b-houseofbaituna.l.aivencloud.com:16855/defaultdb?sslmode=require"
+DATABASE_URL="postgres://username:password@host:port/database?sslmode=require"
 ```
 
 ### Step 3: Run Migration

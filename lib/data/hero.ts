@@ -5,7 +5,7 @@ export const heroData = {
     'Komunitas pendidikan berbasis fitrah dengan 7 pendekatan pendidikan yang holistik guna mengembangkan manusia yang paripurna dari 3 aspek: jiwa, fisik dan akal. Iqrolife hadir dengan ekosistem pendidikan untuk semua komponen keluarga: Ayah, Ibu dan Anak dengan program-program yang terstruktur dan terukur. ',
   buttons: [
     {
-      label: 'Lihat Sekolah',
+      label: 'Lihat Kelas Siap Sekolah',
       href: '/program/school',
       variant: 'primary' as const,
     },

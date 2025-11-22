@@ -14,11 +14,8 @@ export default function VisionMissionSection() {
   useEffect(() => {
     const fetchVisionMissionData = async () => {
       try {
-        // Try foundation API first, fallback to school API
-        let response = await fetch('/api/foundation-vision-mission');
-        if (!response.ok) {
-          response = await fetch('/api/school/vision-mission');
-        }
+        // Only use foundation API - school API removed
+        const response = await fetch('/api/foundation-vision-mission');
         const data = await response.json();
         setVisionMissionData(data);
       } catch (error) {
@@ -76,10 +73,13 @@ export default function VisionMissionSection() {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-brand-sky/20 to-brand-lime/10 overflow-hidden">
+    <section
+      id="visi-misi"
+      className="py-16 bg-gradient-to-br from-[#4caade]/20 to-[#f2cd5b]/10 overflow-hidden"
+    >
       <div className="container mx-auto px-4">
         <AnimatedSection>
-          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-[#4caade] to-[#f2cd5b] bg-clip-text text-transparent">
             {visionMissionData.title}
           </h2>
         </AnimatedSection>
@@ -136,7 +136,7 @@ export default function VisionMissionSection() {
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 360 }}
                     transition={{ duration: 0.5 }}
-                    className="w-16 h-16 bg-brand-emerald rounded-full flex items-center justify-center mx-auto mb-4"
+                    className="w-16 h-16 bg-[#4caade] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"
                   >
                     <svg
                       className="w-8 h-8 text-white"
@@ -154,7 +154,7 @@ export default function VisionMissionSection() {
                   </motion.div>
                   <motion.h2
                     whileHover={{ scale: 1.05 }}
-                    className="text-3xl font-bold bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent mb-6"
+                    className="text-3xl font-bold text-[#4caade] mb-6"
                   >
                     Misi
                   </motion.h2>
@@ -178,10 +178,10 @@ export default function VisionMissionSection() {
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 360 }}
                     transition={{ duration: 0.5 }}
-                    className="w-16 h-16 bg-brand-cyan rounded-full flex items-center justify-center mx-auto mb-4"
+                    className="w-16 h-16 bg-[#f2cd5b] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"
                   >
                     <svg
-                      className="w-8 h-8 text-white"
+                      className="w-8 h-8 text-gray-800"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -202,7 +202,7 @@ export default function VisionMissionSection() {
                   </motion.div>
                   <motion.h2
                     whileHover={{ scale: 1.05 }}
-                    className="text-3xl font-bold bg-gradient-to-r from-brand-cyan to-brand-emerald bg-clip-text text-transparent mb-4"
+                    className="text-3xl font-bold text-[#4caade] mb-4"
                   >
                     Visi
                   </motion.h2>
