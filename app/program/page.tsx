@@ -30,7 +30,7 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <main>
           <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">

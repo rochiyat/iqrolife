@@ -163,7 +163,6 @@ export const schoolMainData = {
       },
     ],
     socialLinks: {
-      facebook: 'https://www.facebook.com/SekolahKreativa',
       instagram: 'https://www.instagram.com/sekolahkreativa.bogor/',
       youtube: 'https://www.youtube.com/c/YasminaSekolahKreativa',
     },

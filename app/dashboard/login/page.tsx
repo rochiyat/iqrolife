@@ -48,7 +48,7 @@ export default function DashboardLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-cyan-50 to-lime-100 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#4caade]/20 via-white to-[#f2cd5b]/20 flex items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 left-10 text-4xl animate-bounce">
           🌈
@@ -93,9 +93,9 @@ export default function DashboardLoginPage() {
           <p className="text-gray-600">Masuk ke portal admin dan manajemen</p>
         </div>
 
-        <Card className="shadow-2xl border-2 border-emerald-200 bg-white/95 backdrop-blur-sm animate-scale-in">
+        <Card className="shadow-2xl border-2 border-[#4caade]/30 bg-white/95 backdrop-blur-sm animate-scale-in">
           <CardHeader className="text-center pb-4">
-            <CardTitle className="text-2xl font-bold text-brand-emerald flex items-center justify-center gap-2">
+            <CardTitle className="text-2xl font-bold text-[#4caade] flex items-center justify-center gap-2">
               🔐 Login Dashboard 🔐
             </CardTitle>
             <p className="text-gray-600 text-sm">
@@ -124,7 +124,7 @@ export default function DashboardLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="border-2 border-emerald-200 focus:border-brand-emerald transition-colors duration-300 hover:border-emerald-300"
+                  className="border-2 border-[#4caade]/30 focus:border-[#4caade] transition-colors duration-300 hover:border-[#4caade]/50"
                 />
               </div>
 
@@ -142,13 +142,13 @@ export default function DashboardLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="border-2 border-emerald-200 focus:border-brand-emerald transition-colors duration-300 hover:border-emerald-300"
+                  className="border-2 border-[#4caade]/30 focus:border-[#4caade] transition-colors duration-300 hover:border-[#4caade]/50"
                 />
               </div>
 
               <Button
                 type="submit"
-                className="w-full bg-brand-emerald hover:bg-brand-emerald/90 text-white font-semibold py-3 rounded-lg transition-all duration-300 hover:scale-105 animate-bounce-gentle"
+                className="w-full bg-[#4caade] hover:bg-[#3a8fc7] text-white font-semibold py-3 rounded-lg transition-all duration-300 hover:scale-105 animate-bounce-gentle"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -165,7 +165,7 @@ export default function DashboardLoginPage() {
             <div className="mt-6 text-center space-y-3">
               <Link
                 href="/dashboard/forgot-password"
-                className="text-sm text-brand-emerald hover:text-brand-cyan transition-colors duration-300 flex items-center justify-center gap-1"
+                className="text-sm text-[#4caade] hover:text-[#3a8fc7] transition-colors duration-300 flex items-center justify-center gap-1"
               >
                 🤔 Lupa password?
               </Link>
@@ -174,7 +174,7 @@ export default function DashboardLoginPage() {
                 Kembali ke{' '}
                 <Link
                   href="/"
-                  className="text-brand-emerald hover:text-brand-cyan font-medium transition-colors duration-300"
+                  className="text-[#4caade] hover:text-[#3a8fc7] font-medium transition-colors duration-300"
                 >
                   Beranda ✨
                 </Link>
@@ -190,7 +190,7 @@ export default function DashboardLoginPage() {
               href="https://wa.me/6281315225557"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-brand-emerald hover:text-brand-cyan font-medium transition-colors duration-300"
+              className="text-[#4caade] hover:text-[#3a8fc7] font-medium transition-colors duration-300"
             >
               💬 WhatsApp
             </a>

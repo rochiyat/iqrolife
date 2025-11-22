@@ -116,7 +116,7 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-sky-50 to-blue-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
           <nav className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
@@ -125,9 +125,9 @@ export default function Page() {
             <Skeleton className="h-4 w-32 inline-block bg-gray-300" />
           </nav>
           <div className="mt-8">
-            <Card className="bg-white/80 backdrop-blur-sm border-2 border-cyan-200 shadow-xl">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-[#4caade]/30 shadow-xl">
               <CardContent className="p-8">
-                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-cyan-300 to-sky-300" />
+                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-[#4caade]/50 to-[#f2cd5b]/50" />
                 <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-sky-200 to-blue-200" />
                 <Skeleton className="h-6 w-5/6 mb-8 bg-gradient-to-r from-blue-200 to-indigo-200" />
                 <Skeleton className="h-8 w-48 mb-4 bg-gradient-to-r from-cyan-400 to-sky-400" />

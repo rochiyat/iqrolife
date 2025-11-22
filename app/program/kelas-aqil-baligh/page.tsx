@@ -107,7 +107,7 @@ export default function KelasAqilBalighPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
           <nav className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
@@ -116,9 +116,9 @@ export default function KelasAqilBalighPage() {
             <Skeleton className="h-4 w-32 inline-block bg-gray-300" />
           </nav>
           <div className="mt-8">
-            <Card className="bg-white/80 backdrop-blur-sm border-2 border-purple-200 shadow-xl">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-[#4caade]/30 shadow-xl">
               <CardContent className="p-8">
-                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-purple-300 to-pink-300" />
+                <Skeleton className="h-10 w-3/4 mb-6 bg-gradient-to-r from-[#4caade]/50 to-[#f2cd5b]/50" />
                 <Skeleton className="h-6 w-full mb-4 bg-gradient-to-r from-pink-200 to-rose-200" />
                 <Skeleton className="h-6 w-5/6 mb-8 bg-gradient-to-r from-rose-200 to-orange-200" />
                 <Skeleton className="h-8 w-48 mb-4 bg-gradient-to-r from-purple-400 to-pink-400" />

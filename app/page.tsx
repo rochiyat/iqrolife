@@ -194,7 +194,7 @@ export default function FoundationLanding() {
         {/* Hero */}
         <section
           id="beranda"
-          className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-emerald-50"
+          className="relative overflow-hidden bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -211,7 +211,7 @@ export default function FoundationLanding() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="text-sm font-semibold text-fun-blue tracking-wide mb-2"
+                        className="text-sm font-semibold text-[#4caade] tracking-wide mb-2"
                       >
                         {hero.subtitle}
                       </motion.p>
@@ -219,7 +219,7 @@ export default function FoundationLanding() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="text-3xl sm:text-4xl lg:text-5xl font-bold text-balance bg-gradient-to-r from-fun-blue via-fun-purple to-fun-blue bg-clip-text text-transparent"
+                        className="text-3xl sm:text-4xl lg:text-5xl font-bold text-balance bg-gradient-to-r from-[#4caade] via-[#f2cd5b] to-[#4caade] bg-clip-text text-transparent"
                       >
                         {hero.title}
                       </motion.h1>
@@ -242,7 +242,7 @@ export default function FoundationLanding() {
                             <Link
                               key={index}
                               href={button.href}
-                              className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-gradient-to-r from-fun-blue to-fun-purple text-white font-semibold shadow-lg hover:opacity-90 transition-all duration-300 hover:scale-105"
+                              className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-gradient-to-r from-[#4caade] to-[#3a8fc7] text-white font-semibold shadow-lg hover:opacity-90 transition-all duration-300 hover:scale-105"
                             >
                               {button.label}
                             </Link>
@@ -250,7 +250,7 @@ export default function FoundationLanding() {
                             <a
                               key={index}
                               href={button.href}
-                              className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-fun-blue/30 font-semibold hover:bg-fun-blue/10 transition-all duration-300 hover:scale-105"
+                              className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-[#f2cd5b] text-[#4caade] font-semibold hover:bg-[#f2cd5b]/20 transition-all duration-300 hover:scale-105"
                             >
                               {button.label}
                             </a>
@@ -304,10 +304,10 @@ export default function FoundationLanding() {
           <div className="container mx-auto px-4">
             <AnimatedSection>
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-brand-emerald to-brand-cyan bg-clip-text text-transparent">
+                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#4caade] to-[#f2cd5b] bg-clip-text text-transparent">
                   Nilai-Nilai Komunitas
                 </h2>
-                <p className="text-brand-gray max-w-2xl mx-auto">
+                <p className="text-gray-700 max-w-2xl mx-auto">
                   Prinsip-prinsip fundamental yang menjadi landasan dalam setiap
                   aktivitas pendidikan dan pengembangan komunitas kami.
                 </p>
@@ -322,7 +322,7 @@ export default function FoundationLanding() {
                       <motion.div
                         whileHover={{ scale: 1.1, rotate: 360 }}
                         transition={{ duration: 0.5 }}
-                        className="w-16 h-16 bg-brand-emerald rounded-full flex items-center justify-center mx-auto mb-4"
+                        className="w-16 h-16 bg-[#4caade] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"
                       >
                         <svg
                           className="w-8 h-8 text-white"
@@ -340,7 +340,7 @@ export default function FoundationLanding() {
                       </motion.div>
                       <motion.h3
                         whileHover={{ scale: 1.05 }}
-                        className="text-2xl font-bold text-brand-emerald mb-4"
+                        className="text-2xl font-bold text-[#4caade] mb-4"
                       >
                         Fitrah
                       </motion.h3>
@@ -510,10 +510,10 @@ export default function FoundationLanding() {
           <div className="container mx-auto px-4">
             <AnimatedSection>
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-brand-warm-brown to-brand-emerald bg-clip-text text-transparent">
+                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#4caade] to-[#f2cd5b] bg-clip-text text-transparent">
                   7 Dimensi Pendidikan Holistik
                 </h2>
-                <p className="text-brand-gray max-w-2xl mx-auto">
+                <p className="text-gray-700 max-w-2xl mx-auto">
                   Pendekatan komprehensif yang mengintegrasikan berbagai aspek
                   perkembangan anak sesuai dengan tahapan usia mereka.
                 </p>

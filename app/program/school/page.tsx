@@ -30,19 +30,19 @@ function ImageCarousel({
 
   const themeColors = {
     purple: {
-      border: 'border-purple-300',
-      hover: 'hover:bg-purple-50',
-      dot: 'bg-purple-600',
+      border: 'border-[#4caade]/30',
+      hover: 'hover:bg-[#4caade]/10',
+      dot: 'bg-[#4caade]',
     },
     orange: {
-      border: 'border-orange-300',
-      hover: 'hover:bg-orange-50',
-      dot: 'bg-orange-600',
+      border: 'border-[#f2cd5b]/30',
+      hover: 'hover:bg-[#f2cd5b]/10',
+      dot: 'bg-[#f2cd5b]',
     },
     green: {
-      border: 'border-green-300',
-      hover: 'hover:bg-green-50',
-      dot: 'bg-green-600',
+      border: 'border-[#4caade]/30',
+      hover: 'hover:bg-[#4caade]/10',
+      dot: 'bg-[#4caade]',
     },
   };
 
@@ -160,7 +160,7 @@ export default function SchoolPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="text-center mb-12">
@@ -201,7 +201,7 @@ export default function SchoolPage() {
 
   if (!schoolData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -216,7 +216,7 @@ export default function SchoolPage() {
   const programs = schoolData.programs;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
       <FoundationHeader />
       <main className="container mx-auto px-4 py-16">
         {/* Hero Section */}
@@ -282,9 +282,9 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-16 bg-gradient-to-br from-green-50/60 to-emerald-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+            className="mb-16 bg-gradient-to-br from-[#4caade]/10 to-[#f2cd5b]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-green-700 animate-bounce-gentle">
+            <h2 className="text-3xl font-bold text-center mb-12 text-[#4caade] animate-bounce-gentle">
               {schoolData.whyChoose.title}
             </h2>
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -295,7 +295,7 @@ export default function SchoolPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                 >
-                  <Card className="h-full bg-gradient-to-br from-green-600 to-green-700 border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up">
+                  <Card className="h-full bg-gradient-to-br from-[#4caade] to-[#3a8fc7] border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up">
                     <CardContent className="p-8 text-center h-full flex flex-col">
                       <div className="text-5xl mb-4">{item.icon}</div>
                       <h3 className="text-xl font-bold text-white mb-4">
@@ -318,9 +318,9 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
-            className="mb-16 bg-gradient-to-br from-purple-50/60 to-pink-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+            className="mb-16 bg-gradient-to-br from-[#f2cd5b]/10 to-[#4caade]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+            <h2 className="text-3xl font-bold text-center mb-4 text-[#4caade] animate-bounce-gentle">
               {schoolData.curriculum.title}
             </h2>
             <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
@@ -354,7 +354,7 @@ export default function SchoolPage() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  className="bg-gradient-to-br from-green-500 to-green-600 rounded-3xl px-12 py-16 shadow-xl"
+                  className="bg-gradient-to-br from-[#4caade] to-[#3a8fc7] rounded-3xl px-12 py-16 shadow-xl"
                 >
                   <p className="text-white text-2xl font-bold text-center leading-tight">
                     {schoolData.curriculum.method}
@@ -369,9 +369,9 @@ export default function SchoolPage() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.8 }}
-                  className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl px-12 py-16 shadow-xl"
+                  className="bg-gradient-to-br from-[#f2cd5b] to-[#e5bc45] rounded-3xl px-12 py-16 shadow-xl"
                 >
-                  <p className="text-white text-2xl font-bold text-center leading-tight">
+                  <p className="text-gray-800 text-2xl font-bold text-center leading-tight">
                     {schoolData.curriculum.output}
                   </p>
                 </motion.div>
@@ -381,8 +381,8 @@ export default function SchoolPage() {
         )}
 
         {/* Programs Section */}
-        <section className="mb-16 bg-gradient-to-br from-orange-50/60 to-amber-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm">
-          <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
+        <section className="mb-16 bg-gradient-to-br from-[#4caade]/10 to-[#f2cd5b]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm">
+          <h2 className="text-3xl font-bold text-center mb-12 text-[#4caade] animate-bounce-gentle">
             Output Pembelajaran
           </h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -402,7 +402,7 @@ export default function SchoolPage() {
                       <div className="w-16 h-16 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 flex items-center justify-center flex-shrink-0">
                         <span className="text-3xl">{program.icon}</span>
                       </div>
-                      <h3 className="text-xl font-semibold text-orange-800">
+                      <h3 className="text-xl font-semibold text-[#4caade]">
                         {program.title}
                       </h3>
                     </div>
@@ -431,9 +431,9 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-16 bg-gradient-to-br from-blue-50/60 to-cyan-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+            className="mb-16 bg-gradient-to-br from-[#4caade]/10 to-[#f2cd5b]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-purple-800 animate-bounce-gentle">
+            <h2 className="text-3xl font-bold text-center mb-12 text-[#4caade] animate-bounce-gentle">
               Level Pendidikan
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
@@ -455,16 +455,16 @@ export default function SchoolPage() {
                   <CardContent className="p-6">
                     <div className="flex items-center gap-3 mb-3">
                       <span className="text-3xl">{level.icon}</span>
-                      <h3 className="font-bold text-xl text-green-700">
+                      <h3 className="font-bold text-xl text-[#4caade]">
                         {level.title}
                       </h3>
                     </div>
                     <div className="mb-3">
-                      <p className="text-sm font-semibold text-orange-600">
+                      <p className="text-sm font-semibold text-[#f2cd5b]">
                         {level.age}
                       </p>
                       {level.capacity && (
-                        <p className="text-xs font-medium text-purple-600 mt-1">
+                        <p className="text-xs font-medium text-[#4caade] mt-1">
                           {level.capacity}
                         </p>
                       )}
@@ -486,9 +486,9 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-16 bg-gradient-to-br from-yellow-50/60 to-orange-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+            className="mb-16 bg-gradient-to-br from-[#f2cd5b]/10 to-[#4caade]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+            <h2 className="text-3xl font-bold text-center mb-4 text-[#4caade] animate-bounce-gentle">
               {schoolData.dailySchedule.title}
             </h2>
             <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
@@ -547,9 +547,9 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.33 }}
-            className="mb-16 bg-gradient-to-br from-rose-50/60 to-pink-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+            className="mb-16 bg-gradient-to-br from-[#4caade]/10 to-[#f2cd5b]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+            <h2 className="text-3xl font-bold text-center mb-4 text-[#4caade] animate-bounce-gentle">
               {schoolData.yearlyActivities.title}
             </h2>
             <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
@@ -608,9 +608,9 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
-            className="mb-16 bg-gradient-to-br from-indigo-50/60 to-purple-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+            className="mb-16 bg-gradient-to-br from-[#f2cd5b]/10 to-[#4caade]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+            <h2 className="text-3xl font-bold text-center mb-4 text-[#4caade] animate-bounce-gentle">
               {schoolData.facilities.title}
             </h2>
             <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in-up">
@@ -630,9 +630,9 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-16 bg-gradient-to-br from-teal-50/60 to-green-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+            className="mb-16 bg-gradient-to-br from-[#4caade]/10 to-[#f2cd5b]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <h2 className="text-3xl font-bold text-center mb-4 text-purple-800 animate-bounce-gentle">
+            <h2 className="text-3xl font-bold text-center mb-4 text-[#4caade] animate-bounce-gentle">
               {schoolData.activities.title}
             </h2>
             <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in-up">
@@ -652,9 +652,9 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mb-16 bg-gradient-to-br from-violet-50/60 to-fuchsia-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+            className="mb-16 bg-gradient-to-br from-[#f2cd5b]/10 to-[#4caade]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-purple-800">
+            <h2 className="text-3xl font-bold text-center mb-8 text-[#4caade]">
               {schoolData.ppdb.title}
             </h2>
             <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -665,13 +665,13 @@ export default function SchoolPage() {
                 >
                   <CardContent className="p-8 text-center">
                     <div className="bg-white/80 rounded-lg p-6">
-                      <div className="text-3xl font-bold text-blue-600 mb-2">
+                      <div className="text-3xl font-bold text-[#4caade] mb-2">
                         {item.level}
                       </div>
                       <div className="text-xl text-gray-700 mb-2">
                         Usia: {item.age}
                       </div>
-                      <div className="text-2xl font-bold text-orange-600 mb-1">
+                      <div className="text-2xl font-bold text-[#f2cd5b] mb-1">
                         {item.fee}
                       </div>
                       <div className="text-sm text-gray-600">{item.note}</div>
@@ -689,13 +689,13 @@ export default function SchoolPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="mb-16 bg-gradient-to-br from-sky-50/60 to-blue-50/60 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
+            className="mb-16 bg-gradient-to-br from-[#4caade]/10 to-[#f2cd5b]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {schoolData.requirements && (
                 <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] animate-fade-in-up">
                   <CardContent className="p-8">
-                    <h2 className="text-2xl font-bold mb-6 text-orange-800 animate-bounce-gentle">
+                    <h2 className="text-2xl font-bold mb-6 text-[#4caade] animate-bounce-gentle">
                       {schoolData.requirements.title}
                     </h2>
                     <ul className="space-y-3">
@@ -705,7 +705,7 @@ export default function SchoolPage() {
                             key={i}
                             className="flex items-start gap-3 text-gray-700"
                           >
-                            <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                            <CheckCircle className="w-5 h-5 text-[#4caade] mt-0.5 flex-shrink-0" />
                             <span>{req}</span>
                           </li>
                         )
@@ -718,22 +718,22 @@ export default function SchoolPage() {
               {schoolData.timeline && (
                 <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] animate-fade-in-up">
                   <CardContent className="p-8">
-                    <h2 className="text-2xl font-bold mb-6 text-purple-800 animate-bounce-gentle">
+                    <h2 className="text-2xl font-bold mb-6 text-[#4caade] animate-bounce-gentle">
                       {schoolData.timeline.title}
                     </h2>
                     <div className="space-y-4">
                       {schoolData.timeline.items.map((item: any, i: number) => (
                         <div key={i} className="flex gap-4">
                           <div className="flex-shrink-0">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center">
-                              <Calendar className="w-6 h-6 text-purple-600" />
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#4caade]/20 to-[#f2cd5b]/20 flex items-center justify-center">
+                              <Calendar className="w-6 h-6 text-[#4caade]" />
                             </div>
                           </div>
                           <div>
-                            <h3 className="font-semibold text-lg text-purple-700">
+                            <h3 className="font-semibold text-lg text-[#4caade]">
                               {item.phase}
                             </h3>
-                            <p className="text-sm text-pink-600 font-medium">
+                            <p className="text-sm text-[#f2cd5b] font-medium">
                               {item.date}
                             </p>
                             <p className="text-sm text-gray-600">
@@ -757,9 +757,9 @@ export default function SchoolPage() {
           transition={{ duration: 0.6, delay: 0.9 }}
           className="mt-16"
         >
-          <Card className="bg-gradient-to-br from-orange-100 via-pink-100 to-purple-100 border-0 shadow-lg max-w-4xl mx-auto">
+          <Card className="bg-gradient-to-br from-[#4caade]/20 via-white to-[#f2cd5b]/20 border-0 shadow-lg max-w-4xl mx-auto">
             <CardContent className="p-8 text-center">
-              <h2 className="text-3xl font-bold mb-4 text-purple-800">
+              <h2 className="text-3xl font-bold mb-4 text-[#4caade]">
                 {schoolData.cta.title}
               </h2>
               <p className="text-gray-700 mb-8 text-lg">
@@ -778,7 +778,7 @@ export default function SchoolPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <button className="px-8 py-4 text-lg font-semibold text-purple-700 bg-white border-2 border-purple-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-pulse">
+                    <button className="px-8 py-4 text-lg font-semibold text-white bg-[#4caade] border-2 border-[#4caade] rounded-lg shadow-lg hover:shadow-xl hover:bg-[#3a8fc7] transform hover:scale-110 transition-all duration-300 animate-pulse">
                       {schoolData.cta.whatsappButton.text}
                     </button>
                   </a>

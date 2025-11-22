@@ -11,12 +11,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { 
-  Search, 
-  Eye, 
-  FileText, 
-  CheckCircle, 
-  Clock, 
+import {
+  Search,
+  Eye,
+  FileText,
+  CheckCircle,
+  Clock,
   XCircle,
   Calendar,
   User,
@@ -29,7 +29,7 @@ import {
   Mail,
   Phone,
   MapPin,
-  Home
+  Home,
 } from 'lucide-react';
 import { type UserRole } from '@/lib/auth-context';
 
@@ -42,7 +42,13 @@ interface UserData {
 
 interface PortfolioActivity {
   id: string;
-  type: 'registration' | 'form_submission' | 'document_upload' | 'approval' | 'payment' | 'enrollment';
+  type:
+    | 'registration'
+    | 'form_submission'
+    | 'document_upload'
+    | 'approval'
+    | 'payment'
+    | 'enrollment';
   title: string;
   description: string;
   date: string;
@@ -85,9 +91,12 @@ export default function PortofolioPage() {
   const [user, setUser] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedPortfolio, setSelectedPortfolio] = useState<StudentPortfolio | null>(null);
+  const [selectedPortfolio, setSelectedPortfolio] =
+    useState<StudentPortfolio | null>(null);
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
-  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
+  const [expandedSections, setExpandedSections] = useState<{
+    [key: string]: boolean;
+  }>({
     registration: true,
     form: false,
     documents: false,
@@ -309,16 +318,22 @@ export default function PortofolioPage() {
   ]);
 
   // Filter portfolios for parent role
-  const displayedPortfolios = user?.role === 'parent'
-    ? portfolios.filter(p => p.parentEmail === user?.email)
-    : portfolios.filter(portfolio =>
-        portfolio.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        portfolio.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        portfolio.parent.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+  const displayedPortfolios =
+    user?.role === 'parent'
+      ? portfolios.filter((p) => p.parentEmail === user?.email)
+      : portfolios.filter(
+          (portfolio) =>
+            portfolio.studentName
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase()) ||
+            portfolio.studentId
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase()) ||
+            portfolio.parent.toLowerCase().includes(searchTerm.toLowerCase())
+        );
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
       [section]: !prev[section],
     }));
@@ -392,22 +407,36 @@ export default function PortofolioPage() {
   };
 
   // Parent View - Accordion Style
-  const ParentPortfolioView = ({ portfolio }: { portfolio: StudentPortfolio }) => (
+  const ParentPortfolioView = ({
+    portfolio,
+  }: {
+    portfolio: StudentPortfolio;
+  }) => (
     <div className="space-y-4">
       {/* Header Card */}
       <Card className="border-2 border-brand-emerald">
         <CardContent className="p-6">
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-brand-emerald to-brand-cyan rounded-full flex items-center justify-center text-white font-bold text-2xl">
-                {portfolio.studentName.split(' ').map(n => n[0]).join('').toUpperCase()}
+              <div className="w-16 h-16 bg-gradient-to-br from-[#4caade] to-[#3a8fc7] rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+                {portfolio.studentName
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')
+                  .toUpperCase()}
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">{portfolio.studentName}</h2>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  {portfolio.studentName}
+                </h2>
                 <p className="text-gray-600">{portfolio.studentId}</p>
               </div>
             </div>
-            <span className={`px-4 py-2 rounded-full text-sm font-medium border ${getStatusColor(portfolio.status)}`}>
+            <span
+              className={`px-4 py-2 rounded-full text-sm font-medium border ${getStatusColor(
+                portfolio.status
+              )}`}
+            >
               {getStatusText(portfolio.status)}
             </span>
           </div>
@@ -431,7 +460,9 @@ export default function PortofolioPage() {
                     style={{ width: `${portfolio.progress}%` }}
                   />
                 </div>
-                <span className="text-sm font-semibold text-gray-700">{portfolio.progress}%</span>
+                <span className="text-sm font-semibold text-gray-700">
+                  {portfolio.progress}%
+                </span>
               </div>
             </div>
           </div>
@@ -464,16 +495,21 @@ export default function PortofolioPage() {
               <div>
                 <Label className="text-gray-600">Tanggal Pendaftaran</Label>
                 <p className="font-medium text-gray-900">
-                  {new Date(portfolio.registrationDate).toLocaleDateString('id-ID', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
+                  {new Date(portfolio.registrationDate).toLocaleDateString(
+                    'id-ID',
+                    {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    }
+                  )}
                 </p>
               </div>
               <div>
                 <Label className="text-gray-600">ID Pendaftaran</Label>
-                <p className="font-medium text-gray-900">{portfolio.studentId}</p>
+                <p className="font-medium text-gray-900">
+                  {portfolio.studentId}
+                </p>
               </div>
               <div>
                 <Label className="text-gray-600">Email</Label>
@@ -526,12 +562,16 @@ export default function PortofolioPage() {
                 <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
                   <div>
                     <Label className="text-gray-600">Nama Lengkap</Label>
-                    <p className="font-medium text-gray-900">{portfolio.studentName}</p>
+                    <p className="font-medium text-gray-900">
+                      {portfolio.studentName}
+                    </p>
                   </div>
                   <div>
                     <Label className="text-gray-600">Tanggal Lahir</Label>
                     <p className="font-medium text-gray-900">
-                      {new Date(portfolio.formData.birthDate).toLocaleDateString('id-ID', {
+                      {new Date(
+                        portfolio.formData.birthDate
+                      ).toLocaleDateString('id-ID', {
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric',
@@ -540,18 +580,24 @@ export default function PortofolioPage() {
                   </div>
                   <div>
                     <Label className="text-gray-600">Usia</Label>
-                    <p className="font-medium text-gray-900">{portfolio.formData.age} tahun</p>
+                    <p className="font-medium text-gray-900">
+                      {portfolio.formData.age} tahun
+                    </p>
                   </div>
                   <div>
                     <Label className="text-gray-600">Jenis Kelamin</Label>
-                    <p className="font-medium text-gray-900">{portfolio.formData.gender}</p>
+                    <p className="font-medium text-gray-900">
+                      {portfolio.formData.gender}
+                    </p>
                   </div>
                   <div className="col-span-2">
                     <Label className="text-gray-600 flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
                       Alamat
                     </Label>
-                    <p className="font-medium text-gray-900">{portfolio.formData.address}</p>
+                    <p className="font-medium text-gray-900">
+                      {portfolio.formData.address}
+                    </p>
                   </div>
                   {portfolio.formData.previousSchool && (
                     <div className="col-span-2">
@@ -559,7 +605,9 @@ export default function PortofolioPage() {
                         <Home className="w-4 h-4" />
                         Asal Sekolah
                       </Label>
-                      <p className="font-medium text-gray-900">{portfolio.formData.previousSchool}</p>
+                      <p className="font-medium text-gray-900">
+                        {portfolio.formData.previousSchool}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -574,20 +622,26 @@ export default function PortofolioPage() {
                 <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
                   <div>
                     <Label className="text-gray-600">Nama Orang Tua</Label>
-                    <p className="font-medium text-gray-900">{portfolio.formData.parentName}</p>
+                    <p className="font-medium text-gray-900">
+                      {portfolio.formData.parentName}
+                    </p>
                   </div>
                   <div>
                     <Label className="text-gray-600">Email</Label>
                     <div className="flex items-center gap-2">
                       <Mail className="w-4 h-4 text-gray-500" />
-                      <p className="font-medium text-gray-900">{portfolio.formData.parentEmail}</p>
+                      <p className="font-medium text-gray-900">
+                        {portfolio.formData.parentEmail}
+                      </p>
                     </div>
                   </div>
                   <div className="col-span-2">
                     <Label className="text-gray-600">No. Telepon</Label>
                     <div className="flex items-center gap-2">
                       <Phone className="w-4 h-4 text-gray-500" />
-                      <p className="font-medium text-gray-900">{portfolio.formData.parentPhone}</p>
+                      <p className="font-medium text-gray-900">
+                        {portfolio.formData.parentPhone}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -630,17 +684,23 @@ export default function PortofolioPage() {
                 <div
                   key={doc.key}
                   className={`p-3 rounded-lg border flex items-center gap-3 ${
-                    portfolio.documents[doc.key as keyof typeof portfolio.documents]
+                    portfolio.documents[
+                      doc.key as keyof typeof portfolio.documents
+                    ]
                       ? 'bg-green-50 border-green-200'
                       : 'bg-gray-50 border-gray-200'
                   }`}
                 >
-                  {portfolio.documents[doc.key as keyof typeof portfolio.documents] ? (
+                  {portfolio.documents[
+                    doc.key as keyof typeof portfolio.documents
+                  ] ? (
                     <CheckCircle className="w-5 h-5 text-green-600" />
                   ) : (
                     <XCircle className="w-5 h-5 text-gray-400" />
                   )}
-                  <span className="text-sm font-medium text-gray-700">{doc.label}</span>
+                  <span className="text-sm font-medium text-gray-700">
+                    {doc.label}
+                  </span>
                 </div>
               ))}
             </div>
@@ -685,12 +745,18 @@ export default function PortofolioPage() {
                     <div className="bg-white border rounded-lg p-4 hover:shadow-md transition-shadow">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <h4 className="font-semibold text-gray-900">{activity.title}</h4>
+                          <h4 className="font-semibold text-gray-900">
+                            {activity.title}
+                          </h4>
                           {getActivityStatusIcon(activity.status)}
                         </div>
-                        <span className="text-xs text-gray-500">{activity.date}</span>
+                        <span className="text-xs text-gray-500">
+                          {activity.date}
+                        </span>
                       </div>
-                      <p className="text-sm text-gray-600">{activity.description}</p>
+                      <p className="text-sm text-gray-600">
+                        {activity.description}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -729,7 +795,7 @@ export default function PortofolioPage() {
               <div>
                 <p className="text-sm text-gray-600">Terdaftar</p>
                 <p className="text-3xl font-bold text-green-600 mt-1">
-                  {portfolios.filter(p => p.status === 'enrolled').length}
+                  {portfolios.filter((p) => p.status === 'enrolled').length}
                 </p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -745,7 +811,7 @@ export default function PortofolioPage() {
               <div>
                 <p className="text-sm text-gray-600">Disetujui</p>
                 <p className="text-3xl font-bold text-blue-600 mt-1">
-                  {portfolios.filter(p => p.status === 'approved').length}
+                  {portfolios.filter((p) => p.status === 'approved').length}
                 </p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -761,7 +827,7 @@ export default function PortofolioPage() {
               <div>
                 <p className="text-sm text-gray-600">Menunggu</p>
                 <p className="text-3xl font-bold text-yellow-600 mt-1">
-                  {portfolios.filter(p => p.status === 'pending').length}
+                  {portfolios.filter((p) => p.status === 'pending').length}
                 </p>
               </div>
               <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
@@ -859,7 +925,11 @@ export default function PortofolioPage() {
                       </div>
                     </td>
                     <td className="py-4 px-4 text-center">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(portfolio.status)}`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
+                          portfolio.status
+                        )}`}
+                      >
                         {getStatusText(portfolio.status)}
                       </span>
                     </td>
@@ -900,10 +970,12 @@ export default function PortofolioPage() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-3xl font-bold text-gray-900">
-            {user.role === 'parent' ? 'Portofolio Anak' : 'Portofolio Peserta Didik'}
+            {user.role === 'parent'
+              ? 'Portofolio Anak'
+              : 'Portofolio Peserta Didik'}
           </h2>
           <p className="text-gray-600 mt-1">
-            {user.role === 'parent' 
+            {user.role === 'parent'
               ? 'Timeline dan progress pendaftaran anak Anda'
               : 'Timeline dan progress pendaftaran peserta didik'}
           </p>
@@ -921,7 +993,8 @@ export default function PortofolioPage() {
                 Belum Ada Pendaftaran
               </h3>
               <p className="text-gray-600">
-                Anda belum memiliki data pendaftaran anak. Silakan melakukan pendaftaran terlebih dahulu.
+                Anda belum memiliki data pendaftaran anak. Silakan melakukan
+                pendaftaran terlebih dahulu.
               </p>
             </CardContent>
           </Card>
@@ -942,19 +1015,29 @@ export default function PortofolioPage() {
                 <div className="grid grid-cols-2 gap-4 p-4 bg-gradient-to-r from-brand-emerald/10 to-brand-cyan/10 rounded-lg border border-brand-emerald/20">
                   <div>
                     <p className="text-sm text-gray-600">Nama Lengkap</p>
-                    <p className="font-semibold text-gray-900">{selectedPortfolio.studentName}</p>
+                    <p className="font-semibold text-gray-900">
+                      {selectedPortfolio.studentName}
+                    </p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">ID Murid</p>
-                    <p className="font-semibold text-gray-900">{selectedPortfolio.studentId}</p>
+                    <p className="font-semibold text-gray-900">
+                      {selectedPortfolio.studentId}
+                    </p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Program</p>
-                    <p className="font-semibold text-gray-900">{selectedPortfolio.program}</p>
+                    <p className="font-semibold text-gray-900">
+                      {selectedPortfolio.program}
+                    </p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Status</p>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium border inline-block ${getStatusColor(selectedPortfolio.status)}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium border inline-block ${getStatusColor(
+                        selectedPortfolio.status
+                      )}`}
+                    >
                       {getStatusText(selectedPortfolio.status)}
                     </span>
                   </div>
@@ -980,12 +1063,18 @@ export default function PortofolioPage() {
                           <div className="bg-white border rounded-lg p-4 hover:shadow-md transition-shadow">
                             <div className="flex items-start justify-between mb-2">
                               <div className="flex items-center gap-2">
-                                <h4 className="font-semibold text-gray-900">{activity.title}</h4>
+                                <h4 className="font-semibold text-gray-900">
+                                  {activity.title}
+                                </h4>
                                 {getActivityStatusIcon(activity.status)}
                               </div>
-                              <span className="text-xs text-gray-500">{activity.date}</span>
+                              <span className="text-xs text-gray-500">
+                                {activity.date}
+                              </span>
                             </div>
-                            <p className="text-sm text-gray-600">{activity.description}</p>
+                            <p className="text-sm text-gray-600">
+                              {activity.description}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -995,7 +1084,10 @@ export default function PortofolioPage() {
               </div>
             )}
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsDetailDialogOpen(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setIsDetailDialogOpen(false)}
+              >
                 Tutup
               </Button>
             </div>

@@ -29,7 +29,7 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <main>
           <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
@@ -91,10 +91,10 @@ export default function Page() {
       <main>
         <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold md:text-4xl bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold md:text-4xl bg-gradient-to-r from-[#4caade] to-[#f2cd5b] bg-clip-text text-transparent">
               {contactData?.title || 'Hubungi Kami'}
             </h1>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+            <p className="mt-3 text-gray-700 max-w-2xl mx-auto">
               {contactData?.subtitle ||
                 'Jika Anda memiliki pertanyaan atau ingin mengetahui lebih lanjut tentang program-program kami, silakan hubungi kami melalui kontak di bawah ini.'}
             </p>
@@ -168,7 +168,7 @@ export default function Page() {
           <Button
             asChild
             size="lg"
-            className="bg-brand-emerald hover:bg-brand-cyan text-white shadow-lg transition-all duration-300 hover:scale-105"
+            className="bg-[#4caade] hover:bg-[#3a8fc7] text-white shadow-lg transition-all duration-300 hover:scale-105"
           >
             <a
               href={`https://wa.me/${contactData?.office.whatsapp.replace(
