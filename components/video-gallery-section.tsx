@@ -43,14 +43,20 @@ export default function VideoGallerySection() {
   }
 
   return (
-    <section className="py-16 bg-blue-900 text-white">
+    <section className="py-16 bg-gradient-to-br from-[#4caade] to-[#3a8fc7] text-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">{videoGalleryData.title}</h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <h2 className="text-4xl font-bold mb-4 text-white">
+            {videoGalleryData.title}
+          </h2>
+          <p className="text-xl text-white/90 mb-8">
             {videoGalleryData.subtitle}
           </p>
-          <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
+          <Button
+            asChild
+            size="lg"
+            className="bg-[#f2cd5b] hover:bg-[#e5bc45] text-gray-800 font-bold shadow-lg"
+          >
             <a
               href={videoGalleryData.whatsappUrl}
               target="_blank"
@@ -71,20 +77,22 @@ export default function VideoGallerySection() {
           {videoGalleryData.videos?.map((video: any) => (
             <Card
               key={video.id}
-              className="bg-white/10 backdrop-blur-sm border-white/20"
+              className="bg-white/15 backdrop-blur-sm border-white/30 hover:bg-white/20 transition-all duration-300"
             >
               <CardContent className="p-4">
-                <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center mb-4">
+                <div className="aspect-video bg-[#f2cd5b]/20 rounded-lg flex items-center justify-center mb-4">
                   <svg
-                    className="w-16 h-16 text-white/60"
+                    className="w-16 h-16 text-[#f2cd5b]"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </div>
-                <h4 className="font-semibold text-lg">{video.title}</h4>
-                <p className="text-blue-100 text-sm">{video.description}</p>
+                <h4 className="font-semibold text-lg text-white">
+                  {video.title}
+                </h4>
+                <p className="text-white/80 text-sm">{video.description}</p>
               </CardContent>
             </Card>
           ))}

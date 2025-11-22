@@ -42,13 +42,13 @@ export default function ProfileSection() {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-gradient-to-br from-[#f2cd5b]/10 via-white to-[#4caade]/10">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#4caade] to-[#f2cd5b] bg-clip-text text-transparent mb-4">
             {profileData.title}
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             {profileData.description}
           </p>
         </div>
@@ -69,26 +69,20 @@ export default function ProfileSection() {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Visi</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <h3 className="text-2xl font-bold text-[#4caade] mb-4">Visi</h3>
+              <p className="text-gray-700 leading-relaxed">
                 {profileData.visi}
               </p>
             </div>
 
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Misi</h3>
-              <ul className="space-y-3 text-gray-600">
+              <h3 className="text-2xl font-bold text-[#4caade] mb-4">Misi</h3>
+              <ul className="space-y-3 text-gray-700">
                 {profileData.misi?.map((item: string, index: number) => (
                   <li key={index} className="flex items-start gap-3">
                     <div
                       className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-                        index === 0
-                          ? 'bg-orange-600'
-                          : index === 1
-                          ? 'bg-blue-600'
-                          : index === 2
-                          ? 'bg-green-600'
-                          : 'bg-purple-600'
+                        index % 2 === 0 ? 'bg-[#4caade]' : 'bg-[#f2cd5b]'
                       }`}
                     ></div>
                     <span>{item}</span>
