@@ -71,7 +71,7 @@ export default function FoundationFooter() {
 
   if (isLoading) {
     return (
-      <footer className="border-t border-brand-lime/30 bg-gradient-to-b from-white to-brand-lime/10">
+      <footer className="border-t border-[#4caade]/30 bg-gradient-to-b from-white to-[#4caade]/5">
         <div className="mx-auto max-w-6xl px-4 py-10 md:px-6">
           <div className="grid gap-8 md:grid-cols-4">
             {/* Logo and About Section Skeleton */}
@@ -143,7 +143,7 @@ export default function FoundationFooter() {
   }
 
   return (
-    <footer className="border-t border-brand-lime/30 bg-gradient-to-b from-white to-brand-lime/10">
+    <footer className="border-t border-[#4caade]/30 bg-gradient-to-b from-white to-[#4caade]/5">
       <div className="mx-auto max-w-6xl px-4 py-10 md:px-6">
         <div className="grid gap-8 md:grid-cols-4">
           <div className="md:col-span-4 lg:col-span-1">
@@ -169,15 +169,15 @@ export default function FoundationFooter() {
           </div>
 
           <div className="md:col-span-2 lg:col-span-1">
-            <h3 className="text-sm font-semibold tracking-wide text-brand-emerald">
+            <h3 className="text-sm font-semibold tracking-wide text-[#4caade]">
               {footerData?.quickLinks.title || 'Profile'}
             </h3>
-            <ul className="mt-3 space-y-2 text-sm text-brand-gray">
+            <ul className="mt-3 space-y-2 text-sm text-gray-700">
               {footerData?.quickLinks.items.map((link, index) => (
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="hover:text-brand-emerald transition-colors duration-300"
+                    className="hover:text-[#4caade] transition-colors duration-300"
                   >
                     {link.title}
                   </a>
@@ -187,15 +187,15 @@ export default function FoundationFooter() {
           </div>
 
           <div className="md:col-span-2 lg:col-span-1">
-            <h3 className="text-sm font-semibold tracking-wide text-brand-emerald">
+            <h3 className="text-sm font-semibold tracking-wide text-[#4caade]">
               {footerData?.programs.title || 'Program'}
             </h3>
-            <ul className="mt-3 space-y-2 text-sm text-brand-gray">
+            <ul className="mt-3 space-y-2 text-sm text-gray-700">
               {footerData?.programs.items.map((program, index) => (
                 <li key={index}>
                   <a
                     href={program.href}
-                    className="hover:text-brand-emerald transition-colors duration-300"
+                    className="hover:text-[#4caade] transition-colors duration-300"
                   >
                     {program.title}
                   </a>
@@ -205,10 +205,10 @@ export default function FoundationFooter() {
           </div>
 
           <div className="md:col-span-2 lg:col-span-1">
-            <h3 className="text-sm font-semibold tracking-wide text-brand-emerald">
+            <h3 className="text-sm font-semibold tracking-wide text-[#4caade]">
               {footerData?.contact.title || 'Kontak'}
             </h3>
-            <ul className="mt-3 space-y-2 text-sm text-brand-gray">
+            <ul className="mt-3 space-y-2 text-sm text-gray-700">
               <li>Email: {footerData?.contact.email}</li>
               <li>Telepon: {footerData?.contact.phone}</li>
               <li>Alamat: {footerData?.contact.address}</li>
@@ -216,7 +216,7 @@ export default function FoundationFooter() {
                 {footerData?.contact.social.instagram && (
                   <a
                     href={footerData.contact.social.instagram}
-                    className="hover:text-brand-emerald transition-colors duration-300"
+                    className="hover:text-[#4caade] transition-colors duration-300"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -226,7 +226,7 @@ export default function FoundationFooter() {
                 {footerData?.contact.social.youtube && (
                   <a
                     href={footerData.contact.social.youtube}
-                    className="hover:text-brand-emerald transition-colors duration-300"
+                    className="hover:text-[#4caade] transition-colors duration-300"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
