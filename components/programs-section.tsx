@@ -19,9 +19,8 @@ export default function ProgramsSection() {
   useEffect(() => {
     const fetchProgramsData = async () => {
       try {
-        const response = await fetch('/api/school/programs');
-        const data = await response.json();
-        setProgramsData(data);
+        // API endpoint removed - school folder deleted
+        setProgramsData(null);
       } catch (error) {
         console.error('Error fetching programs data:', error);
       } finally {

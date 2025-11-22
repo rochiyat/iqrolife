@@ -13,9 +13,8 @@ export default function ActivitiesSection() {
   useEffect(() => {
     const fetchActivitiesData = async () => {
       try {
-        const response = await fetch('/api/school/activities');
-        const data = await response.json();
-        setActivitiesData(data);
+        // API endpoint removed - school folder deleted
+        setActivitiesData(null);
       } catch (error) {
         console.error('Error fetching activities data:', error);
       } finally {

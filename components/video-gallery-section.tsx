@@ -12,9 +12,8 @@ export default function VideoGallerySection() {
   useEffect(() => {
     const fetchVideoGalleryData = async () => {
       try {
-        const response = await fetch('/api/school/video-gallery');
-        const data = await response.json();
-        setVideoGalleryData(data);
+        // API endpoint removed - school folder deleted
+        setVideoGalleryData(null);
       } catch (error) {
         console.error('Error fetching video gallery data:', error);
       } finally {

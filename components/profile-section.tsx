@@ -11,9 +11,8 @@ export default function ProfileSection() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch('/api/school/profile');
-        const data = await response.json();
-        setProfileData(data);
+        // API endpoint removed - school folder deleted
+        setProfileData(null);
       } catch (error) {
         console.error('Error fetching profile data:', error);
       } finally {

@@ -14,11 +14,8 @@ export default function VisionMissionSection() {
   useEffect(() => {
     const fetchVisionMissionData = async () => {
       try {
-        // Try foundation API first, fallback to school API
-        let response = await fetch('/api/foundation-vision-mission');
-        if (!response.ok) {
-          response = await fetch('/api/school/vision-mission');
-        }
+        // Only use foundation API - school API removed
+        const response = await fetch('/api/foundation-vision-mission');
         const data = await response.json();
         setVisionMissionData(data);
       } catch (error) {

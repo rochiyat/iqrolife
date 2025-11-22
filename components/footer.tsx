@@ -12,9 +12,8 @@ export default function Footer() {
   useEffect(() => {
     const fetchFooterData = async () => {
       try {
-        const response = await fetch('/api/school/footer');
-        const data = await response.json();
-        setFooterData(data);
+        // API endpoint removed - school folder deleted
+        setFooterData(null);
       } catch (error) {
         console.error('Error fetching footer data:', error);
       } finally {

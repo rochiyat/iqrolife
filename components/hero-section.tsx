@@ -13,9 +13,8 @@ export default function HeroSection() {
   useEffect(() => {
     const fetchHeroData = async () => {
       try {
-        const response = await fetch('/api/school/hero');
-        const data = await response.json();
-        setHeroData(data);
+        // API endpoint removed - school folder deleted
+        setHeroData(null);
       } catch (error) {
         console.error('Error fetching hero data:', error);
       } finally {
