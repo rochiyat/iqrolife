@@ -30,7 +30,7 @@ export default function PurposePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-violet-50 to-indigo-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="text-center mb-12">
@@ -87,11 +87,11 @@ export default function PurposePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
       <FoundationHeader />
       <main className="container mx-auto px-4 py-16">
         <AnimatedSection>
-          <h1 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 to-indigo-800 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-[#4caade] to-[#f2cd5b] bg-clip-text text-transparent">
             {purposeData.title}
           </h1>
         </AnimatedSection>

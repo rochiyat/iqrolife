@@ -30,7 +30,7 @@ export default function VisiPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="max-w-5xl mx-auto">
@@ -87,13 +87,13 @@ export default function VisiPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-white to-brand-sky/10">
+    <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
       <FoundationHeader />
       <main className="container mx-auto px-4 py-16">
         <AnimatedSection>
           <div className="max-w-5xl mx-auto">
             {/* Vision Header */}
-            <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white py-6 px-8 rounded-t-lg text-center shadow-lg">
+            <div className="bg-gradient-to-r from-[#4caade] to-[#3a8fc7] text-white py-6 px-8 rounded-t-lg text-center shadow-lg">
               <h1 className="text-4xl font-bold">Vision</h1>
             </div>
 

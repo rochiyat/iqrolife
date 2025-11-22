@@ -31,7 +31,7 @@ export default function SejarahPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="text-center mb-12">
@@ -74,7 +74,7 @@ export default function SejarahPage() {
 
   if (!sejarahData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
         <FoundationHeader />
         <main className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -89,7 +89,7 @@ export default function SejarahPage() {
   const milestones = sejarahData.milestones;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10">
       <FoundationHeader />
       <main className="container mx-auto px-4 py-16">
         <AnimatedSection>

@@ -12,7 +12,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Mail, Phone, X as XIcon } from 'lucide-react';
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  Mail,
+  Phone,
+  X as XIcon,
+} from 'lucide-react';
 
 interface User {
   id: string;
@@ -25,7 +33,11 @@ interface User {
 }
 
 const availableRoles = [
-  { value: 'superadmin', label: 'Super Admin', color: 'bg-purple-100 text-purple-800' },
+  {
+    value: 'superadmin',
+    label: 'Super Admin',
+    color: 'bg-purple-100 text-purple-800',
+  },
   { value: 'staff', label: 'Staff', color: 'bg-blue-100 text-blue-800' },
   { value: 'teacher', label: 'Teacher', color: 'bg-green-100 text-green-800' },
   { value: 'parent', label: 'Parent', color: 'bg-orange-100 text-orange-800' },
@@ -38,7 +50,7 @@ export default function UsersPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [editFormData, setEditFormData] = useState<User | null>(null);
-  
+
   const [users, setUsers] = useState<User[]>([
     {
       id: '1',
@@ -78,18 +90,19 @@ export default function UsersPage() {
     },
   ]);
 
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getRoleBadgeColor = (role: string) => {
-    const roleConfig = availableRoles.find(r => r.value === role);
+    const roleConfig = availableRoles.find((r) => r.value === role);
     return roleConfig?.color || 'bg-gray-100 text-gray-800';
   };
 
   const getRoleLabel = (role: string) => {
-    const roleConfig = availableRoles.find(r => r.value === role);
+    const roleConfig = availableRoles.find((r) => r.value === role);
     return roleConfig?.label || role;
   };
 
@@ -106,14 +119,14 @@ export default function UsersPage() {
 
   const toggleRole = (role: string) => {
     if (!editFormData) return;
-    
+
     const currentRoles = editFormData.roles;
     const hasRole = currentRoles.includes(role);
-    
+
     const newRoles = hasRole
-      ? currentRoles.filter(r => r !== role)
+      ? currentRoles.filter((r) => r !== role)
       : [...currentRoles, role];
-    
+
     handleEditInputChange('roles', newRoles);
   };
 
@@ -123,10 +136,8 @@ export default function UsersPage() {
         alert('User harus memiliki minimal 1 role!');
         return;
       }
-      
-      setUsers(users.map(u => 
-        u.id === editFormData.id ? editFormData : u
-      ));
+
+      setUsers(users.map((u) => (u.id === editFormData.id ? editFormData : u)));
       alert(`Data ${editFormData.name} berhasil diupdate!`);
       setIsEditDialogOpen(false);
       setEditFormData(null);
@@ -140,7 +151,7 @@ export default function UsersPage() {
 
   const confirmDelete = () => {
     if (selectedUser) {
-      setUsers(users.filter(u => u.id !== selectedUser.id));
+      setUsers(users.filter((u) => u.id !== selectedUser.id));
       alert(`User ${selectedUser.name} berhasil dihapus!`);
       setIsDeleteDialogOpen(false);
       setSelectedUser(null);
@@ -148,7 +159,7 @@ export default function UsersPage() {
   };
 
   const getUserRoleCount = (role: string) => {
-    return users.filter(u => u.roles.includes(role)).length;
+    return users.filter((u) => u.roles.includes(role)).length;
   };
 
   return (
@@ -203,7 +214,10 @@ export default function UsersPage() {
               </div>
             </div>
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setIsAddDialogOpen(false)}
+              >
                 Batal
               </Button>
               <Button className="bg-brand-emerald hover:bg-brand-emerald/90">
@@ -259,8 +273,12 @@ export default function UsersPage() {
                   <tr key={user.id} className="border-b hover:bg-gray-50">
                     <td className="py-4 px-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-brand-emerald to-brand-cyan rounded-full flex items-center justify-center text-white font-bold text-sm">
-                          {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                        <div className="w-10 h-10 bg-gradient-to-br from-[#4caade] to-[#3a8fc7] rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
+                          {user.name
+                            .split(' ')
+                            .map((n) => n[0])
+                            .join('')
+                            .toUpperCase()}
                         </div>
                         <div className="font-medium text-gray-900">
                           {user.name}
@@ -282,9 +300,11 @@ export default function UsersPage() {
                     <td className="py-4 px-4">
                       <div className="flex flex-wrap gap-1">
                         {user.roles.map((role, index) => (
-                          <span 
-                            key={index} 
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${getRoleBadgeColor(role)}`}
+                          <span
+                            key={index}
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${getRoleBadgeColor(
+                              role
+                            )}`}
                           >
                             {getRoleLabel(role)}
                           </span>
@@ -292,26 +312,28 @@ export default function UsersPage() {
                       </div>
                     </td>
                     <td className="py-4 px-4 text-center">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        user.status === 'active' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
-                      }`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          user.status === 'active'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}
+                      >
                         {user.status === 'active' ? 'Active' : 'Inactive'}
                       </span>
                     </td>
                     <td className="py-4 px-4">
                       <div className="flex items-center justify-center gap-2">
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           variant="ghost"
                           className="text-blue-600 hover:text-blue-700"
                           onClick={() => handleEdit(user)}
                         >
                           <Edit className="w-4 h-4" />
                         </Button>
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           variant="ghost"
                           className="text-red-600 hover:text-red-700"
                           onClick={() => handleDelete(user)}
@@ -332,7 +354,9 @@ export default function UsersPage() {
         <Card>
           <CardContent className="p-6">
             <div className="text-center">
-              <div className="text-3xl font-bold text-brand-emerald">{users.length}</div>
+              <div className="text-3xl font-bold text-brand-emerald">
+                {users.length}
+              </div>
               <div className="text-sm text-gray-600 mt-1">Total Users</div>
             </div>
           </CardContent>
@@ -341,12 +365,17 @@ export default function UsersPage() {
           <Card key={role.value}>
             <CardContent className="p-6">
               <div className="text-center">
-                <div className={`text-3xl font-bold ${
-                  role.value === 'superadmin' ? 'text-purple-600' :
-                  role.value === 'staff' ? 'text-blue-600' :
-                  role.value === 'teacher' ? 'text-green-600' :
-                  'text-orange-600'
-                }`}>
+                <div
+                  className={`text-3xl font-bold ${
+                    role.value === 'superadmin'
+                      ? 'text-purple-600'
+                      : role.value === 'staff'
+                      ? 'text-blue-600'
+                      : role.value === 'teacher'
+                      ? 'text-green-600'
+                      : 'text-orange-600'
+                  }`}
+                >
                   {getUserRoleCount(role.value)}
                 </div>
                 <div className="text-sm text-gray-600 mt-1">{role.label}</div>
@@ -370,7 +399,9 @@ export default function UsersPage() {
                   <Input
                     id="edit-name"
                     value={editFormData.name}
-                    onChange={(e) => handleEditInputChange('name', e.target.value)}
+                    onChange={(e) =>
+                      handleEditInputChange('name', e.target.value)
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -379,7 +410,9 @@ export default function UsersPage() {
                     id="edit-email"
                     type="email"
                     value={editFormData.email}
-                    onChange={(e) => handleEditInputChange('email', e.target.value)}
+                    onChange={(e) =>
+                      handleEditInputChange('email', e.target.value)
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -387,7 +420,9 @@ export default function UsersPage() {
                   <Input
                     id="edit-phone"
                     value={editFormData.phone}
-                    onChange={(e) => handleEditInputChange('phone', e.target.value)}
+                    onChange={(e) =>
+                      handleEditInputChange('phone', e.target.value)
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -395,7 +430,12 @@ export default function UsersPage() {
                   <select
                     id="edit-status"
                     value={editFormData.status}
-                    onChange={(e) => handleEditInputChange('status', e.target.value as 'active' | 'inactive')}
+                    onChange={(e) =>
+                      handleEditInputChange(
+                        'status',
+                        e.target.value as 'active' | 'inactive'
+                      )
+                    }
                     className="w-full border border-gray-300 rounded-md px-3 py-2"
                   >
                     <option value="active">Active</option>
@@ -407,7 +447,10 @@ export default function UsersPage() {
                   <div className="border rounded-lg p-4 bg-gray-50">
                     <div className="grid grid-cols-2 gap-3">
                       {availableRoles.map((role) => (
-                        <div key={role.value} className="flex items-center gap-3">
+                        <div
+                          key={role.value}
+                          className="flex items-center gap-3"
+                        >
                           <input
                             type="checkbox"
                             id={`role-${role.value}`}
@@ -415,11 +458,13 @@ export default function UsersPage() {
                             onChange={() => toggleRole(role.value)}
                             className="w-4 h-4 rounded border-gray-300 text-brand-emerald focus:ring-brand-emerald"
                           />
-                          <label 
+                          <label
                             htmlFor={`role-${role.value}`}
                             className="flex-1 cursor-pointer"
                           >
-                            <span className={`px-3 py-1.5 rounded-full text-sm font-medium ${role.color} inline-block`}>
+                            <span
+                              className={`px-3 py-1.5 rounded-full text-sm font-medium ${role.color} inline-block`}
+                            >
                               {role.label}
                             </span>
                           </label>
@@ -433,11 +478,15 @@ export default function UsersPage() {
                     )}
                   </div>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    <span className="text-sm text-gray-600">Role yang dipilih:</span>
+                    <span className="text-sm text-gray-600">
+                      Role yang dipilih:
+                    </span>
                     {editFormData.roles.map((role, index) => (
-                      <span 
+                      <span
                         key={index}
-                        className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getRoleBadgeColor(role)}`}
+                        className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getRoleBadgeColor(
+                          role
+                        )}`}
                       >
                         {getRoleLabel(role)}
                         <button
@@ -454,10 +503,13 @@ export default function UsersPage() {
             </div>
           )}
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsEditDialogOpen(false)}
+            >
               Batal
             </Button>
-            <Button 
+            <Button
               className="bg-brand-emerald hover:bg-brand-emerald/90"
               onClick={confirmEdit}
             >
@@ -492,9 +544,11 @@ export default function UsersPage() {
                     <span className="text-gray-600">Roles:</span>
                     <div className="flex flex-wrap gap-1 justify-end">
                       {selectedUser.roles.map((role, index) => (
-                        <span 
+                        <span
                           key={index}
-                          className={`px-2 py-0.5 rounded-full text-xs font-medium ${getRoleBadgeColor(role)}`}
+                          className={`px-2 py-0.5 rounded-full text-xs font-medium ${getRoleBadgeColor(
+                            role
+                          )}`}
                         >
                           {getRoleLabel(role)}
                         </span>
@@ -505,16 +559,20 @@ export default function UsersPage() {
               </div>
               <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
                 <p className="text-xs text-yellow-800">
-                  <strong>Perhatian:</strong> User yang dihapus tidak dapat dikembalikan dan akan kehilangan akses ke sistem.
+                  <strong>Perhatian:</strong> User yang dihapus tidak dapat
+                  dikembalikan dan akan kehilangan akses ke sistem.
                 </p>
               </div>
             </div>
           )}
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteDialogOpen(false)}
+            >
               Batal
             </Button>
-            <Button 
+            <Button
               className="bg-red-600 hover:bg-red-700 text-white"
               onClick={confirmDelete}
             >
