@@ -9,7 +9,6 @@ import {
   UserCog,
   FileText,
   Settings,
-  LogOut,
   Menu,
   X,
   GraduationCap,
@@ -17,8 +16,8 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { rolePermissions, type UserRole } from '@/lib/auth-context';
+import { ProfileDropdown } from '@/components/dashboard/ProfileDropdown';
 
 interface User {
   id: string;
@@ -61,17 +60,6 @@ export default function DashboardLayout({
       router.push('/dashboard/login');
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/dashboard/logout', {
-        method: 'POST',
-      });
-      router.push('/dashboard/login');
-    } catch (error) {
-      console.error('Logout error:', error);
     }
   };
 
@@ -157,7 +145,7 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-brand-sky/10 to-brand-lime/10">
       {/* Top Navigation */}
-      <header className="bg-gradient-to-r from-brand-emerald to-brand-cyan border-b-4 border-brand-lime sticky top-0 z-30 shadow-lg">
+      <header className="bg-gradient-to-r from-brand-emerald to-brand-cyan border-b-4 border-brand-lime sticky top-0 z-40 shadow-lg">
         <div className="px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
@@ -178,23 +166,14 @@ export default function DashboardLayout({
             </h1>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="text-right hidden sm:block">
-              <p className="text-sm font-medium text-white">{user.name}</p>
-              <p className="text-xs text-brand-lime capitalize font-semibold">
-                {user.role}
-              </p>
-            </div>
-            <Avatar className="ring-2 ring-brand-lime">
-              <AvatarFallback className="bg-gradient-to-br from-brand-lime to-brand-coral text-brand-warm-brown font-bold">
-                {user.name
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')
-                  .toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-          </div>
+          <ProfileDropdown
+            user={{
+              name: user.name,
+              email: user.email,
+              role: user.role,
+              avatar: user.avatar,
+            }}
+          />
         </div>
       </header>
 
@@ -235,14 +214,6 @@ export default function DashboardLayout({
                 </Link>
               );
             })}
-
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-brand-coral hover:bg-brand-coral/10 hover:scale-102 transition-all duration-300 font-medium border-2 border-transparent hover:border-brand-coral/30"
-            >
-              <LogOut className="w-5 h-5" />
-              <span className="font-medium">Logout</span>
-            </button>
           </nav>
         </aside>
 
