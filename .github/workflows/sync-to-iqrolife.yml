@@ -21,19 +21,19 @@ jobs:
           git config --global user.name "Rochiyat"
           git config --global user.email "rochiyat@gmail.com"
       
-      - name: Prepare clean branch
+      - name: Prepare clean branch with history
         run: |
-          # Delete clean-main branch if exists
-          git branch -D clean-main 2>/dev/null || true
+          # Fetch all branches
+          git fetch --all
           
-          # Create fresh orphan branch (no history)
-          git checkout --orphan clean-main
-          
-          # Add all current files
-          git add -A
-          
-          # Create initial commit
-          git commit -m "Clean repository without sensitive data - $(date '+%Y-%m-%d %H:%M:%S')"
+          # Check if clean-main exists locally, if not create it from main
+          if git show-ref --verify --quiet refs/heads/clean-main; then
+            git checkout clean-main
+            git merge main --no-edit -m "Merge latest changes from main - $(date '+%Y-%m-%d %H:%M:%S')"
+          else
+            # Create clean-main from main (preserving history)
+            git checkout -b clean-main main
+          fi
       
       - name: Add target repository as remote
         run: |
@@ -41,7 +41,8 @@ jobs:
       
       - name: Push to target repository
         run: |
-          git push target clean-main:sandbox --force
+          # Push with history preserved (remove --force to keep history)
+          git push target clean-main:sandbox
       
       - name: Notify completion
         if: success()
