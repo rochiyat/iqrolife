@@ -41,8 +41,8 @@ jobs:
       
       - name: Push to target repository
         run: |
-          # Push with history preserved (remove --force to keep history)
-          git push target clean-main:sandbox
+          # Push with force to always sync (preserving history from clean-main)
+          git push target clean-main:sandbox --force
       
       - name: Notify completion
         if: success()
