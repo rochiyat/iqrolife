@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Pool } from 'pg';
 import crypto from 'crypto';
+import { sendEmail, getResetPasswordEmailTemplate } from '@/lib/email';
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -7,10 +13,7 @@ export async function POST(request: NextRequest) {
 
     // Validate email
     if (!email) {
-      return NextResponse.json(
-        { error: 'Email wajib diisi' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Email wajib diisi' }, { status: 400 });
     }
 
     // Validate email format
@@ -22,58 +25,63 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: In production, you should:
-    // 1. Check if email exists in database
-    // 2. Generate a secure reset token
-    // 3. Store token in database with expiration (1 hour)
-    // 4. Send email with reset link
-    // 5. Implement rate limiting to prevent abuse
+    // Check if user exists in database
+    const userResult = await pool.query(
+      'SELECT id, name, email FROM users WHERE email = $1 AND is_active = true',
+      [email]
+    );
 
-    // For now, this is a mock implementation
-    // In production, replace with actual email service (SendGrid, AWS SES, etc.)
+    if (userResult.rows.length === 0) {
+      // For security, return success even if email not found (prevent email enumeration)
+      return NextResponse.json({
+        success: true,
+        message:
+          'Jika email terdaftar, link reset password akan dikirim ke email Anda',
+      });
+    }
 
-    // Generate a mock reset token
+    const user = userResult.rows[0];
+
+    // Generate secure reset token
     const resetToken = crypto.randomBytes(32).toString('hex');
-    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/dashboard/reset-password?token=${resetToken}`;
+    const expiresAt = new Date(Date.now() + 3600000); // 1 hour from now
 
-    // Mock email check (in production, query from database)
-    const validEmails = ['admin@iqrolife.com', 'test@iqrolife.com'];
-    
-    // Simulate email verification
-    // In production, you would:
-    // - Check database for email
-    // - If not found, return generic success message (security best practice)
-    // - If found, send email and store token
-    
-    // For security reasons, always return success even if email doesn't exist
-    // This prevents email enumeration attacks
-    
-    console.log('Password reset requested for:', email);
-    console.log('Reset token generated:', resetToken);
-    console.log('Reset URL:', resetUrl);
+    // Store token in database
+    await pool.query(
+      `INSERT INTO password_reset_tokens (user_id, token, expires_at) 
+       VALUES ($1, $2, $3)`,
+      [user.id, resetToken, expiresAt]
+    );
 
-    // In production, send email here
-    // await sendResetEmail(email, resetUrl);
+    // Send reset email
+    const emailHtml = getResetPasswordEmailTemplate(user.name, resetToken);
+    await sendEmail({
+      to: user.email,
+      subject: 'Reset Password - IqroLife',
+      html: emailHtml,
+    });
 
-    // Simulate email sending delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('Password reset email sent to:', email);
 
     // Always return success to prevent email enumeration
     return NextResponse.json({
       success: true,
-      message: 'Jika email terdaftar, link reset password akan dikirim ke email Anda',
+      message:
+        'Jika email terdaftar, link reset password akan dikirim ke email Anda',
     });
-
   } catch (error) {
     console.error('Forgot password error:', error);
     return NextResponse.json(
-      { error: 'Terjadi kesalahan saat memproses permintaan. Silakan coba lagi.' },
+      {
+        error:
+          'Terjadi kesalahan saat memproses permintaan. Silakan coba lagi.',
+      },
       { status: 500 }
     );
   }
 }
 
-// Optional: GET method to verify reset token
+// GET method to verify reset token
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -86,19 +94,26 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // TODO: In production:
-    // 1. Query database for token
-    // 2. Check if token is expired
-    // 3. Return valid/invalid status
+    // Query database for token
+    const tokenResult = await pool.query(
+      `SELECT prt.*, u.email, u.name 
+       FROM password_reset_tokens prt
+       JOIN users u ON prt.user_id = u.id
+       WHERE prt.token = $1 AND prt.used = false AND prt.expires_at > NOW()`,
+      [token]
+    );
 
-    // Mock token validation
-    console.log('Validating reset token:', token);
+    if (tokenResult.rows.length === 0) {
+      return NextResponse.json({
+        valid: false,
+        message: 'Token tidak valid atau sudah kadaluarsa',
+      });
+    }
 
     return NextResponse.json({
       valid: true,
       message: 'Token valid',
     });
-
   } catch (error) {
     console.error('Token validation error:', error);
     return NextResponse.json(
