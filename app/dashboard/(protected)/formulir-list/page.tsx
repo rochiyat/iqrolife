@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -46,9 +46,31 @@ export default function FormulirListPage() {
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-
-  // TODO: Fetch from API
   const [submissions, setSubmissions] = useState<FormSubmission[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch submissions from API
+  useEffect(() => {
+    fetchSubmissions();
+  }, []);
+
+  const fetchSubmissions = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/dashboard/formulir-list');
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSubmissions(result.data);
+      } else {
+        console.error('Failed to fetch submissions:', result.error);
+      }
+    } catch (error) {
+      console.error('Error fetching submissions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredSubmissions = submissions.filter(
     (form) =>
@@ -178,7 +200,12 @@ export default function FormulirListPage() {
           </div>
         </CardHeader>
         <CardContent>
-          {filteredSubmissions.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-emerald mx-auto mb-4"></div>
+              <p className="text-gray-600">Memuat data formulir...</p>
+            </div>
+          ) : filteredSubmissions.length === 0 ? (
             <div className="text-center py-12">
               <FileImage className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-600 mb-2">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -52,6 +52,8 @@ export default function CalonMuridPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Add form state
   const [addFormData, setAddFormData] = useState({
@@ -68,90 +70,28 @@ export default function CalonMuridPage() {
   });
   const [buktiTransferFile, setBuktiTransferFile] = useState<File | null>(null);
 
-  const [students, setStudents] = useState<Student[]>([
-    {
-      id: '1',
-      name: 'Ahmad Zaki',
-      birthDate: '2017-03-15',
-      age: 7,
-      gender: 'Laki-laki',
-      parent: 'Bapak Ahmad',
-      phone: '081234567890',
-      email: 'ahmad@example.com',
-      address: 'Jl. Merdeka No. 123, Jakarta Selatan',
-      previousSchool: 'TK Permata Hati',
-      status: 'approved',
-      registrationDate: '2024-10-15',
-      notes: 'Anak aktif dan suka belajar',
-      paymentProof:
-        'https://placehold.co/600x400/0ea5e9/white?text=Bukti+Transfer+Ahmad',
-    },
-    {
-      id: '2',
-      name: 'Siti Fatimah',
-      birthDate: '2014-08-20',
-      age: 10,
-      gender: 'Perempuan',
-      parent: 'Ibu Siti',
-      phone: '081234567891',
-      email: 'siti@example.com',
-      address: 'Jl. Kemang Raya No. 45, Jakarta Selatan',
-      previousSchool: 'SD Harapan Bangsa',
-      status: 'pending',
-      registrationDate: '2024-10-20',
-      paymentProof:
-        'https://placehold.co/600x400/ec4899/white?text=Bukti+Transfer+Siti',
-    },
-    {
-      id: '3',
-      name: 'Muhammad Rizki',
-      birthDate: '2019-05-10',
-      age: 5,
-      gender: 'Laki-laki',
-      parent: 'Ibu Rina',
-      phone: '081234567892',
-      email: 'rizki@example.com',
-      address: 'Jl. Sudirman No. 78, Jakarta Pusat',
-      status: 'approved',
-      registrationDate: '2024-10-18',
-      notes: 'Belum pernah sekolah sebelumnya',
-      paymentProof:
-        'https://placehold.co/600x400/10b981/white?text=Bukti+Transfer+Rizki',
-    },
-    {
-      id: '4',
-      name: 'Fatimah Az-Zahra',
-      birthDate: '2018-11-25',
-      age: 6,
-      gender: 'Perempuan',
-      parent: 'Bapak Yusuf',
-      phone: '081234567893',
-      email: 'yusuf@example.com',
-      address: 'Jl. Gatot Subroto No. 99, Jakarta Selatan',
-      previousSchool: 'PAUD Ceria',
-      status: 'pending',
-      registrationDate: '2024-10-22',
-      paymentProof:
-        'https://placehold.co/600x400/f97316/white?text=Bukti+Transfer+Fatimah',
-    },
-    {
-      id: '5',
-      name: 'Abdullah Rahman',
-      birthDate: '2016-02-14',
-      age: 8,
-      gender: 'Laki-laki',
-      parent: 'Ibu Aminah',
-      phone: '081234567894',
-      email: 'aminah@example.com',
-      address: 'Jl. Thamrin No. 112, Jakarta Pusat',
-      previousSchool: 'SD Islam Terpadu',
-      status: 'approved',
-      registrationDate: '2024-10-19',
-      notes: 'Hafal 5 juz Al-Quran',
-      paymentProof:
-        'https://placehold.co/600x400/8b5cf6/white?text=Bukti+Transfer+Abdullah',
-    },
-  ]);
+  // Fetch students from API
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  const fetchStudents = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/dashboard/calon-murid');
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setStudents(result.data);
+      } else {
+        console.error('Failed to fetch students:', result.error);
+      }
+    } catch (error) {
+      console.error('Error fetching students:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredStudents = students.filter(
     (student) =>
@@ -251,12 +191,35 @@ export default function CalonMuridPage() {
     setIsDeleteDialogOpen(true);
   };
 
-  const confirmDelete = () => {
-    if (selectedStudent) {
-      setStudents(students.filter((s) => s.id !== selectedStudent.id));
-      alert(`Data ${selectedStudent.name} berhasil dihapus!`);
-      setIsDeleteDialogOpen(false);
-      setSelectedStudent(null);
+  const confirmDelete = async () => {
+    if (!selectedStudent) return;
+
+    try {
+      setIsSubmitting(true);
+      const response = await fetch(
+        `/api/dashboard/calon-murid?id=${selectedStudent.id}`,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert(`Data ${selectedStudent.name} berhasil dihapus!`);
+        setIsDeleteDialogOpen(false);
+        setSelectedStudent(null);
+
+        // Refresh data from database
+        fetchStudents();
+      } else {
+        alert(result.error || 'Gagal menghapus data');
+      }
+    } catch (error) {
+      console.error('Error deleting student:', error);
+      alert('Terjadi kesalahan saat menghapus data');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -316,39 +279,7 @@ export default function CalonMuridPage() {
 
       const result = await response.json();
 
-      if (response.ok) {
-        // Calculate age
-        const birthDate = new Date(addFormData.tanggalLahir);
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (
-          monthDiff < 0 ||
-          (monthDiff === 0 && today.getDate() < birthDate.getDate())
-        ) {
-          age--;
-        }
-
-        // Add to students list
-        const newStudent: Student = {
-          id: `temp-${Date.now()}`,
-          name: addFormData.namaLengkap,
-          birthDate: addFormData.tanggalLahir,
-          age,
-          gender: addFormData.jenisKelamin,
-          parent: addFormData.namaOrangTua,
-          phone: addFormData.noTelepon,
-          email: addFormData.email,
-          address: addFormData.alamat,
-          previousSchool: addFormData.asalSekolah || undefined,
-          status: addFormData.status as 'pending' | 'approved' | 'rejected',
-          registrationDate: new Date().toISOString().split('T')[0],
-          notes: addFormData.catatan || undefined,
-          paymentProof: result.data?.paymentProof || undefined,
-        };
-
-        setStudents([newStudent, ...students]);
-
+      if (response.ok && result.success) {
         // Reset form
         setAddFormData({
           namaLengkap: '',
@@ -366,6 +297,9 @@ export default function CalonMuridPage() {
 
         setIsAddDialogOpen(false);
         alert('Data calon murid berhasil ditambahkan!');
+
+        // Refresh data from database
+        fetchStudents();
       } else {
         alert(result.error || 'Gagal menambahkan data calon murid');
       }
@@ -727,108 +661,121 @@ export default function CalonMuridPage() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Nama
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Usia
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Orang Tua
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Kontak
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Status
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Aksi
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedStudents.length > 0 ? (
-                  paginatedStudents.map((student) => (
-                    <tr key={student.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4">
-                        <div className="font-medium">{student.name}</div>
-                      </td>
-                      <td className="py-3 px-4">{student.age} tahun</td>
-                      <td className="py-3 px-4">{student.parent}</td>
-                      <td className="py-3 px-4">
-                        <div className="text-sm">
-                          <div>{student.phone}</div>
-                          <div className="text-gray-500">{student.email}</div>
-                        </div>
-                      </td>
-                      <td className="py-3 px-4">
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                            student.status
-                          )}`}
-                        >
-                          {getStatusText(student.status)}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <div className="flex gap-2">
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors"
-                            title="Lihat Detail"
-                            onClick={() => handleViewDetail(student)}
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-emerald mx-auto mb-4"></div>
+              <p className="text-gray-600">Memuat data calon murid...</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Nama
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Usia
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Orang Tua
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Kontak
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Status
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Aksi
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {paginatedStudents.length > 0 ? (
+                    paginatedStudents.map((student) => (
+                      <tr
+                        key={student.id}
+                        className="border-b hover:bg-gray-50"
+                      >
+                        <td className="py-3 px-4">
+                          <div className="font-medium">{student.name}</div>
+                        </td>
+                        <td className="py-3 px-4">{student.age} tahun</td>
+                        <td className="py-3 px-4">{student.parent}</td>
+                        <td className="py-3 px-4">
+                          <div className="text-sm">
+                            <div>{student.phone}</div>
+                            <div className="text-gray-500">{student.email}</div>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                              student.status
+                            )}`}
                           >
-                            <Eye className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors"
-                            title="Buat User"
-                            onClick={() => handleCreateUser(student)}
-                          >
-                            <UserPlus className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors"
-                            title="Edit"
-                            onClick={() => handleEdit(student)}
-                          >
-                            <Edit className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer transition-colors"
-                            title="Hapus"
-                            onClick={() => handleDelete(student)}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
+                            {getStatusText(student.status)}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors"
+                              title="Lihat Detail"
+                              onClick={() => handleViewDetail(student)}
+                            >
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors"
+                              title="Buat User"
+                              onClick={() => handleCreateUser(student)}
+                            >
+                              <UserPlus className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors"
+                              title="Edit"
+                              onClick={() => handleEdit(student)}
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer transition-colors"
+                              title="Hapus"
+                              onClick={() => handleDelete(student)}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan={6}
+                        className="py-8 text-center text-gray-500"
+                      >
+                        Tidak ada data yang ditemukan
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={6} className="py-8 text-center text-gray-500">
-                      Tidak ada data yang ditemukan
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
           {/* Pagination */}
-          {itemsPerPage !== -1 && filteredStudents.length > 0 && (
+          {!loading && itemsPerPage !== -1 && filteredStudents.length > 0 && (
             <div className="flex items-center justify-between px-4 py-3 border-t">
               <div className="text-sm text-gray-600">
                 Menampilkan {startIndex + 1} -{' '}
