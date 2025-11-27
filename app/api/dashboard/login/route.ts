@@ -1,40 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Pool } from 'pg';
+import bcrypt from 'bcrypt';
 
-// Dummy users for testing with 4 different roles
-const dummyUsers = [
-  {
-    id: '1',
-    email: 'superadmin@iqrolife.com',
-    password: 'superadmin123',
-    name: 'Super Admin',
-    role: 'superadmin',
-    avatar: '/avatars/superadmin.jpg',
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
   },
-  {
-    id: '2',
-    email: 'staff@iqrolife.com',
-    password: 'staff123',
-    name: 'Staff Iqrolife',
-    role: 'staff',
-    avatar: '/avatars/staff.jpg',
-  },
-  {
-    id: '3',
-    email: 'teacher@iqrolife.com',
-    password: 'teacher123',
-    name: 'Ustadz Ahmad',
-    role: 'teacher',
-    avatar: '/avatars/teacher.jpg',
-  },
-  {
-    id: '4',
-    email: 'parent@iqrolife.com',
-    password: 'parent123',
-    name: 'Ibu Siti',
-    role: 'parent',
-    avatar: '/avatars/parent.jpg',
-  },
-];
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -55,37 +28,67 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const user = dummyUsers.find(
-      (u) => u.email === email && u.password === password
+    // Get user from database
+    const userResult = await pool.query(
+      'SELECT id, email, password, name, role, avatar, phone, is_active FROM users WHERE email = $1',
+      [email]
     );
 
-    if (user) {
-      const { password: _, ...userWithoutPassword } = user;
-      
-      const response = NextResponse.json(
-        {
-          success: true,
-          message: 'Login berhasil',
-          user: userWithoutPassword,
-        },
-        { status: 200 }
-      );
-
-      response.cookies.set('auth-token', JSON.stringify(userWithoutPassword), {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7,
-        path: '/',
-      });
-
-      return response;
-    } else {
+    if (userResult.rows.length === 0) {
       return NextResponse.json(
         { error: 'Email atau password salah' },
         { status: 401 }
       );
     }
+
+    const user = userResult.rows[0];
+
+    // Check if user is active
+    if (!user.is_active) {
+      return NextResponse.json(
+        { error: 'Akun Anda tidak aktif. Silakan hubungi administrator.' },
+        { status: 403 }
+      );
+    }
+
+    // Verify password with bcrypt
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return NextResponse.json(
+        { error: 'Email atau password salah' },
+        { status: 401 }
+      );
+    }
+
+    // Remove password from user object
+    const { password: _, ...userWithoutPassword } = user;
+
+    // Log activity
+    await pool.query(
+      `INSERT INTO activity_logs (user_id, action, entity_type, entity_id, description, created_at)
+       VALUES ($1, $2, $3, $4, $5, NOW())`,
+      [user.id, 'LOGIN', 'user', user.id, `User ${user.name} logged in`]
+    );
+
+    const response = NextResponse.json(
+      {
+        success: true,
+        message: 'Login berhasil',
+        user: userWithoutPassword,
+      },
+      { status: 200 }
+    );
+
+    response.cookies.set('auth-token', JSON.stringify(userWithoutPassword), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: '/',
+    });
+
+    return response;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
@@ -107,17 +110,11 @@ export async function GET(request: NextRequest) {
           user: user,
         });
       } catch {
-        return NextResponse.json(
-          { authenticated: false },
-          { status: 401 }
-        );
+        return NextResponse.json({ authenticated: false }, { status: 401 });
       }
     }
 
-    return NextResponse.json(
-      { authenticated: false },
-      { status: 401 }
-    );
+    return NextResponse.json({ authenticated: false }, { status: 401 });
   } catch (error) {
     console.error('Auth check error:', error);
     return NextResponse.json(
