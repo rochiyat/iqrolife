@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,15 +11,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Plus, Search, Edit, Trash2, Menu as MenuIcon } from 'lucide-react';
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  Menu as MenuIcon,
+  Loader,
+} from 'lucide-react';
 
 interface MenuItem {
   id: string;
+  name: string;
   label: string;
   icon: string;
   href: string;
-  order: number;
-  isActive: boolean;
+  order_index: number;
+  is_active: boolean;
   description?: string;
 }
 
@@ -30,110 +38,86 @@ export default function MenuPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null);
   const [editFormData, setEditFormData] = useState<MenuItem | null>(null);
+  const [menus, setMenus] = useState<MenuItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [newMenu, setNewMenu] = useState<Partial<MenuItem>>({
+    name: '',
     label: '',
     icon: '',
     href: '',
-    order: 0,
-    isActive: true,
+    order_index: 0,
+    is_active: true,
     description: '',
   });
-  
-  const [menus, setMenus] = useState<MenuItem[]>([
-    {
-      id: '1',
-      label: 'Dashboard',
-      icon: 'LayoutDashboard',
-      href: '/dashboard/home',
-      order: 1,
-      isActive: true,
-      description: 'Halaman utama dashboard',
-    },
-    {
-      id: '2',
-      label: 'Calon Murid',
-      icon: 'GraduationCap',
-      href: '/dashboard/calon-murid',
-      order: 2,
-      isActive: true,
-      description: 'Manajemen data calon murid',
-    },
-    {
-      id: '3',
-      label: 'Users',
-      icon: 'Users',
-      href: '/dashboard/users',
-      order: 3,
-      isActive: true,
-      description: 'Manajemen user sistem',
-    },
-    {
-      id: '4',
-      label: 'Roles',
-      icon: 'UserCog',
-      href: '/dashboard/roles',
-      order: 4,
-      isActive: true,
-      description: 'Manajemen role dan permissions',
-    },
-    {
-      id: '5',
-      label: 'Menu',
-      icon: 'Menu',
-      href: '/dashboard/menu',
-      order: 5,
-      isActive: true,
-      description: 'Manajemen menu dashboard',
-    },
-    {
-      id: '6',
-      label: 'Formulir',
-      icon: 'FileText',
-      href: '/dashboard/formulir',
-      order: 6,
-      isActive: true,
-      description: 'Formulir pendaftaran murid',
-    },
-    {
-      id: '7',
-      label: 'Settings',
-      icon: 'Settings',
-      href: '/dashboard/settings',
-      order: 7,
-      isActive: true,
-      description: 'Pengaturan sistem',
-    },
-  ]);
+
+  useEffect(() => {
+    fetchMenus();
+  }, []);
+
+  const fetchMenus = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/dashboard/menu');
+      if (response.ok) {
+        const data = await response.json();
+        setMenus(data.data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching menus:', error);
+      alert('Gagal mengambil data menu');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const filteredMenus = menus
-    .filter(menu =>
-      menu.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      menu.href.toLowerCase().includes(searchTerm.toLowerCase())
+    .filter(
+      (menu) =>
+        menu.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        menu.href.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .sort((a, b) => a.order - b.order);
+    .sort((a, b) => a.order_index - b.order_index);
 
-  const handleAddMenu = () => {
-    const id = (Math.max(...menus.map(m => parseInt(m.id)), 0) + 1).toString();
-    const menuToAdd: MenuItem = {
-      id,
-      label: newMenu.label || '',
-      icon: newMenu.icon || '',
-      href: newMenu.href || '',
-      order: newMenu.order || menus.length + 1,
-      isActive: newMenu.isActive ?? true,
-      description: newMenu.description || '',
-    };
-    setMenus([...menus, menuToAdd]);
-    setNewMenu({
-      label: '',
-      icon: '',
-      href: '',
-      order: 0,
-      isActive: true,
-      description: '',
-    });
-    setIsAddDialogOpen(false);
-    alert(`Menu "${menuToAdd.label}" berhasil ditambahkan!`);
+  const handleAddMenu = async () => {
+    try {
+      setIsSaving(true);
+      const response = await fetch('/api/dashboard/menu', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: newMenu.name,
+          label: newMenu.label,
+          icon: newMenu.icon,
+          href: newMenu.href,
+          order_index: newMenu.order_index,
+          roles: [],
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMenus([...menus, data.data]);
+        setNewMenu({
+          name: '',
+          label: '',
+          icon: '',
+          href: '',
+          order_index: 0,
+          is_active: true,
+          description: '',
+        });
+        setIsAddDialogOpen(false);
+        alert(`Menu "${data.data.label}" berhasil ditambahkan!`);
+      } else {
+        alert('Gagal menambahkan menu');
+      }
+    } catch (error) {
+      console.error('Error adding menu:', error);
+      alert('Gagal menambahkan menu');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleEdit = (menu: MenuItem) => {
@@ -141,20 +125,41 @@ export default function MenuPage() {
     setIsEditDialogOpen(true);
   };
 
-  const handleEditInputChange = (field: keyof MenuItem, value: string | number | boolean) => {
+  const handleEditInputChange = (
+    field: keyof MenuItem,
+    value: string | number | boolean
+  ) => {
     if (editFormData) {
       setEditFormData({ ...editFormData, [field]: value });
     }
   };
 
-  const confirmEdit = () => {
+  const confirmEdit = async () => {
     if (editFormData) {
-      setMenus(menus.map(m => 
-        m.id === editFormData.id ? editFormData : m
-      ));
-      alert(`Menu "${editFormData.label}" berhasil diupdate!`);
-      setIsEditDialogOpen(false);
-      setEditFormData(null);
+      try {
+        setIsSaving(true);
+        const response = await fetch('/api/dashboard/menu', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(editFormData),
+        });
+
+        if (response.ok) {
+          setMenus(
+            menus.map((m) => (m.id === editFormData.id ? editFormData : m))
+          );
+          alert(`Menu "${editFormData.label}" berhasil diupdate!`);
+          setIsEditDialogOpen(false);
+          setEditFormData(null);
+        } else {
+          alert('Gagal mengupdate menu');
+        }
+      } catch (error) {
+        console.error('Error updating menu:', error);
+        alert('Gagal mengupdate menu');
+      } finally {
+        setIsSaving(false);
+      }
     }
   };
 
@@ -163,19 +168,59 @@ export default function MenuPage() {
     setIsDeleteDialogOpen(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (selectedMenu) {
-      setMenus(menus.filter(m => m.id !== selectedMenu.id));
-      alert(`Menu "${selectedMenu.label}" berhasil dihapus!`);
-      setIsDeleteDialogOpen(false);
-      setSelectedMenu(null);
+      try {
+        setIsSaving(true);
+        const response = await fetch(
+          `/api/dashboard/menu?id=${selectedMenu.id}`,
+          { method: 'DELETE' }
+        );
+
+        if (response.ok) {
+          setMenus(menus.filter((m) => m.id !== selectedMenu.id));
+          alert(`Menu "${selectedMenu.label}" berhasil dihapus!`);
+          setIsDeleteDialogOpen(false);
+          setSelectedMenu(null);
+        } else {
+          alert('Gagal menghapus menu');
+        }
+      } catch (error) {
+        console.error('Error deleting menu:', error);
+        alert('Gagal menghapus menu');
+      } finally {
+        setIsSaving(false);
+      }
     }
   };
 
-  const toggleStatus = (id: string) => {
-    setMenus(menus.map(menu =>
-      menu.id === id ? { ...menu, isActive: !menu.isActive } : menu
-    ));
+  const toggleStatus = async (id: string) => {
+    const menu = menus.find((m) => m.id === id);
+    if (menu) {
+      try {
+        setIsSaving(true);
+        const response = await fetch('/api/dashboard/menu', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id,
+            is_active: !menu.is_active,
+          }),
+        });
+
+        if (response.ok) {
+          setMenus(
+            menus.map((m) =>
+              m.id === id ? { ...m, is_active: !m.is_active } : m
+            )
+          );
+        }
+      } catch (error) {
+        console.error('Error toggling menu status:', error);
+      } finally {
+        setIsSaving(false);
+      }
+    }
   };
 
   return (
@@ -183,9 +228,7 @@ export default function MenuPage() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-3xl font-bold text-gray-900">Menu Management</h2>
-          <p className="text-gray-600 mt-1">
-            Kelola menu navigasi dashboard
-          </p>
+          <p className="text-gray-600 mt-1">Kelola menu navigasi dashboard</p>
         </div>
         <Button
           onClick={() => setIsAddDialogOpen(true)}
@@ -218,7 +261,7 @@ export default function MenuPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">
-              {menus.filter(m => m.isActive).length}
+              {menus.filter((m) => m.is_active).length}
             </div>
           </CardContent>
         </Card>
@@ -231,7 +274,7 @@ export default function MenuPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-600">
-              {menus.filter(m => !m.isActive).length}
+              {menus.filter((m) => !m.is_active).length}
             </div>
           </CardContent>
         </Card>
@@ -253,91 +296,106 @@ export default function MenuPage() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left p-3 text-sm font-semibold text-gray-600">
-                    Order
-                  </th>
-                  <th className="text-left p-3 text-sm font-semibold text-gray-600">
-                    Label
-                  </th>
-                  <th className="text-left p-3 text-sm font-semibold text-gray-600">
-                    Icon
-                  </th>
-                  <th className="text-left p-3 text-sm font-semibold text-gray-600">
-                    Path
-                  </th>
-                  <th className="text-left p-3 text-sm font-semibold text-gray-600">
-                    Status
-                  </th>
-                  <th className="text-left p-3 text-sm font-semibold text-gray-600">
-                    Aksi
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredMenus.map((menu) => (
-                  <tr key={menu.id} className="border-b hover:bg-gray-50">
-                    <td className="p-3">
-                      <span className="font-mono font-medium">{menu.order}</span>
-                    </td>
-                    <td className="p-3">
-                      <div>
-                        <div className="font-medium">{menu.label}</div>
-                        {menu.description && (
-                          <div className="text-xs text-gray-500">{menu.description}</div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="p-3">
-                      <code className="bg-gray-100 px-2 py-1 rounded text-xs">
-                        {menu.icon}
-                      </code>
-                    </td>
-                    <td className="p-3">
-                      <code className="text-xs text-gray-600">{menu.href}</code>
-                    </td>
-                    <td className="p-3">
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => toggleStatus(menu.id)}
-                        className={`${
-                          menu.isActive
-                            ? 'text-green-600 hover:text-green-700'
-                            : 'text-red-600 hover:text-red-700'
-                        }`}
-                      >
-                        {menu.isActive ? 'Aktif' : 'Nonaktif'}
-                      </Button>
-                    </td>
-                    <td className="p-3">
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-blue-600 hover:text-blue-700"
-                          onClick={() => handleEdit(menu)}
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-red-600 hover:text-red-700"
-                          onClick={() => handleDelete(menu)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </td>
+          {isLoading ? (
+            <div className="flex justify-center items-center py-12">
+              <Loader className="w-8 h-8 animate-spin text-brand-emerald" />
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left p-3 text-sm font-semibold text-gray-600">
+                      Order
+                    </th>
+                    <th className="text-left p-3 text-sm font-semibold text-gray-600">
+                      Label
+                    </th>
+                    <th className="text-left p-3 text-sm font-semibold text-gray-600">
+                      Icon
+                    </th>
+                    <th className="text-left p-3 text-sm font-semibold text-gray-600">
+                      Path
+                    </th>
+                    <th className="text-left p-3 text-sm font-semibold text-gray-600">
+                      Status
+                    </th>
+                    <th className="text-left p-3 text-sm font-semibold text-gray-600">
+                      Aksi
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {filteredMenus.map((menu) => (
+                    <tr key={menu.id} className="border-b hover:bg-gray-50">
+                      <td className="p-3">
+                        <span className="font-mono font-medium">
+                          {menu.order_index}
+                        </span>
+                      </td>
+                      <td className="p-3">
+                        <div>
+                          <div className="font-medium">{menu.label}</div>
+                          {menu.description && (
+                            <div className="text-xs text-gray-500">
+                              {menu.description}
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="p-3">
+                        <code className="bg-gray-100 px-2 py-1 rounded text-xs">
+                          {menu.icon}
+                        </code>
+                      </td>
+                      <td className="p-3">
+                        <code className="text-xs text-gray-600">
+                          {menu.href}
+                        </code>
+                      </td>
+                      <td className="p-3">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => toggleStatus(menu.id)}
+                          disabled={isSaving}
+                          className={`${
+                            menu.is_active
+                              ? 'text-green-600 hover:text-green-700'
+                              : 'text-red-600 hover:text-red-700'
+                          }`}
+                        >
+                          {menu.is_active ? 'Aktif' : 'Nonaktif'}
+                        </Button>
+                      </td>
+                      <td className="p-3">
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="text-blue-600 hover:text-blue-700"
+                            onClick={() => handleEdit(menu)}
+                            disabled={isSaving}
+                          >
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="text-red-600 hover:text-red-700"
+                            onClick={() => handleDelete(menu)}
+                            disabled={isSaving}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -350,12 +408,25 @@ export default function MenuPage() {
           <div className="space-y-4 py-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
+                <Label htmlFor="new-name">Name (ID) *</Label>
+                <Input
+                  id="new-name"
+                  placeholder="dashboard"
+                  value={newMenu.name}
+                  onChange={(e) =>
+                    setNewMenu({ ...newMenu, name: e.target.value })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
                 <Label htmlFor="new-label">Label Menu *</Label>
                 <Input
                   id="new-label"
                   placeholder="Dashboard"
                   value={newMenu.label}
-                  onChange={(e) => setNewMenu({ ...newMenu, label: e.target.value })}
+                  onChange={(e) =>
+                    setNewMenu({ ...newMenu, label: e.target.value })
+                  }
                 />
               </div>
               <div className="space-y-2">
@@ -364,7 +435,9 @@ export default function MenuPage() {
                   id="new-icon"
                   placeholder="LayoutDashboard"
                   value={newMenu.icon}
-                  onChange={(e) => setNewMenu({ ...newMenu, icon: e.target.value })}
+                  onChange={(e) =>
+                    setNewMenu({ ...newMenu, icon: e.target.value })
+                  }
                 />
               </div>
               <div className="space-y-2">
@@ -373,7 +446,9 @@ export default function MenuPage() {
                   id="new-href"
                   placeholder="/dashboard/example"
                   value={newMenu.href}
-                  onChange={(e) => setNewMenu({ ...newMenu, href: e.target.value })}
+                  onChange={(e) =>
+                    setNewMenu({ ...newMenu, href: e.target.value })
+                  }
                 />
               </div>
               <div className="space-y-2">
@@ -382,27 +457,26 @@ export default function MenuPage() {
                   id="new-order"
                   type="number"
                   placeholder="1"
-                  value={newMenu.order}
-                  onChange={(e) => setNewMenu({ ...newMenu, order: parseInt(e.target.value) })}
-                />
-              </div>
-              <div className="space-y-2 col-span-2">
-                <Label htmlFor="new-description">Deskripsi</Label>
-                <textarea
-                  id="new-description"
-                  placeholder="Deskripsi menu..."
-                  value={newMenu.description}
-                  onChange={(e) => setNewMenu({ ...newMenu, description: e.target.value })}
-                  rows={2}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  value={newMenu.order_index}
+                  onChange={(e) =>
+                    setNewMenu({
+                      ...newMenu,
+                      order_index: parseInt(e.target.value),
+                    })
+                  }
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="new-status">Status</Label>
                 <select
                   id="new-status"
-                  value={newMenu.isActive ? 'active' : 'inactive'}
-                  onChange={(e) => setNewMenu({ ...newMenu, isActive: e.target.value === 'active' })}
+                  value={newMenu.is_active ? 'active' : 'inactive'}
+                  onChange={(e) =>
+                    setNewMenu({
+                      ...newMenu,
+                      is_active: e.target.value === 'active',
+                    })
+                  }
                   className="w-full border border-gray-300 rounded-md px-3 py-2"
                 >
                   <option value="active">Aktif</option>
@@ -412,14 +486,26 @@ export default function MenuPage() {
             </div>
           </div>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsAddDialogOpen(false)}
+              disabled={isSaving}
+            >
               Batal
             </Button>
             <Button
               className="bg-brand-emerald hover:bg-brand-emerald/90"
               onClick={handleAddMenu}
+              disabled={isSaving}
             >
-              Tambah Menu
+              {isSaving ? (
+                <>
+                  <Loader className="w-4 h-4 mr-2 animate-spin" />
+                  Menambah...
+                </>
+              ) : (
+                'Tambah Menu'
+              )}
             </Button>
           </div>
         </DialogContent>
@@ -435,11 +521,23 @@ export default function MenuPage() {
             <div className="space-y-4 py-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
+                  <Label htmlFor="edit-name">Name (ID) *</Label>
+                  <Input
+                    id="edit-name"
+                    value={editFormData.name}
+                    onChange={(e) =>
+                      handleEditInputChange('name', e.target.value)
+                    }
+                  />
+                </div>
+                <div className="space-y-2">
                   <Label htmlFor="edit-label">Label Menu *</Label>
                   <Input
                     id="edit-label"
                     value={editFormData.label}
-                    onChange={(e) => handleEditInputChange('label', e.target.value)}
+                    onChange={(e) =>
+                      handleEditInputChange('label', e.target.value)
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -447,7 +545,9 @@ export default function MenuPage() {
                   <Input
                     id="edit-icon"
                     value={editFormData.icon}
-                    onChange={(e) => handleEditInputChange('icon', e.target.value)}
+                    onChange={(e) =>
+                      handleEditInputChange('icon', e.target.value)
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -455,7 +555,9 @@ export default function MenuPage() {
                   <Input
                     id="edit-href"
                     value={editFormData.href}
-                    onChange={(e) => handleEditInputChange('href', e.target.value)}
+                    onChange={(e) =>
+                      handleEditInputChange('href', e.target.value)
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -463,26 +565,26 @@ export default function MenuPage() {
                   <Input
                     id="edit-order"
                     type="number"
-                    value={editFormData.order}
-                    onChange={(e) => handleEditInputChange('order', parseInt(e.target.value))}
-                  />
-                </div>
-                <div className="space-y-2 col-span-2">
-                  <Label htmlFor="edit-description">Deskripsi</Label>
-                  <textarea
-                    id="edit-description"
-                    value={editFormData.description}
-                    onChange={(e) => handleEditInputChange('description', e.target.value)}
-                    rows={2}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    value={editFormData.order_index}
+                    onChange={(e) =>
+                      handleEditInputChange(
+                        'order_index',
+                        parseInt(e.target.value)
+                      )
+                    }
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="edit-status">Status</Label>
                   <select
                     id="edit-status"
-                    value={editFormData.isActive ? 'active' : 'inactive'}
-                    onChange={(e) => handleEditInputChange('isActive', e.target.value === 'active')}
+                    value={editFormData.is_active ? 'active' : 'inactive'}
+                    onChange={(e) =>
+                      handleEditInputChange(
+                        'is_active',
+                        e.target.value === 'active'
+                      )
+                    }
                     className="w-full border border-gray-300 rounded-md px-3 py-2"
                   >
                     <option value="active">Aktif</option>
@@ -493,14 +595,26 @@ export default function MenuPage() {
             </div>
           )}
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsEditDialogOpen(false)}
+              disabled={isSaving}
+            >
               Batal
             </Button>
             <Button
               className="bg-brand-emerald hover:bg-brand-emerald/90"
               onClick={confirmEdit}
+              disabled={isSaving}
             >
-              Simpan Perubahan
+              {isSaving ? (
+                <>
+                  <Loader className="w-4 h-4 mr-2 animate-spin" />
+                  Menyimpan...
+                </>
+              ) : (
+                'Simpan Perubahan'
+              )}
             </Button>
           </div>
         </DialogContent>
@@ -531,18 +645,24 @@ export default function MenuPage() {
               </div>
               <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
                 <p className="text-xs text-yellow-800">
-                  <strong>Perhatian:</strong> Menu yang dihapus akan hilang dari semua role.
+                  <strong>Perhatian:</strong> Menu yang dihapus akan hilang dari
+                  semua role.
                 </p>
               </div>
             </div>
           )}
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteDialogOpen(false)}
+              disabled={isSaving}
+            >
               Batal
             </Button>
             <Button
               className="bg-red-600 hover:bg-red-700 text-white"
               onClick={confirmDelete}
+              disabled={isSaving}
             >
               <Trash2 className="w-4 h-4 mr-2" />
               Hapus Menu

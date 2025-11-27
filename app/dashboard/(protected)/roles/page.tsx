@@ -1,10 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Shield, Check, X, Menu as MenuIcon } from 'lucide-react';
-import { roleMenuAccess } from '@/lib/auth-context';
+import { Shield, Check, X, Menu as MenuIcon, Loader } from 'lucide-react';
+
+interface Role {
+  id: string;
+  name: string;
+  display_name: string;
+  description: string;
+  permissions: any;
+  is_active: boolean;
+}
 
 interface Permission {
   name: string;
@@ -16,7 +24,36 @@ interface Permission {
 }
 
 export default function RolesPage() {
-  const [menuAccess, setMenuAccess] = useState(roleMenuAccess);
+  const [roles, setRoles] = useState<Role[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [menuAccess, setMenuAccess] = useState<{ [key: string]: string[] }>({});
+
+  useEffect(() => {
+    fetchRoles();
+  }, []);
+
+  const fetchRoles = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/dashboard/roles');
+      if (response.ok) {
+        const data = await response.json();
+        setRoles(data.data || []);
+        // Initialize menu access from roles
+        const access: { [key: string]: string[] } = {};
+        data.data.forEach((role: Role) => {
+          access[role.name] = role.permissions?.menus || [];
+        });
+        setMenuAccess(access);
+      }
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      alert('Gagal mengambil data roles');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const availableMenus = [
     { id: 'home', label: 'Dashboard', icon: '🏠' },
@@ -26,24 +63,52 @@ export default function RolesPage() {
     { id: 'menu', label: 'Menu', icon: '📋' },
     { id: 'formulir', label: 'Formulir', icon: '📝' },
     { id: 'settings', label: 'Settings', icon: '⚙️' },
+    { id: 'portofolio', label: 'Portofolio', icon: '🎨' },
   ];
 
-  const toggleMenuAccess = (roleKey: string, menuId: string) => {
+  const toggleMenuAccess = (roleName: string, menuId: string) => {
     setMenuAccess((prev) => {
-      const currentAccess = prev[roleKey as keyof typeof prev] || [];
+      const currentAccess = prev[roleName] || [];
       const hasAccess = currentAccess.includes(menuId);
-      
+
       return {
         ...prev,
-        [roleKey]: hasAccess
-          ? currentAccess.filter(id => id !== menuId)
+        [roleName]: hasAccess
+          ? currentAccess.filter((id) => id !== menuId)
           : [...currentAccess, menuId],
       };
     });
   };
 
-  const hasMenuAccess = (roleKey: string, menuId: string): boolean => {
-    return (menuAccess[roleKey as keyof typeof menuAccess] || []).includes(menuId);
+  const hasMenuAccess = (roleName: string, menuId: string): boolean => {
+    return (menuAccess[roleName] || []).includes(menuId);
+  };
+
+  const handleSaveMenuAccess = async () => {
+    try {
+      setIsSaving(true);
+      for (const role of roles) {
+        const menus = menuAccess[role.name] || [];
+        const response = await fetch('/api/dashboard/roles', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: role.id,
+            permissions: { ...role.permissions, menus },
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Gagal update role ${role.display_name}`);
+        }
+      }
+      alert('Menu access berhasil disimpan!');
+    } catch (error) {
+      console.error('Error saving menu access:', error);
+      alert('Gagal menyimpan menu access');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const permissions: Permission[] = [
@@ -105,64 +170,65 @@ export default function RolesPage() {
     },
   ];
 
-  const roles = [
-    {
-      name: 'Super Admin',
-      key: 'superadmin',
-      description: 'Akses penuh ke semua fitur sistem',
-      color: 'from-purple-500 to-purple-700',
-      icon: '👑',
-    },
-    {
-      name: 'Staff',
-      key: 'staff',
-      description: 'Mengelola operasional dan data siswa',
-      color: 'from-blue-500 to-blue-700',
-      icon: '💼',
-    },
-    {
-      name: 'Teacher',
-      key: 'teacher',
-      description: 'Mengelola data siswa dan pembelajaran',
-      color: 'from-green-500 to-green-700',
-      icon: '📚',
-    },
-    {
-      name: 'Parent',
-      key: 'parent',
-      description: 'Mengisi formulir dan melihat info anak',
-      color: 'from-orange-500 to-orange-700',
-      icon: '👨‍👩‍👧',
-    },
-  ];
+  const roleColors: { [key: string]: { color: string; icon: string } } = {
+    superadmin: { color: 'from-purple-500 to-purple-700', icon: '👑' },
+    staff: { color: 'from-blue-500 to-blue-700', icon: '💼' },
+    teacher: { color: 'from-green-500 to-green-700', icon: '📚' },
+    parent: { color: 'from-orange-500 to-orange-700', icon: '👨‍👩‍👧' },
+  };
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold text-gray-900">Roles & Permissions</h2>
+        <h2 className="text-3xl font-bold text-gray-900">
+          Roles & Permissions
+        </h2>
         <p className="text-gray-600 mt-1">
           Kelola role pengguna dan hak aksesnya
         </p>
       </div>
 
       {/* Roles Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {roles.map((role) => (
-          <Card key={role.key} className="hover:shadow-lg transition-shadow">
-            <CardContent className="p-6">
-              <div className={`w-12 h-12 bg-gradient-to-br ${role.color} rounded-lg flex items-center justify-center text-2xl mb-4`}>
-                {role.icon}
-              </div>
-              <h3 className="font-bold text-lg text-gray-900 mb-2">
-                {role.name}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {role.description}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center py-12">
+          <Loader className="w-8 h-8 animate-spin text-brand-emerald" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {roles.map((role) => {
+            const colorConfig = roleColors[role.name.toLowerCase()] || {
+              color: 'from-gray-500 to-gray-700',
+              icon: '🔒',
+            };
+            return (
+              <Card key={role.id} className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <div
+                    className={`w-12 h-12 bg-gradient-to-br ${colorConfig.color} rounded-lg flex items-center justify-center text-2xl mb-4`}
+                  >
+                    {colorConfig.icon}
+                  </div>
+                  <h3 className="font-bold text-lg text-gray-900 mb-2">
+                    {role.display_name}
+                  </h3>
+                  <p className="text-sm text-gray-600">{role.description}</p>
+                  <div className="mt-3 flex items-center gap-2">
+                    <span
+                      className={`px-2 py-1 rounded text-xs font-medium ${
+                        role.is_active
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}
+                    >
+                      {role.is_active ? 'Aktif' : 'Nonaktif'}
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      )}
 
       {/* Permissions Table */}
       <Card>
@@ -181,8 +247,11 @@ export default function RolesPage() {
                     Permission
                   </th>
                   {roles.map((role) => (
-                    <th key={role.key} className="text-center py-4 px-4 font-semibold text-gray-700">
-                      {role.icon} {role.name}
+                    <th
+                      key={role.id}
+                      className="text-center py-4 px-4 font-semibold text-gray-700"
+                    >
+                      {role.display_name}
                     </th>
                   ))}
                 </tr>
@@ -200,66 +269,37 @@ export default function RolesPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="py-4 px-4 text-center">
-                      {permission.superadmin ? (
-                        <div className="flex justify-center">
-                          <div className="bg-green-100 p-2 rounded-full">
-                            <Check className="w-5 h-5 text-green-600" />
+                    {roles.map((role) => {
+                      let hasPermission = false;
+                      if (role.name === 'superadmin')
+                        hasPermission = permission.superadmin;
+                      else if (role.name === 'staff')
+                        hasPermission = permission.staff;
+                      else if (role.name === 'teacher')
+                        hasPermission = permission.teacher;
+                      else if (role.name === 'parent')
+                        hasPermission = permission.parent;
+
+                      return (
+                        <td key={role.id} className="py-4 px-4 text-center">
+                          <div className="flex justify-center">
+                            <div
+                              className={`${
+                                hasPermission
+                                  ? 'bg-green-100 p-2 rounded-full'
+                                  : 'bg-red-100 p-2 rounded-full'
+                              }`}
+                            >
+                              {hasPermission ? (
+                                <Check className="w-5 h-5 text-green-600" />
+                              ) : (
+                                <X className="w-5 h-5 text-red-600" />
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      ) : (
-                        <div className="flex justify-center">
-                          <div className="bg-red-100 p-2 rounded-full">
-                            <X className="w-5 h-5 text-red-600" />
-                          </div>
-                        </div>
-                      )}
-                    </td>
-                    <td className="py-4 px-4 text-center">
-                      {permission.staff ? (
-                        <div className="flex justify-center">
-                          <div className="bg-green-100 p-2 rounded-full">
-                            <Check className="w-5 h-5 text-green-600" />
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex justify-center">
-                          <div className="bg-red-100 p-2 rounded-full">
-                            <X className="w-5 h-5 text-red-600" />
-                          </div>
-                        </div>
-                      )}
-                    </td>
-                    <td className="py-4 px-4 text-center">
-                      {permission.teacher ? (
-                        <div className="flex justify-center">
-                          <div className="bg-green-100 p-2 rounded-full">
-                            <Check className="w-5 h-5 text-green-600" />
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex justify-center">
-                          <div className="bg-red-100 p-2 rounded-full">
-                            <X className="w-5 h-5 text-red-600" />
-                          </div>
-                        </div>
-                      )}
-                    </td>
-                    <td className="py-4 px-4 text-center">
-                      {permission.parent ? (
-                        <div className="flex justify-center">
-                          <div className="bg-green-100 p-2 rounded-full">
-                            <Check className="w-5 h-5 text-green-600" />
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex justify-center">
-                          <div className="bg-red-100 p-2 rounded-full">
-                            <X className="w-5 h-5 text-red-600" />
-                          </div>
-                        </div>
-                      )}
-                    </td>
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))}
               </tbody>
@@ -278,13 +318,18 @@ export default function RolesPage() {
             </CardTitle>
             <Button
               size="sm"
-              onClick={() => {
-                alert('Perubahan menu access berhasil disimpan!\n\nNote: Dalam production, ini akan menyimpan ke database.');
-                console.log('Menu Access:', menuAccess);
-              }}
+              onClick={handleSaveMenuAccess}
+              disabled={isSaving}
               className="bg-brand-emerald hover:bg-brand-emerald/90"
             >
-              Simpan Perubahan
+              {isSaving ? (
+                <>
+                  <Loader className="w-4 h-4 mr-2 animate-spin" />
+                  Menyimpan...
+                </>
+              ) : (
+                'Simpan Perubahan'
+              )}
             </Button>
           </div>
         </CardHeader>
@@ -297,8 +342,11 @@ export default function RolesPage() {
                     Menu
                   </th>
                   {roles.map((role) => (
-                    <th key={role.key} className="text-center py-4 px-4 font-semibold text-gray-700">
-                      {role.icon} {role.name}
+                    <th
+                      key={role.id}
+                      className="text-center py-4 px-4 font-semibold text-gray-700"
+                    >
+                      {role.display_name}
                     </th>
                   ))}
                 </tr>
@@ -315,17 +363,17 @@ export default function RolesPage() {
                       </div>
                     </td>
                     {roles.map((role) => (
-                      <td key={role.key} className="py-4 px-4 text-center">
+                      <td key={role.id} className="py-4 px-4 text-center">
                         <div className="flex justify-center">
                           <button
-                            onClick={() => toggleMenuAccess(role.key, menu.id)}
+                            onClick={() => toggleMenuAccess(role.name, menu.id)}
                             className={`p-2 rounded-full transition-colors ${
-                              hasMenuAccess(role.key, menu.id)
+                              hasMenuAccess(role.name, menu.id)
                                 ? 'bg-green-100 hover:bg-green-200'
                                 : 'bg-red-100 hover:bg-red-200'
                             }`}
                           >
-                            {hasMenuAccess(role.key, menu.id) ? (
+                            {hasMenuAccess(role.name, menu.id) ? (
                               <Check className="w-5 h-5 text-green-600" />
                             ) : (
                               <X className="w-5 h-5 text-red-600" />
@@ -341,8 +389,9 @@ export default function RolesPage() {
           </div>
           <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <p className="text-sm text-blue-800">
-              <strong>Info:</strong> Klik icon ✓ atau ✗ untuk mengubah akses menu untuk role tertentu. 
-              Jangan lupa klik "Simpan Perubahan" setelah melakukan modifikasi.
+              <strong>Info:</strong> Klik icon ✓ atau ✗ untuk mengubah akses
+              menu untuk role tertentu. Jangan lupa klik "Simpan Perubahan"
+              setelah melakukan modifikasi.
             </p>
           </div>
         </CardContent>
@@ -358,9 +407,10 @@ export default function RolesPage() {
                 Tentang Role Management
               </h3>
               <p className="text-sm text-gray-600">
-                Role-based access control (RBAC) memastikan setiap pengguna hanya memiliki akses 
-                ke fitur yang sesuai dengan tanggung jawab mereka. Super Admin memiliki kontrol penuh, 
-                sementara role lain memiliki akses terbatas sesuai kebutuhan.
+                Role-based access control (RBAC) memastikan setiap pengguna
+                hanya memiliki akses ke fitur yang sesuai dengan tanggung jawab
+                mereka. Super Admin memiliki kontrol penuh, sementara role lain
+                memiliki akses terbatas sesuai kebutuhan.
               </p>
             </div>
           </div>
