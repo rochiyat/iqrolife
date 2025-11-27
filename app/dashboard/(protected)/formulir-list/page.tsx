@@ -44,6 +44,8 @@ export default function FormulirListPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedForm, setSelectedForm] = useState<FormSubmission | null>(null);
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // TODO: Fetch from API
   const [submissions, setSubmissions] = useState<FormSubmission[]>([]);
@@ -53,6 +55,29 @@ export default function FormulirListPage() {
       form.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       form.parent.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Pagination logic
+  const totalPages =
+    itemsPerPage === -1
+      ? 1
+      : Math.ceil(filteredSubmissions.length / itemsPerPage);
+  const startIndex = itemsPerPage === -1 ? 0 : (currentPage - 1) * itemsPerPage;
+  const endIndex =
+    itemsPerPage === -1
+      ? filteredSubmissions.length
+      : startIndex + itemsPerPage;
+  const paginatedSubmissions = filteredSubmissions.slice(startIndex, endIndex);
+
+  // Reset to page 1 when search term or items per page changes
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  const handleItemsPerPageChange = (value: string) => {
+    setItemsPerPage(value === 'all' ? -1 : parseInt(value));
+    setCurrentPage(1);
+  };
 
   const handleViewDetail = (form: FormSubmission) => {
     setSelectedForm(form);
@@ -76,17 +101,79 @@ export default function FormulirListPage() {
         </Link>
       </div>
 
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-brand-emerald">
+                {submissions.length}
+              </div>
+              <div className="text-sm text-gray-600 mt-1">Total Formulir</div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600">
+                {
+                  submissions.filter(
+                    (s) =>
+                      new Date(s.registrationDate).getMonth() ===
+                      new Date().getMonth()
+                  ).length
+                }
+              </div>
+              <div className="text-sm text-gray-600 mt-1">Bulan Ini</div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-purple-600">
+                {
+                  submissions.filter(
+                    (s) =>
+                      new Date(s.registrationDate).toDateString() ===
+                      new Date().toDateString()
+                  ).length
+                }
+              </div>
+              <div className="text-sm text-gray-600 mt-1">Hari Ini</div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card>
         <CardHeader>
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1">
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="relative flex-1 min-w-[200px]">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 placeholder="Cari berdasarkan nama atau orang tua..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 className="pl-10"
               />
+            </div>
+            <div className="flex items-center gap-2">
+              <Label className="text-sm text-gray-600 whitespace-nowrap">
+                Show:
+              </Label>
+              <select
+                value={itemsPerPage === -1 ? 'all' : itemsPerPage}
+                onChange={(e) => handleItemsPerPageChange(e.target.value)}
+                className="border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors text-sm"
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="all">All</option>
+              </select>
             </div>
           </div>
         </CardHeader>
@@ -133,7 +220,7 @@ export default function FormulirListPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredSubmissions.map((form) => (
+                  {paginatedSubmissions.map((form) => (
                     <tr key={form.id} className="border-b hover:bg-gray-50">
                       <td className="py-3 px-4">
                         <div className="font-medium">{form.name}</div>
@@ -168,53 +255,59 @@ export default function FormulirListPage() {
               </table>
             </div>
           )}
+          {/* Pagination */}
+          {submissions.length > 0 &&
+            itemsPerPage !== -1 &&
+            filteredSubmissions.length > 0 && (
+              <div className="flex items-center justify-between px-4 py-3 border-t">
+                <div className="text-sm text-gray-600">
+                  Menampilkan {startIndex + 1} -{' '}
+                  {Math.min(endIndex, filteredSubmissions.length)} dari{' '}
+                  {filteredSubmissions.length} data
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="cursor-pointer hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Previous
+                  </Button>
+                  <div className="flex gap-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (page) => (
+                        <Button
+                          key={page}
+                          size="sm"
+                          variant={currentPage === page ? 'default' : 'outline'}
+                          onClick={() => setCurrentPage(page)}
+                          className={`cursor-pointer ${
+                            currentPage === page
+                              ? 'bg-brand-emerald hover:bg-emerald-600'
+                              : 'hover:bg-gray-100'
+                          }`}
+                        >
+                          {page}
+                        </Button>
+                      )
+                    )}
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="cursor-pointer hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
+            )}
         </CardContent>
       </Card>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardContent className="p-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-brand-emerald">
-                {submissions.length}
-              </div>
-              <div className="text-sm text-gray-600 mt-1">Total Formulir</div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">
-                {
-                  submissions.filter(
-                    (s) =>
-                      new Date(s.registrationDate).getMonth() ===
-                      new Date().getMonth()
-                  ).length
-                }
-              </div>
-              <div className="text-sm text-gray-600 mt-1">Bulan Ini</div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600">
-                {
-                  submissions.filter(
-                    (s) =>
-                      new Date(s.registrationDate).toDateString() ===
-                      new Date().toDateString()
-                  ).length
-                }
-              </div>
-              <div className="text-sm text-gray-600 mt-1">Hari Ini</div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Detail Dialog */}
       <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
