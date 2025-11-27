@@ -160,7 +160,7 @@ export const schoolData = {
       description:
         'Kelas Siap Sekolah A untuk usia mulai 4 tahun yang terdiri dari maksimal 10 anak setiap kelasnya. Kelas dilaksanakan <strong>selama 3 hari disekolah dan 2 hari homekeeping dirumah.</strong><br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan belajar terstruktur</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi sensori melalui pembelajaran berbasis bermain.</strong>',
       icon: '🌟',
-      image: '/program/kelas-siap-sekolah/level/level-002.jpg',
+      image: '/program/kelas-siap-sekolah/level/level-003.jpg',
     },
     {
       title: 'Kelas Siap Sekolah 2 (KSS 2)',
@@ -178,7 +178,7 @@ export const schoolData = {
       description:
         'Kelas Siap Sekolah A untuk usia mulai 5 tahun 6 bulan yang terdiri dari maksimal 10 anak setiap kelasnya. <br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan belajar terstruktur</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi perkembangan sensori serta kognitif melalui pembelajaran berbasis bermain.</strong>',
       icon: '🎓',
-      image: '/program/kelas-siap-sekolah/level/level-003.jpg',
+      image: '/program/kelas-siap-sekolah/level/level-001.jpg',
     },
   ],
   yearlyActivities: {
