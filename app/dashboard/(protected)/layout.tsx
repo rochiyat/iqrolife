@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   LayoutDashboard,
@@ -16,52 +16,24 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { rolePermissions, type UserRole } from '@/lib/auth-context';
+import { rolePermissions, useAuth } from '@/lib/auth-context';
 import { ProfileDropdown } from '@/components/dashboard/ProfileDropdown';
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: UserRole;
-  avatar?: string;
-}
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, isLoading } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const router = useRouter();
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const response = await fetch('/api/dashboard/login');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.authenticated && data.user) {
-          setUser(data.user);
-        } else {
-          router.push('/dashboard/login');
-        }
-      } else {
-        router.push('/dashboard/login');
-      }
-    } catch (error) {
-      console.error('Auth check error:', error);
+    if (!isLoading && !user) {
       router.push('/dashboard/login');
-    } finally {
-      setIsLoading(false);
     }
-  };
+  }, [isLoading, user, router]);
 
   const getNavItems = () => {
     if (!user) return [];

@@ -34,6 +34,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkAuth = async () => {
     try {
+      // Cek cookie dulu di client-side
+      const cookieUser = getCookieUser();
+      if (cookieUser) {
+        setUser(cookieUser);
+        setIsLoading(false);
+        return;
+      }
+
+      // Fallback: validasi ke server jika cookie tidak ada
       const response = await fetch('/api/dashboard/login');
       if (response.ok) {
         const data = await response.json();
@@ -46,6 +55,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const getCookieUser = () => {
+    try {
+      const cookies = document.cookie.split(';');
+      const authCookie = cookies.find((c) =>
+        c.trim().startsWith('auth-token=')
+      );
+      if (authCookie) {
+        const value = authCookie.split('=')[1];
+        return JSON.parse(decodeURIComponent(value));
+      }
+    } catch (error) {
+      console.error('Error parsing cookie:', error);
+    }
+    return null;
   };
 
   const login = async (email: string, password: string) => {
@@ -69,13 +94,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
+      // Hapus cookie di client-side dulu (instant feedback)
+      document.cookie = 'auth-token=; Max-Age=0; path=/; SameSite=Lax';
+      setUser(null);
+
+      // Panggil API logout untuk cleanup di server
       await fetch('/api/dashboard/logout', {
         method: 'POST',
       });
-      setUser(null);
+
       router.push('/dashboard/login');
     } catch (error) {
       console.error('Logout error:', error);
+      // Tetap redirect meskipun API error
+      router.push('/dashboard/login');
     }
   };
 

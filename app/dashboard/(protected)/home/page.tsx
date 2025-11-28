@@ -3,10 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, GraduationCap, FileText, TrendingUp } from 'lucide-react';
-
-interface User {
-  role: string;
-}
+import { useAuth } from '@/lib/auth-context';
 
 interface DashboardStats {
   totalCalonMurid: number;
@@ -26,36 +23,21 @@ interface Activity {
 }
 
 export default function DashboardHome() {
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useAuth();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [recentActivities, setRecentActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await fetch('/api/dashboard/login');
-        if (response.ok) {
-          const data = await response.json();
-          if (data.authenticated && data.user) {
-            setUser(data.user);
-
-            // Fetch stats only for superadmin and staff
-            if (data.user.role === 'superadmin' || data.user.role === 'staff') {
-              fetchDashboardStats();
-            } else {
-              setLoading(false);
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Auth check error:', error);
+    if (user) {
+      // Fetch stats only for superadmin and staff
+      if (user.role === 'superadmin' || user.role === 'staff') {
+        fetchDashboardStats();
+      } else {
         setLoading(false);
       }
-    };
-
-    checkAuth();
-  }, []);
+    }
+  }, [user]);
 
   const fetchDashboardStats = async () => {
     try {
