@@ -154,13 +154,48 @@ export default function CalonMuridPage() {
     setIsCreateUserDialogOpen(true);
   };
 
-  const confirmCreateUser = () => {
-    if (selectedStudent) {
-      alert(
-        `User berhasil dibuat!\n\nNama: ${selectedStudent.name}\nEmail: ${selectedStudent.email}\nRole: Parent\nPassword: (dikirim via email)`
-      );
-      setIsCreateUserDialogOpen(false);
-      setSelectedStudent(null);
+  const confirmCreateUser = async () => {
+    if (!selectedStudent) return;
+
+    try {
+      setIsSubmitting(true);
+      const response = await fetch('/api/dashboard/calon-murid/create-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentId: selectedStudent.id,
+          email: selectedStudent.email,
+          name: selectedStudent.parent,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        let alertMessage = '';
+        switch (result.action) {
+          case 'created':
+            alertMessage = `✅ User baru berhasil dibuat!\n\nNama: ${selectedStudent.parent}\nEmail: ${selectedStudent.email}\nRole: Parent\n\nPassword telah dikirim ke email.`;
+            break;
+          case 'role_added':
+            alertMessage = `✅ User sudah ada!\n\nRole Parent berhasil ditambahkan.\nAnak "${selectedStudent.name}" berhasil dimapping ke user ini.`;
+            break;
+          case 'mapping_added':
+            alertMessage = `✅ User sudah ada sebagai Parent!\n\nAnak "${selectedStudent.name}" berhasil dimapping ke user ini.`;
+            break;
+        }
+        alert(alertMessage);
+        setIsCreateUserDialogOpen(false);
+        setSelectedStudent(null);
+        fetchStudents(); // Refresh data
+      } else {
+        alert(result.error || 'Gagal membuat user');
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+      alert('Terjadi kesalahan saat membuat user');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -1051,9 +1086,22 @@ export default function CalonMuridPage() {
               </div>
               <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
                 <p className="text-xs text-yellow-800">
-                  <strong>Catatan:</strong> Password akan dikirimkan ke email
-                  yang terdaftar.
+                  <strong>Catatan:</strong>
                 </p>
+                <ul className="text-xs text-yellow-800 mt-1 ml-4 list-disc">
+                  <li>
+                    Jika email sudah terdaftar sebagai user lain, akan
+                    ditambahkan role Parent
+                  </li>
+                  <li>
+                    Jika email sudah terdaftar sebagai Parent, anak akan
+                    dimapping ke user tersebut
+                  </li>
+                  <li>
+                    Jika email belum terdaftar, user baru akan dibuat dan
+                    password dikirim via email
+                  </li>
+                </ul>
               </div>
             </div>
           )}
@@ -1061,6 +1109,7 @@ export default function CalonMuridPage() {
             <Button
               variant="outline"
               onClick={() => setIsCreateUserDialogOpen(false)}
+              disabled={isSubmitting}
               className="hover:bg-gray-200 hover:border-gray-400 cursor-pointer transition-colors"
             >
               Batal
@@ -1068,9 +1117,19 @@ export default function CalonMuridPage() {
             <Button
               className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors"
               onClick={confirmCreateUser}
+              disabled={isSubmitting}
             >
-              <UserPlus className="w-4 h-4 mr-2" />
-              Buat User
+              {isSubmitting ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Memproses...
+                </div>
+              ) : (
+                <>
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Buat User
+                </>
+              )}
             </Button>
           </div>
         </DialogContent>
