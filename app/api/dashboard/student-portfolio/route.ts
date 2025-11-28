@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
         fp.jenis_kelamin as gender,
         fp.tempat_lahir as birth_place,
         fp.tanggal_lahir as birth_date,
-        fp.program,
+        fp.program_yang_dipilih as program,
         fp.status,
         fp.submission_date as registration_date,
         fp.review_notes,
@@ -48,9 +48,10 @@ export async function GET(request: NextRequest) {
         fp.nama_ibu as mother_name,
         fp.pekerjaan_ayah as father_job,
         fp.pekerjaan_ibu as mother_job,
-        fp.no_hp_ayah as father_phone,
-        fp.no_hp_ibu as mother_phone,
-        fp.asal_sekolah as previous_school,
+        fp.telepon_ayah as father_phone,
+        fp.telepon_ibu as mother_phone,
+        fp.hobi_minat as hobbies,
+        fp.prestasi_yang_pernah_diraih as achievements,
         fp.created_at,
         fp.updated_at
       FROM formulir_pendaftaran fp

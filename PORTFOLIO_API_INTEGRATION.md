@@ -193,13 +193,28 @@ Informasi lengkap:
 - `user_id` - Foreign key to users (parent)
 - `nama_lengkap` - Student name
 - `tanggal_lahir` - Birth date
-- `program` - Program selection
-- `status` - Application status
+- `program_yang_dipilih` - Program selection (KBTK, Kelas Eksplorasi, dll)
+- `status` - Application status (draft, submitted, pending, reviewed, approved, rejected, enrolled)
 - `submission_date` - Form submission date
 - `reviewed_at` - Review timestamp
 - `review_notes` - Admin notes
 - `created_at` - Registration date
 - `updated_at` - Last update
+- `nama_ayah`, `nama_ibu` - Parent names
+- `pekerjaan_ayah`, `pekerjaan_ibu` - Parent jobs
+- `telepon_ayah`, `telepon_ibu` - Parent phones
+- `alamat_lengkap` - Full address
+- `hobi_minat` - Hobbies and interests
+- `prestasi_yang_pernah_diraih` - Achievements
+
+### Migration Required
+
+**Add 'enrolled' status:**
+```bash
+node run-migration-enrolled-status.js
+```
+
+This adds `enrolled` status to the status constraint.
 
 ## Testing
 
@@ -232,6 +247,8 @@ curl -X GET "http://localhost:3000/api/dashboard/student-portfolio?status=approv
 
 1. ✅ `app/api/dashboard/student-portfolio/route.ts` - New API endpoint
 2. ✅ `app/dashboard/(protected)/portofolio/page.tsx` - Frontend integration
+3. ✅ `db/migration-add-enrolled-status.sql` - Database migration
+4. ✅ `run-migration-enrolled-status.js` - Migration script
 
 ## Next Steps (Optional)
 
