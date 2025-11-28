@@ -22,7 +22,10 @@ import {
   Users,
   Phone,
   Mail,
+  CheckCircle,
+  Edit,
 } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
 
 interface FormSubmission {
@@ -79,6 +82,11 @@ export default function FormulirListPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedForm, setSelectedForm] = useState<FormSubmission | null>(null);
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
+  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [reviewNotes, setReviewNotes] = useState('');
+  const [editNotes, setEditNotes] = useState('');
+  const [actionLoading, setActionLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [submissions, setSubmissions] = useState<FormSubmission[]>([]);
@@ -140,6 +148,96 @@ export default function FormulirListPage() {
   const handleViewDetail = (form: FormSubmission) => {
     setSelectedForm(form);
     setIsDetailDialogOpen(true);
+  };
+
+  const handleOpenReview = (form: FormSubmission) => {
+    setSelectedForm(form);
+    setReviewNotes('');
+    setIsReviewDialogOpen(true);
+  };
+
+  const handleOpenEdit = (form: FormSubmission) => {
+    setSelectedForm(form);
+    setEditNotes('');
+    setIsEditDialogOpen(true);
+  };
+
+  const handleReviewSubmit = async () => {
+    if (!selectedForm || !reviewNotes.trim()) {
+      alert('Catatan review wajib diisi');
+      return;
+    }
+
+    try {
+      setActionLoading(true);
+      const response = await fetch(
+        '/api/dashboard/formulir-pendaftaran/review',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: selectedForm.id,
+            status: 'reviewed',
+            notes: reviewNotes,
+            action: 'review',
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert('Formulir berhasil direview dan email telah dikirim!');
+        setIsReviewDialogOpen(false);
+        fetchSubmissions(); // Refresh data
+      } else {
+        alert(result.error || 'Gagal mereview formulir');
+      }
+    } catch (error) {
+      console.error('Review error:', error);
+      alert('Terjadi kesalahan saat mereview formulir');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleEditSubmit = async () => {
+    if (!selectedForm || !editNotes.trim()) {
+      alert('Catatan edit wajib diisi');
+      return;
+    }
+
+    try {
+      setActionLoading(true);
+      const response = await fetch(
+        '/api/dashboard/formulir-pendaftaran/review',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: selectedForm.id,
+            status: 'pending',
+            notes: editNotes,
+            action: 'edit',
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert('Permintaan edit berhasil dikirim dan email telah dikirim!');
+        setIsEditDialogOpen(false);
+        fetchSubmissions(); // Refresh data
+      } else {
+        alert(result.error || 'Gagal mengirim permintaan edit');
+      }
+    } catch (error) {
+      console.error('Edit request error:', error);
+      alert('Terjadi kesalahan saat mengirim permintaan edit');
+    } finally {
+      setActionLoading(false);
+    }
   };
 
   return (
@@ -317,15 +415,35 @@ export default function FormulirListPage() {
                           )}
                         </td>
                         <td className="py-3 px-4">
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors"
-                            title="Lihat Detail"
-                            onClick={() => handleViewDetail(form)}
-                          >
-                            <Eye className="w-4 h-4" />
-                          </Button>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors"
+                              title="Lihat Detail"
+                              onClick={() => handleViewDetail(form)}
+                            >
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors"
+                              title="Review"
+                              onClick={() => handleOpenReview(form)}
+                            >
+                              <CheckCircle className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-orange-600 hover:text-orange-700 hover:bg-orange-50 cursor-pointer transition-colors"
+                              title="Minta Edit"
+                              onClick={() => handleOpenEdit(form)}
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -772,6 +890,136 @@ export default function FormulirListPage() {
               Tutup
             </Button>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Review Dialog */}
+      <Dialog open={isReviewDialogOpen} onOpenChange={setIsReviewDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-600" />
+              Review Formulir
+            </DialogTitle>
+          </DialogHeader>
+          {selectedForm && (
+            <div className="space-y-4 py-4">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <p className="text-sm text-blue-900">
+                  <strong>Formulir:</strong> {selectedForm.nama_lengkap}
+                </p>
+                <p className="text-sm text-blue-900">
+                  <strong>Program:</strong> {selectedForm.program_yang_dipilih}
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="reviewNotes">
+                  Catatan Review <span className="text-red-500">*</span>
+                </Label>
+                <Textarea
+                  id="reviewNotes"
+                  value={reviewNotes}
+                  onChange={(e) => setReviewNotes(e.target.value)}
+                  placeholder="Masukkan catatan hasil review..."
+                  rows={4}
+                  className="resize-none"
+                />
+                <p className="text-xs text-gray-500">
+                  Catatan ini akan dikirim via email ke orang tua/wali
+                </p>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-4 border-t">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsReviewDialogOpen(false)}
+                  disabled={actionLoading}
+                >
+                  Batal
+                </Button>
+                <Button
+                  onClick={handleReviewSubmit}
+                  disabled={actionLoading || !reviewNotes.trim()}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  {actionLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Mengirim...
+                    </div>
+                  ) : (
+                    'Kirim Review'
+                  )}
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Request Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Edit className="w-5 h-5 text-orange-600" />
+              Minta Edit Formulir
+            </DialogTitle>
+          </DialogHeader>
+          {selectedForm && (
+            <div className="space-y-4 py-4">
+              <div className="bg-orange-50 p-4 rounded-lg">
+                <p className="text-sm text-orange-900">
+                  <strong>Formulir:</strong> {selectedForm.nama_lengkap}
+                </p>
+                <p className="text-sm text-orange-900">
+                  <strong>Program:</strong> {selectedForm.program_yang_dipilih}
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="editNotes">
+                  Catatan Edit <span className="text-red-500">*</span>
+                </Label>
+                <Textarea
+                  id="editNotes"
+                  value={editNotes}
+                  onChange={(e) => setEditNotes(e.target.value)}
+                  placeholder="Jelaskan bagian mana yang perlu diedit..."
+                  rows={4}
+                  className="resize-none"
+                />
+                <p className="text-xs text-gray-500">
+                  Permintaan edit akan dikirim via email ke orang tua/wali
+                </p>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-4 border-t">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsEditDialogOpen(false)}
+                  disabled={actionLoading}
+                >
+                  Batal
+                </Button>
+                <Button
+                  onClick={handleEditSubmit}
+                  disabled={actionLoading || !editNotes.trim()}
+                  className="bg-orange-600 hover:bg-orange-700"
+                >
+                  {actionLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Mengirim...
+                    </div>
+                  ) : (
+                    'Kirim Permintaan'
+                  )}
+                </Button>
+              </div>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </div>
