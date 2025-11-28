@@ -189,10 +189,6 @@ export default function FormulirPage() {
       case 1:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              DATA PRIBADI
-            </h3>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="namaLengkap">
@@ -360,10 +356,6 @@ export default function FormulirPage() {
       case 2:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              KETERANGAN TEMPAT TINGGAL
-            </h3>
-
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="alamatLengkap">
@@ -517,10 +509,6 @@ export default function FormulirPage() {
       case 3:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              DATA ORANG TUA/WALI
-            </h3>
-
             <div className="space-y-6">
               {/* Data Ayah */}
               <div className="border-b pb-4">
@@ -724,10 +712,6 @@ export default function FormulirPage() {
       case 4:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              DATA KESEHATAN DAN LAINNYA
-            </h3>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="golonganDarah">Golongan Darah</Label>
@@ -847,10 +831,6 @@ export default function FormulirPage() {
       case 5:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              PERNYATAAN DAN KONFIRMASI
-            </h3>
-
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="programYangDipilih">
