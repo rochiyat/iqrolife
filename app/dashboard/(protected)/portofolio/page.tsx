@@ -31,14 +31,7 @@ import {
   MapPin,
   Home,
 } from 'lucide-react';
-import { type UserRole } from '@/lib/auth-context';
-
-interface UserData {
-  id: string;
-  email: string;
-  name: string;
-  role: UserRole;
-}
+import { useAuth } from '@/lib/auth-context';
 
 interface PortfolioActivity {
   id: string;
@@ -88,8 +81,7 @@ interface StudentPortfolio {
 }
 
 export default function PortofolioPage() {
-  const [user, setUser] = useState<UserData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, isLoading } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPortfolio, setSelectedPortfolio] =
     useState<StudentPortfolio | null>(null);
@@ -102,26 +94,6 @@ export default function PortofolioPage() {
     documents: false,
     timeline: false,
   });
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const response = await fetch('/api/dashboard/login');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.authenticated && data.user) {
-          setUser(data.user);
-        }
-      }
-    } catch (error) {
-      console.error('Auth check error:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const [portfolios] = useState<StudentPortfolio[]>([
     {

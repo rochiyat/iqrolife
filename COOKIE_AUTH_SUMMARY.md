@@ -167,10 +167,13 @@ if (data.authenticated) {
 
 1. ✅ `lib/auth-context.tsx` - Read cookie first, fallback to API
 2. ✅ `app/dashboard/layout.tsx` - Wrap dengan AuthProvider
-3. ✅ `app/dashboard/(protected)/layout.tsx` - Use useAuth() hook
+3. ✅ `app/dashboard/(protected)/layout.tsx` - Use useAuth() hook + redirect logic
 4. ✅ `app/dashboard/(protected)/home/page.tsx` - Use useAuth() hook
-5. ✅ `app/api/dashboard/validate-session/route.ts` - New endpoint
-6. ✅ `lib/cookie-utils.ts` - Cookie utility functions
+5. ✅ `app/dashboard/(protected)/portofolio/page.tsx` - Use useAuth() hook
+6. ✅ `app/api/dashboard/validate-session/route.ts` - New endpoint
+7. ✅ `lib/cookie-utils.ts` - Cookie utility functions
+
+**All protected pages now use `useAuth()` hook instead of direct API calls!**
 
 ## Testing
 
