@@ -94,200 +94,31 @@ export default function PortofolioPage() {
     documents: false,
     timeline: false,
   });
+  const [portfolios, setPortfolios] = useState<StudentPortfolio[]>([]);
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
-  const [portfolios] = useState<StudentPortfolio[]>([
-    {
-      id: '1',
-      studentName: 'Ahmad Zaki',
-      studentId: 'IQL-2024-001',
-      program: 'KBTK',
-      registrationDate: '2024-10-15',
-      status: 'enrolled',
-      progress: 100,
-      parent: 'Bapak Ahmad',
-      parentEmail: 'parent@iqrolife.com',
-      email: 'ahmad@example.com',
-      phone: '081234567890',
-      documents: {
-        formData: true,
-        paymentProof: true,
-        birthCertificate: true,
-        healthCertificate: true,
-        photo: true,
-      },
-      formData: {
-        birthDate: '2017-03-15',
-        age: 7,
-        gender: 'Laki-laki',
-        address: 'Jl. Merdeka No. 123, Jakarta Selatan',
-        previousSchool: 'TK Permata Hati',
-        parentName: 'Bapak Ahmad',
-        parentEmail: 'parent@iqrolife.com',
-        parentPhone: '081234567890',
-      },
-      activities: [
-        {
-          id: '1',
-          type: 'registration',
-          title: 'Pendaftaran Online',
-          description: 'Pendaftaran akun dan data awal berhasil',
-          date: '2024-10-15 09:30',
-          status: 'completed',
-        },
-        {
-          id: '2',
-          type: 'form_submission',
-          title: 'Pengisian Formulir',
-          description: 'Formulir pendaftaran lengkap disubmit',
-          date: '2024-10-15 10:15',
-          status: 'completed',
-        },
-        {
-          id: '3',
-          type: 'document_upload',
-          title: 'Upload Dokumen',
-          description: 'Bukti transfer dan dokumen pendukung diupload',
-          date: '2024-10-16 14:20',
-          status: 'completed',
-        },
-        {
-          id: '4',
-          type: 'approval',
-          title: 'Verifikasi Admin',
-          description: 'Data dan dokumen diverifikasi dan disetujui',
-          date: '2024-10-17 11:00',
-          status: 'completed',
-        },
-        {
-          id: '5',
-          type: 'enrollment',
-          title: 'Terdaftar Resmi',
-          description: 'Murid terdaftar resmi di program KBTK',
-          date: '2024-10-18 09:00',
-          status: 'completed',
-        },
-      ],
-    },
-    {
-      id: '2',
-      studentName: 'Siti Fatimah',
-      studentId: 'IQL-2024-002',
-      program: 'Kelas Pra Aqil Baligh',
-      registrationDate: '2024-10-20',
-      status: 'pending',
-      progress: 60,
-      parent: 'Ibu Siti',
-      parentEmail: 'siti@example.com',
-      email: 'siti@example.com',
-      phone: '081234567891',
-      documents: {
-        formData: true,
-        paymentProof: true,
-        birthCertificate: true,
-        healthCertificate: false,
-        photo: false,
-      },
-      formData: {
-        birthDate: '2014-08-20',
-        age: 10,
-        gender: 'Perempuan',
-        address: 'Jl. Kemang Raya No. 45, Jakarta Selatan',
-        previousSchool: 'SD Harapan Bangsa',
-        parentName: 'Ibu Siti',
-        parentEmail: 'siti@example.com',
-        parentPhone: '081234567891',
-      },
-      activities: [
-        {
-          id: '1',
-          type: 'registration',
-          title: 'Pendaftaran Online',
-          description: 'Pendaftaran akun berhasil',
-          date: '2024-10-20 13:45',
-          status: 'completed',
-        },
-        {
-          id: '2',
-          type: 'form_submission',
-          title: 'Pengisian Formulir',
-          description: 'Formulir pendaftaran disubmit',
-          date: '2024-10-20 14:30',
-          status: 'completed',
-        },
-        {
-          id: '3',
-          type: 'document_upload',
-          title: 'Upload Dokumen',
-          description: 'Menunggu upload dokumen kesehatan dan foto',
-          date: '2024-10-21 10:00',
-          status: 'pending',
-        },
-      ],
-    },
-    {
-      id: '3',
-      studentName: 'Muhammad Rizki',
-      studentId: 'IQL-2024-003',
-      program: 'KBTK',
-      registrationDate: '2024-10-18',
-      status: 'approved',
-      progress: 80,
-      parent: 'Ibu Rina',
-      parentEmail: 'rina@example.com',
-      email: 'rizki@example.com',
-      phone: '081234567892',
-      documents: {
-        formData: true,
-        paymentProof: true,
-        birthCertificate: true,
-        healthCertificate: true,
-        photo: true,
-      },
-      formData: {
-        birthDate: '2019-05-10',
-        age: 5,
-        gender: 'Laki-laki',
-        address: 'Jl. Sudirman No. 78, Jakarta Pusat',
-        parentName: 'Ibu Rina',
-        parentEmail: 'rina@example.com',
-        parentPhone: '081234567892',
-      },
-      activities: [
-        {
-          id: '1',
-          type: 'registration',
-          title: 'Pendaftaran Online',
-          description: 'Pendaftaran berhasil',
-          date: '2024-10-18 08:15',
-          status: 'completed',
-        },
-        {
-          id: '2',
-          type: 'form_submission',
-          title: 'Pengisian Formulir',
-          description: 'Formulir lengkap disubmit',
-          date: '2024-10-18 09:00',
-          status: 'completed',
-        },
-        {
-          id: '3',
-          type: 'document_upload',
-          title: 'Upload Dokumen',
-          description: 'Semua dokumen berhasil diupload',
-          date: '2024-10-19 15:30',
-          status: 'completed',
-        },
-        {
-          id: '4',
-          type: 'approval',
-          title: 'Verifikasi Admin',
-          description: 'Data disetujui, menunggu pembayaran',
-          date: '2024-10-20 10:45',
-          status: 'completed',
-        },
-      ],
-    },
-  ]);
+  useEffect(() => {
+    if (user) {
+      fetchPortfolios();
+    }
+  }, [user]);
+
+  const fetchPortfolios = async () => {
+    try {
+      setIsLoadingData(true);
+      const response = await fetch('/api/dashboard/student-portfolio');
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          setPortfolios(result.data);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching portfolios:', error);
+    } finally {
+      setIsLoadingData(false);
+    }
+  };
 
   // Filter portfolios for parent role
   const displayedPortfolios =
@@ -954,7 +785,14 @@ export default function PortofolioPage() {
         </div>
       </div>
 
-      {user.role === 'parent' ? (
+      {isLoadingData ? (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-brand-emerald border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Memuat data portfolio...</p>
+          </div>
+        </div>
+      ) : user.role === 'parent' ? (
         displayedPortfolios.length > 0 ? (
           <ParentPortfolioView portfolio={displayedPortfolios[0]} />
         ) : (
