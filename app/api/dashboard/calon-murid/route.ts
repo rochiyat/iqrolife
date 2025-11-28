@@ -12,6 +12,13 @@ const pool = new Pool({
 // GET - Fetch all calon murid
 export async function GET(request: NextRequest) {
   try {
+    // Get authenticated user from cookie
+    const authToken = request.cookies.get('auth-token');
+    if (!authToken || !authToken.value) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const user = JSON.parse(authToken.value);
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
 
@@ -19,25 +26,33 @@ export async function GET(request: NextRequest) {
       SELECT 
         id, name, birth_date, age, gender, parent_name, phone, email, 
         address, previous_school, status, notes, payment_proof_url, 
-        payment_proof_public_id, registration_date, created_at
+        payment_proof_public_id, registration_date, user_id, created_at
       FROM calon_murid
-      ORDER BY created_at DESC
     `;
 
+    const conditions: string[] = [];
     const params: any[] = [];
+    let paramIndex = 1;
 
-    if (status) {
-      query = `
-        SELECT 
-          id, name, birth_date, age, gender, parent_name, phone, email, 
-          address, previous_school, status, notes, payment_proof_url, 
-          payment_proof_public_id, registration_date, created_at
-        FROM calon_murid
-        WHERE status = $1
-        ORDER BY created_at DESC
-      `;
-      params.push(status);
+    // Filter by user_id for parent role
+    if (user.role === 'parent') {
+      conditions.push(`user_id = $${paramIndex}`);
+      params.push(user.id);
+      paramIndex++;
     }
+
+    // Filter by status
+    if (status) {
+      conditions.push(`status = $${paramIndex}`);
+      params.push(status);
+      paramIndex++;
+    }
+
+    if (conditions.length > 0) {
+      query += ' WHERE ' + conditions.join(' AND ');
+    }
+
+    query += ' ORDER BY created_at DESC';
 
     const result = await pool.query(query, params);
 
