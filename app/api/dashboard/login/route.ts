@@ -28,9 +28,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get user from database
+    // Get user from database with role permissions
     const userResult = await pool.query(
-      'SELECT id, email, password, name, role, avatar, phone, is_active FROM users WHERE email = $1',
+      `SELECT 
+        u.id, 
+        u.email, 
+        u.password, 
+        u.name, 
+        u.role, 
+        u.avatar, 
+        u.phone, 
+        u.is_active,
+        r.permissions
+      FROM users u
+      LEFT JOIN roles r ON LOWER(u.role) = LOWER(r.name)
+      WHERE u.email = $1`,
       [email]
     );
 
@@ -61,8 +73,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Remove password from user object
+    // Remove password from user object and include permissions
     const { password: _, ...userWithoutPassword } = user;
+
+    // Ensure permissions exist (fallback to empty object if role not found)
+    if (!userWithoutPassword.permissions) {
+      userWithoutPassword.permissions = {
+        menus: [],
+        canAccessAll: false,
+        canManageUsers: false,
+        canManageRoles: false,
+        canManageStudents: false,
+        canManageForms: false,
+        canManageFormsList: false,
+        canManageSettings: false,
+        canManageMenu: false,
+        canViewPortfolio: false,
+      };
+    }
 
     // Log activity
     await pool.query(

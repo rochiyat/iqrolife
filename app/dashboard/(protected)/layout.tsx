@@ -16,7 +16,7 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { rolePermissions, useAuth } from '@/lib/auth-context';
+import { getUserPermissions, useAuth } from '@/lib/auth-context';
 import { ProfileDropdown } from '@/components/dashboard/ProfileDropdown';
 
 export default function DashboardLayout({
@@ -38,7 +38,9 @@ export default function DashboardLayout({
   const getNavItems = () => {
     if (!user) return [];
 
-    const permissions = rolePermissions[user.role];
+    // Get permissions from database (or fallback to hardcoded)
+    const permissions = getUserPermissions(user);
+    const accessibleMenus = permissions.menus || [];
 
     // Main menu items (without group)
     const mainItems = [
@@ -46,31 +48,36 @@ export default function DashboardLayout({
         label: 'Dashboard',
         icon: LayoutDashboard,
         href: '/dashboard/home',
-        show: true,
+        menuId: 'home',
+        show: accessibleMenus.includes('home'),
       },
       {
         label: 'Calon Murid',
         icon: GraduationCap,
         href: '/dashboard/calon-murid',
-        show: permissions.canManageStudents,
+        menuId: 'calon-murid',
+        show: accessibleMenus.includes('calon-murid'),
       },
       {
         label: 'Formulir List',
         icon: FileText,
         href: '/dashboard/formulir-list',
-        show: permissions.canManageFormsList,
+        menuId: 'formulir-list',
+        show: accessibleMenus.includes('formulir-list'),
       },
       {
         label: 'Formulir',
         icon: FileText,
         href: '/dashboard/formulir',
-        show: permissions.canManageForms,
+        menuId: 'formulir',
+        show: accessibleMenus.includes('formulir'),
       },
       {
         label: 'Portofolio',
         icon: Briefcase,
         href: '/dashboard/portofolio',
-        show: permissions.canViewPortfolio,
+        menuId: 'portofolio',
+        show: accessibleMenus.includes('portofolio'),
       },
     ];
 
@@ -80,25 +87,29 @@ export default function DashboardLayout({
         label: 'Users',
         icon: Users,
         href: '/dashboard/users',
-        show: permissions.canManageUsers,
+        menuId: 'users',
+        show: accessibleMenus.includes('users'),
       },
       {
         label: 'Roles',
         icon: UserCog,
         href: '/dashboard/roles',
-        show: permissions.canManageRoles,
+        menuId: 'roles',
+        show: accessibleMenus.includes('roles'),
       },
       {
         label: 'Menu',
         icon: MenuIcon,
         href: '/dashboard/menu',
-        show: permissions.canManageMenu,
+        menuId: 'menu',
+        show: accessibleMenus.includes('menu'),
       },
       {
         label: 'Settings',
         icon: Settings,
         href: '/dashboard/settings',
-        show: permissions.canManageSettings,
+        menuId: 'settings',
+        show: accessibleMenus.includes('settings'),
       },
     ];
 

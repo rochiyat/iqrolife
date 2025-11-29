@@ -5,12 +5,26 @@ import { useRouter } from 'next/navigation';
 
 export type UserRole = 'superadmin' | 'staff' | 'teacher' | 'parent';
 
+export interface UserPermissions {
+  menus: string[];
+  canAccessAll: boolean;
+  canManageUsers: boolean;
+  canManageRoles: boolean;
+  canManageStudents: boolean;
+  canManageForms: boolean;
+  canManageFormsList: boolean;
+  canManageSettings: boolean;
+  canManageMenu: boolean;
+  canViewPortfolio: boolean;
+}
+
 export interface User {
   id: string;
   email: string;
   name: string;
   role: UserRole;
   avatar?: string;
+  permissions?: UserPermissions;
 }
 
 interface AuthContextType {
@@ -141,6 +155,95 @@ export function hasPermission(
   return requiredRoles.includes(userRole);
 }
 
+// Helper function to get user permissions (from database or fallback)
+export function getUserPermissions(user: User | null): UserPermissions {
+  if (!user) {
+    return {
+      menus: [],
+      canAccessAll: false,
+      canManageUsers: false,
+      canManageRoles: false,
+      canManageStudents: false,
+      canManageForms: false,
+      canManageFormsList: false,
+      canManageSettings: false,
+      canManageMenu: false,
+      canViewPortfolio: false,
+    };
+  }
+
+  // Use permissions from database if available
+  if (user.permissions) {
+    return user.permissions;
+  }
+
+  // Fallback to hardcoded permissions (for backward compatibility)
+  const fallbackPermissions: { [key in UserRole]: UserPermissions } = {
+    superadmin: {
+      menus: [
+        'home',
+        'calon-murid',
+        'formulir-list',
+        'users',
+        'roles',
+        'menu',
+        'formulir',
+        'portofolio',
+        'settings',
+      ],
+      canAccessAll: true,
+      canManageUsers: true,
+      canManageRoles: true,
+      canManageStudents: true,
+      canManageForms: true,
+      canManageFormsList: true,
+      canManageSettings: true,
+      canManageMenu: true,
+      canViewPortfolio: true,
+    },
+    staff: {
+      menus: ['home', 'calon-murid', 'formulir-list', 'formulir', 'portofolio'],
+      canAccessAll: false,
+      canManageUsers: false,
+      canManageRoles: false,
+      canManageStudents: true,
+      canManageForms: true,
+      canManageFormsList: true,
+      canManageSettings: false,
+      canManageMenu: false,
+      canViewPortfolio: true,
+    },
+    teacher: {
+      menus: ['home', 'calon-murid', 'formulir-list', 'portofolio'],
+      canAccessAll: false,
+      canManageUsers: false,
+      canManageRoles: false,
+      canManageStudents: true,
+      canManageForms: false,
+      canManageFormsList: true,
+      canManageSettings: false,
+      canManageMenu: false,
+      canViewPortfolio: true,
+    },
+    parent: {
+      menus: ['home', 'formulir', 'portofolio'],
+      canAccessAll: false,
+      canManageUsers: false,
+      canManageRoles: false,
+      canManageStudents: false,
+      canManageForms: true,
+      canManageFormsList: false,
+      canManageSettings: false,
+      canManageMenu: false,
+      canViewPortfolio: true,
+    },
+  };
+
+  return fallbackPermissions[user.role] || fallbackPermissions.parent;
+}
+
+// Deprecated: Use getUserPermissions instead
+// Kept for backward compatibility
 export const rolePermissions = {
   superadmin: {
     canAccessAll: true,
@@ -186,21 +289,4 @@ export const rolePermissions = {
     canManageMenu: false,
     canViewPortfolio: true,
   },
-};
-
-export const roleMenuAccess = {
-  superadmin: [
-    'home',
-    'calon-murid',
-    'formulir-list',
-    'users',
-    'roles',
-    'menu',
-    'formulir',
-    'portofolio',
-    'settings',
-  ],
-  staff: ['home', 'calon-murid', 'formulir-list', 'formulir', 'portofolio'],
-  teacher: ['home', 'calon-murid', 'formulir-list', 'portofolio'],
-  parent: ['home', 'formulir', 'portofolio'],
 };
