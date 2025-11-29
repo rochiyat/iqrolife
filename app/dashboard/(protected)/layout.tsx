@@ -16,7 +16,11 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { getUserPermissions, useAuth } from '@/lib/auth-context';
+import {
+  getUserPermissions,
+  getAccessibleMenusFromStorage,
+  useAuth,
+} from '@/lib/auth-context';
 import { ProfileDropdown } from '@/components/dashboard/ProfileDropdown';
 
 export default function DashboardLayout({
@@ -38,9 +42,15 @@ export default function DashboardLayout({
   const getNavItems = () => {
     if (!user) return [];
 
-    // Get permissions from database (or fallback to hardcoded)
-    const permissions = getUserPermissions(user);
-    const accessibleMenus = permissions.menus || [];
+    // Priority 1: Try to get menus from localStorage (fastest)
+    let accessibleMenus = getAccessibleMenusFromStorage(user.role);
+    console.log('accessibleMenus', accessibleMenus);
+
+    // Priority 2: Fallback to permissions from user object (from database)
+    if (accessibleMenus.length === 0) {
+      const permissions = getUserPermissions(user);
+      accessibleMenus = permissions.menus || [];
+    }
 
     // Main menu items (without group)
     const mainItems = [
@@ -59,7 +69,7 @@ export default function DashboardLayout({
         show: accessibleMenus.includes('calon-murid'),
       },
       {
-        label: 'Formulir List',
+        label: 'Formulir Review',
         icon: FileText,
         href: '/dashboard/formulir-list',
         menuId: 'formulir-list',

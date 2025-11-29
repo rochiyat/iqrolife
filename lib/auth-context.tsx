@@ -103,6 +103,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     setUser(data.user);
+
+    // Fetch accessible menus from API and save to localStorage
+    try {
+      console.log('🔍 Fetching menus for role:', data.user.role);
+      const menuResponse = await fetch(
+        `/api/dashboard/menu?role=${data.user.role}`
+      );
+      console.log('📡 Menu API response status:', menuResponse.status);
+
+      if (menuResponse.ok) {
+        const menuData = await menuResponse.json();
+        console.log('📋 Menu data received:', menuData);
+
+        // Save to localStorage
+        localStorage.setItem('accessible-menus', JSON.stringify(menuData.data));
+        localStorage.setItem('menus-role', data.user.role);
+
+        console.log('✅ Menus saved to localStorage');
+        console.log('   - accessible-menus:', menuData.data.length, 'items');
+        console.log('   - menus-role:', data.user.role);
+      } else {
+        console.error('❌ Menu API failed:', menuResponse.status);
+        const errorData = await menuResponse.json();
+        console.error('   Error:', errorData);
+      }
+    } catch (error) {
+      console.error('❌ Error fetching menus:', error);
+      // Continue even if menu fetch fails
+    }
+
     return data;
   };
 
@@ -110,6 +140,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       // Hapus cookie di client-side dulu (instant feedback)
       document.cookie = 'auth-token=; Max-Age=0; path=/; SameSite=Lax';
+
+      // Clear localStorage
+      localStorage.removeItem('accessible-menus');
+      localStorage.removeItem('menus-role');
+
       setUser(null);
 
       // Panggil API logout untuk cleanup di server
@@ -153,6 +188,29 @@ export function hasPermission(
   requiredRoles: UserRole[]
 ): boolean {
   return requiredRoles.includes(userRole);
+}
+
+// Helper function to get accessible menus from localStorage
+export function getAccessibleMenusFromStorage(
+  userRole: UserRole | null
+): string[] {
+  if (typeof window === 'undefined' || !userRole) return [];
+
+  try {
+    const storedRole = localStorage.getItem('menus-role');
+    const storedMenus = localStorage.getItem('accessible-menus');
+
+    // Check if stored menus match current user role
+    if (storedRole === userRole && storedMenus) {
+      const menus = JSON.parse(storedMenus);
+      // Extract menu names/ids
+      return menus.map((menu: any) => menu.name);
+    }
+  } catch (error) {
+    console.error('Error reading menus from localStorage:', error);
+  }
+
+  return [];
 }
 
 // Helper function to get user permissions (from database or fallback)
