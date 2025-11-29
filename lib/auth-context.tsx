@@ -116,13 +116,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const menuData = await menuResponse.json();
         console.log('📋 Menu data received:', menuData);
 
-        // Save to localStorage
+        // Save to localStorage with version
+        const MENU_VERSION = '1.1'; // Increment this when menu structure changes
         localStorage.setItem('accessible-menus', JSON.stringify(menuData.data));
         localStorage.setItem('menus-role', data.user.role);
+        localStorage.setItem('menus-version', MENU_VERSION);
 
         console.log('✅ Menus saved to localStorage');
         console.log('   - accessible-menus:', menuData.data.length, 'items');
         console.log('   - menus-role:', data.user.role);
+        console.log('   - menus-version:', MENU_VERSION);
       } else {
         console.error('❌ Menu API failed:', menuResponse.status);
         const errorData = await menuResponse.json();
@@ -197,8 +200,19 @@ export function getAccessibleMenusFromStorage(
   if (typeof window === 'undefined' || !userRole) return [];
 
   try {
+    const MENU_VERSION = '1.1'; // Must match version in login()
+    const storedVersion = localStorage.getItem('menus-version');
     const storedRole = localStorage.getItem('menus-role');
     const storedMenus = localStorage.getItem('accessible-menus');
+
+    // Clear old menu data if version mismatch
+    if (storedVersion !== MENU_VERSION) {
+      console.log('🔄 Menu version mismatch, clearing old data');
+      localStorage.removeItem('accessible-menus');
+      localStorage.removeItem('menus-role');
+      localStorage.removeItem('menus-version');
+      return [];
+    }
 
     // Check if stored menus match current user role
     if (storedRole === userRole && storedMenus) {

@@ -2,8 +2,25 @@
 
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, GraduationCap, FileText, TrendingUp } from 'lucide-react';
+import {
+  Users,
+  GraduationCap,
+  FileText,
+  TrendingUp,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface DashboardStats {
   totalCalonMurid: number;
@@ -27,6 +44,11 @@ export default function DashboardHome() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [recentActivities, setRecentActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Pagination & Search states
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   useEffect(() => {
     if (user) {
@@ -54,6 +76,35 @@ export default function DashboardHome() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Filter activities based on search
+  const filteredActivities = recentActivities.filter((activity) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      activity.action.toLowerCase().includes(searchLower) ||
+      activity.name.toLowerCase().includes(searchLower) ||
+      activity.time.toLowerCase().includes(searchLower)
+    );
+  });
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredActivities.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedActivities = filteredActivities.slice(startIndex, endIndex);
+
+  // Reset to page 1 when search or items per page changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, itemsPerPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleItemsPerPageChange = (value: string) => {
+    setItemsPerPage(Number(value));
   };
 
   const statsCards = stats
@@ -173,28 +224,138 @@ export default function DashboardHome() {
                 <CardTitle>Aktivitas Terkini</CardTitle>
               </CardHeader>
               <CardContent>
+                {/* Search and Show Entries */}
+                <div className="flex flex-col sm:flex-row gap-3 mb-4">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Input
+                      type="text"
+                      placeholder="Cari aktivitas..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-600 whitespace-nowrap">
+                      Show:
+                    </span>
+                    <Select
+                      value={itemsPerPage.toString()}
+                      onValueChange={handleItemsPerPageChange}
+                    >
+                      <SelectTrigger className="w-20">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="5">5</SelectItem>
+                        <SelectItem value="10">10</SelectItem>
+                        <SelectItem value="15">15</SelectItem>
+                        <SelectItem value="20">20</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Activities List */}
                 {recentActivities.length > 0 ? (
-                  <div className="space-y-4">
-                    {recentActivities.map((activity, index) => (
-                      <div
-                        key={index}
-                        className="flex items-start gap-3 pb-4 border-b last:border-0"
-                      >
-                        <div className="w-2 h-2 bg-brand-emerald rounded-full mt-2" />
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-900">
-                            {activity.action}
-                          </p>
-                          <p className="text-sm text-gray-600">
-                            {activity.name}
-                          </p>
-                          <p className="text-xs text-gray-400 mt-1">
-                            {activity.time}
-                          </p>
+                  <>
+                    {paginatedActivities.length > 0 ? (
+                      <div className="space-y-4 mb-4">
+                        {paginatedActivities.map((activity, index) => (
+                          <div
+                            key={index}
+                            className="flex items-start gap-3 pb-4 border-b last:border-0"
+                          >
+                            <div className="w-2 h-2 bg-brand-emerald rounded-full mt-2" />
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-gray-900">
+                                {activity.action}
+                              </p>
+                              <p className="text-sm text-gray-600">
+                                {activity.name}
+                              </p>
+                              <p className="text-xs text-gray-400 mt-1">
+                                {activity.time}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-500 text-center py-8">
+                        Tidak ada aktivitas yang cocok dengan pencarian
+                      </p>
+                    )}
+
+                    {/* Pagination */}
+                    {filteredActivities.length > 0 && (
+                      <div className="flex items-center justify-between pt-4 border-t">
+                        <div className="text-sm text-gray-600">
+                          Menampilkan {startIndex + 1} -{' '}
+                          {Math.min(endIndex, filteredActivities.length)} dari{' '}
+                          {filteredActivities.length} aktivitas
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                          </Button>
+                          <div className="flex items-center gap-1">
+                            {Array.from({ length: totalPages }, (_, i) => i + 1)
+                              .filter((page) => {
+                                // Show first page, last page, current page, and pages around current
+                                return (
+                                  page === 1 ||
+                                  page === totalPages ||
+                                  Math.abs(page - currentPage) <= 1
+                                );
+                              })
+                              .map((page, index, array) => {
+                                // Add ellipsis if there's a gap
+                                const prevPage = array[index - 1];
+                                const showEllipsis =
+                                  prevPage && page - prevPage > 1;
+
+                                return (
+                                  <div key={page} className="flex items-center">
+                                    {showEllipsis && (
+                                      <span className="px-2 text-gray-400">
+                                        ...
+                                      </span>
+                                    )}
+                                    <Button
+                                      variant={
+                                        currentPage === page
+                                          ? 'default'
+                                          : 'outline'
+                                      }
+                                      size="sm"
+                                      onClick={() => handlePageChange(page)}
+                                      className="w-8 h-8 p-0"
+                                    >
+                                      {page}
+                                    </Button>
+                                  </div>
+                                );
+                              })}
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </Button>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    )}
+                  </>
                 ) : (
                   <p className="text-sm text-gray-500 text-center py-8">
                     Belum ada aktivitas terkini

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Menu Cache - Iqrolife Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            border-radius: 5px;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .info-box li {
+            padding: 5px 0;
+            color: #555;
+        }
+        
+        .info-box li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+            margin: 10px;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .button:active {
+            transform: translateY(0);
+        }
+        
+        .button.secondary {
+            background: #6c757d;
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .cache-info {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .cache-info h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .cache-info pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🔄</div>
+        <h1>Clear Menu Cache</h1>
+        <p class="subtitle">Refresh menu data untuk melihat menu terbaru</p>
+        
+        <div class="info-box">
+            <h3>Kapan perlu clear cache?</h3>
+            <ul>
+                <li>Menu baru tidak muncul setelah login</li>
+                <li>Menu yang seharusnya ada hilang</li>
+                <li>Setelah update role atau permissions</li>
+                <li>Setelah admin menambah menu baru</li>
+            </ul>
+        </div>
+        
+        <button class="button" onclick="clearCache()">
+            🗑️ Clear Cache & Reload
+        </button>
+        
+        <button class="button secondary" onclick="showCacheInfo()">
+            📋 Lihat Cache Info
+        </button>
+        
+        <div id="status" class="status"></div>
+        
+        <div id="cacheInfo" class="cache-info" style="display: none;">
+            <h4>Current Cache Data:</h4>
+            <pre id="cacheData"></pre>
+        </div>
+    </div>
+    
+    <script>
+        function clearCache() {
+            const status = document.getElementById('status');
+            
+            try {
+                // Get current cache info before clearing
+                const menusRole = localStorage.getItem('menus-role');
+                const menusVersion = localStorage.getItem('menus-version');
+                const accessibleMenus = localStorage.getItem('accessible-menus');
+                
+                // Clear menu cache
+                localStorage.removeItem('accessible-menus');
+                localStorage.removeItem('menus-role');
+                localStorage.removeItem('menus-version');
+                
+                // Show success message
+                status.className = 'status success';
+                status.style.display = 'block';
+                status.innerHTML = `
+                    <strong>✅ Cache berhasil dihapus!</strong><br>
+                    <small>Cleared: menus-role, menus-version, accessible-menus</small><br>
+                    <small>Halaman akan reload dalam 2 detik...</small>
+                `;
+                
+                // Log to console
+                console.log('🗑️ Menu cache cleared:');
+                console.log('- menus-role:', menusRole);
+                console.log('- menus-version:', menusVersion);
+                console.log('- accessible-menus:', accessibleMenus ? JSON.parse(accessibleMenus).length + ' items' : 'none');
+                
+                // Reload page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '/dashboard/login';
+                }, 2000);
+                
+            } catch (error) {
+                status.className = 'status error';
+                status.style.display = 'block';
+                status.innerHTML = `
+                    <strong>❌ Error:</strong><br>
+                    ${error.message}
+                `;
+            }
+        }
+        
+        function showCacheInfo() {
+            const cacheInfo = document.getElementById('cacheInfo');
+            const cacheData = document.getElementById('cacheData');
+            
+            try {
+                const menusRole = localStorage.getItem('menus-role');
+                const menusVersion = localStorage.getItem('menus-version');
+                const accessibleMenus = localStorage.getItem('accessible-menus');
+                
+                let info = '';
+                info += `Role: ${menusRole || 'Not set'}\n`;
+                info += `Version: ${menusVersion || 'Not set'}\n`;
+                info += `\nAccessible Menus:\n`;
+                
+                if (accessibleMenus) {
+                    const menus = JSON.parse(accessibleMenus);
+                    info += `Total: ${menus.length} menus\n\n`;
+                    menus.forEach((menu, i) => {
+                        info += `${i + 1}. ${menu.name} (${menu.label})\n`;
+                        info += `   → ${menu.href}\n`;
+                    });
+                } else {
+                    info += 'No menus cached\n';
+                }
+                
+                cacheData.textContent = info;
+                cacheInfo.style.display = 'block';
+                
+            } catch (error) {
+                cacheData.textContent = 'Error reading cache: ' + error.message;
+                cacheInfo.style.display = 'block';
+            }
+        }
+        
+        // Auto-show cache info on load
+        window.addEventListener('load', () => {
+            const menusRole = localStorage.getItem('menus-role');
+            if (menusRole) {
+                const status = document.getElementById('status');
+                status.className = 'status info';
+                status.style.display = 'block';
+                status.innerHTML = `
+                    <strong>ℹ️ Cache ditemukan</strong><br>
+                    <small>Role: ${menusRole}</small><br>
+                    <small>Klik "Lihat Cache Info" untuk detail</small>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

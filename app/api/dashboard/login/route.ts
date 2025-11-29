@@ -99,6 +99,13 @@ export async function POST(request: NextRequest) {
       [user.id, 'LOGIN', 'user', user.id, `User ${user.name} logged in`]
     );
 
+    // add get menus and store in localstorage
+    const menus = {}; // get menus from database or api menus
+    localStorage.setItem('accessible-menus', JSON.stringify(menus));
+    localStorage.setItem('menus-role', user.role);
+    localStorage.setItem('menus-version', '1.1');
+    userWithoutPassword.menus = menus;
+
     const response = NextResponse.json(
       {
         success: true,

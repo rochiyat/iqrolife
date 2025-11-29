@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dashboard Activities Pagination</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .test-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checklist input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .checklist label {
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffc107;
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px 5px;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .feature-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .feature-box h3 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .feature-box p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Dashboard Activities Pagination</h1>
+        <p class="subtitle">Checklist untuk memverifikasi fitur pagination, search, dan show entries</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0%</div>
+        </div>
+        
+        <!-- Feature Overview -->
+        <div class="test-section">
+            <h2>📋 Fitur yang Ditambahkan</h2>
+            <div class="feature-box">
+                <h3>🔍 Search Bar</h3>
+                <p>Input field untuk mencari aktivitas berdasarkan action, name, atau time. Real-time filtering.</p>
+            </div>
+            <div class="feature-box">
+                <h3>📊 Show Entries</h3>
+                <p>Dropdown untuk memilih jumlah item per halaman: 5, 10, 15, atau 20 items.</p>
+            </div>
+            <div class="feature-box">
+                <h3>📄 Pagination</h3>
+                <p>Navigasi halaman dengan tombol prev/next dan page numbers. Smart display dengan ellipsis.</p>
+            </div>
+            <div class="feature-box">
+                <h3>📈 Info Display</h3>
+                <p>Menampilkan "Menampilkan X - Y dari Z aktivitas" untuk informasi yang jelas.</p>
+            </div>
+        </div>
+        
+        <!-- Test Instructions -->
+        <div class="test-section">
+            <h2>🚀 Cara Test</h2>
+            <ol style="padding-left: 20px; color: #555;">
+                <li style="margin-bottom: 10px;">Buka dashboard: <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">http://localhost:3000/dashboard/home</code></li>
+                <li style="margin-bottom: 10px;">Login sebagai <strong>superadmin</strong> atau <strong>staff</strong></li>
+                <li style="margin-bottom: 10px;">Scroll ke bagian <strong>"Aktivitas Terkini"</strong></li>
+                <li style="margin-bottom: 10px;">Lakukan test sesuai checklist di bawah</li>
+                <li style="margin-bottom: 10px;">Centang setiap item yang berhasil</li>
+            </ol>
+        </div>
+        
+        <!-- Functional Tests -->
+        <div class="test-section">
+            <h2>✅ Functional Tests</h2>
+            <ul class="checklist" id="functionalTests">
+                <li>
+                    <input type="checkbox" id="test1" onchange="updateProgress()">
+                    <label for="test1">Search bar muncul di atas list aktivitas</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test2" onchange="updateProgress()">
+                    <label for="test2">Search icon muncul di sebelah kiri input</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test3" onchange="updateProgress()">
+                    <label for="test3">Ketik di search bar → aktivitas ter-filter real-time</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test4" onchange="updateProgress()">
+                    <label for="test4">Search case-insensitive (huruf besar/kecil sama)</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test5" onchange="updateProgress()">
+                    <label for="test5">Dropdown "Show" muncul dengan pilihan 5, 10, 15, 20</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test6" onchange="updateProgress()">
+                    <label for="test6">Default show 5 items per page</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test7" onchange="updateProgress()">
+                    <label for="test7">Ubah show entries → jumlah item berubah</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test8" onchange="updateProgress()">
+                    <label for="test8">Pagination muncul jika aktivitas > items per page</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test9" onchange="updateProgress()">
+                    <label for="test9">Tombol Previous berfungsi</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test10" onchange="updateProgress()">
+                    <label for="test10">Tombol Next berfungsi</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test11" onchange="updateProgress()">
+                    <label for="test11">Page numbers clickable dan navigasi benar</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test12" onchange="updateProgress()">
+                    <label for="test12">Info display menampilkan "Menampilkan X - Y dari Z"</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="test13" onchange="updateProgress()">
+                    <label for="test13">Info display update saat pagination berubah</label>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Edge Cases -->
+        <div class="test-section">
+            <h2>🔍 Edge Cases</h2>
+            <ul class="checklist" id="edgeCases">
+                <li>
+                    <input type="checkbox" id="edge1" onchange="updateProgress()">
+                    <label for="edge1">Tidak ada aktivitas → tampil "Belum ada aktivitas terkini"</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="edge2" onchange="updateProgress()">
+                    <label for="edge2">Search tanpa hasil → tampil "Tidak ada aktivitas yang cocok"</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="edge3" onchange="updateProgress()">
+                    <label for="edge3">Aktivitas = 5 → tidak ada pagination (1 page)</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="edge4" onchange="updateProgress()">
+                    <label for="edge4">Di page 1 → tombol Previous disabled</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="edge5" onchange="updateProgress()">
+                    <label for="edge5">Di last page → tombol Next disabled</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="edge6" onchange="updateProgress()">
+                    <label for="edge6">Search → pagination reset ke page 1</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="edge7" onchange="updateProgress()">
+                    <label for="edge7">Ubah show entries → pagination reset ke page 1</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="edge8" onchange="updateProgress()">
+                    <label for="edge8">Last page dengan partial items (misal 3 dari 5)</label>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Responsive Tests -->
+        <div class="test-section">
+            <h2>📱 Responsive Tests</h2>
+            <ul class="checklist" id="responsiveTests">
+                <li>
+                    <input type="checkbox" id="resp1" onchange="updateProgress()">
+                    <label for="resp1">Desktop: Search dan Show entries dalam 1 baris</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="resp2" onchange="updateProgress()">
+                    <label for="resp2">Mobile: Search dan Show entries stack vertikal</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="resp3" onchange="updateProgress()">
+                    <label for="resp3">Pagination responsive di mobile</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="resp4" onchange="updateProgress()">
+                    <label for="resp4">Info display responsive (tidak overflow)</label>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- UI/UX Tests -->
+        <div class="test-section">
+            <h2>🎨 UI/UX Tests</h2>
+            <ul class="checklist" id="uiTests">
+                <li>
+                    <input type="checkbox" id="ui1" onchange="updateProgress()">
+                    <label for="ui1">Search placeholder text jelas</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="ui2" onchange="updateProgress()">
+                    <label for="ui2">Hover states pada buttons terlihat</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="ui3" onchange="updateProgress()">
+                    <label for="ui3">Active page number highlighted</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="ui4" onchange="updateProgress()">
+                    <label for="ui4">Disabled buttons terlihat berbeda</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="ui5" onchange="updateProgress()">
+                    <label for="ui5">Spacing dan alignment rapi</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="ui6" onchange="updateProgress()">
+                    <label for="ui6">Ellipsis (...) muncul jika ada gap halaman</label>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="test-section">
+            <h2>⚡ Quick Actions</h2>
+            <button class="button" onclick="checkAll()">✓ Check All</button>
+            <button class="button" onclick="uncheckAll()">✗ Uncheck All</button>
+            <button class="button" onclick="window.open('/dashboard/home', '_blank')">🚀 Open Dashboard</button>
+        </div>
+        
+        <div id="statusMessage"></div>
+    </div>
+    
+    <script>
+        function updateProgress() {
+            const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const percentage = Math.round((checkedBoxes.length / allCheckboxes.length) * 100);
+            
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '%';
+            
+            const statusMessage = document.getElementById('statusMessage');
+            
+            if (percentage === 100) {
+                statusMessage.className = 'status success';
+                statusMessage.innerHTML = `
+                    <strong>🎉 Semua test berhasil!</strong><br>
+                    Fitur pagination, search, dan show entries berfungsi dengan baik.
+                `;
+            } else if (percentage >= 80) {
+                statusMessage.className = 'status warning';
+                statusMessage.innerHTML = `
+                    <strong>⚠️ Hampir selesai!</strong><br>
+                    ${checkedBoxes.length} dari ${allCheckboxes.length} test berhasil (${percentage}%)
+                `;
+            } else if (percentage > 0) {
+                statusMessage.className = 'status warning';
+                statusMessage.innerHTML = `
+                    <strong>🔄 Testing in progress...</strong><br>
+                    ${checkedBoxes.length} dari ${allCheckboxes.length} test berhasil (${percentage}%)
+                `;
+            } else {
+                statusMessage.innerHTML = '';
+            }
+        }
+        
+        function checkAll() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = true);
+            updateProgress();
+        }
+        
+        function uncheckAll() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = false);
+            updateProgress();
+        }
+        
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>

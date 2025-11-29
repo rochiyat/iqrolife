@@ -58,7 +58,7 @@ export default function RolesPage() {
   const availableMenus = [
     { id: 'home', label: 'Dashboard', icon: '🏠' },
     { id: 'calon-murid', label: 'Calon Murid', icon: '🎓' },
-    { id: 'formulir-list', label: 'Formulir List', icon: '📋' },
+    { id: 'formulir-list', label: 'Formulir Review', icon: '📋' },
     { id: 'formulir', label: 'Formulir', icon: '📝' },
     { id: 'portofolio', label: 'Portofolio', icon: '🎨' },
     { id: 'users', label: 'Users', icon: '👥' },
@@ -68,6 +68,8 @@ export default function RolesPage() {
   ];
 
   const toggleMenuAccess = (roleName: string, menuId: string) => {
+    console.log('roleName:', roleName);
+
     setMenuAccess((prev) => {
       const currentAccess = prev[roleName] || [];
       const hasAccess = currentAccess.includes(menuId);
