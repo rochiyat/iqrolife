@@ -58,12 +58,13 @@ export default function RolesPage() {
   const availableMenus = [
     { id: 'home', label: 'Dashboard', icon: '🏠' },
     { id: 'calon-murid', label: 'Calon Murid', icon: '🎓' },
+    { id: 'formulir-list', label: 'Formulir List', icon: '📋' },
+    { id: 'formulir', label: 'Formulir', icon: '📝' },
+    { id: 'portofolio', label: 'Portofolio', icon: '🎨' },
     { id: 'users', label: 'Users', icon: '👥' },
     { id: 'roles', label: 'Roles', icon: '🛡️' },
     { id: 'menu', label: 'Menu', icon: '📋' },
-    { id: 'formulir', label: 'Formulir', icon: '📝' },
     { id: 'settings', label: 'Settings', icon: '⚙️' },
-    { id: 'portofolio', label: 'Portofolio', icon: '🎨' },
   ];
 
   const toggleMenuAccess = (roleName: string, menuId: string) => {
