@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 /**
- * GET - Fetch student portfolios
+ * GET - Fetch student portfolios from calon_murid
  * Query params:
  * - user_id: Filter by parent user (for parent role)
  * - status: Filter by status
@@ -28,22 +28,27 @@ export async function GET(request: NextRequest) {
 
     let query = `
       SELECT 
-        fp.id,
-        fp.nama_lengkap as student_name,
-        fp.nama_panggilan as nickname,
-        fp.jenis_kelamin as gender,
-        fp.tempat_lahir as birth_place,
-        fp.tanggal_lahir as birth_date,
+        cm.id,
+        cm.name as student_name,
+        cm.birth_date,
+        cm.age,
+        cm.gender,
+        cm.parent_name,
+        cm.phone as parent_phone,
+        cm.email as parent_email,
+        cm.address,
+        cm.previous_school,
+        cm.status,
+        cm.notes as review_notes,
+        cm.registration_date,
+        cm.user_id,
+        cm.formulir_pendaftaran_id,
+        u.name as user_parent_name,
+        u.email as user_email,
+        u.phone as user_phone,
+        cm.created_at,
+        cm.updated_at,
         fp.program_yang_dipilih as program,
-        fp.status,
-        fp.submission_date as registration_date,
-        fp.review_notes,
-        fp.reviewed_at,
-        fp.user_id,
-        u.name as parent_name,
-        u.email as parent_email,
-        u.phone as parent_phone,
-        fp.alamat_lengkap as address,
         fp.nama_ayah as father_name,
         fp.nama_ibu as mother_name,
         fp.pekerjaan_ayah as father_job,
@@ -51,11 +56,10 @@ export async function GET(request: NextRequest) {
         fp.telepon_ayah as father_phone,
         fp.telepon_ibu as mother_phone,
         fp.hobi_minat as hobbies,
-        fp.prestasi_yang_pernah_diraih as achievements,
-        fp.created_at,
-        fp.updated_at
-      FROM formulir_pendaftaran fp
-      LEFT JOIN users u ON fp.user_id = u.id
+        fp.prestasi_yang_pernah_diraih as achievements
+      FROM calon_murid cm
+      LEFT JOIN users u ON cm.user_id = u.id
+      LEFT JOIN formulir_pendaftaran fp ON cm.formulir_pendaftaran_id = fp.id
     `;
 
     const conditions: string[] = [];
@@ -64,18 +68,18 @@ export async function GET(request: NextRequest) {
 
     // Filter by user_id for parent role
     if (user.role === 'parent') {
-      conditions.push(`fp.user_id = $${paramIndex}`);
+      conditions.push(`cm.user_id = $${paramIndex}`);
       params.push(user.id);
       paramIndex++;
     } else if (userId) {
-      conditions.push(`fp.user_id = $${paramIndex}`);
+      conditions.push(`cm.user_id = $${paramIndex}`);
       params.push(userId);
       paramIndex++;
     }
 
     // Filter by status
     if (statusFilter) {
-      conditions.push(`fp.status = $${paramIndex}`);
+      conditions.push(`cm.status = $${paramIndex}`);
       params.push(statusFilter);
       paramIndex++;
     }
@@ -84,23 +88,28 @@ export async function GET(request: NextRequest) {
       query += ' WHERE ' + conditions.join(' AND ');
     }
 
-    query += ' ORDER BY fp.submission_date DESC';
+    query += ' ORDER BY cm.registration_date DESC';
 
     const result = await pool.query(query, params);
 
     // Transform data to match frontend structure
     const portfolios = result.rows.map((row) => {
-      // Calculate age
-      const birthDate = new Date(row.birth_date);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (
-        monthDiff < 0 ||
-        (monthDiff === 0 && today.getDate() < birthDate.getDate())
-      ) {
-        age--;
-      }
+      // Use age from calon_murid or calculate if needed
+      const age =
+        row.age ||
+        (() => {
+          const birthDate = new Date(row.birth_date);
+          const today = new Date();
+          let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+          const monthDiff = today.getMonth() - birthDate.getMonth();
+          if (
+            monthDiff < 0 ||
+            (monthDiff === 0 && today.getDate() < birthDate.getDate())
+          ) {
+            calculatedAge--;
+          }
+          return calculatedAge;
+        })();
 
       // Calculate progress based on status
       let progress = 0;
@@ -108,11 +117,6 @@ export async function GET(request: NextRequest) {
         'pending';
 
       switch (row.status) {
-        case 'draft':
-          progress = 20;
-          mappedStatus = 'pending';
-          break;
-        case 'submitted':
         case 'pending':
           progress = 40;
           mappedStatus = 'pending';
@@ -134,7 +138,7 @@ export async function GET(request: NextRequest) {
           mappedStatus = 'rejected';
           break;
         default:
-          progress = 20;
+          progress = 40;
           mappedStatus = 'pending';
       }
 
@@ -151,42 +155,33 @@ export async function GET(request: NextRequest) {
         id: '1',
         type: 'registration',
         title: 'Pendaftaran Online',
-        description: 'Pendaftaran akun dan data awal berhasil',
+        description: 'Pendaftaran calon murid berhasil',
         date: new Date(row.created_at).toLocaleString('id-ID'),
         status: 'completed',
       });
 
-      // 2. Form submission
-      if (row.submission_date) {
-        activities.push({
-          id: '2',
-          type: 'form_submission',
-          title: 'Pengisian Formulir',
-          description: 'Formulir pendaftaran lengkap disubmit',
-          date: new Date(row.submission_date).toLocaleString('id-ID'),
-          status: 'completed',
-        });
-      }
+      // 2. Data verification (always completed for calon_murid)
+      activities.push({
+        id: '2',
+        type: 'form_submission',
+        title: 'Verifikasi Data',
+        description: 'Data calon murid telah diverifikasi',
+        date: new Date(row.created_at).toLocaleString('id-ID'),
+        status: 'completed',
+      });
 
-      // 3. Review/Approval
-      if (row.reviewed_at) {
+      // 3. Approval (use created_at as approval date for approved status)
+      if (row.status === 'approved' || row.status === 'rejected') {
         activities.push({
           id: '3',
           type: 'approval',
-          title: 'Verifikasi Admin',
+          title: 'Persetujuan Admin',
           description:
-            row.status === 'approved' || row.status === 'reviewed'
-              ? 'Data dan dokumen diverifikasi dan disetujui'
-              : row.status === 'rejected'
-              ? 'Pendaftaran ditolak'
-              : 'Sedang dalam proses review',
-          date: new Date(row.reviewed_at).toLocaleString('id-ID'),
-          status:
-            row.status === 'approved' || row.status === 'reviewed'
-              ? 'completed'
-              : row.status === 'rejected'
-              ? 'rejected'
-              : 'pending',
+            row.status === 'approved'
+              ? 'Data calon murid disetujui'
+              : 'Pendaftaran ditolak',
+          date: new Date(row.created_at).toLocaleString('id-ID'),
+          status: row.status === 'approved' ? 'completed' : 'rejected',
         });
       }
 
@@ -196,7 +191,9 @@ export async function GET(request: NextRequest) {
           id: '4',
           type: 'enrollment',
           title: 'Terdaftar Resmi',
-          description: `Murid terdaftar resmi di program ${row.program}`,
+          description: `Murid terdaftar resmi${
+            row.program ? ` di program ${row.program}` : ''
+          }`,
           date: new Date(row.updated_at).toLocaleString('id-ID'),
           status: 'completed',
         });
@@ -210,14 +207,14 @@ export async function GET(request: NextRequest) {
         registrationDate: row.registration_date,
         status: mappedStatus,
         progress: progress,
-        parent: row.parent_name || 'N/A',
-        parentEmail: row.parent_email || '',
-        email: row.parent_email || '',
-        phone: row.parent_phone || '',
+        parent: row.parent_name || row.user_parent_name || 'N/A',
+        parentEmail: row.parent_email || row.user_email || '',
+        email: row.parent_email || row.user_email || '',
+        phone: row.parent_phone || row.user_phone || '',
         activities: activities,
         documents: {
-          formData: !!row.submission_date,
-          paymentProof: false, // TODO: Add payment tracking
+          formData: true, // calon_murid already has complete data
+          paymentProof: !!row.payment_proof_url,
           birthCertificate: false, // TODO: Add document tracking
           healthCertificate: false,
           photo: false,
@@ -225,12 +222,12 @@ export async function GET(request: NextRequest) {
         formData: {
           birthDate: row.birth_date,
           age: age,
-          gender: row.gender === 'L' ? 'Laki-laki' : 'Perempuan',
+          gender: row.gender || '',
           address: row.address || '',
           previousSchool: row.previous_school || '',
-          parentName: row.parent_name || '',
-          parentEmail: row.parent_email || '',
-          parentPhone: row.parent_phone || '',
+          parentName: row.parent_name || row.user_parent_name || '',
+          parentEmail: row.parent_email || row.user_email || '',
+          parentPhone: row.parent_phone || row.user_phone || '',
           fatherName: row.father_name || '',
           motherName: row.mother_name || '',
           fatherJob: row.father_job || '',
@@ -238,7 +235,7 @@ export async function GET(request: NextRequest) {
           fatherPhone: row.father_phone || '',
           motherPhone: row.mother_phone || '',
         },
-        reviewNotes: row.review_notes,
+        reviewNotes: row.review_notes || row.notes,
       };
     });
 
