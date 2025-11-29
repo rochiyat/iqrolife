@@ -168,15 +168,21 @@ export default function SettingsPage() {
         },
       ];
 
-      for (const setting of settingsToUpdate) {
-        await fetch('/api/dashboard/settings', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(setting),
-        });
-      }
+      // Send all settings in a single batch request
+      const response = await fetch('/api/dashboard/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settingsToUpdate), // Send array
+      });
 
-      alert('Settings berhasil disimpan!');
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Settings berhasil disimpan!');
+        await fetchSettings(); // Refresh data
+      } else {
+        alert(result.error || 'Gagal menyimpan settings');
+      }
     } catch (error) {
       console.error('Error saving settings:', error);
       alert('Gagal menyimpan settings');

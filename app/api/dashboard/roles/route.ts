@@ -77,48 +77,111 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// PUT - Update role
+// PUT - Update role (supports batch update)
 export async function PUT(request: NextRequest) {
   try {
-    const { id, name, display_name, description, permissions, is_active } =
-      await request.json();
+    const body = await request.json();
 
-    if (!id) {
-      return NextResponse.json(
-        { error: 'ID role diperlukan' },
-        { status: 400 }
+    // Check if it's a batch update (array of roles)
+    if (Array.isArray(body)) {
+      // Batch update
+      const client = await pool.connect();
+      try {
+        await client.query('BEGIN');
+
+        const results = [];
+        for (const role of body) {
+          const {
+            id,
+            name,
+            display_name,
+            description,
+            permissions,
+            is_active,
+          } = role;
+
+          if (!id) {
+            throw new Error(`ID is required for role: ${JSON.stringify(role)}`);
+          }
+
+          const result = await client.query(
+            `UPDATE roles 
+             SET name = COALESCE($1, name),
+                 display_name = COALESCE($2, display_name),
+                 description = COALESCE($3, description),
+                 permissions = COALESCE($4, permissions),
+                 is_active = COALESCE($5, is_active),
+                 updated_at = NOW()
+             WHERE id = $6
+             RETURNING id, name, display_name, description, permissions, is_active, updated_at`,
+            [name, display_name, description, permissions, is_active, id]
+          );
+
+          if (result.rows.length === 0) {
+            throw new Error(`Role with id ${id} not found`);
+          }
+
+          results.push(result.rows[0]);
+        }
+
+        await client.query('COMMIT');
+
+        return NextResponse.json({
+          success: true,
+          message: `${results.length} roles berhasil diupdate`,
+          data: results,
+        });
+      } catch (error) {
+        await client.query('ROLLBACK');
+        throw error;
+      } finally {
+        client.release();
+      }
+    } else {
+      // Single update
+      const { id, name, display_name, description, permissions, is_active } =
+        body;
+
+      if (!id) {
+        return NextResponse.json(
+          { error: 'ID role diperlukan' },
+          { status: 400 }
+        );
+      }
+
+      const result = await pool.query(
+        `UPDATE roles 
+         SET name = COALESCE($1, name),
+             display_name = COALESCE($2, display_name),
+             description = COALESCE($3, description),
+             permissions = COALESCE($4, permissions),
+             is_active = COALESCE($5, is_active),
+             updated_at = NOW()
+         WHERE id = $6
+         RETURNING id, name, display_name, description, permissions, is_active, updated_at`,
+        [name, display_name, description, permissions, is_active, id]
       );
+
+      if (result.rows.length === 0) {
+        return NextResponse.json(
+          { error: 'Role tidak ditemukan' },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: 'Role berhasil diupdate',
+        data: result.rows[0],
+      });
     }
-
-    const result = await pool.query(
-      `UPDATE roles 
-       SET name = COALESCE($1, name),
-           display_name = COALESCE($2, display_name),
-           description = COALESCE($3, description),
-           permissions = COALESCE($4, permissions),
-           is_active = COALESCE($5, is_active),
-           updated_at = NOW()
-       WHERE id = $6
-       RETURNING id, name, display_name, description, permissions, is_active, updated_at`,
-      [name, display_name, description, permissions, is_active, id]
-    );
-
-    if (result.rows.length === 0) {
-      return NextResponse.json(
-        { error: 'Role tidak ditemukan' },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Role berhasil diupdate',
-      data: result.rows[0],
-    });
   } catch (error) {
     console.error('Error updating role:', error);
     return NextResponse.json(
-      { error: 'Gagal mengupdate role' },
+      {
+        error: 'Gagal mengupdate role',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
       { status: 500 }
     );
   }

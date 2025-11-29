@@ -87,22 +87,31 @@ export default function RolesPage() {
   const handleSaveMenuAccess = async () => {
     try {
       setIsSaving(true);
-      for (const role of roles) {
-        const menus = menuAccess[role.name] || [];
-        const response = await fetch('/api/dashboard/roles', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: role.id,
-            permissions: { ...role.permissions, menus },
-          }),
-        });
 
-        if (!response.ok) {
-          throw new Error(`Gagal update role ${role.display_name}`);
-        }
+      // Prepare batch update data
+      const rolesToUpdate = roles.map((role) => ({
+        id: role.id,
+        permissions: {
+          ...role.permissions,
+          menus: menuAccess[role.name] || [],
+        },
+      }));
+
+      // Send single batch request
+      const response = await fetch('/api/dashboard/roles', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(rolesToUpdate), // Send as array
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Menu access berhasil disimpan!');
+        await fetchRoles(); // Refresh data
+      } else {
+        alert(result.error || 'Gagal menyimpan menu access');
       }
-      alert('Menu access berhasil disimpan!');
     } catch (error) {
       console.error('Error saving menu access:', error);
       alert('Gagal menyimpan menu access');

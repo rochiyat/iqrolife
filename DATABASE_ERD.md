@@ -12,10 +12,14 @@ erDiagram
     users ||--o{ formulir_pendaftaran : "reviewed_by"
     users ||--o{ portofolio : "created_by"
     users ||--o{ activity_logs : "user_id"
+    users ||--o{ notifications : "receives"
     
     users }o--|| roles : "role_id (FK - deprecated)"
     users ||--o{ user_roles : "has"
     roles ||--o{ user_roles : "assigned to"
+    
+    calon_murid ||--o{ student_documents : "has"
+    calon_murid ||--o{ payments : "makes"
     
     formulir ||--o| calon_murid : "formulir_id"
     formulir_pendaftaran ||--o| calon_murid : "formulir_pendaftaran_id"
@@ -209,6 +213,62 @@ erDiagram
         text description
         varchar ip_address
         text user_agent
+        timestamp created_at
+    }
+
+    student_documents {
+        int id PK
+        int student_id FK
+        varchar document_type
+        text file_url
+        varchar file_public_id
+        varchar file_name
+        int file_size
+        varchar mime_type
+        int uploaded_by FK
+        timestamp uploaded_at
+        int verified_by FK
+        timestamp verified_at
+        varchar status
+        text notes
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    payments {
+        int id PK
+        int student_id FK
+        varchar payment_type
+        decimal amount
+        varchar currency
+        varchar payment_method
+        date payment_date
+        text proof_url
+        varchar proof_public_id
+        varchar status
+        int verified_by FK
+        timestamp verified_at
+        text notes
+        varchar reference_number
+        varchar bank_name
+        varchar account_name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    notifications {
+        int id PK
+        int user_id FK
+        varchar type
+        varchar channel
+        varchar subject
+        text message
+        jsonb data
+        varchar status
+        timestamp sent_at
+        timestamp read_at
+        text error_message
+        int retry_count
         timestamp created_at
     }
 ```

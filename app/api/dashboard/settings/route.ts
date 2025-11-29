@@ -107,65 +107,115 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// PUT - Update setting
+// PUT - Update or Insert setting (UPSERT)
 export async function PUT(request: NextRequest) {
   try {
-    const { id, key, value, type, category, description, is_public } =
-      await request.json();
+    const body = await request.json();
 
-    if (!id && !key) {
-      return NextResponse.json(
-        { error: 'ID atau key setting diperlukan' },
-        { status: 400 }
-      );
-    }
+    // Check if it's a batch update (array of settings)
+    if (Array.isArray(body)) {
+      // Batch UPSERT
+      const client = await pool.connect();
+      try {
+        await client.query('BEGIN');
 
-    let query;
-    let params;
+        const results = [];
+        for (const setting of body) {
+          const { key, value, type, category, description, is_public } =
+            setting;
 
-    if (id) {
-      query = `UPDATE settings 
-               SET key = COALESCE($1, key),
-                   value = COALESCE($2, value),
-                   type = COALESCE($3, type),
-                   category = COALESCE($4, category),
-                   description = COALESCE($5, description),
-                   is_public = COALESCE($6, is_public),
-                   updated_at = NOW()
-               WHERE id = $7
-               RETURNING id, key, value, type, category, description, is_public, updated_at`;
-      params = [key, value, type, category, description, is_public, id];
+          if (!key) {
+            throw new Error(
+              `Key is required for setting: ${JSON.stringify(setting)}`
+            );
+          }
+
+          const query = `
+            INSERT INTO settings (key, value, type, category, description, is_public, created_at, updated_at)
+            VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
+            ON CONFLICT (key) 
+            DO UPDATE SET 
+              value = EXCLUDED.value,
+              type = EXCLUDED.type,
+              category = EXCLUDED.category,
+              description = EXCLUDED.description,
+              is_public = EXCLUDED.is_public,
+              updated_at = NOW()
+            RETURNING id, key, value, type, category, description, is_public, created_at, updated_at
+          `;
+
+          const result = await client.query(query, [
+            key,
+            value || null,
+            type || 'string',
+            category || null,
+            description || null,
+            is_public || false,
+          ]);
+
+          results.push(result.rows[0]);
+        }
+
+        await client.query('COMMIT');
+
+        return NextResponse.json({
+          success: true,
+          message: `${results.length} settings berhasil disimpan`,
+          data: results,
+        });
+      } catch (error) {
+        await client.query('ROLLBACK');
+        throw error;
+      } finally {
+        client.release();
+      }
     } else {
-      query = `UPDATE settings 
-               SET value = COALESCE($1, value),
-                   type = COALESCE($2, type),
-                   category = COALESCE($3, category),
-                   description = COALESCE($4, description),
-                   is_public = COALESCE($5, is_public),
-                   updated_at = NOW()
-               WHERE key = $6
-               RETURNING id, key, value, type, category, description, is_public, updated_at`;
-      params = [value, type, category, description, is_public, key];
+      // Single UPSERT
+      const { key, value, type, category, description, is_public } = body;
+
+      if (!key) {
+        return NextResponse.json(
+          { error: 'Key setting diperlukan' },
+          { status: 400 }
+        );
+      }
+
+      const query = `
+        INSERT INTO settings (key, value, type, category, description, is_public, created_at, updated_at)
+        VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
+        ON CONFLICT (key) 
+        DO UPDATE SET 
+          value = EXCLUDED.value,
+          type = EXCLUDED.type,
+          category = EXCLUDED.category,
+          description = EXCLUDED.description,
+          is_public = EXCLUDED.is_public,
+          updated_at = NOW()
+        RETURNING id, key, value, type, category, description, is_public, created_at, updated_at
+      `;
+
+      const result = await pool.query(query, [
+        key,
+        value || null,
+        type || 'string',
+        category || null,
+        description || null,
+        is_public || false,
+      ]);
+
+      return NextResponse.json({
+        success: true,
+        message: 'Setting berhasil disimpan',
+        data: result.rows[0],
+      });
     }
-
-    const result = await pool.query(query, params);
-
-    if (result.rows.length === 0) {
-      return NextResponse.json(
-        { error: 'Setting tidak ditemukan' },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Setting berhasil diupdate',
-      data: result.rows[0],
-    });
   } catch (error) {
-    console.error('Error updating setting:', error);
+    console.error('Error upserting setting:', error);
     return NextResponse.json(
-      { error: 'Gagal mengupdate setting' },
+      {
+        error: 'Gagal menyimpan setting',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
       { status: 500 }
     );
   }
