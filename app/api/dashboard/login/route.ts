@@ -99,18 +99,28 @@ export async function POST(request: NextRequest) {
       [user.id, 'LOGIN', 'user', user.id, `User ${user.name} logged in`]
     );
 
-    // add get menus and store in localstorage
-    const menus = {}; // get menus from database or api menus
-    localStorage.setItem('accessible-menus', JSON.stringify(menus));
-    localStorage.setItem('menus-role', user.role);
-    localStorage.setItem('menus-version', '1.1');
-    userWithoutPassword.menus = menus;
+    // Get accessible menus for user's role from database
+    const menusResult = await pool.query(
+      `SELECT id, name, label, icon, href, parent_id, order_index, is_active, roles
+       FROM menu
+       WHERE is_active = true
+       AND roles @> $1::jsonb
+       ORDER BY order_index, name`,
+      [JSON.stringify([user.role])]
+    );
+
+    const accessibleMenus = menusResult.rows;
+
+    // Add menus to user object (will be sent to client)
+    // Client-side (auth-context.tsx) will save to localStorage
+    userWithoutPassword.accessibleMenus = accessibleMenus;
 
     const response = NextResponse.json(
       {
         success: true,
         message: 'Login berhasil',
         user: userWithoutPassword,
+        menus: accessibleMenus, // Send menus separately for clarity
       },
       { status: 200 }
     );

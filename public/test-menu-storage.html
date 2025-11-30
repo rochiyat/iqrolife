@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Menu Storage - Iqrolife</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .info-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+        
+        .info-box.success {
+            border-left: 4px solid #28a745;
+        }
+        
+        .info-box.warning {
+            border-left: 4px solid #ffc107;
+        }
+        
+        .info-box.error {
+            border-left: 4px solid #dc3545;
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 5px;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .button.secondary {
+            background: #6c757d;
+        }
+        
+        .button.danger {
+            background: #dc3545;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Menu Storage</h1>
+        <p class="subtitle">Test fungsi getAccessibleMenusFromStorage dengan berbagai skenario</p>
+        
+        <!-- Current State -->
+        <div class="section">
+            <h2>📊 Current Storage State</h2>
+            <div id="currentState"></div>
+            <button class="button" onclick="checkCurrentState()">🔄 Refresh</button>
+        </div>
+        
+        <!-- Test Scenarios -->
+        <div class="section">
+            <h2>🧪 Test Scenarios</h2>
+            
+            <h3 style="margin: 15px 0 10px 0;">Scenario 1: Read from localStorage</h3>
+            <p style="color: #666; margin-bottom: 10px;">Test membaca menu dari localStorage (priority 1)</p>
+            <button class="button" onclick="testLocalStorage()">▶️ Run Test</button>
+            <div id="testLocalStorage"></div>
+            
+            <h3 style="margin: 15px 0 10px 0;">Scenario 2: Read from Cookie (Fallback)</h3>
+            <p style="color: #666; margin-bottom: 10px;">Test membaca menu dari cookie saat localStorage kosong</p>
+            <button class="button" onclick="testCookieFallback()">▶️ Run Test</button>
+            <div id="testCookieFallback"></div>
+            
+            <h3 style="margin: 15px 0 10px 0;">Scenario 3: Version Mismatch</h3>
+            <p style="color: #666; margin-bottom: 10px;">Test clear localStorage saat version tidak match</p>
+            <button class="button" onclick="testVersionMismatch()">▶️ Run Test</button>
+            <div id="testVersionMismatch"></div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="section">
+            <h2>⚡ Quick Actions</h2>
+            <button class="button" onclick="clearLocalStorage()">🗑️ Clear localStorage</button>
+            <button class="button secondary" onclick="clearCookie()">🍪 Clear Cookie</button>
+            <button class="button danger" onclick="clearAll()">💥 Clear All</button>
+            <button class="button" onclick="window.open('/dashboard/home', '_blank')">🚀 Open Dashboard</button>
+        </div>
+        
+        <div id="statusMessage"></div>
+    </div>
+    
+    <script>
+        function checkCurrentState() {
+            const output = document.getElementById('currentState');
+            let html = '';
+            
+            // Check localStorage
+            html += '<h3 style="margin-top: 10px;">localStorage:</h3>';
+            const lsMenus = localStorage.getItem('accessible-menus');
+            const lsRole = localStorage.getItem('menus-role');
+            const lsVersion = localStorage.getItem('menus-version');
+            
+            if (lsMenus || lsRole || lsVersion) {
+                html += '<div class="info-box success">';
+                if (lsMenus) {
+                    const menus = JSON.parse(lsMenus);
+                    html += `<strong>accessible-menus:</strong> ${menus.length} items<br>`;
+                    html += `Menu names: ${menus.map(m => m.name).join(', ')}<br>`;
+                }
+                if (lsRole) html += `<strong>menus-role:</strong> ${lsRole}<br>`;
+                if (lsVersion) html += `<strong>menus-version:</strong> ${lsVersion}`;
+                html += '</div>';
+            } else {
+                html += '<div class="info-box warning">No localStorage data</div>';
+            }
+            
+            // Check Cookie
+            html += '<h3 style="margin-top: 15px;">Cookie (auth-token):</h3>';
+            const cookies = document.cookie.split(';');
+            const authCookie = cookies.find(c => c.trim().startsWith('auth-token='));
+            
+            if (authCookie) {
+                try {
+                    const value = authCookie.split('=')[1];
+                    const userData = JSON.parse(decodeURIComponent(value));
+                    
+                    html += '<div class="info-box success">';
+                    html += `<strong>User:</strong> ${userData.name} (${userData.email})<br>`;
+                    html += `<strong>Role:</strong> ${userData.role}<br>`;
+                    
+                    if (userData.accessibleMenus && Array.isArray(userData.accessibleMenus)) {
+                        html += `<strong>accessibleMenus:</strong> ${userData.accessibleMenus.length} items<br>`;
+                        html += `Menu names: ${userData.accessibleMenus.map(m => m.name).join(', ')}`;
+                    } else {
+                        html += '<strong>accessibleMenus:</strong> Not found in cookie';
+                    }
+                    html += '</div>';
+                } catch (e) {
+                    html += '<div class="info-box error">Error parsing cookie: ' + e.message + '</div>';
+                }
+            } else {
+                html += '<div class="info-box warning">No auth-token cookie found</div>';
+            }
+            
+            output.innerHTML = html;
+        }
+        
+        function testLocalStorage() {
+            const output = document.getElementById('testLocalStorage');
+            let html = '<div style="margin-top: 10px;">';
+            
+            const lsMenus = localStorage.getItem('accessible-menus');
+            const lsRole = localStorage.getItem('menus-role');
+            const lsVersion = localStorage.getItem('menus-version');
+            
+            if (lsMenus && lsRole && lsVersion) {
+                const menus = JSON.parse(lsMenus);
+                const menuNames = menus.map(m => m.name);
+                
+                html += '<div class="info-box success">';
+                html += '✅ <strong>Test PASSED</strong><br>';
+                html += `Found ${menus.length} menus in localStorage<br>`;
+                html += `Menu names: ${menuNames.join(', ')}<br>`;
+                html += `Role: ${lsRole}<br>`;
+                html += `Version: ${lsVersion}`;
+                html += '</div>';
+            } else {
+                html += '<div class="info-box warning">';
+                html += '⚠️ <strong>localStorage empty</strong><br>';
+                html += 'Function will fallback to cookie';
+                html += '</div>';
+            }
+            
+            html += '</div>';
+            output.innerHTML = html;
+        }
+        
+        function testCookieFallback() {
+            const output = document.getElementById('testCookieFallback');
+            let html = '<div style="margin-top: 10px;">';
+            
+            // Clear localStorage first
+            localStorage.removeItem('accessible-menus');
+            localStorage.removeItem('menus-role');
+            localStorage.removeItem('menus-version');
+            
+            html += '<div class="info-box">Step 1: Cleared localStorage ✓</div>';
+            
+            // Try to read from cookie
+            const cookies = document.cookie.split(';');
+            const authCookie = cookies.find(c => c.trim().startsWith('auth-token='));
+            
+            if (authCookie) {
+                try {
+                    const value = authCookie.split('=')[1];
+                    const userData = JSON.parse(decodeURIComponent(value));
+                    
+                    if (userData.accessibleMenus && Array.isArray(userData.accessibleMenus)) {
+                        html += '<div class="info-box success">';
+                        html += '✅ <strong>Test PASSED</strong><br>';
+                        html += 'Step 2: Read from cookie ✓<br>';
+                        html += `Found ${userData.accessibleMenus.length} menus in cookie<br>`;
+                        html += `Menu names: ${userData.accessibleMenus.map(m => m.name).join(', ')}`;
+                        html += '</div>';
+                        
+                        // Simulate saving to localStorage
+                        localStorage.setItem('accessible-menus', JSON.stringify(userData.accessibleMenus));
+                        localStorage.setItem('menus-role', userData.role);
+                        localStorage.setItem('menus-version', '1.1');
+                        
+                        html += '<div class="info-box success">Step 3: Saved to localStorage ✓</div>';
+                    } else {
+                        html += '<div class="info-box error">';
+                        html += '❌ <strong>Test FAILED</strong><br>';
+                        html += 'Cookie exists but no accessibleMenus found';
+                        html += '</div>';
+                    }
+                } catch (e) {
+                    html += '<div class="info-box error">❌ Error: ' + e.message + '</div>';
+                }
+            } else {
+                html += '<div class="info-box error">';
+                html += '❌ <strong>Test FAILED</strong><br>';
+                html += 'No auth-token cookie found<br>';
+                html += 'Please login first';
+                html += '</div>';
+            }
+            
+            html += '</div>';
+            output.innerHTML = html;
+        }
+        
+        function testVersionMismatch() {
+            const output = document.getElementById('testVersionMismatch');
+            let html = '<div style="margin-top: 10px;">';
+            
+            // Set old version
+            localStorage.setItem('menus-version', '1.0');
+            localStorage.setItem('menus-role', 'superadmin');
+            localStorage.setItem('accessible-menus', JSON.stringify([
+                { id: 1, name: 'home', label: 'Dashboard' }
+            ]));
+            
+            html += '<div class="info-box">Step 1: Set old version (1.0) ✓</div>';
+            
+            // Check version
+            const storedVersion = localStorage.getItem('menus-version');
+            const currentVersion = '1.1';
+            
+            if (storedVersion !== currentVersion) {
+                html += '<div class="info-box warning">';
+                html += `Step 2: Version mismatch detected<br>`;
+                html += `Stored: ${storedVersion}, Current: ${currentVersion}`;
+                html += '</div>';
+                
+                // Clear old data
+                localStorage.removeItem('accessible-menus');
+                localStorage.removeItem('menus-role');
+                localStorage.removeItem('menus-version');
+                
+                html += '<div class="info-box success">';
+                html += '✅ <strong>Test PASSED</strong><br>';
+                html += 'Step 3: Cleared old localStorage ✓<br>';
+                html += 'Function will now fallback to cookie';
+                html += '</div>';
+            } else {
+                html += '<div class="info-box error">❌ Version check failed</div>';
+            }
+            
+            html += '</div>';
+            output.innerHTML = html;
+        }
+        
+        function clearLocalStorage() {
+            localStorage.removeItem('accessible-menus');
+            localStorage.removeItem('menus-role');
+            localStorage.removeItem('menus-version');
+            
+            const status = document.getElementById('statusMessage');
+            status.className = 'status success';
+            status.innerHTML = '✅ localStorage cleared successfully';
+            
+            checkCurrentState();
+        }
+        
+        function clearCookie() {
+            document.cookie = 'auth-token=; Max-Age=0; path=/; SameSite=Lax';
+            
+            const status = document.getElementById('statusMessage');
+            status.className = 'status success';
+            status.innerHTML = '✅ Cookie cleared successfully';
+            
+            checkCurrentState();
+        }
+        
+        function clearAll() {
+            localStorage.removeItem('accessible-menus');
+            localStorage.removeItem('menus-role');
+            localStorage.removeItem('menus-version');
+            document.cookie = 'auth-token=; Max-Age=0; path=/; SameSite=Lax';
+            
+            const status = document.getElementById('statusMessage');
+            status.className = 'status success';
+            status.innerHTML = '✅ All storage cleared successfully';
+            
+            checkCurrentState();
+        }
+        
+        // Initialize
+        checkCurrentState();
+    </script>
+</body>
+</html>

@@ -104,36 +104,57 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setUser(data.user);
 
-    // Fetch accessible menus from API and save to localStorage
+    // Save accessible menus to localStorage
+    // Menus are already fetched by login API and included in response
     try {
-      console.log('🔍 Fetching menus for role:', data.user.role);
-      const menuResponse = await fetch(
-        `/api/dashboard/menu?role=${data.user.role}`
-      );
-      console.log('📡 Menu API response status:', menuResponse.status);
+      const MENU_VERSION = '1.1'; // Increment this when menu structure changes
 
-      if (menuResponse.ok) {
-        const menuData = await menuResponse.json();
-        console.log('📋 Menu data received:', menuData);
+      if (data.menus && Array.isArray(data.menus)) {
+        console.log(
+          '📋 Menus received from login API:',
+          data.menus.length,
+          'items'
+        );
 
         // Save to localStorage with version
-        const MENU_VERSION = '1.1'; // Increment this when menu structure changes
-        localStorage.setItem('accessible-menus', JSON.stringify(menuData.data));
+        localStorage.setItem('accessible-menus', JSON.stringify(data.menus));
         localStorage.setItem('menus-role', data.user.role);
         localStorage.setItem('menus-version', MENU_VERSION);
 
         console.log('✅ Menus saved to localStorage');
-        console.log('   - accessible-menus:', menuData.data.length, 'items');
+        console.log('   - accessible-menus:', data.menus.length, 'items');
         console.log('   - menus-role:', data.user.role);
         console.log('   - menus-version:', MENU_VERSION);
+
+        // Log menu names for debugging
+        const menuNames = data.menus.map((m: any) => m.name).join(', ');
+        console.log('   - menu names:', menuNames);
       } else {
-        console.error('❌ Menu API failed:', menuResponse.status);
-        const errorData = await menuResponse.json();
-        console.error('   Error:', errorData);
+        console.warn(
+          '⚠️ No menus in login response, fetching from menu API...'
+        );
+
+        // Fallback: fetch from menu API if not included in login response
+        const menuResponse = await fetch(
+          `/api/dashboard/menu?role=${data.user.role}`
+        );
+
+        if (menuResponse.ok) {
+          const menuData = await menuResponse.json();
+          localStorage.setItem(
+            'accessible-menus',
+            JSON.stringify(menuData.data)
+          );
+          localStorage.setItem('menus-role', data.user.role);
+          localStorage.setItem('menus-version', MENU_VERSION);
+          console.log('✅ Menus fetched and saved (fallback)');
+        } else {
+          console.error('❌ Menu API failed:', menuResponse.status);
+        }
       }
     } catch (error) {
-      console.error('❌ Error fetching menus:', error);
-      // Continue even if menu fetch fails
+      console.error('❌ Error saving menus to localStorage:', error);
+      // Continue even if menu save fails
     }
 
     return data;
@@ -144,9 +165,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Hapus cookie di client-side dulu (instant feedback)
       document.cookie = 'auth-token=; Max-Age=0; path=/; SameSite=Lax';
 
-      // Clear localStorage
+      // Clear localStorage (all menu-related data)
       localStorage.removeItem('accessible-menus');
       localStorage.removeItem('menus-role');
+      localStorage.removeItem('menus-version');
 
       setUser(null);
 
@@ -193,7 +215,7 @@ export function hasPermission(
   return requiredRoles.includes(userRole);
 }
 
-// Helper function to get accessible menus from localStorage
+// Helper function to get accessible menus from localStorage or cookie
 export function getAccessibleMenusFromStorage(
   userRole: UserRole | null
 ): string[] {
@@ -201,27 +223,50 @@ export function getAccessibleMenusFromStorage(
 
   try {
     const MENU_VERSION = '1.1'; // Must match version in login()
+
+    // Priority 1: Try localStorage (new method)
     const storedVersion = localStorage.getItem('menus-version');
     const storedRole = localStorage.getItem('menus-role');
     const storedMenus = localStorage.getItem('accessible-menus');
 
     // Clear old menu data if version mismatch
-    if (storedVersion !== MENU_VERSION) {
+    if (storedVersion && storedVersion !== MENU_VERSION) {
       console.log('🔄 Menu version mismatch, clearing old data');
       localStorage.removeItem('accessible-menus');
       localStorage.removeItem('menus-role');
       localStorage.removeItem('menus-version');
-      return [];
-    }
-
-    // Check if stored menus match current user role
-    if (storedRole === userRole && storedMenus) {
+      // Continue to try cookie method below
+    } else if (storedRole === userRole && storedMenus) {
+      // Valid localStorage data found
       const menus = JSON.parse(storedMenus);
-      // Extract menu names/ids
       return menus.map((menu: any) => menu.name);
     }
+
+    // Priority 2: Try reading from cookie (fallback for existing sessions)
+    const cookies = document.cookie.split(';');
+    const authCookie = cookies.find((c) => c.trim().startsWith('auth-token='));
+
+    if (authCookie) {
+      const value = authCookie.split('=')[1];
+      const userData = JSON.parse(decodeURIComponent(value));
+
+      // Check if user has accessibleMenus in cookie
+      if (userData.accessibleMenus && Array.isArray(userData.accessibleMenus)) {
+        console.log('📋 Reading menus from cookie (fallback)');
+
+        // Save to localStorage for next time
+        localStorage.setItem(
+          'accessible-menus',
+          JSON.stringify(userData.accessibleMenus)
+        );
+        localStorage.setItem('menus-role', userData.role);
+        localStorage.setItem('menus-version', MENU_VERSION);
+
+        return userData.accessibleMenus.map((menu: any) => menu.name);
+      }
+    }
   } catch (error) {
-    console.error('Error reading menus from localStorage:', error);
+    console.error('Error reading menus from storage:', error);
   }
 
   return [];
