@@ -4,12 +4,12 @@ import { getParentConfirmationTemplate } from './email-templates/parent-confirma
 
 // Email transporter
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587'),
+  host: process.env.EMAIL_HOST,
+  port: parseInt(process.env.EMAIL_PORT || '587'),
   secure: false,
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
@@ -36,7 +36,7 @@ export async function sendAdminNotification(
 
   try {
     await transporter.sendMail({
-      from: `"Iqrolife" <${process.env.SMTP_USER}>`,
+      from: process.env.EMAIL_FROM || `"Iqrolife" <${process.env.EMAIL_USER}>`,
       to: adminEmail,
       subject: `🎓 Pendaftaran Baru - ${registrationData.namaLengkap}`,
       html: getAdminNotificationTemplate(registrationData),
@@ -58,7 +58,7 @@ export async function sendParentConfirmation(
 ): Promise<void> {
   try {
     await transporter.sendMail({
-      from: `"Iqrolife" <${process.env.SMTP_USER}>`,
+      from: process.env.EMAIL_FROM || `"Iqrolife" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: '✅ Pendaftaran Berhasil - Kelas Siap Sekolah Iqrolife',
       html: getParentConfirmationTemplate({

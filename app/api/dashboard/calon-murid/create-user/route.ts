@@ -12,12 +12,12 @@ const pool = new Pool({
 
 // Email transporter
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587'),
+  host: process.env.EMAIL_HOST,
+  port: parseInt(process.env.EMAIL_PORT || '587'),
   secure: false,
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
@@ -86,7 +86,9 @@ export async function POST(request: NextRequest) {
     if (action === 'created') {
       try {
         await transporter.sendMail({
-          from: `"Iqrolife School" <${process.env.SMTP_USER}>`,
+          from:
+            process.env.EMAIL_FROM ||
+            `"Iqrolife School" <${process.env.EMAIL_USER}>`,
           to: email,
           subject: 'Akun Parent Iqrolife - Informasi Login',
           html: getWelcomeEmailTemplate(name, email, password),
