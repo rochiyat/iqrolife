@@ -108,6 +108,7 @@ export async function POST(request: NextRequest) {
        ORDER BY order_index, name`,
       [JSON.stringify([user.role])]
     );
+    console.log('menusResult', menusResult);
 
     const accessibleMenus = menusResult.rows;
 
