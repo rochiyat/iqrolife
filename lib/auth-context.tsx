@@ -107,7 +107,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Save accessible menus to localStorage
     // Menus are already fetched by login API and included in response
     try {
-      const MENU_VERSION = '1.1'; // Increment this when menu structure changes
+      const MENU_VERSION = '1.2'; // Increment this when menu structure changes
 
       if (data.menus && Array.isArray(data.menus)) {
         console.log(
@@ -222,7 +222,7 @@ export function getAccessibleMenusFromStorage(
   if (typeof window === 'undefined' || !userRole) return [];
 
   try {
-    const MENU_VERSION = '1.1'; // Must match version in login()
+    const MENU_VERSION = '1.2'; // Must match version in login()
 
     // Priority 1: Try localStorage (new method)
     const storedVersion = localStorage.getItem('menus-version');
@@ -289,11 +289,6 @@ export function getUserPermissions(user: User | null): UserPermissions {
     };
   }
 
-  // Use permissions from database if available
-  if (user.permissions) {
-    return user.permissions;
-  }
-
   // Fallback to hardcoded permissions (for backward compatibility)
   const fallbackPermissions: { [key in UserRole]: UserPermissions } = {
     superadmin: {
@@ -355,6 +350,20 @@ export function getUserPermissions(user: User | null): UserPermissions {
       canViewPortfolio: true,
     },
   };
+
+  // Use permissions from database if available
+  if (user.permissions) {
+    // If menus is missing in DB permissions (common in old seed data), use fallback
+    if (!user.permissions.menus || !Array.isArray(user.permissions.menus)) {
+      const fallback =
+        fallbackPermissions[user.role] || fallbackPermissions.parent;
+      return {
+        ...user.permissions,
+        menus: fallback.menus,
+      };
+    }
+    return user.permissions;
+  }
 
   return fallbackPermissions[user.role] || fallbackPermissions.parent;
 }
