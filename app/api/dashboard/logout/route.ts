@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const cookieStore = await cookies();
 
     // Hapus session cookie
-    cookieStore.delete('session');
+    cookieStore.delete('auth-token');
 
     return NextResponse.json({
       message: 'Logout berhasil',

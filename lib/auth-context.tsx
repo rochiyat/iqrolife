@@ -169,6 +169,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.removeItem('accessible-menus');
       localStorage.removeItem('menus-role');
       localStorage.removeItem('menus-version');
+      localStorage.removeItem('auth-token'); // Clear auth token if present
 
       setUser(null);
 
