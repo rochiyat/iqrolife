@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { uploadToCloudinary } from '@/lib/cloudinary';
+import { Pool } from 'pg';
+import { sendAdminNotification, sendParentConfirmation } from '@/lib/email';
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -83,17 +92,46 @@ export async function POST(request: NextRequest) {
 
     console.log('New Registration:', registrationData);
 
-    // TODO: Save to database
-    // await db.registration.create({ data: registrationData });
+    // Save to database
+    const insertResult = await pool.query(
+      `INSERT INTO registrations (
+        nama_lengkap, tanggal_lahir, jenis_kelamin, asal_sekolah,
+        nama_orang_tua, no_telepon, email, alamat, catatan,
+        bukti_transfer_url, bukti_transfer_public_id, status
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      RETURNING id`,
+      [
+        namaLengkap,
+        tanggalLahir,
+        jenisKelamin,
+        asalSekolah || null,
+        namaOrangTua,
+        noTelepon,
+        email,
+        alamat,
+        catatan || null,
+        cloudinaryResult?.secure_url,
+        cloudinaryResult?.public_id,
+        'pending',
+      ]
+    );
 
-    // TODO: Send notification emails
-    // await sendAdminNotification(registrationData);
-    // await sendParentConfirmation(email, registrationData);
+    const registrationId = insertResult.rows[0].id;
+    console.log('✅ Registration saved to database with ID:', registrationId);
+
+    // Send notification emails (don't block the response)
+    Promise.all([
+      sendAdminNotification(registrationData),
+      sendParentConfirmation(email, registrationData),
+    ]).catch((error) => {
+      console.error('⚠️ Email notification failed:', error);
+      // Don't throw - registration is already saved
+    });
 
     return NextResponse.json({
       success: true,
       message: 'Pendaftaran berhasil diterima',
-      registrationId: `REG-${Date.now()}`,
+      registrationId: `REG-${registrationId}`,
       data: {
         buktiTransferUrl: cloudinaryResult?.secure_url,
       },
