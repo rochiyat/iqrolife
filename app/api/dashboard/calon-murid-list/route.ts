@@ -29,17 +29,16 @@ export async function GET(request: NextRequest) {
       query = `
         SELECT 
           id,
-          name,
-          birth_date,
-          gender,
-          parent_name,
-          phone,
-          email,
-          address,
+          nama_lengkap as name,
+          tanggal_lahir as birth_date,
+          jenis_kelamin as gender,
+          nama_ayah as parent_name,
+          telepon as phone,
+          alamat_lengkap as address,
           status,
           created_at
-        FROM calon_murid
-        ORDER BY name ASC
+        FROM formulir_pendaftaran
+        ORDER BY nama_lengkap ASC
       `;
     }
     // For parent: show only their registered children
@@ -47,18 +46,17 @@ export async function GET(request: NextRequest) {
       query = `
         SELECT 
           id,
-          name,
-          birth_date,
-          gender,
-          parent_name,
-          phone,
-          email,
-          address,
+          nama_lengkap as name,
+          tanggal_lahir as birth_date,
+          jenis_kelamin as gender,
+          nama_ayah as parent_name,
+          telepon as phone,
+          alamat_lengkap as address,
           status,
           created_at
-        FROM calon_murid
-        WHERE created_by = $1
-        ORDER BY name ASC
+        FROM formulir_pendaftaran
+        WHERE user_id = $1
+        ORDER BY nama_lengkap ASC
       `;
       params = [userId];
     } else {
@@ -79,7 +77,7 @@ export async function GET(request: NextRequest) {
       gender: row.gender,
       parentName: row.parent_name,
       phone: row.phone,
-      email: row.email,
+      email: row.email || '',
       address: row.address,
       status: row.status,
       createdAt: row.created_at,

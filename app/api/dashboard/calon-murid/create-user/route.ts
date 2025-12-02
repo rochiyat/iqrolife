@@ -82,6 +82,87 @@ export async function POST(request: NextRequest) {
       [userId, studentId]
     );
 
+    // Get registration data to copy to formulir_pendaftaran
+    const registrationResult = await pool.query(
+      'SELECT * FROM registrations WHERE id = $1',
+      [studentId]
+    );
+
+    if (registrationResult.rows.length > 0) {
+      const regData = registrationResult.rows[0];
+
+      // Check if formulir already exists for this user/student to avoid duplicates
+      // We assume one formulir per student name for now, or just insert since it's a new mapping
+      const existingFormulir = await pool.query(
+        'SELECT id FROM formulir_pendaftaran WHERE user_id = $1 AND nama_lengkap = $2',
+        [userId, regData.nama_lengkap]
+      );
+
+      if (existingFormulir.rows.length === 0) {
+        // Insert into formulir_pendaftaran
+        await pool.query(
+          `INSERT INTO formulir_pendaftaran (
+            user_id,
+            nama_lengkap,
+            nama_panggilan,
+            jenis_kelamin,
+            tempat_lahir,
+            tanggal_lahir,
+            agama,
+            kewarganegaraan,
+            anak_ke,
+            jumlah_saudara,
+            bahasa_sehari_hari,
+            alamat_lengkap,
+            rt, rw, kelurahan, kecamatan, kabupaten_kota, provinsi, kode_pos,
+            telepon,
+            nama_ayah,
+            pekerjaan_ayah,
+            telepon_ayah,
+            nama_ibu,
+            pekerjaan_ibu,
+            telepon_ibu,
+            program_yang_dipilih,
+            status,
+            created_at,
+            updated_at
+          ) VALUES (
+            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, NOW(), NOW()
+          )`,
+          [
+            userId,
+            regData.nama_lengkap,
+            regData.nama_lengkap.split(' ')[0], // Nama panggilan (ambil kata pertama)
+            regData.jenis_kelamin,
+            '-', // Tempat lahir
+            regData.tanggal_lahir,
+            'Islam', // Agama
+            'Indonesia', // Kewarganegaraan
+            1, // Anak ke
+            0, // Jumlah saudara
+            'Indonesia', // Bahasa
+            regData.alamat, // Alamat lengkap
+            '-',
+            '-',
+            '-',
+            '-',
+            '-',
+            '-',
+            '-', // RT, RW, Kel, Kec, Kab, Prov, Pos
+            regData.no_telepon, // Telepon rumah/siswa
+            regData.nama_orang_tua, // Nama Ayah (asumsi)
+            '-', // Pekerjaan Ayah
+            regData.no_telepon, // Telepon Ayah
+            '-', // Nama Ibu
+            '-', // Pekerjaan Ibu
+            '-', // Telepon Ibu
+            'Reguler', // Program
+            'submitted', // Status formulir
+          ]
+        );
+      }
+    }
+
     // Send email notification
     if (action === 'created') {
       try {

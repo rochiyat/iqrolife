@@ -830,60 +830,97 @@ export default function CalonMuridPage() {
                         </td>
                         <td className="py-3 px-4">
                           <div className="flex gap-2">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors"
-                              title="Lihat Detail"
-                              onClick={() => handleViewDetail(student)}
-                            >
-                              <Eye className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className={`text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors ${
-                                student.status !== 'approved'
-                                  ? 'opacity-50 cursor-not-allowed'
-                                  : ''
-                              }`}
-                              title={
-                                student.status === 'approved'
-                                  ? 'Buat User'
-                                  : 'Status harus Disetujui untuk buat user'
-                              }
-                              onClick={() => handleCreateUser(student)}
-                              disabled={student.status !== 'approved'}
-                            >
-                              <UserPlus className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="text-orange-600 hover:text-orange-700 hover:bg-orange-50 cursor-pointer transition-colors"
-                              title="Review"
-                              onClick={() => handleReview(student)}
-                            >
-                              <ClipboardCheck className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors"
-                              title="Edit"
-                              onClick={() => handleEdit(student)}
-                            >
-                              <Edit className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer transition-colors"
-                              title="Hapus"
-                              onClick={() => handleDelete(student)}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
+                            {/* Logic: Disable all actions if approved AND user created */}
+                            {(() => {
+                              const isLocked =
+                                student.status === 'approved' &&
+                                !!student.userId;
+
+                              return (
+                                <>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors ${
+                                      isLocked
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title="Lihat Detail"
+                                    onClick={() => handleViewDetail(student)}
+                                    disabled={isLocked}
+                                  >
+                                    <Eye className="w-4 h-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors ${
+                                      student.status !== 'approved' ||
+                                      !!student.userId
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title={
+                                      student.status !== 'approved'
+                                        ? 'Status harus Disetujui untuk buat user'
+                                        : !!student.userId
+                                        ? 'User sudah dibuat'
+                                        : 'Buat User'
+                                    }
+                                    onClick={() => handleCreateUser(student)}
+                                    disabled={
+                                      student.status !== 'approved' ||
+                                      !!student.userId
+                                    }
+                                  >
+                                    <UserPlus className="w-4 h-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-orange-600 hover:text-orange-700 hover:bg-orange-50 cursor-pointer transition-colors ${
+                                      isLocked
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title="Review"
+                                    onClick={() => handleReview(student)}
+                                    disabled={isLocked}
+                                  >
+                                    <ClipboardCheck className="w-4 h-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors ${
+                                      isLocked
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title="Edit"
+                                    onClick={() => handleEdit(student)}
+                                    disabled={isLocked}
+                                  >
+                                    <Edit className="w-4 h-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer transition-colors ${
+                                      isLocked
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title="Hapus"
+                                    onClick={() => handleDelete(student)}
+                                    disabled={isLocked}
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                  </Button>
+                                </>
+                              );
+                            })()}
                           </div>
                         </td>
                       </tr>
