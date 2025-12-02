@@ -217,10 +217,17 @@ export default function CalonMuridPage() {
   };
 
   const handleEdit = (student: Student) => {
-    // Format date for input (YYYY-MM-DD)
-    const formattedDate = student.birthDate
-      ? new Date(student.birthDate).toISOString().split('T')[0]
-      : '';
+    // Format date for input (YYYY-MM-DD) using local time to avoid timezone shifts
+    const formatDateForInput = (dateString: string) => {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    const formattedDate = formatDateForInput(student.birthDate);
 
     setEditFormData({
       ...student,
@@ -1454,8 +1461,16 @@ export default function CalonMuridPage() {
             <Button
               className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors"
               onClick={confirmEdit}
+              disabled={isSubmitting}
             >
-              Simpan Perubahan
+              {isSubmitting ? (
+                <>
+                  <span className="animate-spin mr-2">⏳</span>
+                  Menyimpan...
+                </>
+              ) : (
+                'Simpan Perubahan'
+              )}
             </Button>
           </div>
         </DialogContent>

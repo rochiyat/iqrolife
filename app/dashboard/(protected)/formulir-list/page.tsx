@@ -240,6 +240,11 @@ export default function FormulirListPage() {
     }
   };
 
+  const displayValue = (value: string | number | null | undefined) => {
+    if (value === null || value === undefined || value === '') return '-';
+    return value;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
