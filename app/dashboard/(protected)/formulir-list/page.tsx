@@ -754,68 +754,60 @@ export default function FormulirListPage() {
                 </h3>
 
                 <div className="grid grid-cols-2 gap-4">
-                  {selectedForm.golongan_darah && (
-                    <div>
-                      <Label className="text-gray-600">Golongan Darah</Label>
-                      <p className="font-medium">
-                        {selectedForm.golongan_darah}
-                      </p>
-                    </div>
-                  )}
-                  {selectedForm.tinggi_badan && (
-                    <div>
-                      <Label className="text-gray-600">Tinggi Badan</Label>
-                      <p className="font-medium">
-                        {selectedForm.tinggi_badan} cm
-                      </p>
-                    </div>
-                  )}
-                  {selectedForm.berat_badan && (
-                    <div>
-                      <Label className="text-gray-600">Berat Badan</Label>
-                      <p className="font-medium">
-                        {selectedForm.berat_badan} kg
-                      </p>
-                    </div>
-                  )}
-                  {selectedForm.riwayat_penyakit && (
-                    <div className="col-span-2">
-                      <Label className="text-gray-600">Riwayat Penyakit</Label>
-                      <p className="font-medium">
-                        {selectedForm.riwayat_penyakit}
-                      </p>
-                    </div>
-                  )}
-                  {selectedForm.alergi && (
-                    <div className="col-span-2">
-                      <Label className="text-gray-600">Alergi</Label>
-                      <p className="font-medium">{selectedForm.alergi}</p>
-                    </div>
-                  )}
-                  {selectedForm.riwayat_vaksinasi && (
-                    <div className="col-span-2">
-                      <Label className="text-gray-600">Riwayat Vaksinasi</Label>
-                      <p className="font-medium">
-                        {selectedForm.riwayat_vaksinasi}
-                      </p>
-                    </div>
-                  )}
-                  {selectedForm.hobi_minat && (
-                    <div className="col-span-2">
-                      <Label className="text-gray-600">Hobi dan Minat</Label>
-                      <p className="font-medium">{selectedForm.hobi_minat}</p>
-                    </div>
-                  )}
-                  {selectedForm.prestasi_yang_pernah_diraih && (
-                    <div className="col-span-2">
-                      <Label className="text-gray-600">
-                        Prestasi yang Pernah Diraih
-                      </Label>
-                      <p className="font-medium">
-                        {selectedForm.prestasi_yang_pernah_diraih}
-                      </p>
-                    </div>
-                  )}
+                  <div>
+                    <Label className="text-gray-600">Golongan Darah</Label>
+                    <p className="font-medium">
+                      {displayValue(selectedForm.golongan_darah)}
+                    </p>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">Tinggi Badan</Label>
+                    <p className="font-medium">
+                      {selectedForm.tinggi_badan
+                        ? `${selectedForm.tinggi_badan} cm`
+                        : '-'}
+                    </p>
+                  </div>
+                  <div>
+                    <Label className="text-gray-600">Berat Badan</Label>
+                    <p className="font-medium">
+                      {selectedForm.berat_badan
+                        ? `${selectedForm.berat_badan} kg`
+                        : '-'}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <Label className="text-gray-600">Riwayat Penyakit</Label>
+                    <p className="font-medium">
+                      {displayValue(selectedForm.riwayat_penyakit)}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <Label className="text-gray-600">Alergi</Label>
+                    <p className="font-medium">
+                      {displayValue(selectedForm.alergi)}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <Label className="text-gray-600">Riwayat Vaksinasi</Label>
+                    <p className="font-medium">
+                      {displayValue(selectedForm.riwayat_vaksinasi)}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <Label className="text-gray-600">Hobi dan Minat</Label>
+                    <p className="font-medium">
+                      {displayValue(selectedForm.hobi_minat)}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <Label className="text-gray-600">
+                      Prestasi yang Pernah Diraih
+                    </Label>
+                    <p className="font-medium">
+                      {displayValue(selectedForm.prestasi_yang_pernah_diraih)}
+                    </p>
+                  </div>
                 </div>
               </div>
 
