@@ -9,7 +9,8 @@ const pool = new Pool({
 });
 
 /**
- * GET - Fetch student portfolios from calon_murid
+ * GET - Fetch student portfolios from registrations table
+ * Joins with users and formulir_pendaftaran tables
  * Query params:
  * - user_id: Filter by parent user (for parent role)
  * - status: Filter by status
@@ -29,25 +30,29 @@ export async function GET(request: NextRequest) {
     let query = `
       SELECT 
         r.id,
-        r.name as student_name,
-        r.birth_date,
-        r.age,
-        r.gender,
-        r.parent_name,
-        r.phone as parent_phone,
+        r.nama_lengkap as student_name,
+        r.tanggal_lahir as birth_date,
+        r.jenis_kelamin as gender,
+        r.nama_orang_tua as parent_name,
+        r.no_telepon as parent_phone,
         r.email as parent_email,
-        r.address,
-        r.previous_school,
+        r.alamat as address,
+        r.asal_sekolah as previous_school,
         r.status,
-        r.notes as review_notes,
-        r.registration_date,
+        r.catatan as notes,
+        r.review_notes,
+        r.created_at as registration_date,
         r.user_id,
         r.formulir_pendaftaran_id,
+        r.bukti_transfer_url as payment_proof_url,
+        r.bukti_transfer_public_id as payment_proof_public_id,
+        r.reviewed_by,
+        r.reviewed_at,
+        r.created_at,
+        r.updated_at,
         u.name as user_parent_name,
         u.email as user_email,
         u.phone as user_phone,
-        r.created_at,
-        r.updated_at,
         fp.program_yang_dipilih as program,
         fp.nama_ayah as father_name,
         fp.nama_ibu as mother_name,
@@ -88,28 +93,27 @@ export async function GET(request: NextRequest) {
       query += ' WHERE ' + conditions.join(' AND ');
     }
 
-    query += ' ORDER BY r.registration_date DESC';
+    query += ' ORDER BY r.created_at DESC';
 
     const result = await pool.query(query, params);
 
     // Transform data to match frontend structure
     const portfolios = result.rows.map((row) => {
-      // Use age from calon_murid or calculate if needed
-      const age =
-        row.age ||
-        (() => {
-          const birthDate = new Date(row.birth_date);
-          const today = new Date();
-          let calculatedAge = today.getFullYear() - birthDate.getFullYear();
-          const monthDiff = today.getMonth() - birthDate.getMonth();
-          if (
-            monthDiff < 0 ||
-            (monthDiff === 0 && today.getDate() < birthDate.getDate())
-          ) {
-            calculatedAge--;
-          }
-          return calculatedAge;
-        })();
+      // Calculate age from birth_date
+      const age = (() => {
+        if (!row.birth_date) return 0;
+        const birthDate = new Date(row.birth_date);
+        const today = new Date();
+        let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (
+          monthDiff < 0 ||
+          (monthDiff === 0 && today.getDate() < birthDate.getDate())
+        ) {
+          calculatedAge--;
+        }
+        return calculatedAge;
+      })();
 
       // Calculate progress based on status
       let progress = 0;
@@ -160,7 +164,7 @@ export async function GET(request: NextRequest) {
         status: 'completed',
       });
 
-      // 2. Data verification (always completed for calon_murid)
+      // 2. Data verification (always completed for registrations)
       activities.push({
         id: '2',
         type: 'form_submission',
@@ -170,18 +174,26 @@ export async function GET(request: NextRequest) {
         status: 'completed',
       });
 
-      // 3. Approval (use created_at as approval date for approved status)
-      if (row.status === 'approved' || row.status === 'rejected') {
+      // 3. Approval/Review
+      if (
+        row.status === 'reviewed' ||
+        row.status === 'approved' ||
+        row.status === 'rejected'
+      ) {
         activities.push({
           id: '3',
           type: 'approval',
-          title: 'Persetujuan Admin',
+          title: 'Review Admin',
           description:
-            row.status === 'approved'
+            row.status === 'rejected'
+              ? 'Pendaftaran ditolak'
+              : row.status === 'approved'
               ? 'Data calon murid disetujui'
-              : 'Pendaftaran ditolak',
-          date: new Date(row.created_at).toLocaleString('id-ID'),
-          status: row.status === 'approved' ? 'completed' : 'rejected',
+              : 'Data calon murid telah direview',
+          date: row.reviewed_at
+            ? new Date(row.reviewed_at).toLocaleString('id-ID')
+            : new Date(row.updated_at).toLocaleString('id-ID'),
+          status: row.status === 'rejected' ? 'rejected' : 'completed',
         });
       }
 
@@ -213,7 +225,7 @@ export async function GET(request: NextRequest) {
         phone: row.parent_phone || row.user_phone || '',
         activities: activities,
         documents: {
-          formData: true, // calon_murid already has complete data
+          formData: !!row.formulir_pendaftaran_id, // Has formulir if formulir_id exists
           paymentProof: !!row.payment_proof_url,
           birthCertificate: false, // TODO: Add document tracking
           healthCertificate: false,
