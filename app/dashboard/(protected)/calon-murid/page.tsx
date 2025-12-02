@@ -842,9 +842,18 @@ export default function CalonMuridPage() {
                             <Button
                               size="sm"
                               variant="ghost"
-                              className="text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors"
-                              title="Buat User"
+                              className={`text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors ${
+                                student.status !== 'approved'
+                                  ? 'opacity-50 cursor-not-allowed'
+                                  : ''
+                              }`}
+                              title={
+                                student.status === 'approved'
+                                  ? 'Buat User'
+                                  : 'Status harus Disetujui untuk buat user'
+                              }
                               onClick={() => handleCreateUser(student)}
+                              disabled={student.status !== 'approved'}
                             >
                               <UserPlus className="w-4 h-4" />
                             </Button>
@@ -1332,15 +1341,17 @@ export default function CalonMuridPage() {
                   <select
                     id="edit-status"
                     value={editFormData.status}
-                    onChange={(e) =>
-                      handleEditInputChange('status', e.target.value)
-                    }
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+                    disabled
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed transition-colors"
                   >
                     <option value="pending">Pending</option>
+                    <option value="reviewed">Direview</option>
                     <option value="approved">Disetujui</option>
                     <option value="rejected">Ditolak</option>
                   </select>
+                  <p className="text-xs text-gray-500">
+                    Status hanya dapat diubah melalui menu Review
+                  </p>
                 </div>
                 <div className="space-y-2 col-span-2">
                   <Label htmlFor="edit-notes">Catatan</Label>
