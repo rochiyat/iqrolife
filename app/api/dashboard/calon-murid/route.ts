@@ -9,7 +9,7 @@ const pool = new Pool({
   },
 });
 
-// GET - Fetch all calon murid
+// GET - Fetch all calon murid (from registrations table)
 export async function GET(request: NextRequest) {
   try {
     // Get authenticated user from cookie
@@ -24,22 +24,15 @@ export async function GET(request: NextRequest) {
 
     let query = `
       SELECT 
-        id, name, birth_date, age, gender, parent_name, phone, email, 
-        address, previous_school, status, notes, payment_proof_url, 
-        payment_proof_public_id, registration_date, user_id, created_at
-      FROM calon_murid
+        id, nama_lengkap, tanggal_lahir, jenis_kelamin, nama_orang_tua, 
+        no_telepon, email, alamat, asal_sekolah, status, catatan, 
+        bukti_transfer_url, bukti_transfer_public_id, created_at, updated_at
+      FROM registrations
     `;
 
     const conditions: string[] = [];
     const params: any[] = [];
     let paramIndex = 1;
-
-    // Filter by user_id for parent role
-    if (user.role === 'parent') {
-      conditions.push(`user_id = $${paramIndex}`);
-      params.push(user.id);
-      paramIndex++;
-    }
 
     // Filter by status
     if (status) {
@@ -57,23 +50,37 @@ export async function GET(request: NextRequest) {
     const result = await pool.query(query, params);
 
     // Transform data to match frontend interface
-    const students = result.rows.map((row) => ({
-      id: row.id.toString(),
-      name: row.name,
-      birthDate: row.birth_date,
-      age: row.age,
-      gender: row.gender,
-      parent: row.parent_name,
-      phone: row.phone,
-      email: row.email,
-      address: row.address,
-      previousSchool: row.previous_school,
-      status: row.status,
-      notes: row.notes,
-      paymentProof: row.payment_proof_url,
-      paymentProofPublicId: row.payment_proof_public_id,
-      registrationDate: row.registration_date,
-    }));
+    const students = result.rows.map((row) => {
+      // Calculate age from birth date
+      const birthDate = new Date(row.tanggal_lahir);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+
+      return {
+        id: row.id.toString(),
+        name: row.nama_lengkap,
+        birthDate: row.tanggal_lahir,
+        age: age,
+        gender: row.jenis_kelamin,
+        parent: row.nama_orang_tua,
+        phone: row.no_telepon,
+        email: row.email,
+        address: row.alamat,
+        previousSchool: row.asal_sekolah,
+        status: row.status,
+        notes: row.catatan,
+        paymentProof: row.bukti_transfer_url,
+        paymentProofPublicId: row.bukti_transfer_public_id,
+        registrationDate: row.created_at,
+      };
+    });
 
     return NextResponse.json({
       success: true,
@@ -142,9 +149,9 @@ export async function POST(request: NextRequest) {
       const sanitizedName = namaLengkap
         .replace(/[^a-zA-Z0-9]/g, '_')
         .toLowerCase();
-      const publicId = `calon_murid_${sanitizedName}_${timestamp}`;
+      const publicId = `registrations_${sanitizedName}_${timestamp}`;
 
-      cloudinaryResult = await uploadToCloudinary(buffer, 'calon-murid', {
+      cloudinaryResult = await uploadToCloudinary(buffer, 'registrations', {
         public_id: publicId,
         resource_type: 'auto',
       });
@@ -164,18 +171,17 @@ export async function POST(request: NextRequest) {
 
     // Save to database
     const result = await pool.query(
-      `INSERT INTO calon_murid (
-        name, birth_date, age, gender, parent_name, phone, email, address,
-        previous_school, status, notes, payment_proof_url, payment_proof_public_id,
-        registration_date, created_at, updated_at
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, NOW(), NOW())
-      RETURNING id, name, birth_date, age, gender, parent_name, phone, email, 
-                address, previous_school, status, notes, payment_proof_url, 
-                payment_proof_public_id, registration_date`,
+      `INSERT INTO registrations (
+        nama_lengkap, tanggal_lahir, jenis_kelamin, nama_orang_tua, no_telepon, 
+        email, alamat, asal_sekolah, status, catatan, bukti_transfer_url, 
+        bukti_transfer_public_id, created_at, updated_at
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW(), NOW())
+      RETURNING id, nama_lengkap, tanggal_lahir, jenis_kelamin, nama_orang_tua, 
+                no_telepon, email, alamat, asal_sekolah, status, catatan, 
+                bukti_transfer_url, bukti_transfer_public_id, created_at`,
       [
         namaLengkap,
         tanggalLahir,
-        age,
         jenisKelamin,
         namaOrangTua,
         noTelepon,
@@ -186,7 +192,6 @@ export async function POST(request: NextRequest) {
         catatan || null,
         cloudinaryResult?.secure_url || null,
         cloudinaryResult?.public_id || null,
-        new Date().toISOString().split('T')[0],
       ]
     );
 
@@ -195,20 +200,20 @@ export async function POST(request: NextRequest) {
     // Transform to match frontend interface
     const studentData = {
       id: newStudent.id.toString(),
-      name: newStudent.name,
-      birthDate: newStudent.birth_date,
-      age: newStudent.age,
-      gender: newStudent.gender,
-      parent: newStudent.parent_name,
-      phone: newStudent.phone,
+      name: newStudent.nama_lengkap,
+      birthDate: newStudent.tanggal_lahir,
+      age: age,
+      gender: newStudent.jenis_kelamin,
+      parent: newStudent.nama_orang_tua,
+      phone: newStudent.no_telepon,
       email: newStudent.email,
-      address: newStudent.address,
-      previousSchool: newStudent.previous_school,
+      address: newStudent.alamat,
+      previousSchool: newStudent.asal_sekolah,
       status: newStudent.status,
-      notes: newStudent.notes,
-      paymentProof: newStudent.payment_proof_url,
-      paymentProofPublicId: newStudent.payment_proof_public_id,
-      registrationDate: newStudent.registration_date,
+      notes: newStudent.catatan,
+      paymentProof: newStudent.bukti_transfer_url,
+      paymentProofPublicId: newStudent.bukti_transfer_public_id,
+      registrationDate: newStudent.created_at,
     };
 
     // Log activity
@@ -217,7 +222,7 @@ export async function POST(request: NextRequest) {
        VALUES ($1, $2, $3, $4, NOW())`,
       [
         'CREATE',
-        'calon_murid',
+        'registrations',
         newStudent.id,
         `Calon murid baru ditambahkan: ${namaLengkap}`,
       ]
@@ -249,9 +254,6 @@ export async function PUT(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    // TODO: Fetch existing student from database
-    // const existingStudent = await db.student.findUnique({ where: { id: studentId } });
 
     const namaLengkap = formData.get('namaLengkap') as string;
     const tanggalLahir = formData.get('tanggalLahir') as string;
@@ -294,9 +296,9 @@ export async function PUT(request: NextRequest) {
       const sanitizedName = namaLengkap
         .replace(/[^a-zA-Z0-9]/g, '_')
         .toLowerCase();
-      const publicId = `calon_murid_${sanitizedName}_${timestamp}`;
+      const publicId = `registrations_${sanitizedName}_${timestamp}`;
 
-      cloudinaryResult = await uploadToCloudinary(buffer, 'calon-murid', {
+      cloudinaryResult = await uploadToCloudinary(buffer, 'registrations', {
         public_id: publicId,
         resource_type: 'auto',
       });
@@ -316,25 +318,24 @@ export async function PUT(request: NextRequest) {
 
     // Update in database
     const result = await pool.query(
-      `UPDATE calon_murid 
-       SET name = $1, birth_date = $2, age = $3, gender = $4, parent_name = $5,
-           phone = $6, email = $7, address = $8, previous_school = $9,
-           status = $10, notes = $11,
+      `UPDATE registrations 
+       SET nama_lengkap = $1, tanggal_lahir = $2, jenis_kelamin = $3, nama_orang_tua = $4,
+           no_telepon = $5, email = $6, alamat = $7, asal_sekolah = $8,
+           status = $9, catatan = $10,
            ${
              cloudinaryResult
-               ? 'payment_proof_url = $12, payment_proof_public_id = $13,'
+               ? 'bukti_transfer_url = $11, bukti_transfer_public_id = $12,'
                : ''
            }
            updated_at = NOW()
-       WHERE id = $${cloudinaryResult ? '14' : '12'}
-       RETURNING id, name, birth_date, age, gender, parent_name, phone, email,
-                 address, previous_school, status, notes, payment_proof_url,
-                 payment_proof_public_id, registration_date`,
+       WHERE id = $${cloudinaryResult ? '13' : '11'}
+       RETURNING id, nama_lengkap, tanggal_lahir, jenis_kelamin, nama_orang_tua, 
+                 no_telepon, email, alamat, asal_sekolah, status, catatan, 
+                 bukti_transfer_url, bukti_transfer_public_id, created_at`,
       cloudinaryResult
         ? [
             namaLengkap,
             tanggalLahir,
-            age,
             jenisKelamin,
             namaOrangTua,
             noTelepon,
@@ -350,7 +351,6 @@ export async function PUT(request: NextRequest) {
         : [
             namaLengkap,
             tanggalLahir,
-            age,
             jenisKelamin,
             namaOrangTua,
             noTelepon,
@@ -375,20 +375,20 @@ export async function PUT(request: NextRequest) {
     // Transform to match frontend interface
     const updateData = {
       id: updatedStudent.id.toString(),
-      name: updatedStudent.name,
-      birthDate: updatedStudent.birth_date,
-      age: updatedStudent.age,
-      gender: updatedStudent.gender,
-      parent: updatedStudent.parent_name,
-      phone: updatedStudent.phone,
+      name: updatedStudent.nama_lengkap,
+      birthDate: updatedStudent.tanggal_lahir,
+      age: age,
+      gender: updatedStudent.jenis_kelamin,
+      parent: updatedStudent.nama_orang_tua,
+      phone: updatedStudent.no_telepon,
       email: updatedStudent.email,
-      address: updatedStudent.address,
-      previousSchool: updatedStudent.previous_school,
+      address: updatedStudent.alamat,
+      previousSchool: updatedStudent.asal_sekolah,
       status: updatedStudent.status,
-      notes: updatedStudent.notes,
-      paymentProof: updatedStudent.payment_proof_url,
-      paymentProofPublicId: updatedStudent.payment_proof_public_id,
-      registrationDate: updatedStudent.registration_date,
+      notes: updatedStudent.catatan,
+      paymentProof: updatedStudent.bukti_transfer_url,
+      paymentProofPublicId: updatedStudent.bukti_transfer_public_id,
+      registrationDate: updatedStudent.created_at,
     };
 
     // Log activity
@@ -397,7 +397,7 @@ export async function PUT(request: NextRequest) {
        VALUES ($1, $2, $3, $4, NOW())`,
       [
         'UPDATE',
-        'calon_murid',
+        'registrations',
         studentId,
         `Data calon murid diupdate: ${namaLengkap}`,
       ]
@@ -433,7 +433,7 @@ export async function DELETE(request: NextRequest) {
 
     // Get student data first
     const studentResult = await pool.query(
-      'SELECT name, payment_proof_public_id FROM calon_murid WHERE id = $1',
+      'SELECT nama_lengkap, bukti_transfer_public_id FROM registrations WHERE id = $1',
       [studentId]
     );
 
@@ -445,7 +445,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     const student = studentResult.rows[0];
-    const imagePublicId = publicId || student.payment_proof_public_id;
+    const imagePublicId = publicId || student.bukti_transfer_public_id;
 
     // Delete image from Cloudinary if exists
     if (imagePublicId) {
@@ -457,7 +457,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Delete from database
-    await pool.query('DELETE FROM calon_murid WHERE id = $1', [studentId]);
+    await pool.query('DELETE FROM registrations WHERE id = $1', [studentId]);
 
     // Log activity
     await pool.query(
@@ -465,9 +465,9 @@ export async function DELETE(request: NextRequest) {
        VALUES ($1, $2, $3, $4, NOW())`,
       [
         'DELETE',
-        'calon_murid',
+        'registrations',
         studentId,
-        `Calon murid dihapus: ${student.name}`,
+        `Calon murid dihapus: ${student.nama_lengkap}`,
       ]
     );
 

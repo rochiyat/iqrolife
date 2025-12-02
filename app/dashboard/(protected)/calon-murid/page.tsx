@@ -34,7 +34,7 @@ interface Student {
   email: string;
   address: string;
   previousSchool?: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: 'pending' | 'reviewed' | 'approved' | 'rejected';
   registrationDate: string;
   notes?: string;
   paymentProof?: string;
@@ -122,6 +122,8 @@ export default function CalonMuridPage() {
     switch (status) {
       case 'approved':
         return 'bg-green-100 text-green-800';
+      case 'reviewed':
+        return 'bg-blue-100 text-blue-800';
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
       case 'rejected':
@@ -135,6 +137,8 @@ export default function CalonMuridPage() {
     switch (status) {
       case 'approved':
         return 'Disetujui';
+      case 'reviewed':
+        return 'Direview';
       case 'pending':
         return 'Pending';
       case 'rejected':
@@ -556,6 +560,7 @@ export default function CalonMuridPage() {
                     }
                   >
                     <option value="pending">Pending</option>
+                    <option value="reviewed">Direview</option>
                     <option value="approved">Disetujui</option>
                     <option value="rejected">Ditolak</option>
                   </select>
