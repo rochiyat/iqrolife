@@ -28,26 +28,26 @@ export async function GET(request: NextRequest) {
 
     let query = `
       SELECT 
-        cm.id,
-        cm.name as student_name,
-        cm.birth_date,
-        cm.age,
-        cm.gender,
-        cm.parent_name,
-        cm.phone as parent_phone,
-        cm.email as parent_email,
-        cm.address,
-        cm.previous_school,
-        cm.status,
-        cm.notes as review_notes,
-        cm.registration_date,
-        cm.user_id,
-        cm.formulir_pendaftaran_id,
+        r.id,
+        r.name as student_name,
+        r.birth_date,
+        r.age,
+        r.gender,
+        r.parent_name,
+        r.phone as parent_phone,
+        r.email as parent_email,
+        r.address,
+        r.previous_school,
+        r.status,
+        r.notes as review_notes,
+        r.registration_date,
+        r.user_id,
+        r.formulir_pendaftaran_id,
         u.name as user_parent_name,
         u.email as user_email,
         u.phone as user_phone,
-        cm.created_at,
-        cm.updated_at,
+        r.created_at,
+        r.updated_at,
         fp.program_yang_dipilih as program,
         fp.nama_ayah as father_name,
         fp.nama_ibu as mother_name,
@@ -57,9 +57,9 @@ export async function GET(request: NextRequest) {
         fp.telepon_ibu as mother_phone,
         fp.hobi_minat as hobbies,
         fp.prestasi_yang_pernah_diraih as achievements
-      FROM calon_murid cm
-      LEFT JOIN users u ON cm.user_id = u.id
-      LEFT JOIN formulir_pendaftaran fp ON cm.formulir_pendaftaran_id = fp.id
+      FROM registrations r
+      LEFT JOIN users u ON r.user_id = u.id
+      LEFT JOIN formulir_pendaftaran fp ON r.formulir_pendaftaran_id = fp.id
     `;
 
     const conditions: string[] = [];
@@ -68,18 +68,18 @@ export async function GET(request: NextRequest) {
 
     // Filter by user_id for parent role
     if (user.role === 'parent') {
-      conditions.push(`cm.user_id = $${paramIndex}`);
+      conditions.push(`r.user_id = $${paramIndex}`);
       params.push(user.id);
       paramIndex++;
     } else if (userId) {
-      conditions.push(`cm.user_id = $${paramIndex}`);
+      conditions.push(`r.user_id = $${paramIndex}`);
       params.push(userId);
       paramIndex++;
     }
 
     // Filter by status
     if (statusFilter) {
-      conditions.push(`cm.status = $${paramIndex}`);
+      conditions.push(`r.status = $${paramIndex}`);
       params.push(statusFilter);
       paramIndex++;
     }
@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
       query += ' WHERE ' + conditions.join(' AND ');
     }
 
-    query += ' ORDER BY cm.registration_date DESC';
+    query += ' ORDER BY r.registration_date DESC';
 
     const result = await pool.query(query, params);
 

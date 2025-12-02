@@ -99,8 +99,8 @@ export async function POST(request: NextRequest) {
       );
 
       if (existingFormulir.rows.length === 0) {
-        // Insert into formulir_pendaftaran
-        await pool.query(
+        // Insert into formulir_pendaftaran and get the new id
+        const formulirResult = await pool.query(
           `INSERT INTO formulir_pendaftaran (
             user_id,
             nama_lengkap,
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
             updated_at
           ) VALUES (
             $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, NOW(), NOW()
-          )`,
+          ) RETURNING id`,
           [
             userId,
             regData.nama_lengkap,
@@ -159,6 +159,22 @@ export async function POST(request: NextRequest) {
             'Reguler', // Program
             'submitted', // Status formulir
           ]
+        );
+
+        // Update registrations with formulir_pendaftaran_id
+        if (formulirResult.rows.length > 0) {
+          const formulirId = formulirResult.rows[0].id;
+          await pool.query(
+            'UPDATE registrations SET formulir_pendaftaran_id = $1, updated_at = NOW() WHERE id = $2',
+            [formulirId, studentId]
+          );
+        }
+      } else {
+        // If formulir already exists, update registrations with existing formulir id
+        const existingFormulirId = existingFormulir.rows[0].id;
+        await pool.query(
+          'UPDATE registrations SET formulir_pendaftaran_id = $1, updated_at = NOW() WHERE id = $2',
+          [existingFormulirId, studentId]
         );
       }
     }
