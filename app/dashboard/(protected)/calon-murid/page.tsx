@@ -217,7 +217,15 @@ export default function CalonMuridPage() {
   };
 
   const handleEdit = (student: Student) => {
-    setEditFormData({ ...student });
+    // Format date for input (YYYY-MM-DD)
+    const formattedDate = student.birthDate
+      ? new Date(student.birthDate).toISOString().split('T')[0]
+      : '';
+
+    setEditFormData({
+      ...student,
+      birthDate: formattedDate,
+    });
     setIsEditDialogOpen(true);
   };
 
@@ -227,14 +235,44 @@ export default function CalonMuridPage() {
     }
   };
 
-  const confirmEdit = () => {
-    if (editFormData) {
-      setStudents(
-        students.map((s) => (s.id === editFormData.id ? editFormData : s))
-      );
-      alert(`Data ${editFormData.name} berhasil diupdate!`);
-      setIsEditDialogOpen(false);
-      setEditFormData(null);
+  const confirmEdit = async () => {
+    if (!editFormData) return;
+
+    try {
+      setIsSubmitting(true);
+      const formData = new FormData();
+      formData.append('id', editFormData.id);
+      formData.append('namaLengkap', editFormData.name);
+      formData.append('tanggalLahir', editFormData.birthDate);
+      formData.append('jenisKelamin', editFormData.gender);
+      formData.append('namaOrangTua', editFormData.parent);
+      formData.append('noTelepon', editFormData.phone);
+      formData.append('email', editFormData.email);
+      formData.append('alamat', editFormData.address);
+      formData.append('asalSekolah', editFormData.previousSchool || '');
+      formData.append('status', editFormData.status);
+      formData.append('catatan', editFormData.notes || '');
+
+      const response = await fetch('/api/dashboard/calon-murid', {
+        method: 'PUT',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert(`Data ${editFormData.name} berhasil diupdate!`);
+        setIsEditDialogOpen(false);
+        setEditFormData(null);
+        fetchStudents(); // Refresh data from server
+      } else {
+        alert(result.error || 'Gagal mengupdate data');
+      }
+    } catch (error) {
+      console.error('Error updating student:', error);
+      alert('Terjadi kesalahan saat mengupdate data');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
