@@ -26,13 +26,21 @@ export async function GET(request: NextRequest) {
       SELECT 
         id, nama_lengkap, tanggal_lahir, jenis_kelamin, nama_orang_tua, 
         no_telepon, email, alamat, asal_sekolah, status, catatan, 
-        bukti_transfer_url, bukti_transfer_public_id, created_at, updated_at
+        bukti_transfer_url, bukti_transfer_public_id, user_id, 
+        reviewed_by, reviewed_at, review_notes, created_at, updated_at
       FROM registrations
     `;
 
     const conditions: string[] = [];
     const params: any[] = [];
     let paramIndex = 1;
+
+    // Filter by user_id for parent role (parents can only see their own children)
+    if (user.role === 'parent') {
+      conditions.push(`user_id = $${paramIndex}`);
+      params.push(user.id);
+      paramIndex++;
+    }
 
     // Filter by status
     if (status) {
@@ -79,6 +87,10 @@ export async function GET(request: NextRequest) {
         paymentProof: row.bukti_transfer_url,
         paymentProofPublicId: row.bukti_transfer_public_id,
         registrationDate: row.created_at,
+        userId: row.user_id,
+        reviewedBy: row.reviewed_by,
+        reviewedAt: row.reviewed_at,
+        reviewNotes: row.review_notes,
       };
     });
 

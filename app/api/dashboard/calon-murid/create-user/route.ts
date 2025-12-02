@@ -67,8 +67,8 @@ export async function POST(request: NextRequest) {
 
       const newUserResult = await pool.query(
         `INSERT INTO users (email, password, name, role, is_active, created_at, updated_at)
-         VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
-         RETURNING id`,
+          VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+          RETURNING id`,
         [email, hashedPassword, name, 'parent', true]
       );
 
@@ -76,9 +76,9 @@ export async function POST(request: NextRequest) {
       action = 'created';
     }
 
-    // Update calon_murid with user_id (create mapping)
+    // Update registrations with user_id (create mapping)
     await pool.query(
-      'UPDATE calon_murid SET created_by = $1, updated_at = NOW() WHERE id = $2',
+      'UPDATE registrations SET user_id = $1, updated_at = NOW() WHERE id = $2',
       [userId, studentId]
     );
 

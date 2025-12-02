@@ -21,6 +21,7 @@ import {
   UserPlus,
   FileImage,
   ExternalLink,
+  ClipboardCheck,
 } from 'lucide-react';
 
 interface Student {
@@ -38,6 +39,10 @@ interface Student {
   registrationDate: string;
   notes?: string;
   paymentProof?: string;
+  userId?: number;
+  reviewedBy?: number;
+  reviewedAt?: string;
+  reviewNotes?: string;
 }
 
 export default function CalonMuridPage() {
@@ -48,6 +53,14 @@ export default function CalonMuridPage() {
   const [isCreateUserDialogOpen, setIsCreateUserDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
+  const [reviewNotes, setReviewNotes] = useState('');
+  const [reviewStatus, setReviewStatus] = useState<
+    'reviewed' | 'approved' | 'rejected'
+  >('reviewed');
+  const [modalMessage, setModalMessage] = useState('');
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [editFormData, setEditFormData] = useState<Student | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -257,6 +270,63 @@ export default function CalonMuridPage() {
     } catch (error) {
       console.error('Error deleting student:', error);
       alert('Terjadi kesalahan saat menghapus data');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleReview = (student: Student) => {
+    setSelectedStudent(student);
+    setReviewNotes('');
+    setReviewStatus('reviewed');
+    setIsReviewDialogOpen(true);
+  };
+
+  const confirmReview = async () => {
+    if (!selectedStudent) return;
+
+    // Validate notes (mandatory)
+    if (!reviewNotes.trim()) {
+      setModalMessage('Catatan review wajib diisi!');
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      const response = await fetch('/api/dashboard/calon-murid/review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentId: selectedStudent.id,
+          status: reviewStatus,
+          reviewNotes: reviewNotes.trim(),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setModalMessage(
+          `Data ${
+            selectedStudent.name
+          } berhasil direview dengan status: ${getStatusText(reviewStatus)}`
+        );
+        setIsSuccessModalOpen(true);
+        setIsReviewDialogOpen(false);
+        setSelectedStudent(null);
+        setReviewNotes('');
+
+        // Refresh data from database
+        fetchStudents();
+      } else {
+        setModalMessage(result.error || 'Gagal melakukan review');
+        setIsErrorModalOpen(true);
+      }
+    } catch (error) {
+      console.error('Error reviewing student:', error);
+      setModalMessage('Terjadi kesalahan saat melakukan review');
+      setIsErrorModalOpen(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -777,6 +847,15 @@ export default function CalonMuridPage() {
                               onClick={() => handleCreateUser(student)}
                             >
                               <UserPlus className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-orange-600 hover:text-orange-700 hover:bg-orange-50 cursor-pointer transition-colors"
+                              title="Review"
+                              onClick={() => handleReview(student)}
+                            >
+                              <ClipboardCheck className="w-4 h-4" />
                             </Button>
                             <Button
                               size="sm"
@@ -1343,6 +1422,150 @@ export default function CalonMuridPage() {
             >
               <Trash2 className="w-4 h-4 mr-2" />
               Hapus Data
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Review Dialog */}
+      <Dialog open={isReviewDialogOpen} onOpenChange={setIsReviewDialogOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Review Pendaftaran</DialogTitle>
+          </DialogHeader>
+          {selectedStudent && (
+            <div className="space-y-4 py-4">
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Nama:</span>
+                    <span className="font-medium">{selectedStudent.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Orang Tua:</span>
+                    <span className="font-medium">
+                      {selectedStudent.parent}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Email:</span>
+                    <span className="font-medium">{selectedStudent.email}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>
+                  Status Review <span className="text-red-500">*</span>
+                </Label>
+                <select
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+                  value={reviewStatus}
+                  onChange={(e) =>
+                    setReviewStatus(
+                      e.target.value as 'reviewed' | 'approved' | 'rejected'
+                    )
+                  }
+                >
+                  <option value="reviewed">Direview</option>
+                  <option value="approved">Disetujui</option>
+                  <option value="rejected">Ditolak</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <Label>
+                  Catatan Review <span className="text-red-500">*</span>
+                </Label>
+                <textarea
+                  rows={4}
+                  placeholder="Masukkan catatan review (wajib diisi)"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
+                  value={reviewNotes}
+                  onChange={(e) => setReviewNotes(e.target.value)}
+                  required
+                />
+                <p className="text-xs text-gray-500">
+                  Catatan ini akan tersimpan dan dapat dilihat oleh admin/staff
+                </p>
+              </div>
+            </div>
+          )}
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsReviewDialogOpen(false)}
+              disabled={isSubmitting}
+              className="hover:bg-gray-200 hover:border-gray-400 cursor-pointer transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Batal
+            </Button>
+            <Button
+              className="bg-orange-600 hover:bg-orange-700 text-white cursor-pointer transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              onClick={confirmReview}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="animate-spin mr-2">⏳</span>
+                  Memproses...
+                </>
+              ) : (
+                <>
+                  <ClipboardCheck className="w-4 h-4 mr-2" />
+                  Simpan Review
+                </>
+              )}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Success Modal */}
+      <Dialog open={isSuccessModalOpen} onOpenChange={setIsSuccessModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Berhasil!</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+              <div className="flex items-start gap-3">
+                <div className="text-green-600 text-2xl">✅</div>
+                <p className="text-sm text-green-800">{modalMessage}</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <Button
+              className="bg-green-600 hover:bg-green-700 text-white cursor-pointer transition-colors"
+              onClick={() => setIsSuccessModalOpen(false)}
+            >
+              OK
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Error Modal */}
+      <Dialog open={isErrorModalOpen} onOpenChange={setIsErrorModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Gagal</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+              <div className="flex items-start gap-3">
+                <div className="text-red-600 text-2xl">❌</div>
+                <p className="text-sm text-red-800">{modalMessage}</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <Button
+              className="bg-red-600 hover:bg-red-700 text-white cursor-pointer transition-colors"
+              onClick={() => setIsErrorModalOpen(false)}
+            >
+              OK
             </Button>
           </div>
         </DialogContent>
