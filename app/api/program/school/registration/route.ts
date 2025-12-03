@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
     const email = formData.get('email') as string;
     const alamat = formData.get('alamat') as string;
     const asalSekolah = formData.get('asalSekolah') as string;
+    const program = formData.get('program') as string;
     const catatan = formData.get('catatan') as string;
     const buktiTransfer = formData.get('buktiTransfer') as File;
 
@@ -34,6 +35,7 @@ export async function POST(request: NextRequest) {
       !noTelepon ||
       !email ||
       !alamat ||
+      !program ||
       !buktiTransfer
     ) {
       return NextResponse.json(
@@ -79,6 +81,7 @@ export async function POST(request: NextRequest) {
       email,
       alamat,
       asalSekolah,
+      program,
       catatan,
       buktiTransferUrl: cloudinaryResult?.secure_url || '',
       buktiTransferPublicId: cloudinaryResult?.public_id || '',
@@ -96,9 +99,9 @@ export async function POST(request: NextRequest) {
     const insertResult = await pool.query(
       `INSERT INTO registrations (
         nama_lengkap, tanggal_lahir, jenis_kelamin, asal_sekolah,
-        nama_orang_tua, no_telepon, email, alamat, catatan,
+        nama_orang_tua, no_telepon, email, alamat, program, catatan,
         bukti_transfer_url, bukti_transfer_public_id, status
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       RETURNING id`,
       [
         namaLengkap,
@@ -109,6 +112,7 @@ export async function POST(request: NextRequest) {
         noTelepon,
         email,
         alamat,
+        program,
         catatan || null,
         cloudinaryResult?.secure_url,
         cloudinaryResult?.public_id,

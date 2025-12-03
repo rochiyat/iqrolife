@@ -35,6 +35,7 @@ interface Student {
   email: string;
   address: string;
   previousSchool?: string;
+  program?: string;
   status: 'pending' | 'reviewed' | 'approved' | 'rejected';
   registrationDate: string;
   notes?: string;

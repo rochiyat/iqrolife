@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     let query = `
       SELECT 
         id, nama_lengkap, tanggal_lahir, jenis_kelamin, nama_orang_tua, 
-        no_telepon, email, alamat, asal_sekolah, status, catatan, 
+        no_telepon, email, alamat, asal_sekolah, program, status, catatan, 
         bukti_transfer_url, bukti_transfer_public_id, user_id, 
         reviewed_by, reviewed_at, review_notes, created_at, updated_at
       FROM registrations
@@ -82,6 +82,7 @@ export async function GET(request: NextRequest) {
         email: row.email,
         address: row.alamat,
         previousSchool: row.asal_sekolah,
+        program: row.program,
         status: row.status,
         notes: row.catatan,
         paymentProof: row.bukti_transfer_url,

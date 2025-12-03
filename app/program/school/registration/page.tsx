@@ -35,6 +35,7 @@ export default function RegistrationPage() {
     email: '',
     alamat: '',
     asalSekolah: '',
+    program: '',
     catatan: '',
   });
   const [buktiTransfer, setBuktiTransfer] = useState<File | null>(null);
@@ -101,6 +102,7 @@ export default function RegistrationPage() {
           email: '',
           alamat: '',
           asalSekolah: '',
+          program: '',
           catatan: '',
         });
         setBuktiTransfer(null);
@@ -302,6 +304,29 @@ export default function RegistrationPage() {
                       placeholder="Masukkan asal sekolah/TK"
                       className="mt-1 border-2 focus:border-orange-400 transition-all"
                     />
+                  </div>
+
+                  <div>
+                    <Label
+                      htmlFor="program"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Pilih Program <span className="text-red-500">*</span>
+                    </Label>
+                    <select
+                      id="program"
+                      name="program"
+                      value={formData.program}
+                      onChange={handleInputChange}
+                      required
+                      className="mt-1 w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition-all"
+                    >
+                      <option value="">Pilih program</option>
+                      <option value="Kelas Siap Sekolah">
+                        Kelas Siap Sekolah
+                      </option>
+                      <option value="Kelas Bermain">Kelas Bermain</option>
+                    </select>
                   </div>
                 </div>
 

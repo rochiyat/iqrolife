@@ -38,6 +38,7 @@ export async function GET(request: NextRequest) {
         r.email as parent_email,
         r.alamat as address,
         r.asal_sekolah as previous_school,
+        r.program,
         r.status,
         r.catatan as notes,
         r.review_notes,
