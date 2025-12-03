@@ -4,6 +4,10 @@ import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import { sendEmail, getResetPasswordEmailTemplate } from '@/lib/email';
 
+// Force Node.js runtime (required for bcrypt and pg)
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
