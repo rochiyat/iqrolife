@@ -7,6 +7,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
   ChevronRight,
   ChevronLeft,
   User,
@@ -16,6 +23,9 @@ import {
   CheckSquare,
   FileText,
   UserCheck,
+  AlertCircle,
+  CheckCircle2,
+  XCircle,
 } from 'lucide-react';
 
 interface CalonMurid {
@@ -97,6 +107,11 @@ export default function FormulirPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [genderFilter, setGenderFilter] = useState('all');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [formData, setFormData] = useState<FormData>({
     // Step 1
     namaLengkap: '',
@@ -308,9 +323,93 @@ export default function FormulirPage() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log('Form submitted:', formData);
-    alert('Formulir berhasil dikirim!');
+  const validateForm = (): string[] => {
+    const errors: string[] = [];
+
+    // Step 1 - Data Pribadi
+    if (!formData.namaLengkap.trim()) errors.push('Nama Lengkap');
+    if (!formData.namaPanggilan.trim()) errors.push('Nama Panggilan');
+    if (!formData.jenisKelamin) errors.push('Jenis Kelamin');
+    if (!formData.tempatLahir.trim()) errors.push('Tempat Lahir');
+    if (!formData.tanggalLahir) errors.push('Tanggal Lahir');
+    if (!formData.agama) errors.push('Agama');
+    if (!formData.kewarganegaraan.trim()) errors.push('Kewarganegaraan');
+    if (!formData.anakKe) errors.push('Anak Ke');
+    if (!formData.jumlahSaudara) errors.push('Jumlah Saudara');
+    if (!formData.bahasaSehariHari.trim()) errors.push('Bahasa Sehari-hari');
+
+    // Step 2 - Tempat Tinggal
+    if (!formData.alamatLengkap.trim()) errors.push('Alamat Lengkap');
+    if (!formData.rt.trim()) errors.push('RT');
+    if (!formData.rw.trim()) errors.push('RW');
+    if (!formData.kelurahan.trim()) errors.push('Kelurahan/Desa');
+    if (!formData.kecamatan.trim()) errors.push('Kecamatan');
+    if (!formData.kabupatenKota.trim()) errors.push('Kabupaten/Kota');
+    if (!formData.provinsi.trim()) errors.push('Provinsi');
+    if (!formData.kodePos.trim()) errors.push('Kode Pos');
+    if (!formData.telepon.trim()) errors.push('Nomor Telepon');
+
+    // Step 3 - Data Orang Tua
+    if (!formData.namaAyah.trim()) errors.push('Nama Ayah');
+    if (!formData.pekerjaanAyah.trim()) errors.push('Pekerjaan Ayah');
+    if (!formData.teleponAyah.trim()) errors.push('Telepon Ayah');
+    if (!formData.namaIbu.trim()) errors.push('Nama Ibu');
+    if (!formData.pekerjaanIbu.trim()) errors.push('Pekerjaan Ibu');
+    if (!formData.teleponIbu.trim()) errors.push('Telepon Ibu');
+
+    // Step 5 - Konfirmasi
+    if (!formData.programYangDipilih) errors.push('Program Yang Dipilih');
+    if (!formData.pernyataanSetuju) errors.push('Pernyataan Setuju (checkbox)');
+
+    return errors;
+  };
+
+  const handleSubmit = async () => {
+    // Validate form
+    const errors = validateForm();
+    if (errors.length > 0) {
+      setValidationErrors(errors);
+      setShowErrorModal(true);
+      setErrorMessage('Mohon lengkapi semua field yang wajib diisi');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setValidationErrors([]);
+
+    try {
+      const response = await fetch('/api/dashboard/formulir-pendaftaran', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: selectedStudent?.id,
+          ...formData,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setShowSuccessModal(true);
+        // Reset form after successful submission
+        setTimeout(() => {
+          setCurrentStep(0);
+          setSelectedStudent(null);
+          setShowSuccessModal(false);
+        }, 3000);
+      } else {
+        setErrorMessage(result.error || 'Gagal mengirim formulir');
+        setShowErrorModal(true);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setErrorMessage('Terjadi kesalahan saat mengirim formulir');
+      setShowErrorModal(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderStepContent = () => {
@@ -1348,11 +1447,20 @@ export default function FormulirPage() {
                 ) : (
                   <Button
                     onClick={handleSubmit}
-                    disabled={!formData.pernyataanSetuju}
+                    disabled={!formData.pernyataanSetuju || isSubmitting}
                     className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
                   >
-                    <CheckSquare className="w-4 h-4" />
-                    Submit Formulir
+                    {isSubmitting ? (
+                      <>
+                        <span className="animate-spin mr-2">⏳</span>
+                        Mengirim...
+                      </>
+                    ) : (
+                      <>
+                        <CheckSquare className="w-4 h-4" />
+                        Submit Formulir
+                      </>
+                    )}
                   </Button>
                 )}
               </div>
@@ -1386,6 +1494,79 @@ export default function FormulirPage() {
           </Card>
         </>
       )}
+
+      {/* Success Modal */}
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-green-100">
+              <CheckCircle2 className="w-6 h-6 text-green-600" />
+            </div>
+            <DialogTitle className="text-center text-xl">
+              Formulir Berhasil Dikirim! 🎉
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              Formulir pendaftaran Anda telah berhasil disimpan. Admin akan
+              meninjau data Anda segera.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center mt-4">
+            <Button
+              onClick={() => setShowSuccessModal(false)}
+              className="bg-brand-emerald hover:bg-brand-emerald/90"
+            >
+              Tutup
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Error Modal */}
+      <Dialog open={showErrorModal} onOpenChange={setShowErrorModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-red-100">
+              <XCircle className="w-6 h-6 text-red-600" />
+            </div>
+            <DialogTitle className="text-center text-xl">
+              {validationErrors.length > 0 ? 'Lengkapi Form' : 'Gagal Mengirim'}
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              {errorMessage}
+            </DialogDescription>
+          </DialogHeader>
+
+          {validationErrors.length > 0 && (
+            <div className="mt-4">
+              <p className="text-sm font-semibold text-gray-700 mb-2">
+                Field yang perlu diisi:
+              </p>
+              <div className="max-h-60 overflow-y-auto bg-red-50 rounded-lg p-3 border border-red-200">
+                <ul className="text-sm text-red-800 space-y-1">
+                  {validationErrors.map((error, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <span>{error}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-center mt-4">
+            <Button
+              onClick={() => {
+                setShowErrorModal(false);
+                setValidationErrors([]);
+              }}
+              variant="outline"
+            >
+              Tutup
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
