@@ -1,6 +1,11 @@
 import nodemailer from 'nodemailer';
 import { getAdminNotificationTemplate } from './email-templates/admin-notification';
 import { getParentConfirmationTemplate } from './email-templates/parent-confirmation';
+import { getResetPasswordEmailTemplate } from './email-templates/reset-password';
+import { getWelcomeEmailTemplate } from './email-templates/welcome';
+
+// Re-export the template functions
+export { getResetPasswordEmailTemplate, getWelcomeEmailTemplate };
 
 // Email transporter
 const transporter = nodemailer.createTransport({
@@ -78,6 +83,32 @@ export async function sendParentConfirmation(
     console.log('✅ Parent confirmation email sent');
   } catch (error) {
     console.error('❌ Failed to send parent confirmation:', error);
+    throw error;
+  }
+}
+
+/**
+ * Generic email sending function
+ */
+interface EmailOptions {
+  to: string | string[];
+  subject: string;
+  html: string;
+  from?: string;
+}
+
+export async function sendEmail(options: EmailOptions): Promise<void> {
+  try {
+    await transporter.sendMail({
+      from: options.from || `"Iqrolife" <${process.env.EMAIL_USER}>`,
+      to: options.to,
+      subject: options.subject,
+      html: options.html,
+    });
+
+    console.log(`✅ Email sent to ${options.to}`);
+  } catch (error) {
+    console.error('❌ Failed to send email:', error);
     throw error;
   }
 }
