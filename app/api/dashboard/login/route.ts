@@ -1,40 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Pool } from 'pg';
+import bcrypt from 'bcrypt';
 
-// Dummy users for testing with 4 different roles
-const dummyUsers = [
-  {
-    id: '1',
-    email: 'superadmin@iqrolife.com',
-    password: 'superadmin123',
-    name: 'Super Admin',
-    role: 'superadmin',
-    avatar: '/avatars/superadmin.jpg',
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
   },
-  {
-    id: '2',
-    email: 'staff@iqrolife.com',
-    password: 'staff123',
-    name: 'Staff Iqrolife',
-    role: 'staff',
-    avatar: '/avatars/staff.jpg',
-  },
-  {
-    id: '3',
-    email: 'teacher@iqrolife.com',
-    password: 'teacher123',
-    name: 'Ustadz Ahmad',
-    role: 'teacher',
-    avatar: '/avatars/teacher.jpg',
-  },
-  {
-    id: '4',
-    email: 'parent@iqrolife.com',
-    password: 'parent123',
-    name: 'Ibu Siti',
-    role: 'parent',
-    avatar: '/avatars/parent.jpg',
-  },
-];
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -55,37 +28,114 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const user = dummyUsers.find(
-      (u) => u.email === email && u.password === password
+    // Get user from database with role permissions
+    const userResult = await pool.query(
+      `SELECT 
+        u.id, 
+        u.email, 
+        u.password, 
+        u.name, 
+        u.role, 
+        u.avatar, 
+        u.phone, 
+        u.is_active,
+        r.permissions
+      FROM users u
+      LEFT JOIN roles r ON LOWER(u.role) = LOWER(r.name)
+      WHERE u.email = $1`,
+      [email]
     );
 
-    if (user) {
-      const { password: _, ...userWithoutPassword } = user;
-      
-      const response = NextResponse.json(
-        {
-          success: true,
-          message: 'Login berhasil',
-          user: userWithoutPassword,
-        },
-        { status: 200 }
-      );
-
-      response.cookies.set('auth-token', JSON.stringify(userWithoutPassword), {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7,
-        path: '/',
-      });
-
-      return response;
-    } else {
+    if (userResult.rows.length === 0) {
       return NextResponse.json(
         { error: 'Email atau password salah' },
         { status: 401 }
       );
     }
+
+    const user = userResult.rows[0];
+
+    // Check if user is active
+    if (!user.is_active) {
+      return NextResponse.json(
+        { error: 'Akun Anda tidak aktif. Silakan hubungi administrator.' },
+        { status: 403 }
+      );
+    }
+
+    // Verify password with bcrypt
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return NextResponse.json(
+        { error: 'Email atau password salah' },
+        { status: 401 }
+      );
+    }
+
+    // Remove password from user object and include permissions
+    const { password: _, ...userWithoutPassword } = user;
+
+    // Ensure permissions exist (fallback to empty object if role not found)
+    if (!userWithoutPassword.permissions) {
+      userWithoutPassword.permissions = {
+        menus: [],
+        canAccessAll: false,
+        canManageUsers: false,
+        canManageRoles: false,
+        canManageStudents: false,
+        canManageForms: false,
+        canManageFormsList: false,
+        canManageSettings: false,
+        canManageMenu: false,
+        canViewPortfolio: false,
+      };
+    }
+
+    // Log activity
+    await pool.query(
+      `INSERT INTO activity_logs (user_id, action, entity_type, entity_id, description, created_at)
+       VALUES ($1, $2, $3, $4, $5, NOW())`,
+      [user.id, 'LOGIN', 'user', user.id, `User ${user.name} logged in`]
+    );
+
+    // Get accessible menus for user's role from database
+    const menusResult = await pool.query(
+      `SELECT id, name, label, icon, href, parent_id, order_index, is_active, roles
+       FROM menu
+       WHERE is_active = true
+       AND roles @> $1::jsonb
+       ORDER BY order_index, name`,
+      [JSON.stringify([user.role])]
+    );
+    console.log('menusResult', menusResult.rows);
+    console.log('user.role', user.role);
+
+    const accessibleMenus = menusResult.rows;
+
+    // Add menus to user object (will be sent to client)
+    // Client-side (auth-context.tsx) will save to localStorage
+    userWithoutPassword.accessibleMenus = accessibleMenus;
+
+    const response = NextResponse.json(
+      {
+        success: true,
+        message: 'Login berhasil',
+        user: userWithoutPassword,
+        menus: accessibleMenus, // Send menus separately for clarity
+      },
+      { status: 200 }
+    );
+
+    response.cookies.set('auth-token', JSON.stringify(userWithoutPassword), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: '/',
+    });
+
+    return response;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
@@ -107,17 +157,11 @@ export async function GET(request: NextRequest) {
           user: user,
         });
       } catch {
-        return NextResponse.json(
-          { authenticated: false },
-          { status: 401 }
-        );
+        return NextResponse.json({ authenticated: false }, { status: 401 });
       }
     }
 
-    return NextResponse.json(
-      { authenticated: false },
-      { status: 401 }
-    );
+    return NextResponse.json({ authenticated: false }, { status: 401 });
   } catch (error) {
     console.error('Auth check error:', error);
     return NextResponse.json(

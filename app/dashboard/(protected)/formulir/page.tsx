@@ -1,11 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import {
   ChevronRight,
   ChevronLeft,
@@ -15,7 +22,24 @@ import {
   Heart,
   CheckSquare,
   FileText,
+  UserCheck,
+  AlertCircle,
+  CheckCircle2,
+  XCircle,
 } from 'lucide-react';
+
+interface CalonMurid {
+  id: number;
+  name: string;
+  birthDate: string;
+  age: number;
+  gender: string;
+  parentName: string;
+  phone: string;
+  email: string;
+  address: string;
+  status: string;
+}
 
 interface FormData {
   // Step 1: Data Pribadi
@@ -72,7 +96,22 @@ interface FormData {
 }
 
 export default function FormulirPage() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0); // Start at 0 for selection
+  const [selectedStudent, setSelectedStudent] = useState<CalonMurid | null>(
+    null
+  );
+  const [students, setStudents] = useState<CalonMurid[]>([]);
+  const [filteredStudents, setFilteredStudents] = useState<CalonMurid[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [genderFilter, setGenderFilter] = useState('all');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [formData, setFormData] = useState<FormData>({
     // Step 1
     namaLengkap: '',
@@ -127,6 +166,111 @@ export default function FormulirPage() {
     pernyataanSetuju: false,
   });
 
+  // Fetch calon murid list
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  // Filter students when search or filter changes
+  useEffect(() => {
+    let filtered = students;
+
+    // Search filter
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (student) =>
+          student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          student.parentName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Status filter
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter((student) => student.status === statusFilter);
+    }
+
+    // Gender filter
+    if (genderFilter !== 'all') {
+      filtered = filtered.filter((student) => student.gender === genderFilter);
+    }
+
+    setFilteredStudents(filtered);
+  }, [students, searchTerm, statusFilter, genderFilter]);
+
+  const fetchStudents = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/dashboard/calon-murid-list');
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setStudents(result.data);
+        setFilteredStudents(result.data);
+        setUserRole(result.userRole);
+      } else {
+        console.error('Failed to fetch students:', result.error);
+      }
+    } catch (error) {
+      console.error('Error fetching students:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getStatusBadge = (status: string) => {
+    const statusConfig: Record<string, { label: string; className: string }> = {
+      approved: {
+        label: 'Disetujui',
+        className: 'bg-green-100 text-green-800',
+      },
+      pending: {
+        label: 'Menunggu',
+        className: 'bg-yellow-100 text-yellow-800',
+      },
+      rejected: { label: 'Ditolak', className: 'bg-red-100 text-red-800' },
+      active: { label: 'Aktif', className: 'bg-blue-100 text-blue-800' },
+    };
+
+    const config = statusConfig[status] || {
+      label: status,
+      className: 'bg-gray-100 text-gray-800',
+    };
+
+    return (
+      <span
+        className={`px-2 py-1 rounded-full text-xs font-medium ${config.className}`}
+      >
+        {config.label}
+      </span>
+    );
+  };
+
+  const handleSelectStudent = (student: CalonMurid) => {
+    setSelectedStudent(student);
+
+    // Format date for input (YYYY-MM-DD) using local time
+    const formatDateForInput = (dateString: string) => {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    // Pre-fill form data with student info
+    setFormData((prev) => ({
+      ...prev,
+      namaLengkap: student.name,
+      namaPanggilan: student.name.split(' ')[0],
+      jenisKelamin: student.gender,
+      tanggalLahir: formatDateForInput(student.birthDate),
+      alamatLengkap: student.address,
+      telepon: student.phone,
+    }));
+    setCurrentStep(1); // Move to first form step
+  };
+
   const steps = [
     {
       number: 1,
@@ -179,9 +323,93 @@ export default function FormulirPage() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log('Form submitted:', formData);
-    alert('Formulir berhasil dikirim!');
+  const validateForm = (): string[] => {
+    const errors: string[] = [];
+
+    // Step 1 - Data Pribadi
+    if (!formData.namaLengkap.trim()) errors.push('Nama Lengkap');
+    if (!formData.namaPanggilan.trim()) errors.push('Nama Panggilan');
+    if (!formData.jenisKelamin) errors.push('Jenis Kelamin');
+    if (!formData.tempatLahir.trim()) errors.push('Tempat Lahir');
+    if (!formData.tanggalLahir) errors.push('Tanggal Lahir');
+    if (!formData.agama) errors.push('Agama');
+    if (!formData.kewarganegaraan.trim()) errors.push('Kewarganegaraan');
+    if (!formData.anakKe) errors.push('Anak Ke');
+    if (!formData.jumlahSaudara) errors.push('Jumlah Saudara');
+    if (!formData.bahasaSehariHari.trim()) errors.push('Bahasa Sehari-hari');
+
+    // Step 2 - Tempat Tinggal
+    if (!formData.alamatLengkap.trim()) errors.push('Alamat Lengkap');
+    if (!formData.rt.trim()) errors.push('RT');
+    if (!formData.rw.trim()) errors.push('RW');
+    if (!formData.kelurahan.trim()) errors.push('Kelurahan/Desa');
+    if (!formData.kecamatan.trim()) errors.push('Kecamatan');
+    if (!formData.kabupatenKota.trim()) errors.push('Kabupaten/Kota');
+    if (!formData.provinsi.trim()) errors.push('Provinsi');
+    if (!formData.kodePos.trim()) errors.push('Kode Pos');
+    if (!formData.telepon.trim()) errors.push('Nomor Telepon');
+
+    // Step 3 - Data Orang Tua
+    if (!formData.namaAyah.trim()) errors.push('Nama Ayah');
+    if (!formData.pekerjaanAyah.trim()) errors.push('Pekerjaan Ayah');
+    if (!formData.teleponAyah.trim()) errors.push('Telepon Ayah');
+    if (!formData.namaIbu.trim()) errors.push('Nama Ibu');
+    if (!formData.pekerjaanIbu.trim()) errors.push('Pekerjaan Ibu');
+    if (!formData.teleponIbu.trim()) errors.push('Telepon Ibu');
+
+    // Step 5 - Konfirmasi
+    if (!formData.programYangDipilih) errors.push('Program Yang Dipilih');
+    if (!formData.pernyataanSetuju) errors.push('Pernyataan Setuju (checkbox)');
+
+    return errors;
+  };
+
+  const handleSubmit = async () => {
+    // Validate form
+    const errors = validateForm();
+    if (errors.length > 0) {
+      setValidationErrors(errors);
+      setShowErrorModal(true);
+      setErrorMessage('Mohon lengkapi semua field yang wajib diisi');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setValidationErrors([]);
+
+    try {
+      const response = await fetch('/api/dashboard/formulir-pendaftaran', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: selectedStudent?.id,
+          ...formData,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setShowSuccessModal(true);
+        // Reset form after successful submission
+        setTimeout(() => {
+          setCurrentStep(0);
+          setSelectedStudent(null);
+          setShowSuccessModal(false);
+        }, 3000);
+      } else {
+        setErrorMessage(result.error || 'Gagal mengirim formulir');
+        setShowErrorModal(true);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setErrorMessage('Terjadi kesalahan saat mengirim formulir');
+      setShowErrorModal(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderStepContent = () => {
@@ -189,10 +417,6 @@ export default function FormulirPage() {
       case 1:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              DATA PRIBADI
-            </h3>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="namaLengkap">
@@ -360,10 +584,6 @@ export default function FormulirPage() {
       case 2:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              KETERANGAN TEMPAT TINGGAL
-            </h3>
-
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="alamatLengkap">
@@ -517,10 +737,6 @@ export default function FormulirPage() {
       case 3:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              DATA ORANG TUA/WALI
-            </h3>
-
             <div className="space-y-6">
               {/* Data Ayah */}
               <div className="border-b pb-4">
@@ -724,10 +940,6 @@ export default function FormulirPage() {
       case 4:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              DATA KESEHATAN DAN LAINNYA
-            </h3>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="golonganDarah">Golongan Darah</Label>
@@ -847,10 +1059,6 @@ export default function FormulirPage() {
       case 5:
         return (
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-brand-emerald mb-4">
-              PERNYATAAN DAN KONFIRMASI
-            </h3>
-
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="programYangDipilih">
@@ -866,12 +1074,8 @@ export default function FormulirPage() {
                   required
                 >
                   <option value="">Pilih program</option>
-                  <option value="KBTK">Kelas Siap Sekolah</option>
-                  <option value="Kelas Eksplorasi">Kelas Eksplorasi</option>
-                  <option value="Kelas Pra Aqil Baligh">
-                    Kelas Pra Aqil Baligh
-                  </option>
-                  <option value="Kelas Aqil Baligh">Kelas Aqil Baligh</option>
+                  <option value="KKS">Kelas Siap Sekolah</option>
+                  <option value="KB">Kelas Bermain</option>
                 </select>
               </div>
 
@@ -963,24 +1167,212 @@ export default function FormulirPage() {
           Formulir Pendaftaran Murid
         </h2>
         <p className="text-gray-600 mt-1">
-          Isi formulir pendaftaran dengan lengkap dan benar
+          {currentStep === 0
+            ? 'Pilih nama calon murid yang akan diisi formulirnya'
+            : 'Isi formulir pendaftaran dengan lengkap dan benar'}
         </p>
       </div>
 
-      {/* Progress Steps */}
-      <Card>
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-8">
-            {steps.map((step, index) => {
-              const Icon = step.icon;
-              const isActive = currentStep === step.number;
-              const isCompleted = currentStep > step.number;
+      {/* Step 0: Student Selection */}
+      {currentStep === 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <UserCheck className="w-6 h-6 text-brand-emerald" />
+              Pilih Calon Murid
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {loading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-emerald mx-auto mb-4"></div>
+                <p className="text-gray-600">Memuat data calon murid...</p>
+              </div>
+            ) : students.length === 0 ? (
+              <div className="text-center py-12">
+                <UserCheck className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                  Belum Ada Calon Murid
+                </h3>
+                <p className="text-gray-500 mb-4">
+                  {userRole === 'parent'
+                    ? 'Anda belum mendaftarkan calon murid. Silakan hubungi admin untuk mendaftarkan anak Anda.'
+                    : 'Belum ada data calon murid yang terdaftar.'}
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                  <p className="text-sm text-blue-900">
+                    <strong>Info:</strong>{' '}
+                    {userRole === 'parent'
+                      ? 'Pilih salah satu anak Anda yang akan diisi formulir pendaftarannya.'
+                      : 'Pilih salah satu calon murid untuk mengisi formulir pendaftaran.'}
+                  </p>
+                </div>
 
-              return (
-                <div key={step.number} className="flex-1 flex items-center">
-                  <div className="flex flex-col items-center">
-                    <div
-                      className={`
+                {/* Filters */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label>Cari Nama</Label>
+                    <Input
+                      placeholder="Cari nama murid atau orang tua..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Status</Label>
+                    <select
+                      value={statusFilter}
+                      onChange={(e) => setStatusFilter(e.target.value)}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    >
+                      <option value="all">Semua Status</option>
+                      <option value="approved">Disetujui</option>
+                      <option value="pending">Menunggu</option>
+                      <option value="rejected">Ditolak</option>
+                      <option value="active">Aktif</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Jenis Kelamin</Label>
+                    <select
+                      value={genderFilter}
+                      onChange={(e) => setGenderFilter(e.target.value)}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    >
+                      <option value="all">Semua</option>
+                      <option value="Laki-laki">Laki-laki</option>
+                      <option value="Perempuan">Perempuan</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Results Count */}
+                <div className="text-sm text-gray-600">
+                  Menampilkan {filteredStudents.length} dari {students.length}{' '}
+                  calon murid
+                </div>
+
+                {filteredStudents.length === 0 ? (
+                  <div className="text-center py-12">
+                    <UserCheck className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                      Tidak Ada Hasil
+                    </h3>
+                    <p className="text-gray-500 mb-4">
+                      Tidak ada calon murid yang sesuai dengan filter yang
+                      dipilih.
+                    </p>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setSearchTerm('');
+                        setStatusFilter('all');
+                        setGenderFilter('all');
+                      }}
+                    >
+                      Reset Filter
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {filteredStudents.map((student) => (
+                      <Card
+                        key={student.id}
+                        className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-brand-emerald"
+                        onClick={() => handleSelectStudent(student)}
+                      >
+                        <CardContent className="p-6">
+                          <div className="flex items-start gap-4 mb-3">
+                            <div className="w-12 h-12 rounded-full bg-brand-emerald/10 flex items-center justify-center flex-shrink-0">
+                              <User className="w-6 h-6 text-brand-emerald" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-2 mb-2">
+                                <h3 className="font-semibold text-lg text-gray-900 truncate">
+                                  {student.name}
+                                </h3>
+                                {getStatusBadge(student.status)}
+                              </div>
+                              <div className="space-y-1 text-sm text-gray-600">
+                                <p>
+                                  {student.age} tahun • {student.gender}
+                                </p>
+                                <p className="truncate">{student.parentName}</p>
+                                <p className="truncate">{student.phone}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <Button
+                            className="w-full mt-2 bg-brand-emerald hover:bg-emerald-600"
+                            onClick={() => handleSelectStudent(student)}
+                          >
+                            Pilih & Isi Formulir
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Form Steps */}
+      {currentStep > 0 && (
+        <>
+          {/* Selected Student Info */}
+          {selectedStudent && (
+            <Card className="bg-gradient-to-r from-brand-emerald/10 to-brand-cyan/10 border-brand-emerald/20">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-brand-emerald flex items-center justify-center">
+                      <User className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">
+                        Mengisi formulir untuk:
+                      </p>
+                      <p className="font-semibold text-gray-900">
+                        {selectedStudent.name}
+                      </p>
+                    </div>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setCurrentStep(0);
+                      setSelectedStudent(null);
+                    }}
+                    className="hover:bg-gray-100"
+                  >
+                    Ganti Murid
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Progress Steps */}
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-8">
+                {steps.map((step, index) => {
+                  const Icon = step.icon;
+                  const isActive = currentStep === step.number;
+                  const isCompleted = currentStep > step.number;
+
+                  return (
+                    <div key={step.number} className="flex-1 flex items-center">
+                      <div className="flex flex-col items-center">
+                        <div
+                          className={`
                         w-12 h-12 rounded-full flex items-center justify-center mb-2
                         ${isActive ? 'bg-brand-emerald text-white' : ''}
                         ${isCompleted ? 'bg-green-500 text-white' : ''}
@@ -990,106 +1382,191 @@ export default function FormulirPage() {
                             : ''
                         }
                       `}
-                    >
-                      {isCompleted ? (
-                        <CheckSquare className="w-6 h-6" />
-                      ) : (
-                        <Icon className="w-6 h-6" />
-                      )}
-                    </div>
-                    <span
-                      className={`text-xs text-center font-medium ${
-                        isActive ? 'text-brand-emerald' : 'text-gray-500'
-                      }`}
-                    >
-                      {step.title}
-                    </span>
-                  </div>
-                  {index < steps.length - 1 && (
-                    <div
-                      className={`
+                        >
+                          {isCompleted ? (
+                            <CheckSquare className="w-6 h-6" />
+                          ) : (
+                            <Icon className="w-6 h-6" />
+                          )}
+                        </div>
+                        <span
+                          className={`text-xs text-center font-medium ${
+                            isActive ? 'text-brand-emerald' : 'text-gray-500'
+                          }`}
+                        >
+                          {step.title}
+                        </span>
+                      </div>
+                      {index < steps.length - 1 && (
+                        <div
+                          className={`
                         flex-1 h-1 mx-2 mb-8
                         ${isCompleted ? 'bg-green-500' : 'bg-gray-200'}
                       `}
-                    />
-                  )}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Step Description */}
+              <div className="mb-6">
+                <div className="flex items-center gap-2 text-lg font-semibold text-brand-emerald">
+                  <span>
+                    Step {currentStep} of {steps.length}
+                  </span>
+                  <span>-</span>
+                  <span>{steps[currentStep - 1].description}</span>
                 </div>
-              );
-            })}
-          </div>
+              </div>
 
-          {/* Step Description */}
-          <div className="mb-6">
-            <div className="flex items-center gap-2 text-lg font-semibold text-brand-emerald">
-              <span>
-                Step {currentStep} of {steps.length}
-              </span>
-              <span>-</span>
-              <span>{steps[currentStep - 1].description}</span>
+              {/* Form Content */}
+              <div className="min-h-[400px]">{renderStepContent()}</div>
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between mt-8 pt-6 border-t">
+                <Button
+                  variant="outline"
+                  onClick={handlePrevious}
+                  disabled={currentStep === 1}
+                  className="flex items-center gap-2"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  Sebelumnya
+                </Button>
+
+                {currentStep < 5 ? (
+                  <Button
+                    onClick={handleNext}
+                    className="bg-brand-emerald hover:bg-brand-emerald/90 flex items-center gap-2"
+                  >
+                    Selanjutnya
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={!formData.pernyataanSetuju || isSubmitting}
+                    className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <span className="animate-spin mr-2">⏳</span>
+                        Mengirim...
+                      </>
+                    ) : (
+                      <>
+                        <CheckSquare className="w-4 h-4" />
+                        Submit Formulir
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Info Card */}
+          <Card className="bg-gradient-to-r from-brand-emerald/10 to-brand-cyan/10 border-brand-emerald/20">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-3">
+                <FileText className="w-6 h-6 text-brand-emerald mt-1" />
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-2">
+                    Petunjuk Pengisian Formulir
+                  </h3>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>
+                      • Isi semua field yang bertanda{' '}
+                      <span className="text-red-500">*</span> (wajib diisi)
+                    </li>
+                    <li>• Pastikan data yang diisikan benar dan akurat</li>
+                    <li>
+                      • Anda dapat kembali ke step sebelumnya untuk mengubah
+                      data
+                    </li>
+                    <li>• Setelah submit, formulir akan diproses oleh admin</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </>
+      )}
+
+      {/* Success Modal */}
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-green-100">
+              <CheckCircle2 className="w-6 h-6 text-green-600" />
             </div>
-          </div>
-
-          {/* Form Content */}
-          <div className="min-h-[400px]">{renderStepContent()}</div>
-
-          {/* Navigation Buttons */}
-          <div className="flex justify-between mt-8 pt-6 border-t">
+            <DialogTitle className="text-center text-xl">
+              Formulir Berhasil Dikirim! 🎉
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              Formulir pendaftaran Anda telah berhasil disimpan. Admin akan
+              meninjau data Anda segera.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center mt-4">
             <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={currentStep === 1}
-              className="flex items-center gap-2"
+              onClick={() => setShowSuccessModal(false)}
+              className="bg-brand-emerald hover:bg-brand-emerald/90"
             >
-              <ChevronLeft className="w-4 h-4" />
-              Sebelumnya
+              Tutup
             </Button>
-
-            {currentStep < 5 ? (
-              <Button
-                onClick={handleNext}
-                className="bg-brand-emerald hover:bg-brand-emerald/90 flex items-center gap-2"
-              >
-                Selanjutnya
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleSubmit}
-                disabled={!formData.pernyataanSetuju}
-                className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
-              >
-                <CheckSquare className="w-4 h-4" />
-                Submit Formulir
-              </Button>
-            )}
           </div>
-        </CardContent>
-      </Card>
+        </DialogContent>
+      </Dialog>
 
-      {/* Info Card */}
-      <Card className="bg-gradient-to-r from-brand-emerald/10 to-brand-cyan/10 border-brand-emerald/20">
-        <CardContent className="p-6">
-          <div className="flex items-start gap-3">
-            <FileText className="w-6 h-6 text-brand-emerald mt-1" />
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">
-                Petunjuk Pengisian Formulir
-              </h3>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>
-                  • Isi semua field yang bertanda{' '}
-                  <span className="text-red-500">*</span> (wajib diisi)
-                </li>
-                <li>• Pastikan data yang diisikan benar dan akurat</li>
-                <li>
-                  • Anda dapat kembali ke step sebelumnya untuk mengubah data
-                </li>
-                <li>• Setelah submit, formulir akan diproses oleh admin</li>
-              </ul>
+      {/* Error Modal */}
+      <Dialog open={showErrorModal} onOpenChange={setShowErrorModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-red-100">
+              <XCircle className="w-6 h-6 text-red-600" />
             </div>
+            <DialogTitle className="text-center text-xl">
+              {validationErrors.length > 0 ? 'Lengkapi Form' : 'Gagal Mengirim'}
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              {errorMessage}
+            </DialogDescription>
+          </DialogHeader>
+
+          {validationErrors.length > 0 && (
+            <div className="mt-4">
+              <p className="text-sm font-semibold text-gray-700 mb-2">
+                Field yang perlu diisi:
+              </p>
+              <div className="max-h-60 overflow-y-auto bg-red-50 rounded-lg p-3 border border-red-200">
+                <ul className="text-sm text-red-800 space-y-1">
+                  {validationErrors.map((error, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <span>{error}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-center mt-4">
+            <Button
+              onClick={() => {
+                setShowErrorModal(false);
+                setValidationErrors([]);
+              }}
+              variant="outline"
+            >
+              Tutup
+            </Button>
           </div>
-        </CardContent>
-      </Card>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

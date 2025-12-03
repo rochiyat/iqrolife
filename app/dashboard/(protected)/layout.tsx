@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   LayoutDashboard,
@@ -9,7 +9,6 @@ import {
   UserCog,
   FileText,
   Settings,
-  LogOut,
   Menu,
   X,
   GraduationCap,
@@ -17,126 +16,117 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { rolePermissions, type UserRole } from '@/lib/auth-context';
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: UserRole;
-  avatar?: string;
-}
+import {
+  getUserPermissions,
+  getAccessibleMenusFromStorage,
+  useAuth,
+} from '@/lib/auth-context';
+import { ProfileDropdown } from '@/components/dashboard/ProfileDropdown';
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, isLoading } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const router = useRouter();
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const response = await fetch('/api/dashboard/login');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.authenticated && data.user) {
-          setUser(data.user);
-        } else {
-          router.push('/dashboard/login');
-        }
-      } else {
-        router.push('/dashboard/login');
-      }
-    } catch (error) {
-      console.error('Auth check error:', error);
+    if (!isLoading && !user) {
       router.push('/dashboard/login');
-    } finally {
-      setIsLoading(false);
     }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/dashboard/logout', {
-        method: 'POST',
-      });
-      router.push('/dashboard/login');
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
+  }, [isLoading, user, router]);
 
   const getNavItems = () => {
     if (!user) return [];
 
-    const permissions = rolePermissions[user.role];
-    const items = [
+    // Priority 1: Try to get menus from localStorage (fastest)
+    let accessibleMenus = getAccessibleMenusFromStorage(user.role);
+    console.log('accessibleMenus', accessibleMenus);
+
+    // Priority 2: Fallback to permissions from user object (from database)
+    if (accessibleMenus.length === 0) {
+      const permissions = getUserPermissions(user);
+      accessibleMenus = permissions.menus || [];
+    }
+
+    // Main menu items (without group)
+    const mainItems = [
       {
         label: 'Dashboard',
         icon: LayoutDashboard,
         href: '/dashboard/home',
-        show: true,
+        menuId: 'home',
+        show: accessibleMenus.includes('home'),
       },
       {
         label: 'Calon Murid',
         icon: GraduationCap,
         href: '/dashboard/calon-murid',
-        show: permissions.canManageStudents,
+        menuId: 'calon-murid',
+        show: accessibleMenus.includes('calon-murid'),
       },
       {
-        label: 'Formulir List',
+        label: 'Formulir Review',
         icon: FileText,
         href: '/dashboard/formulir-list',
-        show: permissions.canManageFormsList,
-      },
-      {
-        label: 'Users',
-        icon: Users,
-        href: '/dashboard/users',
-        show: permissions.canManageUsers,
-      },
-      {
-        label: 'Roles',
-        icon: UserCog,
-        href: '/dashboard/roles',
-        show: permissions.canManageRoles,
-      },
-      {
-        label: 'Menu',
-        icon: MenuIcon,
-        href: '/dashboard/menu',
-        show: permissions.canManageMenu,
+        menuId: 'formulir-list',
+        show: accessibleMenus.includes('formulir-list'),
       },
       {
         label: 'Formulir',
         icon: FileText,
         href: '/dashboard/formulir',
-        show: permissions.canManageForms,
+        menuId: 'formulir',
+        show: accessibleMenus.includes('formulir'),
       },
       {
         label: 'Portofolio',
         icon: Briefcase,
         href: '/dashboard/portofolio',
-        show: permissions.canViewPortfolio,
+        menuId: 'portofolio',
+        show: accessibleMenus.includes('portofolio'),
+      },
+    ];
+
+    // Settings group items
+    const settingsItems = [
+      {
+        label: 'Users',
+        icon: Users,
+        href: '/dashboard/users',
+        menuId: 'users',
+        show: accessibleMenus.includes('users'),
+      },
+      {
+        label: 'Roles',
+        icon: UserCog,
+        href: '/dashboard/roles',
+        menuId: 'roles',
+        show: accessibleMenus.includes('roles'),
+      },
+      {
+        label: 'Menu',
+        icon: MenuIcon,
+        href: '/dashboard/menu',
+        menuId: 'menu',
+        show: accessibleMenus.includes('menu'),
       },
       {
         label: 'Settings',
         icon: Settings,
         href: '/dashboard/settings',
-        show: permissions.canManageSettings,
+        menuId: 'settings',
+        show: accessibleMenus.includes('settings'),
       },
     ];
 
-    return items.filter((item) => item.show);
+    return {
+      main: mainItems.filter((item) => item.show),
+      settings: settingsItems.filter((item) => item.show),
+    };
   };
 
   if (isLoading) {
@@ -152,12 +142,25 @@ export default function DashboardLayout({
 
   if (!user) return null;
 
-  const navItems = getNavItems();
+  const navItems = getNavItems() as {
+    main: Array<{
+      label: string;
+      icon: any;
+      href: string;
+      show: boolean;
+    }>;
+    settings: Array<{
+      label: string;
+      icon: any;
+      href: string;
+      show: boolean;
+    }>;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-brand-sky/10 to-brand-lime/10">
       {/* Top Navigation */}
-      <header className="bg-gradient-to-r from-brand-emerald to-brand-cyan border-b-4 border-brand-lime sticky top-0 z-30 shadow-lg">
+      <header className="bg-gradient-to-r from-brand-emerald to-brand-cyan border-b-4 border-brand-lime sticky top-0 z-40 shadow-lg">
         <div className="px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
@@ -178,23 +181,14 @@ export default function DashboardLayout({
             </h1>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="text-right hidden sm:block">
-              <p className="text-sm font-medium text-white">{user.name}</p>
-              <p className="text-xs text-brand-lime capitalize font-semibold">
-                {user.role}
-              </p>
-            </div>
-            <Avatar className="ring-2 ring-brand-lime">
-              <AvatarFallback className="bg-gradient-to-br from-brand-lime to-brand-coral text-brand-warm-brown font-bold">
-                {user.name
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')
-                  .toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-          </div>
+          <ProfileDropdown
+            user={{
+              name: user.name,
+              email: user.email,
+              role: user.role,
+              avatar: user.avatar,
+            }}
+          />
         </div>
       </header>
 
@@ -203,7 +197,7 @@ export default function DashboardLayout({
         <aside
           className={`
             fixed lg:sticky top-[57px] left-0 h-[calc(100vh-57px)] 
-            bg-gradient-to-b from-white to-brand-sky/20 border-r-4 border-brand-lime/30 transition-transform duration-300 z-20 shadow-xl
+            bg-gradient-to-b from-white to-brand-sky/20 border-r-4 border-brand-lime/30 transition-transform duration-300 z-20 shadow-xl overflow-y-auto
             ${
               isSidebarOpen
                 ? 'translate-x-0'
@@ -212,37 +206,65 @@ export default function DashboardLayout({
             w-64
           `}
         >
-          <nav className="p-4 space-y-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href;
+          <nav className="p-4 space-y-6">
+            {/* Main Menu Items */}
+            <div className="space-y-1">
+              {navItems.main.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href;
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`
-                    flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300
-                    ${
-                      isActive
-                        ? 'bg-gradient-to-r from-brand-emerald to-brand-cyan text-white shadow-lg scale-105 font-bold'
-                        : 'text-brand-gray hover:bg-gradient-to-r hover:from-brand-lime/20 hover:to-brand-sky/20 hover:scale-102 hover:shadow-md'
-                    }
-                  `}
-                >
-                  <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
-                </Link>
-              );
-            })}
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`
+                      flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300
+                      ${
+                        isActive
+                          ? 'bg-gradient-to-r from-brand-emerald to-brand-cyan text-white shadow-lg scale-105 font-bold'
+                          : 'text-brand-gray hover:bg-gradient-to-r hover:from-brand-lime/20 hover:to-brand-sky/20 hover:scale-102 hover:shadow-md'
+                      }
+                    `}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span className="font-medium">{item.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
 
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-brand-coral hover:bg-brand-coral/10 hover:scale-102 transition-all duration-300 font-medium border-2 border-transparent hover:border-brand-coral/30"
-            >
-              <LogOut className="w-5 h-5" />
-              <span className="font-medium">Logout</span>
-            </button>
+            {/* Settings Group */}
+            {navItems.settings.length > 0 && (
+              <div className="space-y-1">
+                <div className="px-4 py-2">
+                  <h3 className="text-xs font-semibold text-brand-gray/60 uppercase tracking-wider">
+                    Settings
+                  </h3>
+                </div>
+                {navItems.settings.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = pathname === item.href;
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`
+                        flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300
+                        ${
+                          isActive
+                            ? 'bg-gradient-to-r from-brand-emerald to-brand-cyan text-white shadow-lg scale-105 font-bold'
+                            : 'text-brand-gray hover:bg-gradient-to-r hover:from-brand-lime/20 hover:to-brand-sky/20 hover:scale-102 hover:shadow-md'
+                        }
+                      `}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span className="font-medium">{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </nav>
         </aside>
 

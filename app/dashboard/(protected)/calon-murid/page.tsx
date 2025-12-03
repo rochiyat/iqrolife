@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,6 +21,7 @@ import {
   UserPlus,
   FileImage,
   ExternalLink,
+  ClipboardCheck,
 } from 'lucide-react';
 
 interface Student {
@@ -34,10 +35,15 @@ interface Student {
   email: string;
   address: string;
   previousSchool?: string;
-  status: 'pending' | 'approved' | 'rejected';
+  program?: string;
+  status: 'pending' | 'reviewed' | 'approved' | 'rejected';
   registrationDate: string;
   notes?: string;
   paymentProof?: string;
+  userId?: number;
+  reviewedBy?: number;
+  reviewedAt?: string;
+  reviewNotes?: string;
 }
 
 export default function CalonMuridPage() {
@@ -48,8 +54,20 @@ export default function CalonMuridPage() {
   const [isCreateUserDialogOpen, setIsCreateUserDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
+  const [reviewNotes, setReviewNotes] = useState('');
+  const [reviewStatus, setReviewStatus] = useState<
+    'reviewed' | 'approved' | 'rejected'
+  >('reviewed');
+  const [modalMessage, setModalMessage] = useState('');
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [editFormData, setEditFormData] = useState<Student | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Add form state
   const [addFormData, setAddFormData] = useState({
@@ -66,90 +84,28 @@ export default function CalonMuridPage() {
   });
   const [buktiTransferFile, setBuktiTransferFile] = useState<File | null>(null);
 
-  const [students, setStudents] = useState<Student[]>([
-    {
-      id: '1',
-      name: 'Ahmad Zaki',
-      birthDate: '2017-03-15',
-      age: 7,
-      gender: 'Laki-laki',
-      parent: 'Bapak Ahmad',
-      phone: '081234567890',
-      email: 'ahmad@example.com',
-      address: 'Jl. Merdeka No. 123, Jakarta Selatan',
-      previousSchool: 'TK Permata Hati',
-      status: 'approved',
-      registrationDate: '2024-10-15',
-      notes: 'Anak aktif dan suka belajar',
-      paymentProof:
-        'https://placehold.co/600x400/0ea5e9/white?text=Bukti+Transfer+Ahmad',
-    },
-    {
-      id: '2',
-      name: 'Siti Fatimah',
-      birthDate: '2014-08-20',
-      age: 10,
-      gender: 'Perempuan',
-      parent: 'Ibu Siti',
-      phone: '081234567891',
-      email: 'siti@example.com',
-      address: 'Jl. Kemang Raya No. 45, Jakarta Selatan',
-      previousSchool: 'SD Harapan Bangsa',
-      status: 'pending',
-      registrationDate: '2024-10-20',
-      paymentProof:
-        'https://placehold.co/600x400/ec4899/white?text=Bukti+Transfer+Siti',
-    },
-    {
-      id: '3',
-      name: 'Muhammad Rizki',
-      birthDate: '2019-05-10',
-      age: 5,
-      gender: 'Laki-laki',
-      parent: 'Ibu Rina',
-      phone: '081234567892',
-      email: 'rizki@example.com',
-      address: 'Jl. Sudirman No. 78, Jakarta Pusat',
-      status: 'approved',
-      registrationDate: '2024-10-18',
-      notes: 'Belum pernah sekolah sebelumnya',
-      paymentProof:
-        'https://placehold.co/600x400/10b981/white?text=Bukti+Transfer+Rizki',
-    },
-    {
-      id: '4',
-      name: 'Fatimah Az-Zahra',
-      birthDate: '2018-11-25',
-      age: 6,
-      gender: 'Perempuan',
-      parent: 'Bapak Yusuf',
-      phone: '081234567893',
-      email: 'yusuf@example.com',
-      address: 'Jl. Gatot Subroto No. 99, Jakarta Selatan',
-      previousSchool: 'PAUD Ceria',
-      status: 'pending',
-      registrationDate: '2024-10-22',
-      paymentProof:
-        'https://placehold.co/600x400/f97316/white?text=Bukti+Transfer+Fatimah',
-    },
-    {
-      id: '5',
-      name: 'Abdullah Rahman',
-      birthDate: '2016-02-14',
-      age: 8,
-      gender: 'Laki-laki',
-      parent: 'Ibu Aminah',
-      phone: '081234567894',
-      email: 'aminah@example.com',
-      address: 'Jl. Thamrin No. 112, Jakarta Pusat',
-      previousSchool: 'SD Islam Terpadu',
-      status: 'approved',
-      registrationDate: '2024-10-19',
-      notes: 'Hafal 5 juz Al-Quran',
-      paymentProof:
-        'https://placehold.co/600x400/8b5cf6/white?text=Bukti+Transfer+Abdullah',
-    },
-  ]);
+  // Fetch students from API
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  const fetchStudents = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/dashboard/calon-murid');
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setStudents(result.data);
+      } else {
+        console.error('Failed to fetch students:', result.error);
+      }
+    } catch (error) {
+      console.error('Error fetching students:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredStudents = students.filter(
     (student) =>
@@ -157,10 +113,31 @@ export default function CalonMuridPage() {
       student.parent.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Pagination logic
+  const totalPages =
+    itemsPerPage === -1 ? 1 : Math.ceil(filteredStudents.length / itemsPerPage);
+  const startIndex = itemsPerPage === -1 ? 0 : (currentPage - 1) * itemsPerPage;
+  const endIndex =
+    itemsPerPage === -1 ? filteredStudents.length : startIndex + itemsPerPage;
+  const paginatedStudents = filteredStudents.slice(startIndex, endIndex);
+
+  // Reset to page 1 when search term or items per page changes
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  const handleItemsPerPageChange = (value: string) => {
+    setItemsPerPage(value === 'all' ? -1 : parseInt(value));
+    setCurrentPage(1);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'approved':
         return 'bg-green-100 text-green-800';
+      case 'reviewed':
+        return 'bg-blue-100 text-blue-800';
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
       case 'rejected':
@@ -174,6 +151,8 @@ export default function CalonMuridPage() {
     switch (status) {
       case 'approved':
         return 'Disetujui';
+      case 'reviewed':
+        return 'Direview';
       case 'pending':
         return 'Pending';
       case 'rejected':
@@ -193,18 +172,68 @@ export default function CalonMuridPage() {
     setIsCreateUserDialogOpen(true);
   };
 
-  const confirmCreateUser = () => {
-    if (selectedStudent) {
-      alert(
-        `User berhasil dibuat!\n\nNama: ${selectedStudent.name}\nEmail: ${selectedStudent.email}\nRole: Parent\nPassword: (dikirim via email)`
-      );
-      setIsCreateUserDialogOpen(false);
-      setSelectedStudent(null);
+  const confirmCreateUser = async () => {
+    if (!selectedStudent) return;
+
+    try {
+      setIsSubmitting(true);
+      const response = await fetch('/api/dashboard/calon-murid/create-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentId: selectedStudent.id,
+          email: selectedStudent.email,
+          name: selectedStudent.parent,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        let alertMessage = '';
+        switch (result.action) {
+          case 'created':
+            alertMessage = `✅ User baru berhasil dibuat!\n\nNama: ${selectedStudent.parent}\nEmail: ${selectedStudent.email}\nRole: Parent\n\nPassword telah dikirim ke email.`;
+            break;
+          case 'role_added':
+            alertMessage = `✅ User sudah ada!\n\nRole Parent berhasil ditambahkan.\nAnak "${selectedStudent.name}" berhasil dimapping ke user ini.`;
+            break;
+          case 'mapping_added':
+            alertMessage = `✅ User sudah ada sebagai Parent!\n\nAnak "${selectedStudent.name}" berhasil dimapping ke user ini.`;
+            break;
+        }
+        alert(alertMessage);
+        setIsCreateUserDialogOpen(false);
+        setSelectedStudent(null);
+        fetchStudents(); // Refresh data
+      } else {
+        alert(result.error || 'Gagal membuat user');
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+      alert('Terjadi kesalahan saat membuat user');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleEdit = (student: Student) => {
-    setEditFormData({ ...student });
+    // Format date for input (YYYY-MM-DD) using local time to avoid timezone shifts
+    const formatDateForInput = (dateString: string) => {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    const formattedDate = formatDateForInput(student.birthDate);
+
+    setEditFormData({
+      ...student,
+      birthDate: formattedDate,
+    });
     setIsEditDialogOpen(true);
   };
 
@@ -214,14 +243,44 @@ export default function CalonMuridPage() {
     }
   };
 
-  const confirmEdit = () => {
-    if (editFormData) {
-      setStudents(
-        students.map((s) => (s.id === editFormData.id ? editFormData : s))
-      );
-      alert(`Data ${editFormData.name} berhasil diupdate!`);
-      setIsEditDialogOpen(false);
-      setEditFormData(null);
+  const confirmEdit = async () => {
+    if (!editFormData) return;
+
+    try {
+      setIsSubmitting(true);
+      const formData = new FormData();
+      formData.append('id', editFormData.id);
+      formData.append('namaLengkap', editFormData.name);
+      formData.append('tanggalLahir', editFormData.birthDate);
+      formData.append('jenisKelamin', editFormData.gender);
+      formData.append('namaOrangTua', editFormData.parent);
+      formData.append('noTelepon', editFormData.phone);
+      formData.append('email', editFormData.email);
+      formData.append('alamat', editFormData.address);
+      formData.append('asalSekolah', editFormData.previousSchool || '');
+      formData.append('status', editFormData.status);
+      formData.append('catatan', editFormData.notes || '');
+
+      const response = await fetch('/api/dashboard/calon-murid', {
+        method: 'PUT',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert(`Data ${editFormData.name} berhasil diupdate!`);
+        setIsEditDialogOpen(false);
+        setEditFormData(null);
+        fetchStudents(); // Refresh data from server
+      } else {
+        alert(result.error || 'Gagal mengupdate data');
+      }
+    } catch (error) {
+      console.error('Error updating student:', error);
+      alert('Terjadi kesalahan saat mengupdate data');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -230,12 +289,92 @@ export default function CalonMuridPage() {
     setIsDeleteDialogOpen(true);
   };
 
-  const confirmDelete = () => {
-    if (selectedStudent) {
-      setStudents(students.filter((s) => s.id !== selectedStudent.id));
-      alert(`Data ${selectedStudent.name} berhasil dihapus!`);
-      setIsDeleteDialogOpen(false);
-      setSelectedStudent(null);
+  const confirmDelete = async () => {
+    if (!selectedStudent) return;
+
+    try {
+      setIsSubmitting(true);
+      const response = await fetch(
+        `/api/dashboard/calon-murid?id=${selectedStudent.id}`,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert(`Data ${selectedStudent.name} berhasil dihapus!`);
+        setIsDeleteDialogOpen(false);
+        setSelectedStudent(null);
+
+        // Refresh data from database
+        fetchStudents();
+      } else {
+        alert(result.error || 'Gagal menghapus data');
+      }
+    } catch (error) {
+      console.error('Error deleting student:', error);
+      alert('Terjadi kesalahan saat menghapus data');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleReview = (student: Student) => {
+    setSelectedStudent(student);
+    setReviewNotes('');
+    setReviewStatus('reviewed');
+    setIsReviewDialogOpen(true);
+  };
+
+  const confirmReview = async () => {
+    if (!selectedStudent) return;
+
+    // Validate notes (mandatory)
+    if (!reviewNotes.trim()) {
+      setModalMessage('Catatan review wajib diisi!');
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      const response = await fetch('/api/dashboard/calon-murid/review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentId: selectedStudent.id,
+          status: reviewStatus,
+          reviewNotes: reviewNotes.trim(),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setModalMessage(
+          `Data ${
+            selectedStudent.name
+          } berhasil direview dengan status: ${getStatusText(reviewStatus)}`
+        );
+        setIsSuccessModalOpen(true);
+        setIsReviewDialogOpen(false);
+        setSelectedStudent(null);
+        setReviewNotes('');
+
+        // Refresh data from database
+        fetchStudents();
+      } else {
+        setModalMessage(result.error || 'Gagal melakukan review');
+        setIsErrorModalOpen(true);
+      }
+    } catch (error) {
+      console.error('Error reviewing student:', error);
+      setModalMessage('Terjadi kesalahan saat melakukan review');
+      setIsErrorModalOpen(true);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -295,39 +434,7 @@ export default function CalonMuridPage() {
 
       const result = await response.json();
 
-      if (response.ok) {
-        // Calculate age
-        const birthDate = new Date(addFormData.tanggalLahir);
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (
-          monthDiff < 0 ||
-          (monthDiff === 0 && today.getDate() < birthDate.getDate())
-        ) {
-          age--;
-        }
-
-        // Add to students list
-        const newStudent: Student = {
-          id: `temp-${Date.now()}`,
-          name: addFormData.namaLengkap,
-          birthDate: addFormData.tanggalLahir,
-          age,
-          gender: addFormData.jenisKelamin,
-          parent: addFormData.namaOrangTua,
-          phone: addFormData.noTelepon,
-          email: addFormData.email,
-          address: addFormData.alamat,
-          previousSchool: addFormData.asalSekolah || undefined,
-          status: addFormData.status as 'pending' | 'approved' | 'rejected',
-          registrationDate: new Date().toISOString().split('T')[0],
-          notes: addFormData.catatan || undefined,
-          paymentProof: result.data?.paymentProof || undefined,
-        };
-
-        setStudents([newStudent, ...students]);
-
+      if (response.ok && result.success) {
         // Reset form
         setAddFormData({
           namaLengkap: '',
@@ -345,6 +452,9 @@ export default function CalonMuridPage() {
 
         setIsAddDialogOpen(false);
         alert('Data calon murid berhasil ditambahkan!');
+
+        // Refresh data from database
+        fetchStudents();
       } else {
         alert(result.error || 'Gagal menambahkan data calon murid');
       }
@@ -566,6 +676,7 @@ export default function CalonMuridPage() {
                     }
                   >
                     <option value="pending">Pending</option>
+                    <option value="reviewed">Direview</option>
                     <option value="approved">Disetujui</option>
                     <option value="rejected">Ditolak</option>
                   </select>
@@ -641,116 +752,7 @@ export default function CalonMuridPage() {
         </Dialog>
       </div>
 
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <Input
-                placeholder="Cari berdasarkan nama atau orang tua..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Nama
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Usia
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Orang Tua
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Kontak
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Status
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                    Aksi
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredStudents.map((student) => (
-                  <tr key={student.id} className="border-b hover:bg-gray-50">
-                    <td className="py-3 px-4">
-                      <div className="font-medium">{student.name}</div>
-                    </td>
-                    <td className="py-3 px-4">{student.age} tahun</td>
-                    <td className="py-3 px-4">{student.parent}</td>
-                    <td className="py-3 px-4">
-                      <div className="text-sm">
-                        <div>{student.phone}</div>
-                        <div className="text-gray-500">{student.email}</div>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                          student.status
-                        )}`}
-                      >
-                        {getStatusText(student.status)}
-                      </span>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors"
-                          title="Lihat Detail"
-                          onClick={() => handleViewDetail(student)}
-                        >
-                          <Eye className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors"
-                          title="Buat User"
-                          onClick={() => handleCreateUser(student)}
-                        >
-                          <UserPlus className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors"
-                          title="Edit"
-                          onClick={() => handleEdit(student)}
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer transition-colors"
-                          title="Hapus"
-                          onClick={() => handleDelete(student)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
-
+      {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardContent className="p-6">
@@ -783,6 +785,257 @@ export default function CalonMuridPage() {
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="relative flex-1 min-w-[200px]">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Input
+                placeholder="Cari berdasarkan nama atau orang tua..."
+                value={searchTerm}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Label className="text-sm text-gray-600 whitespace-nowrap">
+                Show:
+              </Label>
+              <select
+                value={itemsPerPage === -1 ? 'all' : itemsPerPage}
+                onChange={(e) => handleItemsPerPageChange(e.target.value)}
+                className="border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors text-sm"
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="all">All</option>
+              </select>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-emerald mx-auto mb-4"></div>
+              <p className="text-gray-600">Memuat data calon murid...</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Nama
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Usia
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Orang Tua
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Kontak
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Status
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Aksi
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {paginatedStudents.length > 0 ? (
+                    paginatedStudents.map((student) => (
+                      <tr
+                        key={student.id}
+                        className="border-b hover:bg-gray-50"
+                      >
+                        <td className="py-3 px-4">
+                          <div className="font-medium">{student.name}</div>
+                        </td>
+                        <td className="py-3 px-4">{student.age} tahun</td>
+                        <td className="py-3 px-4">{student.parent}</td>
+                        <td className="py-3 px-4">
+                          <div className="text-sm">
+                            <div>{student.phone}</div>
+                            <div className="text-gray-500">{student.email}</div>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                              student.status
+                            )}`}
+                          >
+                            {getStatusText(student.status)}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex gap-2">
+                            {/* Logic: Disable all actions if approved AND user created */}
+                            {(() => {
+                              const isLocked =
+                                student.status === 'approved' &&
+                                !!student.userId;
+
+                              return (
+                                <>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors ${
+                                      isLocked
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title="Lihat Detail"
+                                    onClick={() => handleViewDetail(student)}
+                                    disabled={isLocked}
+                                  >
+                                    <Eye className="w-4 h-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors ${
+                                      student.status !== 'approved' ||
+                                      !!student.userId
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title={
+                                      student.status !== 'approved'
+                                        ? 'Status harus Disetujui untuk buat user'
+                                        : !!student.userId
+                                        ? 'User sudah dibuat'
+                                        : 'Buat User'
+                                    }
+                                    onClick={() => handleCreateUser(student)}
+                                    disabled={
+                                      student.status !== 'approved' ||
+                                      !!student.userId
+                                    }
+                                  >
+                                    <UserPlus className="w-4 h-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-orange-600 hover:text-orange-700 hover:bg-orange-50 cursor-pointer transition-colors ${
+                                      isLocked
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title="Review"
+                                    onClick={() => handleReview(student)}
+                                    disabled={isLocked}
+                                  >
+                                    <ClipboardCheck className="w-4 h-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors ${
+                                      isLocked
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title="Edit"
+                                    onClick={() => handleEdit(student)}
+                                    disabled={isLocked}
+                                  >
+                                    <Edit className="w-4 h-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className={`text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer transition-colors ${
+                                      isLocked
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
+                                    title="Hapus"
+                                    onClick={() => handleDelete(student)}
+                                    disabled={isLocked}
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                  </Button>
+                                </>
+                              );
+                            })()}
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan={6}
+                        className="py-8 text-center text-gray-500"
+                      >
+                        Tidak ada data yang ditemukan
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {/* Pagination */}
+          {!loading && itemsPerPage !== -1 && filteredStudents.length > 0 && (
+            <div className="flex items-center justify-between px-4 py-3 border-t">
+              <div className="text-sm text-gray-600">
+                Menampilkan {startIndex + 1} -{' '}
+                {Math.min(endIndex, filteredStudents.length)} dari{' '}
+                {filteredStudents.length} data
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="cursor-pointer hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Previous
+                </Button>
+                <div className="flex gap-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => (
+                      <Button
+                        key={page}
+                        size="sm"
+                        variant={currentPage === page ? 'default' : 'outline'}
+                        onClick={() => setCurrentPage(page)}
+                        className={`cursor-pointer ${
+                          currentPage === page
+                            ? 'bg-brand-emerald hover:bg-emerald-600'
+                            : 'hover:bg-gray-100'
+                        }`}
+                      >
+                        {page}
+                      </Button>
+                    )
+                  )}
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="cursor-pointer hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Next
+                </Button>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Detail Dialog */}
       <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
@@ -1009,9 +1262,22 @@ export default function CalonMuridPage() {
               </div>
               <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
                 <p className="text-xs text-yellow-800">
-                  <strong>Catatan:</strong> Password akan dikirimkan ke email
-                  yang terdaftar.
+                  <strong>Catatan:</strong>
                 </p>
+                <ul className="text-xs text-yellow-800 mt-1 ml-4 list-disc">
+                  <li>
+                    Jika email sudah terdaftar sebagai user lain, akan
+                    ditambahkan role Parent
+                  </li>
+                  <li>
+                    Jika email sudah terdaftar sebagai Parent, anak akan
+                    dimapping ke user tersebut
+                  </li>
+                  <li>
+                    Jika email belum terdaftar, user baru akan dibuat dan
+                    password dikirim via email
+                  </li>
+                </ul>
               </div>
             </div>
           )}
@@ -1019,6 +1285,7 @@ export default function CalonMuridPage() {
             <Button
               variant="outline"
               onClick={() => setIsCreateUserDialogOpen(false)}
+              disabled={isSubmitting}
               className="hover:bg-gray-200 hover:border-gray-400 cursor-pointer transition-colors"
             >
               Batal
@@ -1026,9 +1293,19 @@ export default function CalonMuridPage() {
             <Button
               className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors"
               onClick={confirmCreateUser}
+              disabled={isSubmitting}
             >
-              <UserPlus className="w-4 h-4 mr-2" />
-              Buat User
+              {isSubmitting ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Memproses...
+                </div>
+              ) : (
+                <>
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Buat User
+                </>
+              )}
             </Button>
           </div>
         </DialogContent>
@@ -1147,15 +1424,17 @@ export default function CalonMuridPage() {
                   <select
                     id="edit-status"
                     value={editFormData.status}
-                    onChange={(e) =>
-                      handleEditInputChange('status', e.target.value)
-                    }
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+                    disabled
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed transition-colors"
                   >
                     <option value="pending">Pending</option>
+                    <option value="reviewed">Direview</option>
                     <option value="approved">Disetujui</option>
                     <option value="rejected">Ditolak</option>
                   </select>
+                  <p className="text-xs text-gray-500">
+                    Status hanya dapat diubah melalui menu Review
+                  </p>
                 </div>
                 <div className="space-y-2 col-span-2">
                   <Label htmlFor="edit-notes">Catatan</Label>
@@ -1183,8 +1462,16 @@ export default function CalonMuridPage() {
             <Button
               className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors"
               onClick={confirmEdit}
+              disabled={isSubmitting}
             >
-              Simpan Perubahan
+              {isSubmitting ? (
+                <>
+                  <span className="animate-spin mr-2">⏳</span>
+                  Menyimpan...
+                </>
+              ) : (
+                'Simpan Perubahan'
+              )}
             </Button>
           </div>
         </DialogContent>
@@ -1237,6 +1524,150 @@ export default function CalonMuridPage() {
             >
               <Trash2 className="w-4 h-4 mr-2" />
               Hapus Data
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Review Dialog */}
+      <Dialog open={isReviewDialogOpen} onOpenChange={setIsReviewDialogOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Review Pendaftaran</DialogTitle>
+          </DialogHeader>
+          {selectedStudent && (
+            <div className="space-y-4 py-4">
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Nama:</span>
+                    <span className="font-medium">{selectedStudent.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Orang Tua:</span>
+                    <span className="font-medium">
+                      {selectedStudent.parent}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Email:</span>
+                    <span className="font-medium">{selectedStudent.email}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>
+                  Status Review <span className="text-red-500">*</span>
+                </Label>
+                <select
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+                  value={reviewStatus}
+                  onChange={(e) =>
+                    setReviewStatus(
+                      e.target.value as 'reviewed' | 'approved' | 'rejected'
+                    )
+                  }
+                >
+                  <option value="reviewed">Direview</option>
+                  <option value="approved">Disetujui</option>
+                  <option value="rejected">Ditolak</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <Label>
+                  Catatan Review <span className="text-red-500">*</span>
+                </Label>
+                <textarea
+                  rows={4}
+                  placeholder="Masukkan catatan review (wajib diisi)"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
+                  value={reviewNotes}
+                  onChange={(e) => setReviewNotes(e.target.value)}
+                  required
+                />
+                <p className="text-xs text-gray-500">
+                  Catatan ini akan tersimpan dan dapat dilihat oleh admin/staff
+                </p>
+              </div>
+            </div>
+          )}
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsReviewDialogOpen(false)}
+              disabled={isSubmitting}
+              className="hover:bg-gray-200 hover:border-gray-400 cursor-pointer transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Batal
+            </Button>
+            <Button
+              className="bg-orange-600 hover:bg-orange-700 text-white cursor-pointer transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              onClick={confirmReview}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="animate-spin mr-2">⏳</span>
+                  Memproses...
+                </>
+              ) : (
+                <>
+                  <ClipboardCheck className="w-4 h-4 mr-2" />
+                  Simpan Review
+                </>
+              )}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Success Modal */}
+      <Dialog open={isSuccessModalOpen} onOpenChange={setIsSuccessModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Berhasil!</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+              <div className="flex items-start gap-3">
+                <div className="text-green-600 text-2xl">✅</div>
+                <p className="text-sm text-green-800">{modalMessage}</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <Button
+              className="bg-green-600 hover:bg-green-700 text-white cursor-pointer transition-colors"
+              onClick={() => setIsSuccessModalOpen(false)}
+            >
+              OK
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Error Modal */}
+      <Dialog open={isErrorModalOpen} onOpenChange={setIsErrorModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Gagal</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+              <div className="flex items-start gap-3">
+                <div className="text-red-600 text-2xl">❌</div>
+                <p className="text-sm text-red-800">{modalMessage}</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <Button
+              className="bg-red-600 hover:bg-red-700 text-white cursor-pointer transition-colors"
+              onClick={() => setIsErrorModalOpen(false)}
+            >
+              OK
             </Button>
           </div>
         </DialogContent>

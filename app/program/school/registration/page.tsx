@@ -23,6 +23,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+import { RegistrationSuccessModal } from '@/components/registration-success-modal';
+
 export default function RegistrationPage() {
   const [formData, setFormData] = useState({
     namaLengkap: '',
@@ -33,6 +35,7 @@ export default function RegistrationPage() {
     email: '',
     alamat: '',
     asalSekolah: '',
+    program: '',
     catatan: '',
   });
   const [buktiTransfer, setBuktiTransfer] = useState<File | null>(null);
@@ -41,6 +44,7 @@ export default function RegistrationPage() {
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
   >('idle');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -88,6 +92,7 @@ export default function RegistrationPage() {
 
       if (response.ok) {
         setSubmitStatus('success');
+        setShowSuccessModal(true);
         setFormData({
           namaLengkap: '',
           tanggalLahir: '',
@@ -97,6 +102,7 @@ export default function RegistrationPage() {
           email: '',
           alamat: '',
           asalSekolah: '',
+          program: '',
           catatan: '',
         });
         setBuktiTransfer(null);
@@ -190,24 +196,11 @@ export default function RegistrationPage() {
             <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-blue-200 to-transparent opacity-50"></div>
 
             <CardContent className="p-8 relative z-10">
-              {submitStatus === 'success' && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="mb-6 p-4 bg-green-100 border border-green-300 rounded-lg flex items-center gap-3"
-                >
-                  <CheckCircle className="w-6 h-6 text-green-600" />
-                  <div>
-                    <p className="font-semibold text-green-800">
-                      Pendaftaran Berhasil!
-                    </p>
-                    <p className="text-sm text-green-700">
-                      Terima kasih telah mendaftar. Kami akan segera menghubungi
-                      Anda.
-                    </p>
-                  </div>
-                </motion.div>
-              )}
+              {/* Success Modal */}
+              <RegistrationSuccessModal
+                isOpen={showSuccessModal}
+                onClose={() => setShowSuccessModal(false)}
+              />
 
               {submitStatus === 'error' && (
                 <motion.div
@@ -311,6 +304,29 @@ export default function RegistrationPage() {
                       placeholder="Masukkan asal sekolah/TK"
                       className="mt-1 border-2 focus:border-orange-400 transition-all"
                     />
+                  </div>
+
+                  <div>
+                    <Label
+                      htmlFor="program"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Pilih Program <span className="text-red-500">*</span>
+                    </Label>
+                    <select
+                      id="program"
+                      name="program"
+                      value={formData.program}
+                      onChange={handleInputChange}
+                      required
+                      className="mt-1 w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition-all"
+                    >
+                      <option value="">Pilih program</option>
+                      <option value="Kelas Siap Sekolah">
+                        Kelas Siap Sekolah
+                      </option>
+                      <option value="Kelas Bermain">Kelas Bermain</option>
+                    </select>
                   </div>
                 </div>
 

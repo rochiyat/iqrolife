@@ -324,6 +324,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Dropdown menu portal z-index fix */
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
+}
+
+/* Ensure dropdown menu content is above everything */
+[data-slot="dropdown-menu-content"] {
+  z-index: 9999 !important;
+}
+
 /* IqroLife Brand Color Utilities - Updated */
 .bg-brand-primary-blue {
   background-color: #4caade;
