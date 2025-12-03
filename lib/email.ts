@@ -32,11 +32,16 @@ interface RegistrationData {
 export async function sendAdminNotification(
   registrationData: RegistrationData
 ): Promise<void> {
-  const adminEmail = process.env.EMAIL_USER || 'iqrolife@gmail.com';
+  const adminEmail = process.env.STAFF_EMAIL;
+
+  if (!adminEmail) {
+    console.error('❌ Admin email not configured');
+    return;
+  }
 
   try {
     await transporter.sendMail({
-      from: process.env.EMAIL_FROM || `"Iqrolife" <${process.env.EMAIL_USER}>`,
+      from: `"Iqrolife" <${process.env.EMAIL_USER}>`,
       to: adminEmail,
       subject: `🎓 Pendaftaran Baru - ${registrationData.namaLengkap}`,
       html: getAdminNotificationTemplate(registrationData),

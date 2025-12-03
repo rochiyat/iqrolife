@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Pool } from 'pg';
+import nodemailer from 'nodemailer';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -7,6 +8,129 @@ const pool = new Pool({
     rejectUnauthorized: false,
   },
 });
+
+// Email transporter with validation
+const createEmailTransporter = () => {
+  const emailUser = process.env.EMAIL_USER;
+  const emailPass = process.env.EMAIL_PASS;
+
+  // Validate credentials
+  if (!emailUser || !emailPass) {
+    console.warn(
+      '⚠️ Email credentials not configured. EMAIL_USER or EMAIL_PASS is missing.'
+    );
+    return null;
+  }
+
+  return nodemailer.createTransport({
+    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+    port: parseInt(process.env.EMAIL_PORT || '587'),
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: emailUser,
+      pass: emailPass,
+    },
+  });
+};
+
+const transporter = createEmailTransporter();
+
+// Parse staff emails from environment variable (comma-separated)
+function parseStaffEmails(): string[] {
+  const staffEmail = process.env.STAFF_EMAIL || '';
+  return staffEmail
+    .split(',')
+    .map((email) => email.trim())
+    .filter((email) => email.length > 0);
+}
+
+// Email template for staff notification
+function getStaffNotificationTemplate(data: any): string {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }
+        .info-row { margin: 15px 0; padding: 10px; background: white; border-radius: 5px; }
+        .label { font-weight: bold; color: #10b981; }
+        .button { display: inline-block; padding: 12px 30px; background: #10b981; color: white; text-decoration: none; border-radius: 5px; margin-top: 20px; }
+        .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>📝 Formulir Pendaftaran Baru</h1>
+          <p>Ada formulir pendaftaran yang baru saja dikirim</p>
+        </div>
+        <div class="content">
+          <h2 style="color: #10b981;">Data Calon Murid</h2>
+          
+          <div class="info-row">
+            <span class="label">Nama Lengkap:</span> ${data.namaLengkap}
+          </div>
+          
+          <div class="info-row">
+            <span class="label">Nama Panggilan:</span> ${data.namaPanggilan}
+          </div>
+          
+          <div class="info-row">
+            <span class="label">Jenis Kelamin:</span> ${data.jenisKelamin}
+          </div>
+          
+          <div class="info-row">
+            <span class="label">Tanggal Lahir:</span> ${new Date(
+              data.tanggalLahir
+            ).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}
+          </div>
+          
+          <div class="info-row">
+            <span class="label">Program:</span> ${data.programYangDipilih}
+          </div>
+          
+          <h3 style="color: #10b981; margin-top: 25px;">Data Orang Tua</h3>
+          
+          <div class="info-row">
+            <span class="label">Nama Ayah:</span> ${data.namaAyah}
+          </div>
+          
+          <div class="info-row">
+            <span class="label">Nama Ibu:</span> ${data.namaIbu}
+          </div>
+          
+          <div class="info-row">
+            <span class="label">Telepon:</span> ${data.telepon}
+          </div>
+          
+          <div class="info-row">
+            <span class="label">Alamat:</span> ${data.alamatLengkap}
+          </div>
+          
+          <div style="text-align: center;">
+            <a href="${
+              process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+            }/dashboard/formulir-list" class="button">
+              Lihat Detail Formulir
+            </a>
+          </div>
+        </div>
+        <div class="footer">
+          <p>Email ini dikirim secara otomatis dari sistem Iqrolife</p>
+          <p>Jangan balas email ini</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
 
 // GET - Fetch all formulir pendaftaran
 export async function GET(request: NextRequest) {
@@ -199,6 +323,26 @@ export async function POST(request: NextRequest) {
         ]
       );
 
+      // Send email notification to staff (non-blocking)
+      const staffEmails = parseStaffEmails();
+      if (transporter && staffEmails.length > 0) {
+        Promise.all(
+          staffEmails.map((email) =>
+            transporter.sendMail({
+              from: `"Iqrolife School" <${process.env.EMAIL_USER}>`,
+              to: email,
+              subject: '📝 Formulir Pendaftaran Diperbarui - Iqrolife',
+              html: getStaffNotificationTemplate(data),
+            })
+          )
+        ).catch((error) => {
+          console.error('⚠️ Email notification failed:', error);
+          // Don't throw - submission is already saved
+        });
+      } else if (!transporter && staffEmails.length > 0) {
+        console.warn('⚠️ Email not sent: Email credentials not configured');
+      }
+
       return NextResponse.json({
         success: true,
         message: 'Formulir berhasil diperbarui',
@@ -272,6 +416,26 @@ export async function POST(request: NextRequest) {
           'submitted',
         ]
       );
+
+      // Send email notification to staff (non-blocking)
+      const staffEmails = parseStaffEmails();
+      if (transporter && staffEmails.length > 0) {
+        Promise.all(
+          staffEmails.map((email) =>
+            transporter.sendMail({
+              from: `"Iqrolife School" <${process.env.EMAIL_USER}>`,
+              to: email,
+              subject: '📝 Formulir Pendaftaran Baru - Iqrolife',
+              html: getStaffNotificationTemplate(data),
+            })
+          )
+        ).catch((error) => {
+          console.error('⚠️ Email notification failed:', error);
+          // Don't throw - submission is already saved
+        });
+      } else if (!transporter && staffEmails.length > 0) {
+        console.warn('⚠️ Email not sent: Email credentials not configured');
+      }
 
       return NextResponse.json({
         success: true,

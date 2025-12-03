@@ -153,11 +153,11 @@ export async function POST(request: NextRequest) {
             regData.nama_orang_tua, // Nama Ayah (asumsi)
             '-', // Pekerjaan Ayah
             regData.no_telepon, // Telepon Ayah
-            '-', // Nama Ibu
+            regData.nama_orang_tua, // Nama Ibu
             '-', // Pekerjaan Ibu
             '-', // Telepon Ibu
-            'Reguler', // Program
-            'submitted', // Status formulir
+            regData.program, // Program
+            'draft', // Status formulir
           ]
         );
 

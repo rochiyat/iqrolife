@@ -73,7 +73,7 @@ export function RegistrationSuccessModal({
                 <div className="space-y-3">
                   <Link href="/program/school">
                     <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300">
-                      Kembali ke Program
+                      Kembali ke Halaman Sekolah
                     </Button>
                   </Link>
 

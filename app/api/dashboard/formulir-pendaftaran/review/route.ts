@@ -11,12 +11,12 @@ const pool = new Pool({
 
 // Email transporter
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587'),
+  host: process.env.EMAIL_HOST,
+  port: parseInt(process.env.EMAIL_PORT || '587'),
   secure: false,
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     const formulir = formulirResult.rows[0];
+    console.log('formulir', formulir);
 
     // Update formulir status
     await pool.query(
@@ -64,6 +65,7 @@ export async function POST(request: NextRequest) {
     // Prepare email based on action
     let emailSubject = '';
     let emailHtml = '';
+    console.log('action', action);
 
     if (action === 'review') {
       emailSubject = `Formulir Pendaftaran ${formulir.nama_lengkap} - Sudah Direview`;
@@ -72,14 +74,18 @@ export async function POST(request: NextRequest) {
       emailSubject = `Formulir Pendaftaran ${formulir.nama_lengkap} - Permintaan Edit`;
       emailHtml = getEditRequestEmailTemplate(formulir, notes);
     }
+    console.log('emailSubject', emailSubject);
+    console.log('emailHtml', emailHtml);
 
     // Send email
-    const recipientEmail =
-      formulir.parent_email || formulir.telepon + '@example.com'; // Fallback if no email
+    const recipientEmail = formulir.parent_email;
+    console.log('recipientEmail', recipientEmail);
 
     try {
       await transporter.sendMail({
-        from: `"Iqrolife School" <${process.env.SMTP_USER}>`,
+        from:
+          process.env.EMAIL_FROM ||
+          `"Iqrolife School" <${process.env.EMAIL_USER}>`,
         to: recipientEmail,
         subject: emailSubject,
         html: emailHtml,
