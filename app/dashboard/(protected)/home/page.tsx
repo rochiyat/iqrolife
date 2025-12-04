@@ -68,7 +68,7 @@ export default function DashboardHome() {
         const result = await response.json();
         if (result.success) {
           setStats(result.data.stats);
-          setRecentActivities(result.data.recentActivities);
+          setRecentActivities(result.data.recentActivities || []);
         }
       }
     } catch (error) {
