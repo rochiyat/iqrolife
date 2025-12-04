@@ -6,10 +6,10 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const data = await proxyToBackend(request, '/api/student-portfolio', 'GET');
+    const data = await proxyToBackend(request, '/api/registrations-list', 'GET');
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error fetching student portfolios:', error);
-    return NextResponse.json({ error: 'Gagal mengambil data portfolio' }, { status: 500 });
+    console.error('Fetch registrations list error:', error);
+    return NextResponse.json({ error: 'Gagal mengambil data registrasi' }, { status: 500 });
   }
 }

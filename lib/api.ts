@@ -167,32 +167,32 @@ class ApiClient {
   // Calon Murid
   async getCalonMurid(status?: string) {
     const query = status ? `?status=${status}` : '';
-    return this.request<any>(`/api/calon-murid${query}`);
+    return this.request<any>(`/api/registrations${query}`);
   }
 
   async createCalonMurid(data: any) {
-    return this.request<any>('/api/calon-murid', {
+    return this.request<any>('/api/registrations', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
   async updateCalonMurid(data: any) {
-    return this.request<any>('/api/calon-murid', {
+    return this.request<any>('/api/registrations', {
       method: 'PUT',
       body: JSON.stringify(data),
     });
   }
 
   async reviewCalonMurid(data: { id: number; status: string; reviewNotes?: string }) {
-    return this.request<any>('/api/calon-murid/review', {
+    return this.request<any>('/api/registrations/review', {
       method: 'PUT',
       body: JSON.stringify(data),
     });
   }
 
   async deleteCalonMurid(id: number) {
-    return this.request<any>(`/api/calon-murid?id=${id}`, { method: 'DELETE' });
+    return this.request<any>(`/api/registrations?id=${id}`, { method: 'DELETE' });
   }
 
   // Portofolio

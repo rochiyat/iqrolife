@@ -161,7 +161,7 @@ export default function RegistrationPage() {
                 className="gap-2 hover:scale-105 transition-all"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Kembali ke Program
+                Kembali ke Halaman Sekolah
               </Button>
             </Link>
           </motion.div>

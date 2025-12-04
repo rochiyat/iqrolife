@@ -81,7 +81,7 @@ export default function UsersPage() {
       const response = await fetch('/api/dashboard/users');
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data.users) {
         // Transform data untuk match dengan interface User
         const transformedUsers = data.users.map((user: any) => ({
           id: user.id.toString(),
@@ -89,8 +89,8 @@ export default function UsersPage() {
           email: user.email,
           phone: user.phone || '',
           roles: [user.role], // Single role dari backend
-          status: user.is_active ? 'active' : 'inactive',
-          createdAt: new Date(user.created_at).toISOString().split('T')[0],
+          status: (user.isActive ?? user.is_active) ? 'active' : 'inactive',
+          createdAt: new Date(user.createdAt || user.created_at).toISOString().split('T')[0],
         }));
         setUsers(transformedUsers);
       }

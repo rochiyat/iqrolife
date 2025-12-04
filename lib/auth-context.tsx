@@ -209,7 +209,7 @@ export function getUserPermissions(user: User | null): UserPermissions {
 
   const fallbackPermissions: { [key in UserRole]: UserPermissions } = {
     superadmin: {
-      menus: ['home', 'calon-murid', 'formulir-list', 'users', 'roles', 'menu', 'formulir', 'portofolio', 'settings'],
+      menus: ['home', 'registrations', 'formulir-list', 'users', 'roles', 'menu', 'formulir', 'portofolio', 'settings'],
       canAccessAll: true,
       canManageUsers: true,
       canManageRoles: true,
@@ -221,7 +221,7 @@ export function getUserPermissions(user: User | null): UserPermissions {
       canViewPortfolio: true,
     },
     staff: {
-      menus: ['home', 'calon-murid', 'formulir-list', 'formulir', 'portofolio'],
+      menus: ['home', 'registrations', 'formulir-list', 'formulir', 'portofolio'],
       canAccessAll: false,
       canManageUsers: false,
       canManageRoles: false,
@@ -233,7 +233,7 @@ export function getUserPermissions(user: User | null): UserPermissions {
       canViewPortfolio: true,
     },
     teacher: {
-      menus: ['home', 'calon-murid', 'formulir-list', 'portofolio'],
+      menus: ['home', 'registrations', 'formulir-list', 'portofolio'],
       canAccessAll: false,
       canManageUsers: false,
       canManageRoles: false,

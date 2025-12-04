@@ -46,7 +46,7 @@ interface Student {
   reviewNotes?: string;
 }
 
-export default function CalonMuridPage() {
+export default function RegistrationsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
