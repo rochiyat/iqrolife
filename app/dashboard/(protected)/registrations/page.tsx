@@ -44,6 +44,9 @@ interface Student {
   reviewedBy?: number;
   reviewedAt?: string;
   reviewNotes?: string;
+  referenceName?: string;
+  referencePhone?: string;
+  referenceRelation?: string;
 }
 
 export default function RegistrationsPage() {
@@ -81,6 +84,9 @@ export default function RegistrationsPage() {
     alamat: '',
     status: 'pending',
     catatan: '',
+    referenceName: '',
+    referencePhone: '',
+    referenceRelation: '',
   });
   const [buktiTransferFile, setBuktiTransferFile] = useState<File | null>(null);
 
@@ -260,6 +266,9 @@ export default function RegistrationsPage() {
       formData.append('asalSekolah', editFormData.previousSchool || '');
       formData.append('status', editFormData.status);
       formData.append('catatan', editFormData.notes || '');
+      formData.append('referenceName', editFormData.referenceName || '');
+      formData.append('referencePhone', editFormData.referencePhone || '');
+      formData.append('referenceRelation', editFormData.referenceRelation || '');
 
       const response = await fetch('/api/dashboard/registrations', {
         method: 'PUT',
@@ -422,6 +431,9 @@ export default function RegistrationsPage() {
       formData.append('asalSekolah', addFormData.asalSekolah);
       formData.append('status', addFormData.status);
       formData.append('catatan', addFormData.catatan);
+      formData.append('referenceName', addFormData.referenceName);
+      formData.append('referencePhone', addFormData.referencePhone);
+      formData.append('referenceRelation', addFormData.referenceRelation);
 
       if (buktiTransferFile) {
         formData.append('buktiTransfer', buktiTransferFile);
@@ -447,6 +459,9 @@ export default function RegistrationsPage() {
           alamat: '',
           status: 'pending',
           catatan: '',
+          referenceName: '',
+          referencePhone: '',
+          referenceRelation: '',
         });
         setBuktiTransferFile(null);
 
@@ -644,6 +659,67 @@ export default function RegistrationsPage() {
                     }
                     required
                   />
+                </div>
+              </div>
+
+              {/* Referensi */}
+              <div className="space-y-4 pt-4 border-t">
+                <h3 className="text-lg font-semibold text-orange-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                  Referensi (Opsional)
+                </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label>Nama Referensi</Label>
+                    <Input
+                      placeholder="Nama orang yang mereferensikan"
+                      value={addFormData.referenceName}
+                      onChange={(e) =>
+                        handleAddInputChange('referenceName', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>No. HP Referensi</Label>
+                    <Input
+                      placeholder="No. HP referensi"
+                      value={addFormData.referencePhone}
+                      onChange={(e) =>
+                        handleAddInputChange('referencePhone', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Hubungan</Label>
+                    <select
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+                      value={addFormData.referenceRelation}
+                      onChange={(e) =>
+                        handleAddInputChange('referenceRelation', e.target.value)
+                      }
+                    >
+                      <option value="">Pilih hubungan</option>
+                      <option value="keluarga">Keluarga</option>
+                      <option value="teman">Teman</option>
+                      <option value="tetangga">Tetangga</option>
+                      <option value="rekan kerja">Rekan Kerja</option>
+                      <option value="alumni">Alumni</option>
+                      <option value="lainnya">Lainnya</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -1137,6 +1213,43 @@ export default function RegistrationsPage() {
                 </div>
               </div>
 
+              {/* Referensi */}
+              {(selectedStudent.referenceName || selectedStudent.referencePhone || selectedStudent.referenceRelation) && (
+                <div className="space-y-4 pt-4 border-t">
+                  <h3 className="text-lg font-semibold text-orange-800 flex items-center gap-2">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                    Referensi
+                  </h3>
+
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <Label className="text-gray-600">Nama Referensi</Label>
+                      <p className="font-medium">{selectedStudent.referenceName || '-'}</p>
+                    </div>
+                    <div>
+                      <Label className="text-gray-600">No. HP Referensi</Label>
+                      <p className="font-medium">{selectedStudent.referencePhone || '-'}</p>
+                    </div>
+                    <div>
+                      <Label className="text-gray-600">Hubungan</Label>
+                      <p className="font-medium capitalize">{selectedStudent.referenceRelation || '-'}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Status & Catatan */}
               <div className="space-y-4 pt-4 border-t">
                 <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2">
@@ -1447,6 +1560,54 @@ export default function RegistrationsPage() {
                     rows={2}
                     className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
                   />
+                </div>
+
+                {/* Referensi */}
+                <div className="col-span-2 pt-4 border-t">
+                  <h4 className="text-md font-semibold text-orange-800 mb-3">Referensi (Opsional)</h4>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="edit-referenceName">Nama Referensi</Label>
+                      <Input
+                        id="edit-referenceName"
+                        value={editFormData.referenceName || ''}
+                        onChange={(e) =>
+                          handleEditInputChange('referenceName', e.target.value)
+                        }
+                        placeholder="Nama referensi"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="edit-referencePhone">No. HP Referensi</Label>
+                      <Input
+                        id="edit-referencePhone"
+                        value={editFormData.referencePhone || ''}
+                        onChange={(e) =>
+                          handleEditInputChange('referencePhone', e.target.value)
+                        }
+                        placeholder="No. HP referensi"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="edit-referenceRelation">Hubungan</Label>
+                      <select
+                        id="edit-referenceRelation"
+                        value={editFormData.referenceRelation || ''}
+                        onChange={(e) =>
+                          handleEditInputChange('referenceRelation', e.target.value)
+                        }
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+                      >
+                        <option value="">Pilih hubungan</option>
+                        <option value="keluarga">Keluarga</option>
+                        <option value="teman">Teman</option>
+                        <option value="tetangga">Tetangga</option>
+                        <option value="rekan kerja">Rekan Kerja</option>
+                        <option value="alumni">Alumni</option>
+                        <option value="lainnya">Lainnya</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
