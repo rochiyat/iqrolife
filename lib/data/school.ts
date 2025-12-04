@@ -321,13 +321,13 @@ export const schoolData = {
       {
         level: 'Kelas Bermain (KB)',
         age: '3 - 4 tahun',
-        fee: 'Rp 985.000',
+        fee: '<div class="line-through text-gray-500 text-lg mb-1">Rp 1.200.000</div><div>Rp 985.000 <span class="text-sm">(gelombang 1)</span></div>',
         note: '*Biaya per awal masuk',
       },
       {
         level: 'Kelas Siap Sekolah (KSS)',
         age: '4 - 7 tahun',
-        fee: 'Rp 6.750.000',
+        fee: '<div class="line-through text-gray-500 text-lg mb-1">Rp. 7.500.000</div><div>Rp. 6.750.000 <span class="text-sm">(gelombang 1)</span></div>',
         note: '*Biaya per awal masuk',
       },
     ],

@@ -37,6 +37,9 @@ export default function RegistrationPage() {
     asalSekolah: '',
     program: '',
     catatan: '',
+    referenceName: '',
+    referencePhone: '',
+    referenceRelation: '',
   });
   const [buktiTransfer, setBuktiTransfer] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -104,6 +107,9 @@ export default function RegistrationPage() {
           asalSekolah: '',
           program: '',
           catatan: '',
+          referenceName: '',
+          referencePhone: '',
+          referenceRelation: '',
         });
         setBuktiTransfer(null);
         setPreviewUrl('');
@@ -442,7 +448,6 @@ export default function RegistrationPage() {
                       <li>• Bank: BSI</li>
                       <li>• No. Rekening: 7016179838</li>
                       <li>• Atas Nama: Agista Rosiana</li>
-                      <li>• Biaya Pendaftaran: Rp 250.000</li>
                     </ul>
                   </div>
 
@@ -524,6 +529,81 @@ export default function RegistrationPage() {
                         </Button>
                       </motion.div>
                     )}
+                  </div>
+                </div>
+
+                {/* Referensi */}
+                <div className="space-y-4 bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-2xl border-2 border-orange-200 shadow-md">
+                  <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-amber-400 flex items-center justify-center">
+                      <User className="w-6 h-6 text-white" />
+                    </div>
+                    Referensi (Opsional)
+                  </h2>
+                  <p className="text-sm text-gray-600">
+                    Jika ada yang mereferensikan Anda ke sekolah kami, silakan isi data berikut
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <Label
+                        htmlFor="referenceName"
+                        className="text-gray-700 font-semibold"
+                      >
+                        Nama Referensi
+                      </Label>
+                      <Input
+                        id="referenceName"
+                        name="referenceName"
+                        type="text"
+                        value={formData.referenceName}
+                        onChange={handleInputChange}
+                        placeholder="Nama orang yang mereferensikan"
+                        className="mt-1 border-2 border-gray-300 focus:border-orange-400 focus:ring-orange-500"
+                      />
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor="referencePhone"
+                        className="text-gray-700 font-semibold"
+                      >
+                        No. HP Referensi
+                      </Label>
+                      <Input
+                        id="referencePhone"
+                        name="referencePhone"
+                        type="tel"
+                        value={formData.referencePhone}
+                        onChange={handleInputChange}
+                        placeholder="No. HP referensi"
+                        className="mt-1 border-2 border-gray-300 focus:border-orange-400 focus:ring-orange-500"
+                      />
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor="referenceRelation"
+                        className="text-gray-700 font-semibold"
+                      >
+                        Hubungan
+                      </Label>
+                      <select
+                        id="referenceRelation"
+                        name="referenceRelation"
+                        value={formData.referenceRelation}
+                        onChange={handleInputChange}
+                        className="mt-1 w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition-all"
+                      >
+                        <option value="">Pilih hubungan</option>
+                        <option value="keluarga">Keluarga</option>
+                        <option value="teman">Teman</option>
+                        <option value="tetangga">Tetangga</option>
+                        <option value="rekan kerja">Rekan Kerja</option>
+                        <option value="alumni">Alumni</option>
+                        <option value="lainnya">Lainnya</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 

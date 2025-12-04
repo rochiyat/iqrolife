@@ -671,9 +671,10 @@ export default function SchoolPage() {
                       <div className="text-xl text-gray-700 mb-2">
                         Usia: {item.age}
                       </div>
-                      <div className="text-2xl font-bold text-[#f2cd5b] mb-1">
-                        {item.fee}
-                      </div>
+                      <div
+                        className="text-2xl font-bold text-[#f2cd5b] mb-1"
+                        dangerouslySetInnerHTML={{ __html: item.fee }}
+                      />
                       <div className="text-sm text-gray-600">{item.note}</div>
                     </div>
                   </CardContent>

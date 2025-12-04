@@ -25,6 +25,9 @@ export async function POST(request: NextRequest) {
     const program = formData.get('program') as string;
     const catatan = formData.get('catatan') as string;
     const buktiTransfer = formData.get('buktiTransfer') as File;
+    const referenceName = formData.get('referenceName') as string;
+    const referencePhone = formData.get('referencePhone') as string;
+    const referenceRelation = formData.get('referenceRelation') as string;
 
     // Validate required fields
     if (
@@ -100,8 +103,9 @@ export async function POST(request: NextRequest) {
       `INSERT INTO registrations (
         nama_lengkap, tanggal_lahir, jenis_kelamin, asal_sekolah,
         nama_orang_tua, no_telepon, email, alamat, program, catatan,
-        bukti_transfer_url, bukti_transfer_public_id, status
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+        bukti_transfer_url, bukti_transfer_public_id, status,
+        reference_name, reference_phone, reference_relation
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
       RETURNING id`,
       [
         namaLengkap,
@@ -117,6 +121,9 @@ export async function POST(request: NextRequest) {
         cloudinaryResult?.secure_url,
         cloudinaryResult?.public_id,
         'pending',
+        referenceName || null,
+        referencePhone || null,
+        referenceRelation || null,
       ]
     );
 
