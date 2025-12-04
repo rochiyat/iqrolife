@@ -16,12 +16,12 @@ const pool = new Pool({
 // Email transporter with validation
 const createEmailTransporter = () => {
   const emailUser = process.env.EMAIL_USER;
-  const emailPass = process.env.EMAIL_PASS;
+  const emailPass = process.env.EMAIL_PASSWORD;
 
   // Validate credentials
   if (!emailUser || !emailPass) {
     console.warn(
-      '⚠️ Email credentials not configured. EMAIL_USER or EMAIL_PASS is missing.'
+      '⚠️ Email credentials not configured. EMAIL_USER or EMAIL_PASSWORD is missing.'
     );
     return null;
   }
