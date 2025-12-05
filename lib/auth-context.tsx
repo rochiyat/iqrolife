@@ -28,10 +28,20 @@ export interface User {
   permissions?: UserPermissions;
 }
 
+interface LoginResponse {
+  success: boolean;
+  message: string;
+  data: {
+    user: any;
+    menus: any[];
+    token: string;
+  };
+}
+
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<LoginResponse>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
 }
@@ -72,7 +82,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         // Update menus in localStorage
         if (userData.accessibleMenus) {
-          localStorage.setItem('accessible-menus', JSON.stringify(userData.accessibleMenus));
+          localStorage.setItem(
+            'accessible-menus',
+            JSON.stringify(userData.accessibleMenus)
+          );
           localStorage.setItem('menus-role', userData.role);
           localStorage.setItem('menus-version', MENU_VERSION);
         }
@@ -99,7 +112,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Save token to localStorage and cookie (for API routes)
     localStorage.setItem('auth-token', token);
-    document.cookie = `auth-token=${token}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
+    document.cookie = `auth-token=${token}; path=/; max-age=${
+      60 * 60 * 24 * 7
+    }; SameSite=Lax`;
 
     // Set user state
     setUser({
@@ -165,7 +180,9 @@ export function hasPermission(
   return requiredRoles.includes(userRole);
 }
 
-export function getAccessibleMenusFromStorage(userRole: UserRole | null): string[] {
+export function getAccessibleMenusFromStorage(
+  userRole: UserRole | null
+): string[] {
   if (typeof window === 'undefined' || !userRole) return [];
 
   try {
@@ -209,7 +226,18 @@ export function getUserPermissions(user: User | null): UserPermissions {
 
   const fallbackPermissions: { [key in UserRole]: UserPermissions } = {
     superadmin: {
-      menus: ['home', 'registrations', 'formulir-list', 'users', 'roles', 'menu', 'formulir', 'portofolio', 'settings'],
+      menus: [
+        'home',
+        'registrations',
+        'formulir-list',
+        'users',
+        'roles',
+        'coupons',
+        'menu',
+        'formulir',
+        'portofolio',
+        'settings',
+      ],
       canAccessAll: true,
       canManageUsers: true,
       canManageRoles: true,
@@ -221,7 +249,13 @@ export function getUserPermissions(user: User | null): UserPermissions {
       canViewPortfolio: true,
     },
     staff: {
-      menus: ['home', 'registrations', 'formulir-list', 'formulir', 'portofolio'],
+      menus: [
+        'home',
+        'registrations',
+        'formulir-list',
+        'formulir',
+        'portofolio',
+      ],
       canAccessAll: false,
       canManageUsers: false,
       canManageRoles: false,
@@ -260,7 +294,8 @@ export function getUserPermissions(user: User | null): UserPermissions {
 
   if (user.permissions) {
     if (!user.permissions.menus || !Array.isArray(user.permissions.menus)) {
-      const fallback = fallbackPermissions[user.role] || fallbackPermissions.parent;
+      const fallback =
+        fallbackPermissions[user.role] || fallbackPermissions.parent;
       return { ...user.permissions, menus: fallback.menus };
     }
     return user.permissions;
