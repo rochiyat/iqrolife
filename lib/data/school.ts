@@ -1,14 +1,14 @@
 export const schoolData = {
   title: 'Kelas Siap Sekolah',
   subtitle:
-    'Pendidikan pra sekolah yang mencakup pendidikan iman, ego/individualitas, emosi dan sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
+    'Pendidikan Usia dini yang berfokus kepada Pendidikan Iman, Pendidikan Ego dan Individualitas, Pendidikan Emosi dan Pendidikan Psikomotorik sebagai persiapan untuk menuju proses pendidikan selanjutnya (Sekolah Dasar).',
   description:
     'Sejak 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah mulai dari KB, TK A dan TK B. ✨',
-  badge: 'Pembukaan KKS 2026-2027',
+  badge: 'Pembukaan KSS 2026-2027',
   hero: {
     title: '🎒 Kelas Siap Sekolah IQROLIFE 🎒',
     subtitle:
-      'Pendidikan pra sekolah yang mencakup pendidikan iman, Pendidikan ego/individualitas, Pendidikan emosi dan Stimulasi sensori-motorik guna mempersiapkan anak untuk menuju jenjang pendidikan berikutnya.',
+      'Pendidikan Usia dini yang berfokus kepada Pendidikan Iman, Pendidikan Ego dan Individualitas, Pendidikan Emosi dan Pendidikan Psikomotorik sebagai persiapan untuk menuju proses pendidikan selanjutnya (Sekolah Dasar).',
     description:
       'Sejak tahun 2022, Iqrolife menghadirkan Kelas Bermain untuk anak usia 3 s.d. 7 tahun. Kelas Bermain ini merupakan cikal bakal Kelas Siap Sekolah ✨',
   },
@@ -31,7 +31,7 @@ export const schoolData = {
         icon: '🎯',
         title: 'Pendekatan Holistik',
         description:
-          'Gagasan 7 Pendidikan Holistik dengan pendekatan Play Based Learning dan dampak atau output pembelajaran yang terukur',
+          'Gagasan 7 Pendidikan Holistik dengan pendekatan Bermain yang Menyenangkan dan dampak atau output pembelajaran yang terukur',
       },
       {
         icon: '👨‍👩‍👧',
@@ -51,12 +51,12 @@ export const schoolData = {
     title: 'Fokus Kurikulum',
     subtitle: 'Pendekatan pembelajaran yang terstruktur dan terukur',
     items: [
-      'Stimulasi Sensori Motorik',
-      'Pendidikan Emosi',
-      'Pendidikan Individualitas',
       'Pendidikan Iman',
+      'Pendidikan Ego dan Individualitas',
+      'Pendidikan Emosi',
+      'Pendidikan Psikomotorik',
     ],
-    method: 'Play Based Learning',
+    method: 'Bermain yang Menyenangkan',
     output: 'Portfolio Sifat Unik Anak',
   },
   programs: [
@@ -97,52 +97,7 @@ export const schoolData = {
       ],
     },
   ],
-  dailySchedule: {
-    title: 'Aktivitas Harian KSS',
-    description: 'Jadwal kegiatan harian untuk Kelas Siap Sekolah',
-    schedule: [
-      {
-        time: '08.00',
-        activity: 'Masuk Sekolah',
-        description: '',
-      },
-      {
-        time: '08.00 – 08.30',
-        activity: 'Eksplorasi lingkungan sekolah.',
-        description: 'Memberi makan ayam, menyiram tanaman dan bermain bebas.',
-      },
-      {
-        time: '08.30 – 09.00',
-        activity: 'Circle Time',
-        description: 'Berdoa dan Dialog Iman',
-      },
-      {
-        time: '09.00 – 09.30',
-        activity: 'Area Multisensory',
-        description: 'Bergerak dan kegiatan stimulasi semua indera',
-      },
-      {
-        time: '09.30 – 10.00',
-        activity: 'Kudapan Pagi',
-        description: 'Kudapan pagi dan mencuci dan merapikan wadah kudapan.',
-      },
-      {
-        time: '10.00 – 10.30',
-        activity: 'Berkisah / Pembelajaran Al Quran',
-        description: 'Membaca buku atau pembelajaran alquran',
-      },
-      {
-        time: '10.30 – 11.30',
-        activity: 'Kegiatan Tematik',
-        description: 'Kegiatan sesuai tema setiap bulannya',
-      },
-      {
-        time: '11.30 – 11.45',
-        activity: 'Circle Time',
-        description: 'Refleksi, Berdoa dan Pulang',
-      },
-    ],
-  },
+
   levels: [
     {
       title: 'Kelas Bermain (KB)',
@@ -181,48 +136,7 @@ export const schoolData = {
       image: '/program/kelas-siap-sekolah/level/level-001.jpg',
     },
   ],
-  yearlyActivities: {
-    title: 'Aktivitas Tahunan KKS',
-    description:
-      'Kegiatan tahunan yang dirancang untuk melibatkan keluarga dalam proses pembelajaran',
-    activities: [
-      {
-        no: 1,
-        name: 'Family Project',
-        frequency: '1 kali dalam satu tahun',
-      },
-      {
-        no: 2,
-        name: 'Kunjungan Edukasi',
-        frequency: '2 kali dalam satu tahun',
-      },
-      {
-        no: 3,
-        name: 'Hari Bersama Ayah',
-        frequency: '2 kali dalam satu tahun',
-      },
-      {
-        no: 4,
-        name: 'Main Bersama Ibu',
-        frequency: '1 kali dalam satu bulan',
-      },
-      {
-        no: 5,
-        name: 'Eksplorasi Air (Renang)',
-        frequency: '4 kali dalam satu tahun',
-      },
-      {
-        no: 6,
-        name: 'Kelas Belajar Orang Tua',
-        frequency: '4 kali dalam satu tahun',
-      },
-      {
-        no: 7,
-        name: 'Pertemuan Orang Tua dan Guru',
-        frequency: '3 kali dalam satu tahun',
-      },
-    ],
-  },
+
   facilities: {
     title: 'Fasilitas Pembelajaran',
     description:
@@ -315,20 +229,32 @@ export const schoolData = {
       },
     ],
   },
-  ppdb: {
-    title: '📚 Biaya Pendidikan 📚',
+  biayaFormulir: {
+    title: '� Biaya Formulir 💰',
+    description: 'Investasi untuk masa depan cerah putra-putri Anda',
     items: [
       {
-        level: 'Kelas Bermain (KB)',
-        age: '3 - 4 tahun',
-        fee: '<div class="line-through text-gray-500 text-lg mb-1">Rp 1.200.000</div><div>Rp 985.000 <span class="text-sm">(gelombang 1)</span></div>',
-        note: '*Biaya per awal masuk',
-      },
-      {
-        level: 'Kelas Siap Sekolah (KSS)',
-        age: '4 - 7 tahun',
-        fee: '<div class="line-through text-gray-500 text-lg mb-1">Rp. 7.500.000</div><div>Rp. 6.750.000 <span class="text-sm">(gelombang 1)</span></div>',
-        note: '*Biaya per awal masuk',
+        title: 'Kelas Siap Sekolah (KSS)',
+        subtitle: 'Usia 3 - 7 tahun',
+        pricing: [
+          {
+            label: 'Ikut Webinar',
+            price: 'Rp 250.000',
+            icon: '🎓',
+            badge: 'Hemat 100rb!',
+          },
+          {
+            label: 'Gelombang 1',
+            price: 'Rp 300.000',
+            icon: '⚡',
+            badge: 'Hemat 50rb!',
+          },
+          {
+            label: 'Harga Normal',
+            price: 'Rp 350.000',
+            icon: '📄',
+          },
+        ],
       },
     ],
   },
@@ -342,16 +268,16 @@ export const schoolData = {
     ],
   },
   timeline: {
-    title: '📅 Timeline Pembukaan KKS 2026/2027 📅',
+    title: '📅 Timeline Pembukaan KSS 2026/2027 📅',
     items: [
       {
         phase: 'Pendaftaran',
-        date: '30 November - 14 Desember 2025',
+        date: '7 Desember- 20 Desember 2025',
         description: 'Pengisian Formulir dan Pengumpulan Berkas',
       },
       {
         phase: 'Observasi dan Wawancara',
-        date: '20 - 21 Desember 2025',
+        date: '21 Desember - 22 Desember 2025',
         description: 'Obersevasi Anak dan Wawancara Orang Tua',
       },
       {
@@ -377,7 +303,7 @@ export const schoolData = {
     },
     whatsappButton: {
       text: '💬 Hubungi via WhatsApp',
-      href: 'https://wa.me/6281315225557',
+      href: 'https://wa.me/6285736030342',
     },
     requirements: [
       'Usia 3 - 7 tahun',
