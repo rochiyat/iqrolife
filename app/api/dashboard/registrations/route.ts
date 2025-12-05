@@ -11,7 +11,6 @@ export async function OPTIONS() {
 export async function GET(request: NextRequest) {
   try {
     const data = await proxyToBackend(request, '/api/registrations', 'GET');
-    console.log('data', data);
     return NextResponse.json(data);
   } catch (error) {
     console.error('Fetch registrations error:', error);

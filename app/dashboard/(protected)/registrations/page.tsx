@@ -204,10 +204,10 @@ export default function RegistrationsPage() {
             alertMessage = `✅ User baru berhasil dibuat!\n\nNama: ${selectedStudent.parent}\nEmail: ${selectedStudent.email}\nRole: Parent\n\nPassword telah dikirim ke email.`;
             break;
           case 'role_added':
-            alertMessage = `✅ User sudah ada!\n\nRole Parent berhasil ditambahkan.\nAnak "${selectedStudent.name}" berhasil dimapping ke user ini.`;
+            alertMessage = `✅ User sudah ada!\n\nRole Parent berhasil ditambahkan.\nAnak "${selectedStudent.name}" berhasil dimapping ke user ${selectedStudent.email}.`;
             break;
           case 'mapping_added':
-            alertMessage = `✅ User sudah ada sebagai Parent!\n\nAnak "${selectedStudent.name}" berhasil dimapping ke user ini.`;
+            alertMessage = `✅ User sudah ada sebagai Parent!\n\nAnak "${selectedStudent.name}" berhasil dimapping ke user ${selectedStudent.email}.`;
             break;
         }
         alert(alertMessage);
