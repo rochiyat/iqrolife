@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'https://iqrolife-backend.vercel.app';
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
     const referenceName = formData.get('referenceName') as string;
     const referencePhone = formData.get('referencePhone') as string;
     const referenceRelation = formData.get('referenceRelation') as string;
+    const couponCode = formData.get('couponCode') as string;
 
     // Validate required fields
     if (
@@ -58,13 +59,16 @@ export async function POST(request: NextRequest) {
         method: 'POST',
         body: uploadFormData,
       });
+      console.log('uploadResponse', uploadResponse);
 
       if (uploadResponse.ok) {
         const uploadData = await uploadResponse.json();
+        console.log('uploadData', uploadData);
         uploadResult = {
           url: uploadData.data?.url,
           publicId: uploadData.data?.publicId,
         };
+        console.log('uploadResult', uploadResult);
       } else {
         console.error('Upload failed:', await uploadResponse.text());
       }
@@ -83,17 +87,21 @@ export async function POST(request: NextRequest) {
       catatan: catatan || '',
       buktiTransferUrl: uploadResult.url || '',
       buktiTransferPublicId: uploadResult.publicId || '',
+      couponCode: couponCode || '',
     };
 
     console.log('Sending registration to backend:', registrationPayload);
 
-    const registrationResponse = await fetch(`${BACKEND_URL}/api/registrations/public`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(registrationPayload),
-    });
+    const registrationResponse = await fetch(
+      `${BACKEND_URL}/api/registrations/public`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registrationPayload),
+      }
+    );
 
     const registrationData = await registrationResponse.json();
 
@@ -110,7 +118,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: 'Pendaftaran berhasil diterima',
-      registrationId: registrationData.data?.id ? `REG-${registrationData.data.id}` : '',
+      registrationId: registrationData.data?.id
+        ? `REG-${registrationData.data.id}`
+        : '',
       data: {
         buktiTransferUrl: uploadResult.url,
       },
