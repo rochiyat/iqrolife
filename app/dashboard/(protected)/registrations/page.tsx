@@ -925,91 +925,100 @@ export default function RegistrationsPage() {
                         </td>
                         <td className="py-3 px-4">
                           <div className="flex gap-2">
-                            {/* Logic: Disable all actions if approved AND user created */}
                             {(() => {
-                              const isLocked =
-                                student.status === 'approved' &&
-                                !!student.userId;
+                              const isApproved = student.status === 'approved';
 
                               return (
                                 <>
+                                  {/* View - Always enabled */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
-                                    className={`text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors ${
-                                      isLocked
-                                        ? 'opacity-50 cursor-not-allowed'
-                                        : ''
-                                    }`}
+                                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors"
                                     title="Lihat Detail"
                                     onClick={() => handleViewDetail(student)}
-                                    disabled={isLocked}
                                   >
                                     <Eye className="w-4 h-4" />
                                   </Button>
+
+                                  {/* Create User - Only enabled when approved and user not created yet */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
                                     className={`text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors ${
-                                      student.status !== 'approved' ||
-                                      !!student.userId
+                                      !isApproved || !!student.userId
                                         ? 'opacity-50 cursor-not-allowed'
                                         : ''
                                     }`}
                                     title={
-                                      student.status !== 'approved'
+                                      !isApproved
                                         ? 'Status harus Disetujui untuk buat user'
                                         : !!student.userId
                                         ? 'User sudah dibuat'
                                         : 'Buat User'
                                     }
                                     onClick={() => handleCreateUser(student)}
-                                    disabled={
-                                      student.status !== 'approved' ||
-                                      !!student.userId
-                                    }
+                                    disabled={!isApproved || !!student.userId}
                                   >
                                     <UserPlus className="w-4 h-4" />
                                   </Button>
+
+                                  {/* Review - Disabled when approved */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
                                     className={`text-orange-600 hover:text-orange-700 hover:bg-orange-50 cursor-pointer transition-colors ${
-                                      isLocked
+                                      isApproved
                                         ? 'opacity-50 cursor-not-allowed'
                                         : ''
                                     }`}
-                                    title="Review"
+                                    title={
+                                      isApproved
+                                        ? 'Tidak dapat review data yang sudah disetujui'
+                                        : 'Review'
+                                    }
                                     onClick={() => handleReview(student)}
-                                    disabled={isLocked}
+                                    disabled={isApproved}
                                   >
                                     <ClipboardCheck className="w-4 h-4" />
                                   </Button>
+
+                                  {/* Edit - Disabled when approved */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
                                     className={`text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors ${
-                                      isLocked
+                                      isApproved
                                         ? 'opacity-50 cursor-not-allowed'
                                         : ''
                                     }`}
-                                    title="Edit"
+                                    title={
+                                      isApproved
+                                        ? 'Tidak dapat edit data yang sudah disetujui'
+                                        : 'Edit'
+                                    }
                                     onClick={() => handleEdit(student)}
-                                    disabled={isLocked}
+                                    disabled={isApproved}
                                   >
                                     <Edit className="w-4 h-4" />
                                   </Button>
+
+                                  {/* Delete - Disabled when approved */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
                                     className={`text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer transition-colors ${
-                                      isLocked
+                                      isApproved
                                         ? 'opacity-50 cursor-not-allowed'
                                         : ''
                                     }`}
-                                    title="Hapus"
+                                    title={
+                                      isApproved
+                                        ? 'Tidak dapat hapus data yang sudah disetujui'
+                                        : 'Hapus'
+                                    }
                                     onClick={() => handleDelete(student)}
-                                    disabled={isLocked}
+                                    disabled={isApproved}
                                   >
                                     <Trash2 className="w-4 h-4" />
                                   </Button>
