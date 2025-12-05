@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { uploadToCloudinary } from '@/lib/cloudinary';
-import { Pool } from 'pg';
-import { sendAdminNotification, sendParentConfirmation } from '@/lib/email';
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'https://iqrolife-backend.vercel.app';
 
 export async function POST(request: NextRequest) {
   try {
@@ -55,27 +47,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Upload bukti transfer to Cloudinary
-    let cloudinaryResult;
+    // Step 1: Upload bukti transfer to backend
+    let uploadResult: { url?: string; publicId?: string } = {};
     if (buktiTransfer) {
-      const bytes = await buktiTransfer.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', buktiTransfer);
+      uploadFormData.append('folder', 'registrations');
 
-      // Generate unique public_id
-      const timestamp = Date.now();
-      const sanitizedName = namaLengkap
-        .replace(/[^a-zA-Z0-9]/g, '_')
-        .toLowerCase();
-      const publicId = `registration_${sanitizedName}_${timestamp}`;
-
-      cloudinaryResult = await uploadToCloudinary(buffer, 'registrations', {
-        public_id: publicId,
-        resource_type: 'auto',
+      const uploadResponse = await fetch(`${BACKEND_URL}/api/upload`, {
+        method: 'POST',
+        body: uploadFormData,
       });
+
+      if (uploadResponse.ok) {
+        const uploadData = await uploadResponse.json();
+        uploadResult = {
+          url: uploadData.data?.url,
+          publicId: uploadData.data?.publicId,
+        };
+      } else {
+        console.error('Upload failed:', await uploadResponse.text());
+      }
     }
 
-    // Create registration data object
-    const registrationData = {
+    // Step 2: Create registration via backend API (public endpoint)
+    const registrationPayload = {
       namaLengkap,
       tanggalLahir,
       jenisKelamin,
@@ -83,68 +79,40 @@ export async function POST(request: NextRequest) {
       noTelepon,
       email,
       alamat,
-      asalSekolah,
-      program,
-      catatan,
-      buktiTransferUrl: cloudinaryResult?.secure_url || '',
-      buktiTransferPublicId: cloudinaryResult?.public_id || '',
-      timestamp: new Date().toISOString(),
+      asalSekolah: asalSekolah || '',
+      catatan: catatan || '',
+      buktiTransferUrl: uploadResult.url || '',
+      buktiTransferPublicId: uploadResult.publicId || '',
     };
 
-    // Here you would typically:
-    // 1. Save to database
-    // 2. Send email notification to admin
-    // 3. Send confirmation email to parent
+    console.log('Sending registration to backend:', registrationPayload);
 
-    console.log('New Registration:', registrationData);
-
-    // Save to database
-    const insertResult = await pool.query(
-      `INSERT INTO registrations (
-        nama_lengkap, tanggal_lahir, jenis_kelamin, asal_sekolah,
-        nama_orang_tua, no_telepon, email, alamat, program, catatan,
-        bukti_transfer_url, bukti_transfer_public_id, status,
-        reference_name, reference_phone, reference_relation
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-      RETURNING id`,
-      [
-        namaLengkap,
-        tanggalLahir,
-        jenisKelamin,
-        asalSekolah || null,
-        namaOrangTua,
-        noTelepon,
-        email,
-        alamat,
-        program,
-        catatan || null,
-        cloudinaryResult?.secure_url,
-        cloudinaryResult?.public_id,
-        'pending',
-        referenceName || null,
-        referencePhone || null,
-        referenceRelation || null,
-      ]
-    );
-
-    const registrationId = insertResult.rows[0].id;
-    console.log('✅ Registration saved to database with ID:', registrationId);
-
-    // Send notification emails (don't block the response)
-    Promise.all([
-      sendAdminNotification(registrationData),
-      sendParentConfirmation(email, registrationData),
-    ]).catch((error) => {
-      console.error('⚠️ Email notification failed:', error);
-      // Don't throw - registration is already saved
+    const registrationResponse = await fetch(`${BACKEND_URL}/api/registrations/public`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(registrationPayload),
     });
+
+    const registrationData = await registrationResponse.json();
+
+    if (!registrationResponse.ok) {
+      console.error('Registration failed:', registrationData);
+      return NextResponse.json(
+        { error: registrationData.message || 'Gagal menyimpan pendaftaran' },
+        { status: registrationResponse.status }
+      );
+    }
+
+    console.log('✅ Registration saved via backend:', registrationData);
 
     return NextResponse.json({
       success: true,
       message: 'Pendaftaran berhasil diterima',
-      registrationId: `REG-${registrationId}`,
+      registrationId: registrationData.data?.id ? `REG-${registrationData.data.id}` : '',
       data: {
-        buktiTransferUrl: cloudinaryResult?.secure_url,
+        buktiTransferUrl: uploadResult.url,
       },
     });
   } catch (error) {

@@ -20,6 +20,7 @@ import {
   Home,
   FileText,
   ArrowLeft,
+  Loader2,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -37,9 +38,7 @@ export default function RegistrationPage() {
     asalSekolah: '',
     program: '',
     catatan: '',
-    referenceName: '',
-    referencePhone: '',
-    referenceRelation: '',
+    referralCode: '',
   });
   const [buktiTransfer, setBuktiTransfer] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -48,6 +47,12 @@ export default function RegistrationPage() {
     'idle' | 'success' | 'error'
   >('idle');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Referral code states
+  const [isCheckingReferral, setIsCheckingReferral] = useState(false);
+  const [referralStatus, setReferralStatus] = useState<
+    'idle' | 'valid' | 'invalid'
+  >('idle');
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -107,10 +112,9 @@ export default function RegistrationPage() {
           asalSekolah: '',
           program: '',
           catatan: '',
-          referenceName: '',
-          referencePhone: '',
-          referenceRelation: '',
+          referralCode: '',
         });
+        setReferralStatus('idle');
         setBuktiTransfer(null);
         setPreviewUrl('');
       } else {
@@ -121,6 +125,37 @@ export default function RegistrationPage() {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleCheckReferral = async () => {
+    if (!formData.referralCode.trim()) return;
+
+    setIsCheckingReferral(true);
+    setReferralStatus('idle');
+
+    try {
+      // TODO: Replace with actual API endpoint when backend is ready
+      // const response = await fetch('/api/check-referral', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ code: formData.referralCode }),
+      // });
+      //
+      // if (response.ok) {
+      //   setReferralStatus('valid');
+      // } else {
+      //   setReferralStatus('invalid');
+      // }
+
+      // Temporary simulation - remove when backend is ready
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setReferralStatus('valid'); // Mock success
+    } catch (error) {
+      console.error('Error checking referral:', error);
+      setReferralStatus('invalid');
+    } finally {
+      setIsCheckingReferral(false);
     }
   };
 
@@ -532,78 +567,86 @@ export default function RegistrationPage() {
                   </div>
                 </div>
 
-                {/* Referensi */}
+                {/* Referral Code */}
                 <div className="space-y-4 bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-2xl border-2 border-orange-200 shadow-md">
                   <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-amber-400 flex items-center justify-center">
                       <User className="w-6 h-6 text-white" />
                     </div>
-                    Referensi (Opsional)
+                    Referral Code (Opsional)
                   </h2>
                   <p className="text-sm text-gray-600">
-                    Jika ada yang mereferensikan Anda ke sekolah kami, silakan isi data berikut
+                    Masukkan kode referral jika Anda memilikinya untuk
+                    mendapatkan keuntungan khusus
                   </p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <Label
-                        htmlFor="referenceName"
-                        className="text-gray-700 font-semibold"
+                  <div className="space-y-2">
+                    <Label
+                      htmlFor="referralCode"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Kode Referral
+                    </Label>
+                    <div className="flex gap-2">
+                      <div className="flex-1 relative">
+                        <Input
+                          id="referralCode"
+                          name="referralCode"
+                          type="text"
+                          value={formData.referralCode}
+                          onChange={(e) => {
+                            handleInputChange(e);
+                            setReferralStatus('idle');
+                          }}
+                          placeholder="Masukkan kode referral"
+                          className="border-2 border-gray-300 focus:border-orange-400 focus:ring-orange-500"
+                        />
+                      </div>
+                      <Button
+                        type="button"
+                        onClick={handleCheckReferral}
+                        disabled={
+                          !formData.referralCode.trim() || isCheckingReferral
+                        }
+                        className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-6 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        Nama Referensi
-                      </Label>
-                      <Input
-                        id="referenceName"
-                        name="referenceName"
-                        type="text"
-                        value={formData.referenceName}
-                        onChange={handleInputChange}
-                        placeholder="Nama orang yang mereferensikan"
-                        className="mt-1 border-2 border-gray-300 focus:border-orange-400 focus:ring-orange-500"
-                      />
+                        {isCheckingReferral ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Checking...
+                          </>
+                        ) : (
+                          'Check'
+                        )}
+                      </Button>
                     </div>
 
-                    <div>
-                      <Label
-                        htmlFor="referencePhone"
-                        className="text-gray-700 font-semibold"
+                    {/* Status Messages */}
+                    {referralStatus === 'valid' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2 text-green-700 bg-green-50 border border-green-200 rounded-lg p-3"
                       >
-                        No. HP Referensi
-                      </Label>
-                      <Input
-                        id="referencePhone"
-                        name="referencePhone"
-                        type="tel"
-                        value={formData.referencePhone}
-                        onChange={handleInputChange}
-                        placeholder="No. HP referensi"
-                        className="mt-1 border-2 border-gray-300 focus:border-orange-400 focus:ring-orange-500"
-                      />
-                    </div>
+                        <CheckCircle className="w-5 h-5" />
+                        <span className="text-sm font-medium">
+                          Kode referral valid! 🎉
+                        </span>
+                      </motion.div>
+                    )}
 
-                    <div>
-                      <Label
-                        htmlFor="referenceRelation"
-                        className="text-gray-700 font-semibold"
+                    {referralStatus === 'invalid' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2 text-red-700 bg-red-50 border border-red-200 rounded-lg p-3"
                       >
-                        Hubungan
-                      </Label>
-                      <select
-                        id="referenceRelation"
-                        name="referenceRelation"
-                        value={formData.referenceRelation}
-                        onChange={handleInputChange}
-                        className="mt-1 w-full px-3 py-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition-all"
-                      >
-                        <option value="">Pilih hubungan</option>
-                        <option value="keluarga">Keluarga</option>
-                        <option value="teman">Teman</option>
-                        <option value="tetangga">Tetangga</option>
-                        <option value="rekan kerja">Rekan Kerja</option>
-                        <option value="alumni">Alumni</option>
-                        <option value="lainnya">Lainnya</option>
-                      </select>
-                    </div>
+                        <AlertCircle className="w-5 h-5" />
+                        <span className="text-sm font-medium">
+                          Kode referral tidak valid
+                        </span>
+                      </motion.div>
+                    )}
                   </div>
                 </div>
 
