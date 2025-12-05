@@ -49,6 +49,8 @@ export default function RegistrationPage() {
     'idle' | 'success' | 'error'
   >('idle');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Referral code states
   const [isCheckingReferral, setIsCheckingReferral] = useState(false);
@@ -132,11 +134,21 @@ export default function RegistrationPage() {
         setBuktiTransfer(null);
         setPreviewUrl('');
       } else {
+        const errorData = await response.json();
         setSubmitStatus('error');
+        setErrorMessage(
+          errorData.error ||
+            'Terjadi kesalahan saat mendaftar. Silakan coba lagi.'
+        );
+        setShowErrorModal(true);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
+      setErrorMessage(
+        'Terjadi kesalahan jaringan. Pastikan koneksi internet Anda stabil dan coba lagi.'
+      );
+      setShowErrorModal(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -339,22 +351,57 @@ export default function RegistrationPage() {
                 </div>
               )}
 
-              {submitStatus === 'error' && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="mb-6 p-4 bg-red-100 border border-red-300 rounded-lg flex items-center gap-3"
-                >
-                  <AlertCircle className="w-6 h-6 text-red-600" />
-                  <div>
-                    <p className="font-semibold text-red-800">
-                      Pendaftaran Gagal
-                    </p>
-                    <p className="text-sm text-red-700">
-                      Terjadi kesalahan. Silakan coba lagi.
-                    </p>
-                  </div>
-                </motion.div>
+              {/* Error Modal */}
+              {showErrorModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  <div
+                    className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                    onClick={() => setShowErrorModal(false)}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="relative bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 border-4 border-red-200"
+                  >
+                    <div className="text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-red-400 to-rose-400 flex items-center justify-center">
+                        <AlertCircle className="w-12 h-12 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                        😔 Pendaftaran Gagal 😔
+                      </h3>
+                      <p className="text-gray-600 mb-6">{errorMessage}</p>
+
+                      <div className="bg-gradient-to-br from-red-50 to-rose-50 rounded-xl p-4 mb-6 border-2 border-red-200">
+                        <p className="text-sm text-gray-700">
+                          Pastikan semua data sudah diisi dengan benar dan coba
+                          lagi. Jika masalah berlanjut, silakan hubungi admin
+                          kami.
+                        </p>
+                      </div>
+
+                      <div className="flex gap-3">
+                        <Button
+                          onClick={() => setShowErrorModal(false)}
+                          variant="outline"
+                          className="flex-1 py-3 border-2 border-red-300 text-red-600 hover:bg-red-50"
+                        >
+                          Tutup
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            setShowErrorModal(false);
+                            setSubmitStatus('idle');
+                          }}
+                          className="flex-1 py-3 bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 text-white font-bold shadow-lg hover:shadow-xl transition-all"
+                        >
+                          Coba Lagi
+                        </Button>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-8">

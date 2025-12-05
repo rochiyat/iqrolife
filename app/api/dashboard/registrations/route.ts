@@ -11,10 +11,14 @@ export async function OPTIONS() {
 export async function GET(request: NextRequest) {
   try {
     const data = await proxyToBackend(request, '/api/registrations', 'GET');
+    console.log('data', data);
     return NextResponse.json(data);
   } catch (error) {
     console.error('Fetch registrations error:', error);
-    return NextResponse.json({ error: 'Gagal mengambil data registrasi' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Gagal mengambil data registrasi' },
+      { status: 500 }
+    );
   }
 }
 
@@ -24,19 +28,19 @@ export async function POST(request: NextRequest) {
     const token = getToken(request);
     const headers: HeadersInit = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
-    
+
     // Handle FormData (multipart/form-data)
     if (contentType.includes('multipart/form-data')) {
       const formData = await request.formData();
       const body: Record<string, any> = {};
-      
+
       for (const [key, value] of formData.entries()) {
         if (typeof value === 'string') {
           body[key] = value;
         }
         // Skip file uploads for now - backend doesn't handle them yet
       }
-      
+
       headers['Content-Type'] = 'application/json';
       const response = await fetch(`${API_URL}/api/registrations`, {
         method: 'POST',
@@ -46,7 +50,7 @@ export async function POST(request: NextRequest) {
       const data = await response.json();
       return NextResponse.json(data);
     }
-    
+
     // Handle JSON
     headers['Content-Type'] = 'application/json';
     const body = await request.json();
@@ -59,7 +63,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Create registration error:', error);
-    return NextResponse.json({ error: 'Gagal menambahkan data registrasi' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Gagal menambahkan data registrasi' },
+      { status: 500 }
+    );
   }
 }
 
@@ -69,18 +76,18 @@ export async function PUT(request: NextRequest) {
     const token = getToken(request);
     const headers: HeadersInit = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
-    
+
     // Handle FormData
     if (contentType.includes('multipart/form-data')) {
       const formData = await request.formData();
       const body: Record<string, any> = {};
-      
+
       for (const [key, value] of formData.entries()) {
         if (typeof value === 'string') {
           body[key] = value;
         }
       }
-      
+
       headers['Content-Type'] = 'application/json';
       const response = await fetch(`${API_URL}/api/registrations`, {
         method: 'PUT',
@@ -90,7 +97,7 @@ export async function PUT(request: NextRequest) {
       const data = await response.json();
       return NextResponse.json(data);
     }
-    
+
     // Handle JSON
     headers['Content-Type'] = 'application/json';
     const body = await request.json();
@@ -103,7 +110,10 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Update registration error:', error);
-    return NextResponse.json({ error: 'Gagal mengupdate data registrasi' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Gagal mengupdate data registrasi' },
+      { status: 500 }
+    );
   }
 }
 
@@ -113,6 +123,9 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Delete registration error:', error);
-    return NextResponse.json({ error: 'Gagal menghapus data registrasi' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Gagal menghapus data registrasi' },
+      { status: 500 }
+    );
   }
 }

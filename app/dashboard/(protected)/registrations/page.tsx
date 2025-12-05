@@ -268,7 +268,10 @@ export default function RegistrationsPage() {
       formData.append('catatan', editFormData.notes || '');
       formData.append('referenceName', editFormData.referenceName || '');
       formData.append('referencePhone', editFormData.referencePhone || '');
-      formData.append('referenceRelation', editFormData.referenceRelation || '');
+      formData.append(
+        'referenceRelation',
+        editFormData.referenceRelation || ''
+      );
 
       const response = await fetch('/api/dashboard/registrations', {
         method: 'PUT',
@@ -466,12 +469,12 @@ export default function RegistrationsPage() {
         setBuktiTransferFile(null);
 
         setIsAddDialogOpen(false);
-        alert('Data calon murid berhasil ditambahkan!');
+        alert('Data registrasi berhasil ditambahkan!');
 
         // Refresh data from database
         fetchStudents();
       } else {
-        alert(result.error || 'Gagal menambahkan data calon murid');
+        alert(result.error || 'Gagal menambahkan data registrasi');
       }
     } catch (error) {
       console.error('Error adding student:', error);
@@ -485,21 +488,21 @@ export default function RegistrationsPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">Calon Murid</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Registrasi</h2>
           <p className="text-gray-600 mt-1">
-            Kelola data calon murid dan pendaftaran
+            Kelola data registrasi dan pendaftaran
           </p>
         </div>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors">
               <Plus className="w-4 h-4 mr-2" />
-              Tambah Calon Murid
+              Tambah Registrasi
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Tambah Calon Murid Baru</DialogTitle>
+              <DialogTitle>Tambah Registrasi Baru</DialogTitle>
             </DialogHeader>
             <div className="space-y-6 py-4">
               {/* Data Anak */}
@@ -708,7 +711,10 @@ export default function RegistrationsPage() {
                       className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
                       value={addFormData.referenceRelation}
                       onChange={(e) =>
-                        handleAddInputChange('referenceRelation', e.target.value)
+                        handleAddInputChange(
+                          'referenceRelation',
+                          e.target.value
+                        )
                       }
                     >
                       <option value="">Pilih hubungan</option>
@@ -1214,7 +1220,9 @@ export default function RegistrationsPage() {
               </div>
 
               {/* Referensi */}
-              {(selectedStudent.referenceName || selectedStudent.referencePhone || selectedStudent.referenceRelation) && (
+              {(selectedStudent.referenceName ||
+                selectedStudent.referencePhone ||
+                selectedStudent.referenceRelation) && (
                 <div className="space-y-4 pt-4 border-t">
                   <h3 className="text-lg font-semibold text-orange-800 flex items-center gap-2">
                     <svg
@@ -1236,15 +1244,21 @@ export default function RegistrationsPage() {
                   <div className="grid grid-cols-3 gap-4">
                     <div>
                       <Label className="text-gray-600">Nama Referensi</Label>
-                      <p className="font-medium">{selectedStudent.referenceName || '-'}</p>
+                      <p className="font-medium">
+                        {selectedStudent.referenceName || '-'}
+                      </p>
                     </div>
                     <div>
                       <Label className="text-gray-600">No. HP Referensi</Label>
-                      <p className="font-medium">{selectedStudent.referencePhone || '-'}</p>
+                      <p className="font-medium">
+                        {selectedStudent.referencePhone || '-'}
+                      </p>
                     </div>
                     <div>
                       <Label className="text-gray-600">Hubungan</Label>
-                      <p className="font-medium capitalize">{selectedStudent.referenceRelation || '-'}</p>
+                      <p className="font-medium capitalize">
+                        {selectedStudent.referenceRelation || '-'}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1564,7 +1578,9 @@ export default function RegistrationsPage() {
 
                 {/* Referensi */}
                 <div className="col-span-2 pt-4 border-t">
-                  <h4 className="text-md font-semibold text-orange-800 mb-3">Referensi (Opsional)</h4>
+                  <h4 className="text-md font-semibold text-orange-800 mb-3">
+                    Referensi (Opsional)
+                  </h4>
                   <div className="grid grid-cols-3 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="edit-referenceName">Nama Referensi</Label>
@@ -1578,12 +1594,17 @@ export default function RegistrationsPage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="edit-referencePhone">No. HP Referensi</Label>
+                      <Label htmlFor="edit-referencePhone">
+                        No. HP Referensi
+                      </Label>
                       <Input
                         id="edit-referencePhone"
                         value={editFormData.referencePhone || ''}
                         onChange={(e) =>
-                          handleEditInputChange('referencePhone', e.target.value)
+                          handleEditInputChange(
+                            'referencePhone',
+                            e.target.value
+                          )
                         }
                         placeholder="No. HP referensi"
                       />
@@ -1594,7 +1615,10 @@ export default function RegistrationsPage() {
                         id="edit-referenceRelation"
                         value={editFormData.referenceRelation || ''}
                         onChange={(e) =>
-                          handleEditInputChange('referenceRelation', e.target.value)
+                          handleEditInputChange(
+                            'referenceRelation',
+                            e.target.value
+                          )
                         }
                         className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
                       >

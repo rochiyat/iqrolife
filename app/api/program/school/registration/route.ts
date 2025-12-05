@@ -17,9 +17,6 @@ export async function POST(request: NextRequest) {
     const program = formData.get('program') as string;
     const catatan = formData.get('catatan') as string;
     const buktiTransfer = formData.get('buktiTransfer') as File;
-    const referenceName = formData.get('referenceName') as string;
-    const referencePhone = formData.get('referencePhone') as string;
-    const referenceRelation = formData.get('referenceRelation') as string;
     const couponCode = formData.get('couponCode') as string;
 
     // Validate required fields
@@ -84,6 +81,7 @@ export async function POST(request: NextRequest) {
       email,
       alamat,
       asalSekolah: asalSekolah || '',
+      program: program || '',
       catatan: catatan || '',
       buktiTransferUrl: uploadResult.url || '',
       buktiTransferPublicId: uploadResult.publicId || '',
@@ -104,6 +102,7 @@ export async function POST(request: NextRequest) {
     );
 
     const registrationData = await registrationResponse.json();
+    console.log('registrationData', registrationData);
 
     if (!registrationResponse.ok) {
       console.error('Registration failed:', registrationData);
