@@ -47,6 +47,7 @@ interface Student {
   referenceName?: string;
   referencePhone?: string;
   referenceRelation?: string;
+  couponCode?: string;
 }
 
 export default function RegistrationsPage() {
@@ -87,6 +88,7 @@ export default function RegistrationsPage() {
     referenceName: '',
     referencePhone: '',
     referenceRelation: '',
+    couponCode: '',
   });
   const [buktiTransferFile, setBuktiTransferFile] = useState<File | null>(null);
 
@@ -272,6 +274,7 @@ export default function RegistrationsPage() {
         'referenceRelation',
         editFormData.referenceRelation || ''
       );
+      formData.append('couponCode', editFormData.couponCode || '');
 
       const response = await fetch('/api/dashboard/registrations', {
         method: 'PUT',
@@ -437,6 +440,7 @@ export default function RegistrationsPage() {
       formData.append('referenceName', addFormData.referenceName);
       formData.append('referencePhone', addFormData.referencePhone);
       formData.append('referenceRelation', addFormData.referenceRelation);
+      formData.append('couponCode', addFormData.couponCode);
 
       if (buktiTransferFile) {
         formData.append('buktiTransfer', buktiTransferFile);
@@ -465,6 +469,7 @@ export default function RegistrationsPage() {
           referenceName: '',
           referencePhone: '',
           referenceRelation: '',
+          couponCode: '',
         });
         setBuktiTransferFile(null);
 
@@ -665,70 +670,6 @@ export default function RegistrationsPage() {
                 </div>
               </div>
 
-              {/* Referensi */}
-              <div className="space-y-4 pt-4 border-t">
-                <h3 className="text-lg font-semibold text-orange-800 flex items-center gap-2">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
-                  Referensi (Opsional)
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label>Nama Referensi</Label>
-                    <Input
-                      placeholder="Nama orang yang mereferensikan"
-                      value={addFormData.referenceName}
-                      onChange={(e) =>
-                        handleAddInputChange('referenceName', e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>No. HP Referensi</Label>
-                    <Input
-                      placeholder="No. HP referensi"
-                      value={addFormData.referencePhone}
-                      onChange={(e) =>
-                        handleAddInputChange('referencePhone', e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Hubungan</Label>
-                    <select
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
-                      value={addFormData.referenceRelation}
-                      onChange={(e) =>
-                        handleAddInputChange(
-                          'referenceRelation',
-                          e.target.value
-                        )
-                      }
-                    >
-                      <option value="">Pilih hubungan</option>
-                      <option value="keluarga">Keluarga</option>
-                      <option value="teman">Teman</option>
-                      <option value="tetangga">Tetangga</option>
-                      <option value="rekan kerja">Rekan Kerja</option>
-                      <option value="alumni">Alumni</option>
-                      <option value="lainnya">Lainnya</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
               {/* Status & Catatan */}
               <div className="space-y-4 pt-4 border-t">
                 <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2">
@@ -762,6 +703,20 @@ export default function RegistrationsPage() {
                     <option value="approved">Disetujui</option>
                     <option value="rejected">Ditolak</option>
                   </select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Kode Kupon (Opsional)</Label>
+                  <Input
+                    placeholder="Masukkan kode kupon jika ada"
+                    value={addFormData.couponCode}
+                    onChange={(e) =>
+                      handleAddInputChange(
+                        'couponCode',
+                        e.target.value.toUpperCase()
+                      )
+                    }
+                  />
                 </div>
 
                 <div className="space-y-2">
@@ -922,6 +877,9 @@ export default function RegistrationsPage() {
                       Kontak
                     </th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Kupon
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
                       Status
                     </th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">
@@ -946,6 +904,15 @@ export default function RegistrationsPage() {
                             <div>{student.phone}</div>
                             <div className="text-gray-500">{student.email}</div>
                           </div>
+                        </td>
+                        <td className="py-3 px-4">
+                          {student.couponCode ? (
+                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                              {student.couponCode}
+                            </span>
+                          ) : (
+                            <span className="text-gray-400 text-sm">-</span>
+                          )}
                         </td>
                         <td className="py-3 px-4">
                           <span
@@ -1056,7 +1023,7 @@ export default function RegistrationsPage() {
                   ) : (
                     <tr>
                       <td
-                        colSpan={6}
+                        colSpan={7}
                         className="py-8 text-center text-gray-500"
                       >
                         Tidak ada data yang ditemukan
@@ -1310,6 +1277,18 @@ export default function RegistrationsPage() {
                       <p className="font-medium">{selectedStudent.notes}</p>
                     </div>
                   )}
+                  <div>
+                    <Label className="text-gray-600">Kode Kupon</Label>
+                    {selectedStudent.couponCode ? (
+                      <p className="font-medium">
+                        <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">
+                          {selectedStudent.couponCode}
+                        </span>
+                      </p>
+                    ) : (
+                      <p className="text-gray-400">-</p>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -1442,7 +1421,7 @@ export default function RegistrationsPage() {
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Edit Data Calon Murid</DialogTitle>
+            <DialogTitle>Edit Data Registrasi</DialogTitle>
           </DialogHeader>
           {editFormData && (
             <div className="space-y-4 py-4">
@@ -1575,63 +1554,19 @@ export default function RegistrationsPage() {
                     className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
                   />
                 </div>
-
-                {/* Referensi */}
-                <div className="col-span-2 pt-4 border-t">
-                  <h4 className="text-md font-semibold text-orange-800 mb-3">
-                    Referensi (Opsional)
-                  </h4>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="edit-referenceName">Nama Referensi</Label>
-                      <Input
-                        id="edit-referenceName"
-                        value={editFormData.referenceName || ''}
-                        onChange={(e) =>
-                          handleEditInputChange('referenceName', e.target.value)
-                        }
-                        placeholder="Nama referensi"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="edit-referencePhone">
-                        No. HP Referensi
-                      </Label>
-                      <Input
-                        id="edit-referencePhone"
-                        value={editFormData.referencePhone || ''}
-                        onChange={(e) =>
-                          handleEditInputChange(
-                            'referencePhone',
-                            e.target.value
-                          )
-                        }
-                        placeholder="No. HP referensi"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="edit-referenceRelation">Hubungan</Label>
-                      <select
-                        id="edit-referenceRelation"
-                        value={editFormData.referenceRelation || ''}
-                        onChange={(e) =>
-                          handleEditInputChange(
-                            'referenceRelation',
-                            e.target.value
-                          )
-                        }
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
-                      >
-                        <option value="">Pilih hubungan</option>
-                        <option value="keluarga">Keluarga</option>
-                        <option value="teman">Teman</option>
-                        <option value="tetangga">Tetangga</option>
-                        <option value="rekan kerja">Rekan Kerja</option>
-                        <option value="alumni">Alumni</option>
-                        <option value="lainnya">Lainnya</option>
-                      </select>
-                    </div>
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-couponCode">Kode Kupon</Label>
+                  <Input
+                    id="edit-couponCode"
+                    value={editFormData.couponCode || ''}
+                    onChange={(e) =>
+                      handleEditInputChange(
+                        'couponCode',
+                        e.target.value.toUpperCase()
+                      )
+                    }
+                    placeholder="Kode kupon (opsional)"
+                  />
                 </div>
               </div>
             </div>

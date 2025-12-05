@@ -105,9 +105,9 @@ export default function RegistrationPage() {
         formDataToSend.append('buktiTransfer', buktiTransfer);
       }
       // Add couponCode if valid coupon is applied
-      if (referralStatus === 'valid' && couponData && formData.referralCode) {
-        formDataToSend.append('couponCode', formData.referralCode);
-      }
+      // if (referralStatus === 'valid' && couponData && formData.referralCode) {
+      formDataToSend.append('couponCode', formData.referralCode);
+      // }
 
       const response = await fetch('/api/program/school/registration', {
         method: 'POST',
