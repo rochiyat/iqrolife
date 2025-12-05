@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 
 export async function POST(request: NextRequest) {
   try {
-    const cookieStore = await cookies();
-
-    // Hapus session cookie
-    cookieStore.delete('auth-token');
-
     return NextResponse.json({
       message: 'Logout berhasil',
     });
