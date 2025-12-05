@@ -48,6 +48,11 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify(body),
       });
       const data = await response.json();
+
+      // Forward the actual status code from backend
+      if (!response.ok) {
+        return NextResponse.json(data, { status: response.status });
+      }
       return NextResponse.json(data);
     }
 
@@ -60,6 +65,11 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(body),
     });
     const data = await response.json();
+
+    // Forward the actual status code from backend
+    if (!response.ok) {
+      return NextResponse.json(data, { status: response.status });
+    }
     return NextResponse.json(data);
   } catch (error) {
     console.error('Create registration error:', error);
@@ -95,6 +105,11 @@ export async function PUT(request: NextRequest) {
         body: JSON.stringify(body),
       });
       const data = await response.json();
+
+      // Forward the actual status code from backend
+      if (!response.ok) {
+        return NextResponse.json(data, { status: response.status });
+      }
       return NextResponse.json(data);
     }
 
@@ -107,6 +122,11 @@ export async function PUT(request: NextRequest) {
       body: JSON.stringify(body),
     });
     const data = await response.json();
+
+    // Forward the actual status code from backend
+    if (!response.ok) {
+      return NextResponse.json(data, { status: response.status });
+    }
     return NextResponse.json(data);
   } catch (error) {
     console.error('Update registration error:', error);
