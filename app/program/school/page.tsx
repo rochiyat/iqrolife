@@ -738,7 +738,7 @@ export default function SchoolPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <a href={schoolData.cta.button.href} className="inline-block">
-                  <button className="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-orange-600 to-pink-600 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
+                  <button className="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg shadow-lg hover:shadow-xl hover:from-orange-600 hover:to-amber-600 transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
                     {schoolData.cta.button.text}
                   </button>
                 </a>
@@ -749,7 +749,7 @@ export default function SchoolPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <button className="px-8 py-4 text-lg font-semibold text-white bg-[#4caade] border-2 border-[#4caade] rounded-lg shadow-lg hover:shadow-xl hover:bg-[#3a8fc7] transform hover:scale-110 transition-all duration-300 animate-pulse">
+                    <button className="px-8 py-4 text-lg font-semibold text-white bg-[#4caade] border-2 border-[#4caade] rounded-lg shadow-lg hover:shadow-xl hover:bg-[#3a8fc7] transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
                       {schoolData.cta.whatsappButton.text}
                     </button>
                   </a>
