@@ -1424,149 +1424,217 @@ export default function RegistrationsPage() {
             <DialogTitle>Edit Data Registrasi</DialogTitle>
           </DialogHeader>
           {editFormData && (
-            <div className="space-y-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="edit-name">Nama Lengkap</Label>
-                  <Input
-                    id="edit-name"
-                    value={editFormData.name}
-                    onChange={(e) =>
-                      handleEditInputChange('name', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-gender">Jenis Kelamin</Label>
-                  <select
-                    id="edit-gender"
-                    value={editFormData.gender}
-                    onChange={(e) =>
-                      handleEditInputChange('gender', e.target.value)
-                    }
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+            <div className="space-y-6 py-4">
+              {/* Data Anak */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-orange-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                  </select>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                  Data Anak
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-name">Nama Lengkap</Label>
+                    <Input
+                      id="edit-name"
+                      value={editFormData.name}
+                      onChange={(e) =>
+                        handleEditInputChange('name', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-gender">Jenis Kelamin</Label>
+                    <select
+                      id="edit-gender"
+                      value={editFormData.gender}
+                      onChange={(e) =>
+                        handleEditInputChange('gender', e.target.value)
+                      }
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+                    >
+                      <option value="Laki-laki">Laki-laki</option>
+                      <option value="Perempuan">Perempuan</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-birthDate">Tanggal Lahir</Label>
+                    <Input
+                      id="edit-birthDate"
+                      type="date"
+                      value={editFormData.birthDate}
+                      onChange={(e) =>
+                        handleEditInputChange('birthDate', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-age">Usia</Label>
+                    <Input
+                      id="edit-age"
+                      type="number"
+                      value={editFormData.age}
+                      onChange={(e) =>
+                        handleEditInputChange('age', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-2">
+                    <Label htmlFor="edit-previousSchool">Asal Sekolah/TK</Label>
+                    <Input
+                      id="edit-previousSchool"
+                      value={editFormData.previousSchool || ''}
+                      onChange={(e) =>
+                        handleEditInputChange('previousSchool', e.target.value)
+                      }
+                      placeholder="Asal sekolah/TK (jika ada)"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-birthDate">Tanggal Lahir</Label>
-                  <Input
-                    id="edit-birthDate"
-                    type="date"
-                    value={editFormData.birthDate}
-                    onChange={(e) =>
-                      handleEditInputChange('birthDate', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-age">Usia</Label>
-                  <Input
-                    id="edit-age"
-                    type="number"
-                    value={editFormData.age}
-                    onChange={(e) =>
-                      handleEditInputChange('age', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-parent">Nama Orang Tua</Label>
-                  <Input
-                    id="edit-parent"
-                    value={editFormData.parent}
-                    onChange={(e) =>
-                      handleEditInputChange('parent', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-phone">No. Telepon</Label>
-                  <Input
-                    id="edit-phone"
-                    value={editFormData.phone}
-                    onChange={(e) =>
-                      handleEditInputChange('phone', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2 col-span-2">
-                  <Label htmlFor="edit-email">Email</Label>
-                  <Input
-                    id="edit-email"
-                    type="email"
-                    value={editFormData.email}
-                    onChange={(e) =>
-                      handleEditInputChange('email', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2 col-span-2">
-                  <Label htmlFor="edit-address">Alamat</Label>
-                  <textarea
-                    id="edit-address"
-                    value={editFormData.address}
-                    onChange={(e) =>
-                      handleEditInputChange('address', e.target.value)
-                    }
-                    rows={3}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-previousSchool">Asal Sekolah</Label>
-                  <Input
-                    id="edit-previousSchool"
-                    value={editFormData.previousSchool || ''}
-                    onChange={(e) =>
-                      handleEditInputChange('previousSchool', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-status">Status</Label>
-                  <select
-                    id="edit-status"
-                    value={editFormData.status}
-                    disabled
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed transition-colors"
+              </div>
+
+              {/* Data Orang Tua */}
+              <div className="space-y-4 pt-4 border-t">
+                <h3 className="text-lg font-semibold text-pink-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <option value="pending">Pending</option>
-                    <option value="reviewed">Direview</option>
-                    <option value="approved">Disetujui</option>
-                    <option value="rejected">Ditolak</option>
-                  </select>
-                  <p className="text-xs text-gray-500">
-                    Status hanya dapat diubah melalui menu Review
-                  </p>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    />
+                  </svg>
+                  Data Orang Tua/Wali
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-parent">Nama Orang Tua/Wali</Label>
+                    <Input
+                      id="edit-parent"
+                      value={editFormData.parent}
+                      onChange={(e) =>
+                        handleEditInputChange('parent', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-phone">No. Telepon/WhatsApp</Label>
+                    <Input
+                      id="edit-phone"
+                      value={editFormData.phone}
+                      onChange={(e) =>
+                        handleEditInputChange('phone', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-2">
+                    <Label htmlFor="edit-email">Email</Label>
+                    <Input
+                      id="edit-email"
+                      type="email"
+                      value={editFormData.email}
+                      onChange={(e) =>
+                        handleEditInputChange('email', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-2">
+                    <Label htmlFor="edit-address">Alamat Lengkap</Label>
+                    <textarea
+                      id="edit-address"
+                      value={editFormData.address}
+                      onChange={(e) =>
+                        handleEditInputChange('address', e.target.value)
+                      }
+                      rows={3}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2 col-span-2">
-                  <Label htmlFor="edit-notes">Catatan</Label>
-                  <textarea
-                    id="edit-notes"
-                    value={editFormData.notes || ''}
-                    onChange={(e) =>
-                      handleEditInputChange('notes', e.target.value)
-                    }
-                    rows={2}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-couponCode">Kode Kupon</Label>
-                  <Input
-                    id="edit-couponCode"
-                    value={editFormData.couponCode || ''}
-                    onChange={(e) =>
-                      handleEditInputChange(
-                        'couponCode',
-                        e.target.value.toUpperCase()
-                      )
-                    }
-                    placeholder="Kode kupon (opsional)"
-                  />
+              </div>
+
+              {/* Status & Catatan */}
+              <div className="space-y-4 pt-4 border-t">
+                <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  Status & Catatan
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-status">Status Pendaftaran</Label>
+                    <select
+                      id="edit-status"
+                      value={editFormData.status}
+                      disabled
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed transition-colors"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="reviewed">Direview</option>
+                      <option value="approved">Disetujui</option>
+                      <option value="rejected">Ditolak</option>
+                    </select>
+                    <p className="text-xs text-gray-500">
+                      Status hanya dapat diubah melalui menu Review
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-couponCode">Kode Kupon</Label>
+                    <Input
+                      id="edit-couponCode"
+                      value={editFormData.couponCode || ''}
+                      onChange={(e) =>
+                        handleEditInputChange(
+                          'couponCode',
+                          e.target.value.toUpperCase()
+                        )
+                      }
+                      placeholder="Kode kupon (opsional)"
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-2">
+                    <Label htmlFor="edit-notes">Catatan</Label>
+                    <textarea
+                      id="edit-notes"
+                      value={editFormData.notes || ''}
+                      onChange={(e) =>
+                        handleEditInputChange('notes', e.target.value)
+                      }
+                      rows={2}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
+                      placeholder="Tambahkan catatan jika ada"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
