@@ -142,6 +142,46 @@ export default function SchoolPage() {
   const [schoolData, setSchoolData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  // Countdown State
+  const [timeLeft, setTimeLeft] = useState<{
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  } | null>(null);
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+
+  useEffect(() => {
+    // Target date: Dec 7, 2025 13:30:00 WIB (UTC+7)
+    const targetDate = new Date('2025-12-07T13:30:00+07:00').getTime();
+
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        setIsRegistrationOpen(true);
+        setTimeLeft(null);
+        return;
+      }
+
+      setIsRegistrationOpen(false);
+      setTimeLeft({
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        ),
+        minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((difference % (1000 * 60)) / 1000),
+      });
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   useEffect(() => {
     const fetchSchoolData = async () => {
       try {
@@ -736,23 +776,97 @@ export default function SchoolPage() {
               <p className="text-gray-700 mb-8 text-lg">
                 {schoolData.cta.description}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <a href={schoolData.cta.button.href} className="inline-block">
-                  <button className="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg shadow-lg hover:shadow-xl hover:from-orange-600 hover:to-amber-600 transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
-                    {schoolData.cta.button.text}
-                  </button>
-                </a>
-                {schoolData.cta.whatsappButton && (
-                  <a
-                    href={schoolData.cta.whatsappButton.href}
-                    className="inline-block"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <button className="px-8 py-4 text-lg font-semibold text-white bg-[#4caade] border-2 border-[#4caade] rounded-lg shadow-lg hover:shadow-xl hover:bg-[#3a8fc7] transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
-                      {schoolData.cta.whatsappButton.text}
-                    </button>
-                  </a>
+              <div className="flex flex-col items-center gap-8 mb-8">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  {!isRegistrationOpen ? (
+                    <div className="inline-block relative group">
+                      <button
+                        disabled
+                        className="px-8 py-4 text-lg font-semibold text-white bg-gray-400 rounded-lg shadow-lg cursor-not-allowed opacity-80 flex items-center gap-2"
+                      >
+                        {schoolData.cta.button.text}{' '}
+                        <span className="text-sm bg-gray-500/50 px-2 py-0.5 rounded">
+                          Segera Dibuka
+                        </span>
+                      </button>
+                    </div>
+                  ) : (
+                    <a
+                      href={schoolData.cta.button.href}
+                      className="inline-block"
+                    >
+                      <button className="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg shadow-lg hover:shadow-xl hover:from-orange-600 hover:to-amber-600 transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
+                        {schoolData.cta.button.text}
+                      </button>
+                    </a>
+                  )}
+
+                  {schoolData.cta.whatsappButton && (
+                    <a
+                      href={schoolData.cta.whatsappButton.href}
+                      className="inline-block"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <button className="px-8 py-4 text-lg font-semibold text-white bg-[#4caade] border-2 border-[#4caade] rounded-lg shadow-lg hover:shadow-xl hover:bg-[#3a8fc7] transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
+                        {schoolData.cta.whatsappButton.text}
+                      </button>
+                    </a>
+                  )}
+                </div>
+
+                {!isRegistrationOpen && timeLeft && (
+                  <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border-2 border-orange-200 shadow-xl max-w-lg w-full transform hover:scale-105 transition-transform duration-300">
+                    <p className="text-center font-bold text-orange-600 mb-4 tracking-wider uppercase flex items-center justify-center gap-2">
+                      <span>⏳</span> Pendaftaran Dibuka Dalam <span>⏳</span>
+                    </p>
+                    <div className="flex gap-3 justify-center">
+                      <div className="flex flex-col items-center bg-white p-3 rounded-xl shadow-md border border-orange-100 min-w-[70px]">
+                        <span className="text-3xl font-black text-[#4caade] font-mono tabular-nums">
+                          {String(timeLeft.days).padStart(2, '0')}
+                        </span>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
+                          Hari
+                        </span>
+                      </div>
+                      <div className="text-2xl font-bold text-orange-300 mt-2">
+                        :
+                      </div>
+                      <div className="flex flex-col items-center bg-white p-3 rounded-xl shadow-md border border-orange-100 min-w-[70px]">
+                        <span className="text-3xl font-black text-[#4caade] font-mono tabular-nums">
+                          {String(timeLeft.hours).padStart(2, '0')}
+                        </span>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
+                          Jam
+                        </span>
+                      </div>
+                      <div className="text-2xl font-bold text-orange-300 mt-2">
+                        :
+                      </div>
+                      <div className="flex flex-col items-center bg-white p-3 rounded-xl shadow-md border border-orange-100 min-w-[70px]">
+                        <span className="text-3xl font-black text-[#4caade] font-mono tabular-nums">
+                          {String(timeLeft.minutes).padStart(2, '0')}
+                        </span>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
+                          Menit
+                        </span>
+                      </div>
+                      <div className="text-2xl font-bold text-orange-300 mt-2">
+                        :
+                      </div>
+                      <div className="flex flex-col items-center bg-white p-3 rounded-xl shadow-md border border-orange-100 min-w-[70px]">
+                        <span className="text-3xl font-black text-orange-500 font-mono tabular-nums animate-pulse">
+                          {String(timeLeft.seconds).padStart(2, '0')}
+                        </span>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
+                          Detik
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-center text-xs text-gray-500 mt-4 italic">
+                      7 Desember 2025, 13:30 WIB
+                    </p>
+                  </div>
                 )}
               </div>
             </CardContent>
