@@ -15,6 +15,8 @@ const pool = new Pool({
   },
 });
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL;
+
 // POST - Request reset password (kirim email)
 export async function POST(request: NextRequest) {
   try {
@@ -89,42 +91,34 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // Cek token
-    const tokenResult = await pool.query(
-      `SELECT prt.*, u.id as user_id, u.email 
-       FROM password_reset_tokens prt
-       JOIN users u ON prt.user_id = u.id
-       WHERE prt.token = $1 AND prt.used = false AND prt.expires_at > NOW()`,
-      [token]
-    );
+    const response = await fetch(`${BACKEND_URL}/api/auth/reset-password`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        token,
+        newPassword,
+      }),
+    });
 
-    if (tokenResult.rows.length === 0) {
+    const data = await response.json();
+
+    if (!response.ok) {
       return NextResponse.json(
-        { error: 'Token tidak valid atau sudah kadaluarsa' },
-        { status: 400 }
+        {
+          error: data.message || 'Gagal mereset password',
+          details: data,
+        },
+        { status: response.status }
       );
     }
 
-    const resetToken = tokenResult.rows[0];
-
-    // Hash password baru
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Update password user
-    await pool.query(
-      'UPDATE users SET password = $1, updated_at = NOW() WHERE id = $2',
-      [hashedPassword, resetToken.user_id]
-    );
-
-    // Tandai token sebagai sudah digunakan
-    await pool.query(
-      'UPDATE password_reset_tokens SET used = true, used_at = NOW() WHERE id = $1',
-      [resetToken.id]
-    );
-
     return NextResponse.json({
+      success: true,
       message:
         'Password berhasil direset. Silakan login dengan password baru Anda',
+      data: data,
     });
   } catch (error) {
     console.error('Error resetting password:', error);
