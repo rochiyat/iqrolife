@@ -200,7 +200,7 @@ export default function FormulirPage() {
   const fetchStudents = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/dashboard/registrations-list');
+      const response = await fetch('/api/dashboard/registrations');
       const result = await response.json();
 
       if (response.ok && result.success) {
