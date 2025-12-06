@@ -51,6 +51,12 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
       });
 
       if (response.ok) {
+        // Clear localStorage keys
+        localStorage.removeItem('accessible-menus');
+        localStorage.removeItem('auth-token');
+        localStorage.removeItem('menus-role');
+        localStorage.removeItem('menus-version');
+
         router.push('/dashboard/login');
       }
     } catch (error) {

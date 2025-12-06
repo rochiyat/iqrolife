@@ -158,7 +158,7 @@ export default function FoundationFooter() {
                   {footerData?.about.title || 'Iqrolife Community'}
                 </span>
                 <span className="text-xs text-muted-foreground md:text-sm">
-                  Profesional • Kekeluargaan
+                  Fitrah - Bertahap - Paripurna - Sukses & Bahagia
                 </span>
               </div>
             </div>

@@ -14,6 +14,7 @@ import {
   GraduationCap,
   Menu as MenuIcon,
   Briefcase,
+  Ticket,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -62,11 +63,13 @@ export default function DashboardLayout({
         show: accessibleMenus.includes('home'),
       },
       {
-        label: 'Calon Murid',
+        label: 'Registrasi',
         icon: GraduationCap,
-        href: '/dashboard/calon-murid',
-        menuId: 'calon-murid',
-        show: accessibleMenus.includes('calon-murid'),
+        href: '/dashboard/registrations',
+        menuId: 'registrations',
+        show:
+          accessibleMenus.includes('registrations') ||
+          accessibleMenus.includes('calon-murid'),
       },
       {
         label: 'Formulir Review',
@@ -106,6 +109,14 @@ export default function DashboardLayout({
         href: '/dashboard/roles',
         menuId: 'roles',
         show: accessibleMenus.includes('roles'),
+      },
+      {
+        label: 'Coupons',
+        icon: Ticket,
+        href: '/dashboard/coupons',
+        menuId: 'coupons',
+        show:
+          accessibleMenus.includes('coupons') || user?.role === 'superadmin',
       },
       {
         label: 'Menu',

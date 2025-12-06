@@ -11,6 +11,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/auth-context';
 
 export default function DashboardLoginPage() {
   const [email, setEmail] = useState('');
@@ -20,6 +21,7 @@ export default function DashboardLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+  const { login } = useAuth();
 
   // Load saved credentials on mount
   useEffect(() => {
@@ -38,33 +40,21 @@ export default function DashboardLoginPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/dashboard/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      await login(email, password);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Save credentials if remember me is checked
-        if (rememberMe) {
-          localStorage.setItem('rememberedEmail', email);
-          localStorage.setItem('rememberedPassword', password);
-        } else {
-          localStorage.removeItem('rememberedEmail');
-          localStorage.removeItem('rememberedPassword');
-        }
-
-        router.push('/dashboard/home');
+      // Save credentials if remember me is checked
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', email);
+        localStorage.setItem('rememberedPassword', password);
       } else {
-        setError(data.error || 'Login gagal. Silakan coba lagi.');
+        localStorage.removeItem('rememberedEmail');
+        localStorage.removeItem('rememberedPassword');
       }
-    } catch (error) {
+
+      router.push('/dashboard/home');
+    } catch (error: any) {
       console.error('Login error:', error);
-      setError('Terjadi kesalahan. Silakan coba lagi.');
+      setError(error.message || 'Terjadi kesalahan. Silakan coba lagi.');
     } finally {
       setIsLoading(false);
     }

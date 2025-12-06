@@ -480,128 +480,6 @@ export default function SchoolPage() {
           </motion.section>
         )}
 
-        {/* Daily Schedule Section */}
-        {schoolData.dailySchedule && (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-16 bg-gradient-to-br from-[#f2cd5b]/10 to-[#4caade]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
-          >
-            <h2 className="text-3xl font-bold text-center mb-4 text-[#4caade] animate-bounce-gentle">
-              {schoolData.dailySchedule.title}
-            </h2>
-            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-              {schoolData.dailySchedule.description}
-            </p>
-
-            <div className="max-w-5xl mx-auto">
-              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="bg-gradient-to-r from-yellow-400 to-yellow-500">
-                        <th className="px-6 py-4 text-left text-white font-bold">
-                          Waktu
-                        </th>
-                        <th className="px-6 py-4 text-left text-white font-bold">
-                          Aktivitas
-                        </th>
-                        <th className="px-6 py-4 text-left text-white font-bold">
-                          Keterangan
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {schoolData.dailySchedule.schedule.map(
-                        (item: any, index: number) => (
-                          <tr
-                            key={index}
-                            className={`border-b ${
-                              index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                            } hover:bg-yellow-50 transition-colors`}
-                          >
-                            <td className="px-6 py-4 font-semibold text-gray-700 whitespace-nowrap">
-                              {item.time}
-                            </td>
-                            <td className="px-6 py-4 text-gray-800">
-                              {item.activity}
-                            </td>
-                            <td className="px-6 py-4 text-gray-600">
-                              {item.description}
-                            </td>
-                          </tr>
-                        )
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </Card>
-            </div>
-          </motion.section>
-        )}
-
-        {/* Yearly Activities Section */}
-        {schoolData.yearlyActivities && (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.33 }}
-            className="mb-16 bg-gradient-to-br from-[#4caade]/10 to-[#f2cd5b]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
-          >
-            <h2 className="text-3xl font-bold text-center mb-4 text-[#4caade] animate-bounce-gentle">
-              {schoolData.yearlyActivities.title}
-            </h2>
-            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-              {schoolData.yearlyActivities.description}
-            </p>
-
-            <div className="max-w-5xl mx-auto">
-              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="bg-gradient-to-r from-yellow-400 to-yellow-500">
-                        <th className="px-6 py-4 text-center text-white font-bold">
-                          No
-                        </th>
-                        <th className="px-6 py-4 text-left text-white font-bold">
-                          Kegiatan
-                        </th>
-                        <th className="px-6 py-4 text-left text-white font-bold">
-                          Ritme
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {schoolData.yearlyActivities.activities.map(
-                        (item: any, index: number) => (
-                          <tr
-                            key={index}
-                            className={`border-b ${
-                              index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                            } hover:bg-yellow-50 transition-colors`}
-                          >
-                            <td className="px-6 py-4 text-center font-semibold text-gray-700">
-                              {item.no}
-                            </td>
-                            <td className="px-6 py-4 text-gray-800">
-                              {item.name}
-                            </td>
-                            <td className="px-6 py-4 text-gray-600">
-                              {item.frequency}
-                            </td>
-                          </tr>
-                        )
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </Card>
-            </div>
-          </motion.section>
-        )}
-
         {/* Facilities Section */}
         {schoolData.facilities && (
           <motion.section
@@ -646,39 +524,132 @@ export default function SchoolPage() {
           </motion.section>
         )}
 
-        {/* PPDB Info Section */}
-        {schoolData.ppdb && (
+        {/* Biaya Formulir Section */}
+        {schoolData.biayaFormulir && (
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             className="mb-16 bg-gradient-to-br from-[#f2cd5b]/10 to-[#4caade]/10 backdrop-blur-sm rounded-3xl p-8 shadow-sm"
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-[#4caade]">
-              {schoolData.ppdb.title}
+            <h2 className="text-3xl font-bold text-center mb-4 text-[#4caade] animate-bounce-gentle">
+              {schoolData.biayaFormulir.title}
             </h2>
-            <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {schoolData.ppdb.items.map((item: any, index: number) => (
-                <Card
-                  key={index}
-                  className="bg-gradient-to-r from-blue-100 to-purple-100 border-0 shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <CardContent className="p-8 text-center">
-                    <div className="bg-white/80 rounded-lg p-6">
-                      <div className="text-3xl font-bold text-[#4caade] mb-2">
-                        {item.level}
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              {schoolData.biayaFormulir.description}
+            </p>
+
+            <div className="max-w-4xl mx-auto">
+              {schoolData.biayaFormulir.items.map(
+                (item: any, index: number) => (
+                  <Card
+                    key={index}
+                    className="bg-white/90 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                  >
+                    <CardContent className="p-8">
+                      {/* Header */}
+                      <div className="text-center mb-8">
+                        <h3 className="text-3xl font-bold text-[#4caade] mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-lg text-gray-600">{item.subtitle}</p>
                       </div>
-                      <div className="text-xl text-gray-700 mb-2">
-                        Usia: {item.age}
+
+                      {/* Pricing Cards */}
+                      <div className="grid md:grid-cols-3 gap-6">
+                        {item.pricing.map((price: any, i: number) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.7 + i * 0.1 }}
+                            className={`relative ${
+                              i === 0 ? 'md:-mt-4' : i === 1 ? 'md:-mt-2' : ''
+                            }`}
+                          >
+                            <Card
+                              className={`h-full border-2 transition-all duration-300 hover:scale-105 ${
+                                i === 0
+                                  ? 'border-green-400 bg-gradient-to-br from-green-50 to-emerald-50 shadow-lg shadow-green-200'
+                                  : i === 1
+                                  ? 'border-orange-400 bg-gradient-to-br from-orange-50 to-amber-50 shadow-lg shadow-orange-200'
+                                  : 'border-blue-400 bg-gradient-to-br from-blue-50 to-cyan-50 shadow-lg shadow-blue-200'
+                              }`}
+                            >
+                              <CardContent className="p-6 text-center relative">
+                                {/* Badge */}
+                                {price.badge && (
+                                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                                    <Badge
+                                      className={`px-4 py-1 text-xs font-bold shadow-md ${
+                                        i === 0
+                                          ? 'bg-gradient-to-r from-green-500 to-emerald-500'
+                                          : 'bg-gradient-to-r from-orange-500 to-amber-500'
+                                      } text-white animate-pulse`}
+                                    >
+                                      {price.badge}
+                                    </Badge>
+                                  </div>
+                                )}
+
+                                {/* Icon */}
+                                <div className="text-5xl mb-4 mt-4">
+                                  {price.icon}
+                                </div>
+
+                                {/* Label */}
+                                <h4
+                                  className={`text-xl font-bold mb-3 ${
+                                    i === 0
+                                      ? 'text-green-700'
+                                      : i === 1
+                                      ? 'text-orange-700'
+                                      : 'text-blue-700'
+                                  }`}
+                                >
+                                  {price.label}
+                                </h4>
+
+                                {/* Price */}
+                                <div
+                                  className={`text-3xl font-extrabold mb-2 ${
+                                    i === 0
+                                      ? 'text-green-600'
+                                      : i === 1
+                                      ? 'text-orange-600'
+                                      : 'text-blue-600'
+                                  }`}
+                                >
+                                  {price.price}
+                                </div>
+
+                                {/* Divider */}
+                                <div
+                                  className={`h-1 w-16 mx-auto rounded-full ${
+                                    i === 0
+                                      ? 'bg-gradient-to-r from-green-400 to-emerald-400'
+                                      : i === 1
+                                      ? 'bg-gradient-to-r from-orange-400 to-amber-400'
+                                      : 'bg-gradient-to-r from-blue-400 to-cyan-400'
+                                  }`}
+                                />
+                              </CardContent>
+                            </Card>
+                          </motion.div>
+                        ))}
                       </div>
-                      <div className="text-2xl font-bold text-[#f2cd5b] mb-1">
-                        {item.fee}
+
+                      {/* Footer Note */}
+                      <div className="mt-8 text-center">
+                        <p className="text-sm text-gray-500 italic">
+                          ✨ Investasi terbaik untuk masa depan cerah
+                          putra-putri Anda
+                        </p>
                       </div>
-                      <div className="text-sm text-gray-600">{item.note}</div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardContent>
+                  </Card>
+                )
+              )}
             </div>
           </motion.section>
         )}
@@ -767,7 +738,7 @@ export default function SchoolPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <a href={schoolData.cta.button.href} className="inline-block">
-                  <button className="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-orange-600 to-pink-600 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
+                  <button className="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg shadow-lg hover:shadow-xl hover:from-orange-600 hover:to-amber-600 transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
                     {schoolData.cta.button.text}
                   </button>
                 </a>
@@ -778,7 +749,7 @@ export default function SchoolPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <button className="px-8 py-4 text-lg font-semibold text-white bg-[#4caade] border-2 border-[#4caade] rounded-lg shadow-lg hover:shadow-xl hover:bg-[#3a8fc7] transform hover:scale-110 transition-all duration-300 animate-pulse">
+                    <button className="px-8 py-4 text-lg font-semibold text-white bg-[#4caade] border-2 border-[#4caade] rounded-lg shadow-lg hover:shadow-xl hover:bg-[#3a8fc7] transform hover:scale-110 transition-all duration-300 animate-bounce-gentle">
                       {schoolData.cta.whatsappButton.text}
                     </button>
                   </a>

@@ -57,7 +57,7 @@ export default function RolesPage() {
 
   const availableMenus = [
     { id: 'home', label: 'Dashboard', icon: '🏠' },
-    { id: 'calon-murid', label: 'Calon Murid', icon: '🎓' },
+    { id: 'registrations', label: 'Registrasi', icon: '🎓' },
     { id: 'formulir-list', label: 'Formulir Review', icon: '📋' },
     { id: 'formulir', label: 'Formulir', icon: '📝' },
     { id: 'portofolio', label: 'Portofolio', icon: '🎨' },

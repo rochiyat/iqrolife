@@ -61,7 +61,18 @@ export default function MenuPage() {
       const response = await fetch('/api/dashboard/menu');
       if (response.ok) {
         const data = await response.json();
-        setMenus(data.data || []);
+        // Transform camelCase to snake_case for frontend compatibility
+        const transformedMenus = (data.data || []).map((menu: any) => ({
+          id: menu.id?.toString() || menu.id,
+          name: menu.name,
+          label: menu.label,
+          icon: menu.icon,
+          href: menu.href,
+          order_index: menu.orderIndex ?? menu.order_index ?? 0,
+          is_active: menu.isActive ?? menu.is_active ?? true,
+          description: menu.description,
+        }));
+        setMenus(transformedMenus);
       }
     } catch (error) {
       console.error('Error fetching menus:', error);

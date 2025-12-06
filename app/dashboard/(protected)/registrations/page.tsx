@@ -44,9 +44,13 @@ interface Student {
   reviewedBy?: number;
   reviewedAt?: string;
   reviewNotes?: string;
+  referenceName?: string;
+  referencePhone?: string;
+  referenceRelation?: string;
+  couponCode?: string;
 }
 
-export default function CalonMuridPage() {
+export default function RegistrationsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
@@ -81,6 +85,10 @@ export default function CalonMuridPage() {
     alamat: '',
     status: 'pending',
     catatan: '',
+    referenceName: '',
+    referencePhone: '',
+    referenceRelation: '',
+    couponCode: '',
   });
   const [buktiTransferFile, setBuktiTransferFile] = useState<File | null>(null);
 
@@ -196,10 +204,10 @@ export default function CalonMuridPage() {
             alertMessage = `✅ User baru berhasil dibuat!\n\nNama: ${selectedStudent.parent}\nEmail: ${selectedStudent.email}\nRole: Parent\n\nPassword telah dikirim ke email.`;
             break;
           case 'role_added':
-            alertMessage = `✅ User sudah ada!\n\nRole Parent berhasil ditambahkan.\nAnak "${selectedStudent.name}" berhasil dimapping ke user ini.`;
+            alertMessage = `✅ User sudah ada!\n\nRole Parent berhasil ditambahkan.\nAnak "${selectedStudent.name}" berhasil dimapping ke user ${selectedStudent.email}.`;
             break;
           case 'mapping_added':
-            alertMessage = `✅ User sudah ada sebagai Parent!\n\nAnak "${selectedStudent.name}" berhasil dimapping ke user ini.`;
+            alertMessage = `✅ User sudah ada sebagai Parent!\n\nAnak "${selectedStudent.name}" berhasil dimapping ke user ${selectedStudent.email}.`;
             break;
         }
         alert(alertMessage);
@@ -260,6 +268,13 @@ export default function CalonMuridPage() {
       formData.append('asalSekolah', editFormData.previousSchool || '');
       formData.append('status', editFormData.status);
       formData.append('catatan', editFormData.notes || '');
+      formData.append('referenceName', editFormData.referenceName || '');
+      formData.append('referencePhone', editFormData.referencePhone || '');
+      formData.append(
+        'referenceRelation',
+        editFormData.referenceRelation || ''
+      );
+      formData.append('couponCode', editFormData.couponCode || '');
 
       const response = await fetch('/api/dashboard/registrations', {
         method: 'PUT',
@@ -422,6 +437,10 @@ export default function CalonMuridPage() {
       formData.append('asalSekolah', addFormData.asalSekolah);
       formData.append('status', addFormData.status);
       formData.append('catatan', addFormData.catatan);
+      formData.append('referenceName', addFormData.referenceName);
+      formData.append('referencePhone', addFormData.referencePhone);
+      formData.append('referenceRelation', addFormData.referenceRelation);
+      formData.append('couponCode', addFormData.couponCode);
 
       if (buktiTransferFile) {
         formData.append('buktiTransfer', buktiTransferFile);
@@ -447,16 +466,20 @@ export default function CalonMuridPage() {
           alamat: '',
           status: 'pending',
           catatan: '',
+          referenceName: '',
+          referencePhone: '',
+          referenceRelation: '',
+          couponCode: '',
         });
         setBuktiTransferFile(null);
 
         setIsAddDialogOpen(false);
-        alert('Data calon murid berhasil ditambahkan!');
+        alert('Data registrasi berhasil ditambahkan!');
 
         // Refresh data from database
         fetchStudents();
       } else {
-        alert(result.error || 'Gagal menambahkan data calon murid');
+        alert(result.error || 'Gagal menambahkan data registrasi');
       }
     } catch (error) {
       console.error('Error adding student:', error);
@@ -470,21 +493,21 @@ export default function CalonMuridPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">Calon Murid</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Registrasi</h2>
           <p className="text-gray-600 mt-1">
-            Kelola data calon murid dan pendaftaran
+            Kelola data registrasi dan pendaftaran
           </p>
         </div>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-brand-emerald hover:bg-emerald-600 cursor-pointer transition-colors">
               <Plus className="w-4 h-4 mr-2" />
-              Tambah Calon Murid
+              Tambah Registrasi
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Tambah Calon Murid Baru</DialogTitle>
+              <DialogTitle>Tambah Registrasi Baru</DialogTitle>
             </DialogHeader>
             <div className="space-y-6 py-4">
               {/* Data Anak */}
@@ -683,6 +706,20 @@ export default function CalonMuridPage() {
                 </div>
 
                 <div className="space-y-2">
+                  <Label>Kode Kupon (Opsional)</Label>
+                  <Input
+                    placeholder="Masukkan kode kupon jika ada"
+                    value={addFormData.couponCode}
+                    onChange={(e) =>
+                      handleAddInputChange(
+                        'couponCode',
+                        e.target.value.toUpperCase()
+                      )
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2">
                   <Label>Catatan</Label>
                   <textarea
                     rows={2}
@@ -840,6 +877,9 @@ export default function CalonMuridPage() {
                       Kontak
                     </th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                      Kupon
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-gray-700">
                       Status
                     </th>
                     <th className="text-left py-3 px-4 font-semibold text-gray-700">
@@ -866,6 +906,15 @@ export default function CalonMuridPage() {
                           </div>
                         </td>
                         <td className="py-3 px-4">
+                          {student.couponCode ? (
+                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                              {student.couponCode}
+                            </span>
+                          ) : (
+                            <span className="text-gray-400 text-sm">-</span>
+                          )}
+                        </td>
+                        <td className="py-3 px-4">
                           <span
                             className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
                               student.status
@@ -876,91 +925,100 @@ export default function CalonMuridPage() {
                         </td>
                         <td className="py-3 px-4">
                           <div className="flex gap-2">
-                            {/* Logic: Disable all actions if approved AND user created */}
                             {(() => {
-                              const isLocked =
-                                student.status === 'approved' &&
-                                !!student.userId;
+                              const isApproved = student.status === 'approved';
 
                               return (
                                 <>
+                                  {/* View - Always enabled */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
-                                    className={`text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors ${
-                                      isLocked
-                                        ? 'opacity-50 cursor-not-allowed'
-                                        : ''
-                                    }`}
+                                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 cursor-pointer transition-colors"
                                     title="Lihat Detail"
                                     onClick={() => handleViewDetail(student)}
-                                    disabled={isLocked}
                                   >
                                     <Eye className="w-4 h-4" />
                                   </Button>
+
+                                  {/* Create User - Only enabled when approved and user not created yet */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
                                     className={`text-purple-600 hover:text-purple-700 hover:bg-purple-50 cursor-pointer transition-colors ${
-                                      student.status !== 'approved' ||
-                                      !!student.userId
+                                      !isApproved || !!student.userId
                                         ? 'opacity-50 cursor-not-allowed'
                                         : ''
                                     }`}
                                     title={
-                                      student.status !== 'approved'
+                                      !isApproved
                                         ? 'Status harus Disetujui untuk buat user'
                                         : !!student.userId
                                         ? 'User sudah dibuat'
                                         : 'Buat User'
                                     }
                                     onClick={() => handleCreateUser(student)}
-                                    disabled={
-                                      student.status !== 'approved' ||
-                                      !!student.userId
-                                    }
+                                    disabled={!isApproved || !!student.userId}
                                   >
                                     <UserPlus className="w-4 h-4" />
                                   </Button>
+
+                                  {/* Review - Disabled when approved */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
                                     className={`text-orange-600 hover:text-orange-700 hover:bg-orange-50 cursor-pointer transition-colors ${
-                                      isLocked
+                                      isApproved
                                         ? 'opacity-50 cursor-not-allowed'
                                         : ''
                                     }`}
-                                    title="Review"
+                                    title={
+                                      isApproved
+                                        ? 'Tidak dapat review data yang sudah disetujui'
+                                        : 'Review'
+                                    }
                                     onClick={() => handleReview(student)}
-                                    disabled={isLocked}
+                                    disabled={isApproved}
                                   >
                                     <ClipboardCheck className="w-4 h-4" />
                                   </Button>
+
+                                  {/* Edit - Disabled when approved */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
                                     className={`text-green-600 hover:text-green-700 hover:bg-green-50 cursor-pointer transition-colors ${
-                                      isLocked
+                                      isApproved
                                         ? 'opacity-50 cursor-not-allowed'
                                         : ''
                                     }`}
-                                    title="Edit"
+                                    title={
+                                      isApproved
+                                        ? 'Tidak dapat edit data yang sudah disetujui'
+                                        : 'Edit'
+                                    }
                                     onClick={() => handleEdit(student)}
-                                    disabled={isLocked}
+                                    disabled={isApproved}
                                   >
                                     <Edit className="w-4 h-4" />
                                   </Button>
+
+                                  {/* Delete - Disabled when approved */}
                                   <Button
                                     size="sm"
                                     variant="ghost"
                                     className={`text-red-600 hover:text-red-700 hover:bg-red-50 cursor-pointer transition-colors ${
-                                      isLocked
+                                      isApproved
                                         ? 'opacity-50 cursor-not-allowed'
                                         : ''
                                     }`}
-                                    title="Hapus"
+                                    title={
+                                      isApproved
+                                        ? 'Tidak dapat hapus data yang sudah disetujui'
+                                        : 'Hapus'
+                                    }
                                     onClick={() => handleDelete(student)}
-                                    disabled={isLocked}
+                                    disabled={isApproved}
                                   >
                                     <Trash2 className="w-4 h-4" />
                                   </Button>
@@ -974,7 +1032,7 @@ export default function CalonMuridPage() {
                   ) : (
                     <tr>
                       <td
-                        colSpan={6}
+                        colSpan={7}
                         className="py-8 text-center text-gray-500"
                       >
                         Tidak ada data yang ditemukan
@@ -1137,6 +1195,51 @@ export default function CalonMuridPage() {
                 </div>
               </div>
 
+              {/* Referensi */}
+              {(selectedStudent.referenceName ||
+                selectedStudent.referencePhone ||
+                selectedStudent.referenceRelation) && (
+                <div className="space-y-4 pt-4 border-t">
+                  <h3 className="text-lg font-semibold text-orange-800 flex items-center gap-2">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                    Referensi
+                  </h3>
+
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <Label className="text-gray-600">Nama Referensi</Label>
+                      <p className="font-medium">
+                        {selectedStudent.referenceName || '-'}
+                      </p>
+                    </div>
+                    <div>
+                      <Label className="text-gray-600">No. HP Referensi</Label>
+                      <p className="font-medium">
+                        {selectedStudent.referencePhone || '-'}
+                      </p>
+                    </div>
+                    <div>
+                      <Label className="text-gray-600">Hubungan</Label>
+                      <p className="font-medium capitalize">
+                        {selectedStudent.referenceRelation || '-'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Status & Catatan */}
               <div className="space-y-4 pt-4 border-t">
                 <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2">
@@ -1183,6 +1286,18 @@ export default function CalonMuridPage() {
                       <p className="font-medium">{selectedStudent.notes}</p>
                     </div>
                   )}
+                  <div>
+                    <Label className="text-gray-600">Kode Kupon</Label>
+                    {selectedStudent.couponCode ? (
+                      <p className="font-medium">
+                        <span className="px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-800">
+                          {selectedStudent.couponCode}
+                        </span>
+                      </p>
+                    ) : (
+                      <p className="text-gray-400">-</p>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -1315,138 +1430,220 @@ export default function CalonMuridPage() {
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Edit Data Calon Murid</DialogTitle>
+            <DialogTitle>Edit Data Registrasi</DialogTitle>
           </DialogHeader>
           {editFormData && (
-            <div className="space-y-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="edit-name">Nama Lengkap</Label>
-                  <Input
-                    id="edit-name"
-                    value={editFormData.name}
-                    onChange={(e) =>
-                      handleEditInputChange('name', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-gender">Jenis Kelamin</Label>
-                  <select
-                    id="edit-gender"
-                    value={editFormData.gender}
-                    onChange={(e) =>
-                      handleEditInputChange('gender', e.target.value)
-                    }
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+            <div className="space-y-6 py-4">
+              {/* Data Anak */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-orange-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                  </select>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                  Data Anak
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-name">Nama Lengkap</Label>
+                    <Input
+                      id="edit-name"
+                      value={editFormData.name}
+                      onChange={(e) =>
+                        handleEditInputChange('name', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-gender">Jenis Kelamin</Label>
+                    <select
+                      id="edit-gender"
+                      value={editFormData.gender}
+                      onChange={(e) =>
+                        handleEditInputChange('gender', e.target.value)
+                      }
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 cursor-pointer hover:border-gray-400 transition-colors"
+                    >
+                      <option value="Laki-laki">Laki-laki</option>
+                      <option value="Perempuan">Perempuan</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-birthDate">Tanggal Lahir</Label>
+                    <Input
+                      id="edit-birthDate"
+                      type="date"
+                      value={editFormData.birthDate}
+                      onChange={(e) =>
+                        handleEditInputChange('birthDate', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-age">Usia</Label>
+                    <Input
+                      id="edit-age"
+                      type="number"
+                      value={editFormData.age}
+                      onChange={(e) =>
+                        handleEditInputChange('age', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-2">
+                    <Label htmlFor="edit-previousSchool">Asal Sekolah/TK</Label>
+                    <Input
+                      id="edit-previousSchool"
+                      value={editFormData.previousSchool || ''}
+                      onChange={(e) =>
+                        handleEditInputChange('previousSchool', e.target.value)
+                      }
+                      placeholder="Asal sekolah/TK (jika ada)"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-birthDate">Tanggal Lahir</Label>
-                  <Input
-                    id="edit-birthDate"
-                    type="date"
-                    value={editFormData.birthDate}
-                    onChange={(e) =>
-                      handleEditInputChange('birthDate', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-age">Usia</Label>
-                  <Input
-                    id="edit-age"
-                    type="number"
-                    value={editFormData.age}
-                    onChange={(e) =>
-                      handleEditInputChange('age', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-parent">Nama Orang Tua</Label>
-                  <Input
-                    id="edit-parent"
-                    value={editFormData.parent}
-                    onChange={(e) =>
-                      handleEditInputChange('parent', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-phone">No. Telepon</Label>
-                  <Input
-                    id="edit-phone"
-                    value={editFormData.phone}
-                    onChange={(e) =>
-                      handleEditInputChange('phone', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2 col-span-2">
-                  <Label htmlFor="edit-email">Email</Label>
-                  <Input
-                    id="edit-email"
-                    type="email"
-                    value={editFormData.email}
-                    onChange={(e) =>
-                      handleEditInputChange('email', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2 col-span-2">
-                  <Label htmlFor="edit-address">Alamat</Label>
-                  <textarea
-                    id="edit-address"
-                    value={editFormData.address}
-                    onChange={(e) =>
-                      handleEditInputChange('address', e.target.value)
-                    }
-                    rows={3}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-previousSchool">Asal Sekolah</Label>
-                  <Input
-                    id="edit-previousSchool"
-                    value={editFormData.previousSchool || ''}
-                    onChange={(e) =>
-                      handleEditInputChange('previousSchool', e.target.value)
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="edit-status">Status</Label>
-                  <select
-                    id="edit-status"
-                    value={editFormData.status}
-                    disabled
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed transition-colors"
+              </div>
+
+              {/* Data Orang Tua */}
+              <div className="space-y-4 pt-4 border-t">
+                <h3 className="text-lg font-semibold text-pink-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <option value="pending">Pending</option>
-                    <option value="reviewed">Direview</option>
-                    <option value="approved">Disetujui</option>
-                    <option value="rejected">Ditolak</option>
-                  </select>
-                  <p className="text-xs text-gray-500">
-                    Status hanya dapat diubah melalui menu Review
-                  </p>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    />
+                  </svg>
+                  Data Orang Tua/Wali
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-parent">Nama Orang Tua/Wali</Label>
+                    <Input
+                      id="edit-parent"
+                      value={editFormData.parent}
+                      onChange={(e) =>
+                        handleEditInputChange('parent', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-phone">No. Telepon/WhatsApp</Label>
+                    <Input
+                      id="edit-phone"
+                      value={editFormData.phone}
+                      onChange={(e) =>
+                        handleEditInputChange('phone', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-2">
+                    <Label htmlFor="edit-email">Email</Label>
+                    <Input
+                      id="edit-email"
+                      type="email"
+                      value={editFormData.email}
+                      onChange={(e) =>
+                        handleEditInputChange('email', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-2">
+                    <Label htmlFor="edit-address">Alamat Lengkap</Label>
+                    <textarea
+                      id="edit-address"
+                      value={editFormData.address}
+                      onChange={(e) =>
+                        handleEditInputChange('address', e.target.value)
+                      }
+                      rows={3}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2 col-span-2">
-                  <Label htmlFor="edit-notes">Catatan</Label>
-                  <textarea
-                    id="edit-notes"
-                    value={editFormData.notes || ''}
-                    onChange={(e) =>
-                      handleEditInputChange('notes', e.target.value)
-                    }
-                    rows={2}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
-                  />
+              </div>
+
+              {/* Status & Catatan */}
+              <div className="space-y-4 pt-4 border-t">
+                <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  Status & Catatan
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-status">Status Pendaftaran</Label>
+                    <select
+                      id="edit-status"
+                      value={editFormData.status}
+                      disabled
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed transition-colors"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="reviewed">Direview</option>
+                      <option value="approved">Disetujui</option>
+                      <option value="rejected">Ditolak</option>
+                    </select>
+                    <p className="text-xs text-gray-500">
+                      Status hanya dapat diubah melalui menu Review
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="edit-couponCode">Kode Kupon</Label>
+                    <Input
+                      id="edit-couponCode"
+                      value={editFormData.couponCode || ''}
+                      onChange={(e) =>
+                        handleEditInputChange(
+                          'couponCode',
+                          e.target.value.toUpperCase()
+                        )
+                      }
+                      placeholder="Kode kupon (opsional)"
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-2">
+                    <Label htmlFor="edit-notes">Catatan</Label>
+                    <textarea
+                      id="edit-notes"
+                      value={editFormData.notes || ''}
+                      onChange={(e) =>
+                        handleEditInputChange('notes', e.target.value)
+                      }
+                      rows={2}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 hover:border-gray-400 transition-colors"
+                      placeholder="Tambahkan catatan jika ada"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

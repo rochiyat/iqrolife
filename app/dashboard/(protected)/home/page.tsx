@@ -23,8 +23,8 @@ import {
 } from '@/components/ui/select';
 
 interface DashboardStats {
-  totalCalonMurid: number;
-  calonMuridChange: string;
+  totalRegistrations: number;
+  registrationsChange: string;
   totalUsers: number;
   usersChange: string;
   pendingFormulir: number;
@@ -68,7 +68,7 @@ export default function DashboardHome() {
         const result = await response.json();
         if (result.success) {
           setStats(result.data.stats);
-          setRecentActivities(result.data.recentActivities);
+          setRecentActivities(result.data.recentActivities || []);
         }
       }
     } catch (error) {
@@ -110,11 +110,11 @@ export default function DashboardHome() {
   const statsCards = stats
     ? [
         {
-          title: 'Total Calon Murid',
-          value: stats.totalCalonMurid.toString(),
+          title: 'Total Registrasi',
+          value: stats.totalRegistrations.toString(),
           icon: GraduationCap,
           color: 'bg-blue-500',
-          change: stats.calonMuridChange,
+          change: stats.registrationsChange,
         },
         {
           title: 'Total Users',

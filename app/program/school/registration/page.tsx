@@ -20,10 +20,13 @@ import {
   Home,
   FileText,
   ArrowLeft,
+  Loader2,
 } from 'lucide-react';
 import Link from 'next/link';
 
 import { RegistrationSuccessModal } from '@/components/registration-success-modal';
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function RegistrationPage() {
   const [formData, setFormData] = useState({
@@ -37,6 +40,7 @@ export default function RegistrationPage() {
     asalSekolah: '',
     program: '',
     catatan: '',
+    referralCode: '',
   });
   const [buktiTransfer, setBuktiTransfer] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -45,6 +49,22 @@ export default function RegistrationPage() {
     'idle' | 'success' | 'error'
   >('idle');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // Referral code states
+  const [isCheckingReferral, setIsCheckingReferral] = useState(false);
+  const [referralStatus, setReferralStatus] = useState<
+    'idle' | 'valid' | 'invalid'
+  >('idle');
+
+  // Coupon states
+  const [showCouponModal, setShowCouponModal] = useState(false);
+  const [couponData, setCouponData] = useState<{
+    discountValue: number;
+    couponName: string;
+  } | null>(null);
+  const originalPrice = 350000; // Harga awal hardcoded
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -84,6 +104,10 @@ export default function RegistrationPage() {
       if (buktiTransfer) {
         formDataToSend.append('buktiTransfer', buktiTransfer);
       }
+      // Add couponCode if valid coupon is applied
+      // if (referralStatus === 'valid' && couponData && formData.referralCode) {
+      formDataToSend.append('couponCode', formData.referralCode);
+      // }
 
       const response = await fetch('/api/program/school/registration', {
         method: 'POST',
@@ -104,18 +128,78 @@ export default function RegistrationPage() {
           asalSekolah: '',
           program: '',
           catatan: '',
+          referralCode: '',
         });
+        setReferralStatus('idle');
         setBuktiTransfer(null);
         setPreviewUrl('');
       } else {
+        const errorData = await response.json();
         setSubmitStatus('error');
+        setErrorMessage(
+          errorData.error ||
+            'Terjadi kesalahan saat mendaftar. Silakan coba lagi.'
+        );
+        setShowErrorModal(true);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
+      setErrorMessage(
+        'Terjadi kesalahan jaringan. Pastikan koneksi internet Anda stabil dan coba lagi.'
+      );
+      setShowErrorModal(true);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleCheckReferral = async () => {
+    if (!formData.referralCode.trim()) return;
+
+    setIsCheckingReferral(true);
+    setReferralStatus('idle');
+    setCouponData(null);
+
+    try {
+      const response = await fetch(BACKEND_URL + '/api/coupons/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: formData.referralCode,
+          program: 'KSS',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setReferralStatus('valid');
+        const discountValue = parseFloat(data.coupon.discountValue);
+        setCouponData({
+          discountValue: discountValue,
+          couponName: data.coupon.name,
+        });
+        setShowCouponModal(true);
+      } else {
+        setReferralStatus('invalid');
+      }
+    } catch (error) {
+      console.error('Error checking referral:', error);
+      setReferralStatus('invalid');
+    } finally {
+      setIsCheckingReferral(false);
+    }
+  };
+
+  // Format currency
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
   };
 
   return (
@@ -161,7 +245,7 @@ export default function RegistrationPage() {
                 className="gap-2 hover:scale-105 transition-all"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Kembali ke Program
+                Kembali ke Halaman Sekolah
               </Button>
             </Link>
           </motion.div>
@@ -202,22 +286,122 @@ export default function RegistrationPage() {
                 onClose={() => setShowSuccessModal(false)}
               />
 
-              {submitStatus === 'error' && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="mb-6 p-4 bg-red-100 border border-red-300 rounded-lg flex items-center gap-3"
-                >
-                  <AlertCircle className="w-6 h-6 text-red-600" />
-                  <div>
-                    <p className="font-semibold text-red-800">
-                      Pendaftaran Gagal
-                    </p>
-                    <p className="text-sm text-red-700">
-                      Terjadi kesalahan. Silakan coba lagi.
-                    </p>
-                  </div>
-                </motion.div>
+              {/* Coupon Success Modal */}
+              {showCouponModal && couponData && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  <div
+                    className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                    onClick={() => setShowCouponModal(false)}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="relative bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 border-4 border-green-200"
+                  >
+                    <div className="text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-400 to-emerald-400 flex items-center justify-center">
+                        <CheckCircle className="w-12 h-12 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                        🎉 Kupon Berhasil Digunakan! 🎉
+                      </h3>
+                      <p className="text-gray-600 mb-6">
+                        Selamat! Anda mendapat potongan harga dari kupon{' '}
+                        <strong>{couponData.couponName}</strong>
+                      </p>
+
+                      <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 mb-6 border-2 border-green-200">
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-600">Harga Awal:</span>
+                            <span className="text-gray-800 font-semibold">
+                              {formatCurrency(originalPrice)}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center text-green-600">
+                            <span>Potongan:</span>
+                            <span className="font-semibold">
+                              - {formatCurrency(couponData.discountValue)}
+                            </span>
+                          </div>
+                          <div className="border-t-2 border-green-300 pt-3">
+                            <div className="flex justify-between items-center">
+                              <span className="text-gray-800 font-bold text-lg">
+                                Total Bayar:
+                              </span>
+                              <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                                {formatCurrency(
+                                  originalPrice - couponData.discountValue
+                                )}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={() => setShowCouponModal(false)}
+                        className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"
+                      >
+                        Lanjutkan Pendaftaran
+                      </Button>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+
+              {/* Error Modal */}
+              {showErrorModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  <div
+                    className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                    onClick={() => setShowErrorModal(false)}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="relative bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 border-4 border-red-200"
+                  >
+                    <div className="text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-red-400 to-rose-400 flex items-center justify-center">
+                        <AlertCircle className="w-12 h-12 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                        😔 Pendaftaran Gagal 😔
+                      </h3>
+                      <p className="text-gray-600 mb-6">{errorMessage}</p>
+
+                      <div className="bg-gradient-to-br from-red-50 to-rose-50 rounded-xl p-4 mb-6 border-2 border-red-200">
+                        <p className="text-sm text-gray-700">
+                          Pastikan semua data sudah diisi dengan benar dan coba
+                          lagi. Jika masalah berlanjut, silakan hubungi admin
+                          kami.
+                        </p>
+                      </div>
+
+                      <div className="flex gap-3">
+                        <Button
+                          onClick={() => setShowErrorModal(false)}
+                          variant="outline"
+                          className="flex-1 py-3 border-2 border-red-300 text-red-600 hover:bg-red-50"
+                        >
+                          Tutup
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            setShowErrorModal(false);
+                            setSubmitStatus('idle');
+                          }}
+                          className="flex-1 py-3 bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 text-white font-bold shadow-lg hover:shadow-xl transition-all"
+                        >
+                          Coba Lagi
+                        </Button>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-8">
@@ -425,6 +609,107 @@ export default function RegistrationPage() {
                   </div>
                 </div>
 
+                {/* Referral Code - Moved above Bukti Transfer */}
+                <div className="space-y-4 bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-2xl border-2 border-orange-200 shadow-md">
+                  <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-amber-400 flex items-center justify-center">
+                      <User className="w-6 h-6 text-white" />
+                    </div>
+                    Referral Code (Opsional)
+                  </h2>
+                  <p className="text-sm text-gray-600">
+                    Masukkan kode referral jika Anda memilikinya untuk
+                    mendapatkan keuntungan khusus
+                  </p>
+
+                  <div className="space-y-2">
+                    <Label
+                      htmlFor="referralCode"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Kode Referral
+                    </Label>
+                    <div className="flex gap-2">
+                      <div className="flex-1 relative">
+                        <Input
+                          id="referralCode"
+                          name="referralCode"
+                          type="text"
+                          value={formData.referralCode}
+                          onChange={(e) => {
+                            handleInputChange(e);
+                            setReferralStatus('idle');
+                          }}
+                          placeholder="Masukkan kode referral"
+                          className="border-2 border-gray-300 focus:border-orange-400 focus:ring-orange-500"
+                        />
+                      </div>
+                      <Button
+                        type="button"
+                        onClick={handleCheckReferral}
+                        disabled={
+                          !formData.referralCode.trim() || isCheckingReferral
+                        }
+                        className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-6 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isCheckingReferral ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Checking...
+                          </>
+                        ) : (
+                          'Check'
+                        )}
+                      </Button>
+                    </div>
+
+                    {/* Status Messages */}
+                    {referralStatus === 'valid' && couponData && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-green-700 bg-green-50 border border-green-200 rounded-lg p-3"
+                      >
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-5 h-5" />
+                          <span className="text-sm font-medium">
+                            Kode referral valid! 🎉
+                          </span>
+                        </div>
+                        <p className="text-sm mt-2 ml-7">
+                          Anda mendapat potongan{' '}
+                          <strong className="text-green-800">
+                            {formatCurrency(couponData.discountValue)}
+                          </strong>{' '}
+                          dari harga{' '}
+                          <span className="line-through">
+                            {formatCurrency(originalPrice)}
+                          </span>{' '}
+                          menjadi{' '}
+                          <strong className="text-green-800">
+                            {formatCurrency(
+                              originalPrice - couponData.discountValue
+                            )}
+                          </strong>
+                        </p>
+                      </motion.div>
+                    )}
+
+                    {referralStatus === 'invalid' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2 text-red-700 bg-red-50 border border-red-200 rounded-lg p-3"
+                      >
+                        <AlertCircle className="w-5 h-5" />
+                        <span className="text-sm font-medium">
+                          Kode referral tidak valid
+                        </span>
+                      </motion.div>
+                    )}
+                  </div>
+                </div>
+
                 {/* Upload Bukti Transfer */}
                 <div className="space-y-4 bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-2xl border-2 border-purple-200 shadow-md">
                   <h2 className="text-2xl font-bold text-purple-800 flex items-center gap-2">
@@ -442,7 +727,6 @@ export default function RegistrationPage() {
                       <li>• Bank: BSI</li>
                       <li>• No. Rekening: 7016179838</li>
                       <li>• Atas Nama: Agista Rosiana</li>
-                      <li>• Biaya Pendaftaran: Rp 250.000</li>
                     </ul>
                   </div>
 
