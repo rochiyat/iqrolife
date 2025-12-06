@@ -378,7 +378,7 @@ export default function FormulirPage() {
     setValidationErrors([]);
 
     try {
-      const response = await fetch('/api/dashboard/formulir-pendaftaran', {
+      const response = await fetch('/api/dashboard/formulir', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
