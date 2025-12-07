@@ -73,7 +73,16 @@ export default function RegistrationPage() {
     >
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === 'nominal') {
+      // Remove non-numeric characters
+      const numericValue = value.replace(/\D/g, '');
+      // Format with thousand separator (dot)
+      const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      setFormData((prev) => ({ ...prev, [name]: formattedValue }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +109,12 @@ export default function RegistrationPage() {
     try {
       const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        formDataToSend.append(key, value);
+        if (key === 'nominal') {
+          // Send raw number without dots
+          formDataToSend.append(key, value.replace(/\./g, ''));
+        } else {
+          formDataToSend.append(key, value);
+        }
       });
       if (buktiTransfer) {
         formDataToSend.append('buktiTransfer', buktiTransfer);
@@ -747,8 +761,8 @@ export default function RegistrationPage() {
                       <Input
                         id="nominal"
                         name="nominal"
-                        type="number"
-                        min="0"
+                        type="text"
+                        inputMode="numeric"
                         value={formData.nominal}
                         onChange={handleInputChange}
                         required
