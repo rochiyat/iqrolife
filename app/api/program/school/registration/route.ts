@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
     const catatan = formData.get('catatan') as string;
     const buktiTransfer = formData.get('buktiTransfer') as File;
     const couponCode = formData.get('couponCode') as string;
+    const nominal = formData.get('nominal') as string;
 
     // Validate required fields
     if (
@@ -85,6 +86,7 @@ export async function POST(request: NextRequest) {
       buktiTransferUrl: uploadResult.url || '',
       buktiTransferPublicId: uploadResult.publicId || '',
       couponCode: couponCode || '',
+      nominal: nominal || '',
     };
 
     console.log('Sending registration to backend:', registrationPayload);

@@ -41,6 +41,7 @@ export default function RegistrationPage() {
     program: '',
     catatan: '',
     referralCode: '',
+    nominal: '',
   });
   const [buktiTransfer, setBuktiTransfer] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -72,7 +73,16 @@ export default function RegistrationPage() {
     >
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === 'nominal') {
+      // Remove non-numeric characters
+      const numericValue = value.replace(/\D/g, '');
+      // Format with thousand separator (dot)
+      const formattedValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      setFormData((prev) => ({ ...prev, [name]: formattedValue }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +109,12 @@ export default function RegistrationPage() {
     try {
       const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        formDataToSend.append(key, value);
+        if (key === 'nominal') {
+          // Send raw number without dots
+          formDataToSend.append(key, value.replace(/\./g, ''));
+        } else {
+          formDataToSend.append(key, value);
+        }
       });
       if (buktiTransfer) {
         formDataToSend.append('buktiTransfer', buktiTransfer);
@@ -129,6 +144,7 @@ export default function RegistrationPage() {
           program: '',
           catatan: '',
           referralCode: '',
+          nominal: '',
         });
         setReferralStatus('idle');
         setBuktiTransfer(null);
@@ -729,6 +745,31 @@ export default function RegistrationPage() {
                       <li>• No. Rekening: 7336694568</li>
                       <li>• Atas Nama: TUMBUH BERSAMA IQROLIFE</li>
                     </ul>
+                  </div>
+
+                  <div>
+                    <Label
+                      htmlFor="nominal"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Nominal Transfer <span className="text-red-500">*</span>
+                    </Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">
+                        Rp
+                      </span>
+                      <Input
+                        id="nominal"
+                        name="nominal"
+                        type="text"
+                        inputMode="numeric"
+                        value={formData.nominal}
+                        onChange={handleInputChange}
+                        required
+                        placeholder="Masukkan jumlah yang ditransfer"
+                        className="mt-1 pl-10 border-2 focus:border-purple-400 transition-all font-semibold text-gray-700"
+                      />
+                    </div>
                   </div>
 
                   <div>
