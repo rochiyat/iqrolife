@@ -41,6 +41,7 @@ export default function RegistrationPage() {
     program: '',
     catatan: '',
     referralCode: '',
+    nominal: '',
   });
   const [buktiTransfer, setBuktiTransfer] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -129,6 +130,7 @@ export default function RegistrationPage() {
           program: '',
           catatan: '',
           referralCode: '',
+          nominal: '',
         });
         setReferralStatus('idle');
         setBuktiTransfer(null);
@@ -729,6 +731,31 @@ export default function RegistrationPage() {
                       <li>• No. Rekening: 7336694568</li>
                       <li>• Atas Nama: TUMBUH BERSAMA IQROLIFE</li>
                     </ul>
+                  </div>
+
+                  <div>
+                    <Label
+                      htmlFor="nominal"
+                      className="text-gray-700 font-semibold"
+                    >
+                      Nominal Transfer <span className="text-red-500">*</span>
+                    </Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">
+                        Rp
+                      </span>
+                      <Input
+                        id="nominal"
+                        name="nominal"
+                        type="number"
+                        min="0"
+                        value={formData.nominal}
+                        onChange={handleInputChange}
+                        required
+                        placeholder="Masukkan jumlah yang ditransfer"
+                        className="mt-1 pl-10 border-2 focus:border-purple-400 transition-all font-semibold text-gray-700"
+                      />
+                    </div>
                   </div>
 
                   <div>
