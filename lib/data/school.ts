@@ -53,7 +53,7 @@ export const schoolData = {
     items: [
       'Pendidikan Iman',
       'Pendidikan Ego dan Individualitas',
-      'Pendidikan Emosi',
+      'Pendidikan Emosi dan Bahasa',
       'Pendidikan Psikomotorik',
     ],
     method: 'Bermain yang Menyenangkan',
@@ -104,34 +104,34 @@ export const schoolData = {
       age: 'Usia mulai 3 - 4 tahun',
       capacity: '10 anak + 10 ibu',
       description:
-        'Kelas bermain untuk anak <strong>usia mulai 3-4 tahun</strong> yang <strong>dibersamai oleh ibu/ayahnya</strong>, terdiri dari 10 anak+ 10 ibu yang dilaksanakan <strong>setiap seminggu sekali</strong>. Kelas didesain untuk memberikan <strong>pengalaman bermain bersama orang tua yang menyenangkan</strong>, menumbuhkan rasa cinta terhadap Rabbnya, serta menstimulasi sensori.',
+        'Kelas bermain untuk anak <strong>usia mulai 3-4 tahun</strong> yang <strong>dibersamai oleh ibu/ayahnya</strong>, terdiri dari 10 anak+ 10 ibu yang dilaksanakan <strong>setiap seminggu sekali</strong>. Kelas didesain untuk memberikan <strong>pengalaman bermain bersama orang tua yang menyenangkan</strong>, menumbuhkan rasa cinta terhadap Rabbnya, menumbuhkan ego dan individualitasnya serta menstimulasi sensori motoriknya.',
       icon: '🎈',
       image: '/profiles/sejarah/sejarah-004.jpg',
     },
     {
-      title: 'Kelas Siap Sekolah 1 (KSS 1)',
+      title: 'Kelas Siap Sekolah A (KSS A)',
       age: 'Usia mulai 4 tahun',
       capacity: '10 anak',
       description:
-        'Kelas Siap Sekolah A untuk usia mulai 4 tahun yang terdiri dari maksimal 10 anak setiap kelasnya. Kelas dilaksanakan <strong>selama 3 hari disekolah dan 2 hari homekeeping dirumah.</strong><br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan belajar terstruktur</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi sensori melalui pembelajaran berbasis bermain.</strong>',
+        'Kelas Siap Sekolah A untuk usia mulai 4 tahun yang terdiri dari maksimal 10 anak setiap kelasnya. Kelas dilaksanakan <strong>selama 3 hari disekolah dan 2 hari homekeeping dirumah.</strong><br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan aman dan nyaman untuk bereksplorasi</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi sensoriknya.</strong>',
       icon: '🌟',
       image: '/program/kelas-siap-sekolah/level/level-003.jpg',
     },
     {
-      title: 'Kelas Siap Sekolah 2 (KSS 2)',
+      title: 'Kelas Siap Sekolah B (KSS B)',
       age: 'Usia mulai 5 tahun',
       capacity: '10 anak',
       description:
-        'Kelas Siap Sekolah A untuk usia mulai 5 tahun yang terdiri dari maksimal 10 anak setiap kelasnya. Kelas dilaksanakan <strong>selama 5 hari disekolah.</strong><br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan belajar terstruktur</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi sensori melalui pembelajaran berbasis bermain.</strong>',
+        'Kelas Siap Sekolah B untuk <strong>usia mulai 5 tahun</strong> yang terdiri dari maksimal 10 anak setiap kelasnya. Kelas dilaksanakan <strong>selama 5 hari disekolah.</strong><br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan aman dan nyaman untuk bereksplorasi</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi sensoriknya.</strong>',
       icon: '✨',
       image: '/program/kelas-siap-sekolah/level/level-002.jpg',
     },
     {
-      title: 'Kelas Siap Sekolah 3 (KSS 3)',
-      age: 'Usia mulai 5 tahun 6 bulan',
+      title: 'Kelas Siap Sekolah C (KSS C)',
+      age: 'Usia mulai 6 tahun',
       capacity: '10 anak',
       description:
-        'Kelas Siap Sekolah A untuk usia mulai 5 tahun 6 bulan yang terdiri dari maksimal 10 anak setiap kelasnya. <br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan belajar terstruktur</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi perkembangan sensori serta kognitif melalui pembelajaran berbasis bermain.</strong>',
+        'Kelas Siap Sekolah C untuk <strong>usia mulai 6 tahun</strong> yang terdiri dari maksimal 10 anak setiap kelasnya. <br/><br/>Kelas didesain sebagai <strong>lingkungan pendidikan awal</strong> dengan menyediakan <strong>lingkungan aman dan nyaman untuk bereksplorasi</strong>, dimana anak-anak dapat menumbuhkan <strong>kecintaan terhadap Rabbnya, mengasah keterampilan sosial, emosi, dan menstimulasi sensoriknya.</strong>',
       icon: '🎓',
       image: '/program/kelas-siap-sekolah/level/level-001.jpg',
     },
