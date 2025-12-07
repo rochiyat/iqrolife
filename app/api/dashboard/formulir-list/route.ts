@@ -6,31 +6,55 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const data = await proxyToBackend(request, '/api/formulir', 'GET');
+    console.log('Fetching formulir list...');
+    const data = await proxyToBackend(
+      request,
+      '/api/formulir-pendaftaran',
+      'GET'
+    );
+    console.log('Formulir list:', data);
     return NextResponse.json(data);
   } catch (error) {
     console.error('Fetch formulir error:', error);
-    return NextResponse.json({ error: 'Gagal mengambil data formulir' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Gagal mengambil data formulir' },
+      { status: 500 }
+    );
   }
 }
 
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const data = await proxyToBackend(request, '/api/formulir', 'PUT', body);
+    const data = await proxyToBackend(
+      request,
+      '/api/formulir-pendaftaran',
+      'PUT',
+      body
+    );
     return NextResponse.json(data);
   } catch (error) {
     console.error('Update formulir error:', error);
-    return NextResponse.json({ error: 'Gagal mengupdate status formulir' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Gagal mengupdate status formulir' },
+      { status: 500 }
+    );
   }
 }
 
 export async function DELETE(request: NextRequest) {
   try {
-    const data = await proxyToBackend(request, '/api/formulir', 'DELETE');
+    const data = await proxyToBackend(
+      request,
+      '/api/formulir-pendaftaran',
+      'DELETE'
+    );
     return NextResponse.json(data);
   } catch (error) {
     console.error('Delete formulir error:', error);
-    return NextResponse.json({ error: 'Gagal menghapus formulir' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Gagal menghapus formulir' },
+      { status: 500 }
+    );
   }
 }
