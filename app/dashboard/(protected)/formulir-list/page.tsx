@@ -30,53 +30,107 @@ import Link from 'next/link';
 
 interface FormSubmission {
   id: number;
-  nama_lengkap: string;
-  nama_panggilan: string;
-  jenis_kelamin: string;
-  tempat_lahir: string;
-  tanggal_lahir: string;
-  agama: string;
-  kewarganegaraan: string;
-  anak_ke: number;
-  jumlah_saudara: number;
-  bahasa_sehari_hari: string;
-  alamat_lengkap: string;
-  rt: string;
-  rw: string;
-  kelurahan: string;
-  kecamatan: string;
-  kabupaten_kota: string;
-  provinsi: string;
-  kode_pos: string;
-  telepon: string;
+  // Support both camelCase (from backend) and snake_case (legacy)
+  namaLengkap?: string;
+  nama_lengkap?: string;
+  namaPanggilan?: string;
+  nama_panggilan?: string;
+  jenisKelamin?: string;
+  jenis_kelamin?: string;
+  tempatLahir?: string;
+  tempat_lahir?: string;
+  tanggalLahir?: string;
+  tanggal_lahir?: string;
+  agama?: string;
+  kewarganegaraan?: string;
+  anakKe?: number;
+  anak_ke?: number;
+  jumlahSaudara?: number;
+  jumlah_saudara?: number;
+  bahasaSehariHari?: string;
+  bahasa_sehari_hari?: string;
+  alamatLengkap?: string;
+  alamat_lengkap?: string;
+  rt?: string;
+  rw?: string;
+  kelurahan?: string;
+  kecamatan?: string;
+  kabupatenKota?: string;
+  kabupaten_kota?: string;
+  provinsi?: string;
+  kodePos?: string;
+  kode_pos?: string;
+  telepon?: string;
+  jarakKeSekolah?: string | number;
   jarak_ke_sekolah?: string;
-  nama_ayah: string;
-  pekerjaan_ayah: string;
+  namaAyah?: string;
+  nama_ayah?: string;
+  pekerjaanAyah?: string;
+  pekerjaan_ayah?: string;
+  pendidikanAyah?: string;
   pendidikan_ayah?: string;
-  telepon_ayah: string;
-  nama_ibu: string;
-  pekerjaan_ibu: string;
+  teleponAyah?: string;
+  telepon_ayah?: string;
+  namaIbu?: string;
+  nama_ibu?: string;
+  pekerjaanIbu?: string;
+  pekerjaan_ibu?: string;
+  pendidikanIbu?: string;
   pendidikan_ibu?: string;
-  telepon_ibu: string;
+  teleponIbu?: string;
+  telepon_ibu?: string;
+  namaWali?: string;
   nama_wali?: string;
+  hubunganWali?: string;
   hubungan_wali?: string;
+  teleponWali?: string;
   telepon_wali?: string;
+  golonganDarah?: string;
   golongan_darah?: string;
+  riwayatPenyakit?: string;
   riwayat_penyakit?: string;
   alergi?: string;
+  tinggiBadan?: number;
   tinggi_badan?: number;
+  beratBadan?: number;
   berat_badan?: number;
+  riwayatVaksinasi?: string;
   riwayat_vaksinasi?: string;
+  hobiMinat?: string;
   hobi_minat?: string;
+  prestasiYangPernahDiraih?: string;
   prestasi_yang_pernah_diraih?: string;
-  program_yang_dipilih: string;
+  programYangDipilih?: string;
+  program_yang_dipilih?: string;
+  informasiTambahan?: string;
   informasi_tambahan?: string;
-  pernyataan_setuju: boolean;
-  status: string;
-  submission_date: string;
-  created_at: string;
-  updated_at: string;
+  pernyataanSetuju?: boolean;
+  pernyataan_setuju?: boolean;
+  status?: string;
+  submissionDate?: string;
+  submission_date?: string;
+  createdAt?: string;
+  created_at?: string;
+  updatedAt?: string;
+  updated_at?: string;
+  reviewNotes?: string;
+  review_notes?: string;
+  reviewedBy?: number;
+  reviewed_by?: number;
+  reviewedAt?: string;
+  reviewed_at?: string;
+  userId?: number;
+  user_id?: number;
 }
+
+// Helper function to get field value (supports both camelCase and snake_case)
+const getField = (
+  form: FormSubmission,
+  camelCase: string,
+  snakeCase: string
+): any => {
+  return (form as any)[camelCase] ?? (form as any)[snakeCase] ?? '';
+};
 
 export default function FormulirListPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -100,9 +154,11 @@ export default function FormulirListPage() {
   const fetchSubmissions = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/dashboard/formulir-pendaftaran');
+      console.log('Fetching submissions...');
+      const response = await fetch('/api/dashboard/formulir-list');
+      console.log('Response:', response);
       const result = await response.json();
-
+      console.log('Result:', result);
       if (response.ok && result.success) {
         setSubmissions(result.data);
       } else {
@@ -115,12 +171,24 @@ export default function FormulirListPage() {
     }
   };
 
-  const filteredSubmissions = submissions.filter(
-    (form) =>
-      form.nama_lengkap.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      form.nama_ayah.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      form.nama_ibu.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredSubmissions = submissions.filter((form) => {
+    const namaLengkap = String(
+      getField(form, 'namaLengkap', 'nama_lengkap') || ''
+    ).toLowerCase();
+    const namaAyah = String(
+      getField(form, 'namaAyah', 'nama_ayah') || ''
+    ).toLowerCase();
+    const namaIbu = String(
+      getField(form, 'namaIbu', 'nama_ibu') || ''
+    ).toLowerCase();
+    const search = searchTerm.toLowerCase();
+
+    return (
+      namaLengkap.includes(search) ||
+      namaAyah.includes(search) ||
+      namaIbu.includes(search)
+    );
+  });
 
   // Pagination logic
   const totalPages =
@@ -279,11 +347,18 @@ export default function FormulirListPage() {
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600">
                 {
-                  submissions.filter(
-                    (s) =>
-                      new Date(s.submission_date).getMonth() ===
-                      new Date().getMonth()
-                  ).length
+                  submissions.filter((s) => {
+                    const submissionDate = getField(
+                      s,
+                      'submissionDate',
+                      'submission_date'
+                    );
+                    return (
+                      submissionDate &&
+                      new Date(submissionDate).getMonth() ===
+                        new Date().getMonth()
+                    );
+                  }).length
                 }
               </div>
               <div className="text-sm text-gray-600 mt-1">Bulan Ini</div>
@@ -295,11 +370,18 @@ export default function FormulirListPage() {
             <div className="text-center">
               <div className="text-3xl font-bold text-purple-600">
                 {
-                  submissions.filter(
-                    (s) =>
-                      new Date(s.submission_date).toDateString() ===
-                      new Date().toDateString()
-                  ).length
+                  submissions.filter((s) => {
+                    const submissionDate = getField(
+                      s,
+                      'submissionDate',
+                      'submission_date'
+                    );
+                    return (
+                      submissionDate &&
+                      new Date(submissionDate).toDateString() ===
+                        new Date().toDateString()
+                    );
+                  }).length
                 }
               </div>
               <div className="text-sm text-gray-600 mt-1">Hari Ini</div>
@@ -387,37 +469,57 @@ export default function FormulirListPage() {
                 </thead>
                 <tbody>
                   {paginatedSubmissions.map((form) => {
-                    const age = Math.floor(
-                      (new Date().getTime() -
-                        new Date(form.tanggal_lahir).getTime()) /
-                        (365.25 * 24 * 60 * 60 * 1000)
+                    const tanggalLahir = getField(
+                      form,
+                      'tanggalLahir',
+                      'tanggal_lahir'
                     );
+                    const age = tanggalLahir
+                      ? Math.floor(
+                          (new Date().getTime() -
+                            new Date(tanggalLahir).getTime()) /
+                            (365.25 * 24 * 60 * 60 * 1000)
+                        )
+                      : 0;
                     return (
                       <tr key={form.id} className="border-b hover:bg-gray-50">
                         <td className="py-3 px-4">
-                          <div className="font-medium">{form.nama_lengkap}</div>
+                          <div className="font-medium">
+                            {getField(form, 'namaLengkap', 'nama_lengkap')}
+                          </div>
                         </td>
                         <td className="py-3 px-4">{age} tahun</td>
                         <td className="py-3 px-4">
                           <div className="text-sm">
-                            <div>Ayah: {form.nama_ayah}</div>
+                            <div>
+                              Ayah: {getField(form, 'namaAyah', 'nama_ayah')}
+                            </div>
                             <div className="text-gray-500">
-                              Ibu: {form.nama_ibu}
+                              Ibu: {getField(form, 'namaIbu', 'nama_ibu')}
                             </div>
                           </div>
                         </td>
                         <td className="py-3 px-4">
                           <div className="text-sm">
-                            <div>{form.telepon}</div>
+                            <div>{getField(form, 'telepon', 'telepon')}</div>
                             <div className="text-gray-500">
-                              {form.telepon_ayah}
+                              {getField(form, 'teleponAyah', 'telepon_ayah')}
                             </div>
                           </div>
                         </td>
                         <td className="py-3 px-4">
-                          {new Date(form.submission_date).toLocaleDateString(
-                            'id-ID'
-                          )}
+                          {(() => {
+                            const submissionDate = getField(
+                              form,
+                              'submissionDate',
+                              'submission_date'
+                            );
+                            return submissionDate
+                              ? new Date(submissionDate).toLocaleDateString(
+                                  'id-ID'
+                                )
+                              : '-';
+                          })()}
                         </td>
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-2">
@@ -529,7 +631,9 @@ export default function FormulirListPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label className="text-gray-600">Nama Lengkap</Label>
-                    <p className="font-medium">{selectedForm.nama_lengkap}</p>
+                    <p className="font-medium">
+                      {getField(selectedForm, 'namaLengkap', 'nama_lengkap')}
+                    </p>
                   </div>
                   <div>
                     <Label className="text-gray-600">Nama Panggilan</Label>
@@ -546,19 +650,35 @@ export default function FormulirListPage() {
                   <div>
                     <Label className="text-gray-600">Tanggal Lahir</Label>
                     <p className="font-medium">
-                      {new Date(selectedForm.tanggal_lahir).toLocaleDateString(
-                        'id-ID'
-                      )}
+                      {(() => {
+                        const tanggalLahir = getField(
+                          selectedForm,
+                          'tanggalLahir',
+                          'tanggal_lahir'
+                        );
+                        return tanggalLahir
+                          ? new Date(tanggalLahir).toLocaleDateString('id-ID')
+                          : '-';
+                      })()}
                     </p>
                   </div>
                   <div>
                     <Label className="text-gray-600">Usia</Label>
                     <p className="font-medium">
-                      {Math.floor(
-                        (new Date().getTime() -
-                          new Date(selectedForm.tanggal_lahir).getTime()) /
-                          (365.25 * 24 * 60 * 60 * 1000)
-                      )}{' '}
+                      {(() => {
+                        const tanggalLahir = getField(
+                          selectedForm,
+                          'tanggalLahir',
+                          'tanggal_lahir'
+                        );
+                        return tanggalLahir
+                          ? Math.floor(
+                              (new Date().getTime() -
+                                new Date(tanggalLahir).getTime()) /
+                                (365.25 * 24 * 60 * 60 * 1000)
+                            )
+                          : 0;
+                      })()}{' '}
                       tahun
                     </p>
                   </div>
@@ -656,7 +776,9 @@ export default function FormulirListPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label className="text-gray-600">Nama Ayah</Label>
-                      <p className="font-medium">{selectedForm.nama_ayah}</p>
+                      <p className="font-medium">
+                        {getField(selectedForm, 'namaAyah', 'nama_ayah')}
+                      </p>
                     </div>
                     <div>
                       <Label className="text-gray-600">Pekerjaan</Label>
@@ -689,7 +811,9 @@ export default function FormulirListPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label className="text-gray-600">Nama Ibu</Label>
-                      <p className="font-medium">{selectedForm.nama_ibu}</p>
+                      <p className="font-medium">
+                        {getField(selectedForm, 'namaIbu', 'nama_ibu')}
+                      </p>
                     </div>
                     <div>
                       <Label className="text-gray-600">Pekerjaan</Label>
@@ -824,30 +948,52 @@ export default function FormulirListPage() {
                       Program yang Dipilih
                     </Label>
                     <p className="font-medium">
-                      {selectedForm.program_yang_dipilih}
+                      {getField(
+                        selectedForm,
+                        'programYangDipilih',
+                        'program_yang_dipilih'
+                      )}
                     </p>
                   </div>
-                  {selectedForm.informasi_tambahan && (
+                  {getField(
+                    selectedForm,
+                    'informasiTambahan',
+                    'informasi_tambahan'
+                  ) && (
                     <div>
                       <Label className="text-gray-600">
                         Informasi Tambahan
                       </Label>
                       <p className="font-medium">
-                        {selectedForm.informasi_tambahan}
+                        {getField(
+                          selectedForm,
+                          'informasiTambahan',
+                          'informasi_tambahan'
+                        )}
                       </p>
                     </div>
                   )}
                   <div>
                     <Label className="text-gray-600">Tanggal Pendaftaran</Label>
                     <p className="font-medium">
-                      {new Date(
-                        selectedForm.submission_date
-                      ).toLocaleDateString('id-ID', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
+                      {(() => {
+                        const submissionDate = getField(
+                          selectedForm,
+                          'submissionDate',
+                          'submission_date'
+                        );
+                        return submissionDate
+                          ? new Date(submissionDate).toLocaleDateString(
+                              'id-ID',
+                              {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                              }
+                            )
+                          : '-';
+                      })()}
                     </p>
                   </div>
                   <div>
@@ -903,10 +1049,16 @@ export default function FormulirListPage() {
             <div className="space-y-4 py-4">
               <div className="bg-blue-50 p-4 rounded-lg">
                 <p className="text-sm text-blue-900">
-                  <strong>Formulir:</strong> {selectedForm.nama_lengkap}
+                  <strong>Formulir:</strong>{' '}
+                  {getField(selectedForm, 'namaLengkap', 'nama_lengkap')}
                 </p>
                 <p className="text-sm text-blue-900">
-                  <strong>Program:</strong> {selectedForm.program_yang_dipilih}
+                  <strong>Program:</strong>{' '}
+                  {getField(
+                    selectedForm,
+                    'programYangDipilih',
+                    'program_yang_dipilih'
+                  )}
                 </p>
               </div>
 
@@ -968,10 +1120,16 @@ export default function FormulirListPage() {
             <div className="space-y-4 py-4">
               <div className="bg-orange-50 p-4 rounded-lg">
                 <p className="text-sm text-orange-900">
-                  <strong>Formulir:</strong> {selectedForm.nama_lengkap}
+                  <strong>Formulir:</strong>{' '}
+                  {getField(selectedForm, 'namaLengkap', 'nama_lengkap')}
                 </p>
                 <p className="text-sm text-orange-900">
-                  <strong>Program:</strong> {selectedForm.program_yang_dipilih}
+                  <strong>Program:</strong>{' '}
+                  {getField(
+                    selectedForm,
+                    'programYangDipilih',
+                    'program_yang_dipilih'
+                  )}
                 </p>
               </div>
 

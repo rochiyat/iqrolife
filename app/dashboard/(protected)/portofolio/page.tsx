@@ -142,6 +142,19 @@ export default function PortofolioPage() {
     }));
   };
 
+  const formatDate = (value?: string) => {
+    if (!value) return '-';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+
+    return new Intl.DateTimeFormat('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'Asia/Jakarta',
+    }).format(date);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'enrolled':
@@ -298,14 +311,7 @@ export default function PortofolioPage() {
               <div>
                 <Label className="text-gray-600">Tanggal Pendaftaran</Label>
                 <p className="font-medium text-gray-900">
-                  {new Date(portfolio.registrationDate).toLocaleDateString(
-                    'id-ID',
-                    {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    }
-                  )}
+                  {formatDate(portfolio.registrationDate)}
                 </p>
               </div>
               <div>
@@ -372,13 +378,7 @@ export default function PortofolioPage() {
                   <div>
                     <Label className="text-gray-600">Tanggal Lahir</Label>
                     <p className="font-medium text-gray-900">
-                      {new Date(
-                        portfolio.formData.birthDate
-                      ).toLocaleDateString('id-ID', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                      })}
+                      {formatDate(portfolio.formData.birthDate)}
                     </p>
                   </div>
                   <div>
