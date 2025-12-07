@@ -1,4 +1,5 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://iqrolife-backend.vercel.app';
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_API_URL || 'https://iqrolife-backend.vercel.app';
 
 class ApiClient {
   private baseUrl: string;
@@ -17,7 +18,7 @@ class ApiClient {
     options: RequestInit = {}
   ): Promise<T> {
     const token = this.getToken();
-    
+
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
       ...options.headers,
@@ -41,20 +42,33 @@ class ApiClient {
     return data;
   }
 
-  // Auth
+  // Auth - menggunakan proxy routes untuk menghindari CORS
   async login(email: string, password: string) {
-    return this.request<{
-      success: boolean;
-      message: string;
-      data: {
-        user: any;
-        menus: any[];
-        token: string;
-      };
-    }>('/api/auth/login', {
+    // Gunakan proxy route Next.js untuk menghindari CORS
+    const response = await fetch('/api/dashboard/login', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ email, password }),
     });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || data.message || 'Login failed');
+    }
+
+    // Konversi format response dari proxy route ke format yang diharapkan
+    return {
+      success: true,
+      message: data.message || 'Login berhasil',
+      data: {
+        user: data.user,
+        menus: data.menus,
+        token: data.token,
+      },
+    };
   }
 
   async register(name: string, email: string, password: string, role?: string) {
@@ -65,23 +79,62 @@ class ApiClient {
   }
 
   async getMe() {
-    return this.request<any>('/api/auth/me');
+    // Gunakan proxy route Next.js untuk menghindari CORS
+    const token = this.getToken();
+    if (!token) {
+      throw new Error('No token found');
+    }
+
+    const response = await fetch('/api/dashboard/login', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: 'include', // Pastikan cookie juga dikirim sebagai fallback
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.authenticated) {
+      throw new Error(data.error || 'Authentication failed');
+    }
+
+    // Format response sesuai dengan yang diharapkan
+    return {
+      success: true,
+      data: data.user,
+    };
   }
 
   // Users
   async getUsers(params?: { role?: string; search?: string }) {
-    const query = params ? '?' + new URLSearchParams(params as any).toString() : '';
+    const query = params
+      ? '?' + new URLSearchParams(params as any).toString()
+      : '';
     return this.request<any>(`/api/users${query}`);
   }
 
-  async createUser(data: { email: string; name: string; role: string; phone?: string }) {
+  async createUser(data: {
+    email: string;
+    name: string;
+    role: string;
+    phone?: string;
+  }) {
     return this.request<any>('/api/users', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async updateUser(data: { id: number; email?: string; name?: string; role?: string; phone?: string; is_active?: boolean }) {
+  async updateUser(data: {
+    id: number;
+    email?: string;
+    name?: string;
+    role?: string;
+    phone?: string;
+    is_active?: boolean;
+  }) {
     return this.request<any>('/api/users', {
       method: 'PUT',
       body: JSON.stringify(data),
@@ -141,7 +194,9 @@ class ApiClient {
 
   // Settings
   async getSettings(params?: { category?: string; key?: string }) {
-    const query = params ? '?' + new URLSearchParams(params as any).toString() : '';
+    const query = params
+      ? '?' + new URLSearchParams(params as any).toString()
+      : '';
     return this.request<any>(`/api/settings${query}`);
   }
 
@@ -184,7 +239,11 @@ class ApiClient {
     });
   }
 
-  async reviewCalonMurid(data: { id: number; status: string; reviewNotes?: string }) {
+  async reviewCalonMurid(data: {
+    id: number;
+    status: string;
+    reviewNotes?: string;
+  }) {
     return this.request<any>('/api/registrations/review', {
       method: 'PUT',
       body: JSON.stringify(data),
@@ -192,7 +251,9 @@ class ApiClient {
   }
 
   async deleteCalonMurid(id: number) {
-    return this.request<any>(`/api/registrations?id=${id}`, { method: 'DELETE' });
+    return this.request<any>(`/api/registrations?id=${id}`, {
+      method: 'DELETE',
+    });
   }
 
   // Portofolio
@@ -242,7 +303,11 @@ class ApiClient {
     return this.request<any>('/api/profile');
   }
 
-  async updateProfile(data: { name?: string; phone?: string; avatar?: string }) {
+  async updateProfile(data: {
+    name?: string;
+    phone?: string;
+    avatar?: string;
+  }) {
     return this.request<any>('/api/profile', {
       method: 'PUT',
       body: JSON.stringify(data),
@@ -257,5 +322,5 @@ class ApiClient {
   }
 }
 
-export const api = new ApiClient(API_BASE_URL);
+export const api = new ApiClient(BACKEND_URL);
 export default api;
