@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { uploadToCloudinary } from '@/lib/utils/claudinary';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -48,26 +49,24 @@ export async function POST(request: NextRequest) {
     // Step 1: Upload bukti transfer to backend
     let uploadResult: { url?: string; publicId?: string } = {};
     if (buktiTransfer) {
-      const uploadFormData = new FormData();
-      uploadFormData.append('file', buktiTransfer);
-      uploadFormData.append('folder', 'registrations');
+      try {
+        const arrayBuffer = await buktiTransfer.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        const folder = 'school'; // Default folder for school registrations
 
-      const uploadResponse = await fetch(`${BACKEND_URL}/api/upload`, {
-        method: 'POST',
-        body: uploadFormData,
-      });
-      console.log('uploadResponse', uploadResponse);
+        const result = await uploadToCloudinary(buffer, folder);
+        console.log('Upload result:', result);
 
-      if (uploadResponse.ok) {
-        const uploadData = await uploadResponse.json();
-        console.log('uploadData', uploadData);
         uploadResult = {
-          url: uploadData.data?.url,
-          publicId: uploadData.data?.publicId,
+          url: result.secure_url,
+          publicId: result.public_id,
         };
-        console.log('uploadResult', uploadResult);
-      } else {
-        console.error('Upload failed:', await uploadResponse.text());
+      } catch (uploadError) {
+        console.error('Upload to Cloudinary failed:', uploadError);
+        return NextResponse.json(
+          { error: 'Gagal mengupload bukti transfer' },
+          { status: 500 }
+        );
       }
     }
 
