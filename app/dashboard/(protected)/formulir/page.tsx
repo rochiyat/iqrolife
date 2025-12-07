@@ -39,6 +39,8 @@ interface CalonMurid {
   email: string;
   address: string;
   status: string;
+  formulirPendaftaranId?: number;
+  formulir_pendaftaran_id?: number;
 }
 
 interface FormData {
@@ -245,7 +247,7 @@ export default function FormulirPage() {
     );
   };
 
-  const handleSelectStudent = (student: CalonMurid) => {
+  const handleSelectStudent = async (student: CalonMurid) => {
     setSelectedStudent(student);
 
     // Format date for input (YYYY-MM-DD) using local time
@@ -258,16 +260,127 @@ export default function FormulirPage() {
       return `${year}-${month}-${day}`;
     };
 
-    // Pre-fill form data with student info
-    setFormData((prev) => ({
-      ...prev,
-      namaLengkap: student.name,
-      namaPanggilan: student.name.split(' ')[0],
-      jenisKelamin: student.gender,
-      tanggalLahir: formatDateForInput(student.birthDate),
-      alamatLengkap: student.address,
-      telepon: student.phone,
-    }));
+    // Get formulirPendaftaranId (support both camelCase and snake_case)
+    const formulirPendaftaranId =
+      student.formulirPendaftaranId || student.formulir_pendaftaran_id;
+
+    // If student has formulir pendaftaran, fetch it
+    if (formulirPendaftaranId) {
+      try {
+        const response = await fetch(
+          `/api/dashboard/formulir-pendaftaran/${formulirPendaftaranId}`
+        );
+        const result = await response.json();
+
+        if (response.ok && result.success && result.data) {
+          const formulir = result.data;
+          // Pre-fill form with existing formulir data
+          setFormData((prev) => ({
+            ...prev,
+            // Support both camelCase and snake_case from backend
+            namaLengkap:
+              formulir.namaLengkap || formulir.nama_lengkap || student.name,
+            namaPanggilan:
+              formulir.namaPanggilan || formulir.nama_panggilan || student.name.split(' ')[0],
+            jenisKelamin:
+              formulir.jenisKelamin || formulir.jenis_kelamin || student.gender,
+            tempatLahir: formulir.tempatLahir || formulir.tempat_lahir || '',
+            tanggalLahir:
+              formulir.tanggalLahir || formulir.tanggal_lahir
+                ? formatDateForInput(
+                    formulir.tanggalLahir || formulir.tanggal_lahir
+                  )
+                : formatDateForInput(student.birthDate),
+            agama: formulir.agama || '',
+            kewarganegaraan: formulir.kewarganegaraan || '',
+            anakKe: formulir.anakKe || formulir.anak_ke || '',
+            jumlahSaudara: formulir.jumlahSaudara || formulir.jumlah_saudara || '',
+            bahasaSehariHari:
+              formulir.bahasaSehariHari || formulir.bahasa_sehari_hari || '',
+            alamatLengkap:
+              formulir.alamatLengkap || formulir.alamat_lengkap || student.address,
+            rt: formulir.rt || '',
+            rw: formulir.rw || '',
+            kelurahan: formulir.kelurahan || '',
+            kecamatan: formulir.kecamatan || '',
+            kabupatenKota: formulir.kabupatenKota || formulir.kabupaten_kota || '',
+            provinsi: formulir.provinsi || '',
+            kodePos: formulir.kodePos || formulir.kode_pos || '',
+            telepon: formulir.telepon || student.phone,
+            jarakKeSekolah:
+              formulir.jarakKeSekolah || formulir.jarak_ke_sekolah || '',
+            namaAyah: formulir.namaAyah || formulir.nama_ayah || '',
+            pekerjaanAyah: formulir.pekerjaanAyah || formulir.pekerjaan_ayah || '',
+            pendidikanAyah:
+              formulir.pendidikanAyah || formulir.pendidikan_ayah || '',
+            teleponAyah: formulir.teleponAyah || formulir.telepon_ayah || '',
+            namaIbu: formulir.namaIbu || formulir.nama_ibu || '',
+            pekerjaanIbu: formulir.pekerjaanIbu || formulir.pekerjaan_ibu || '',
+            pendidikanIbu:
+              formulir.pendidikanIbu || formulir.pendidikan_ibu || '',
+            teleponIbu: formulir.teleponIbu || formulir.telepon_ibu || '',
+            namaWali: formulir.namaWali || formulir.nama_wali || '',
+            hubunganWali: formulir.hubunganWali || formulir.hubungan_wali || '',
+            teleponWali: formulir.teleponWali || formulir.telepon_wali || '',
+            golonganDarah:
+              formulir.golonganDarah || formulir.golongan_darah || '',
+            riwayatPenyakit:
+              formulir.riwayatPenyakit || formulir.riwayat_penyakit || '',
+            alergi: formulir.alergi || '',
+            tinggiBadan: formulir.tinggiBadan || formulir.tinggi_badan || '',
+            beratBadan: formulir.beratBadan || formulir.berat_badan || '',
+            riwayatVaksinasi:
+              formulir.riwayatVaksinasi || formulir.riwayat_vaksinasi || '',
+            hobiMinat: formulir.hobiMinat || formulir.hobi_minat || '',
+            prestasiYangPernahDiraih:
+              formulir.prestasiYangPernahDiraih ||
+              formulir.prestasi_yang_pernah_diraih ||
+              '',
+            programYangDipilih:
+              formulir.programYangDipilih || formulir.program_yang_dipilih || '',
+            informasiTambahan:
+              formulir.informasiTambahan || formulir.informasi_tambahan || '',
+            pernyataanSetuju:
+              formulir.pernyataanSetuju || formulir.pernyataan_setuju || false,
+          }));
+        } else {
+          // If formulir not found, use student data
+          setFormData((prev) => ({
+            ...prev,
+            namaLengkap: student.name,
+            namaPanggilan: student.name.split(' ')[0],
+            jenisKelamin: student.gender,
+            tanggalLahir: formatDateForInput(student.birthDate),
+            alamatLengkap: student.address,
+            telepon: student.phone,
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching formulir:', error);
+        // Fallback to student data if error
+        setFormData((prev) => ({
+          ...prev,
+          namaLengkap: student.name,
+          namaPanggilan: student.name.split(' ')[0],
+          jenisKelamin: student.gender,
+          tanggalLahir: formatDateForInput(student.birthDate),
+          alamatLengkap: student.address,
+          telepon: student.phone,
+        }));
+      }
+    } else {
+      // No formulir pendaftaran, use student data
+      setFormData((prev) => ({
+        ...prev,
+        namaLengkap: student.name,
+        namaPanggilan: student.name.split(' ')[0],
+        jenisKelamin: student.gender,
+        tanggalLahir: formatDateForInput(student.birthDate),
+        alamatLengkap: student.address,
+        telepon: student.phone,
+      }));
+    }
+
     setCurrentStep(1); // Move to first form step
   };
 

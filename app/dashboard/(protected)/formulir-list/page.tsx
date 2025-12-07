@@ -1049,10 +1049,16 @@ export default function FormulirListPage() {
             <div className="space-y-4 py-4">
               <div className="bg-blue-50 p-4 rounded-lg">
                 <p className="text-sm text-blue-900">
-                  <strong>Formulir:</strong> {selectedForm.nama_lengkap}
+                  <strong>Formulir:</strong>{' '}
+                  {getField(selectedForm, 'namaLengkap', 'nama_lengkap')}
                 </p>
                 <p className="text-sm text-blue-900">
-                  <strong>Program:</strong> {selectedForm.program_yang_dipilih}
+                  <strong>Program:</strong>{' '}
+                  {getField(
+                    selectedForm,
+                    'programYangDipilih',
+                    'program_yang_dipilih'
+                  )}
                 </p>
               </div>
 
@@ -1114,10 +1120,16 @@ export default function FormulirListPage() {
             <div className="space-y-4 py-4">
               <div className="bg-orange-50 p-4 rounded-lg">
                 <p className="text-sm text-orange-900">
-                  <strong>Formulir:</strong> {selectedForm.nama_lengkap}
+                  <strong>Formulir:</strong>{' '}
+                  {getField(selectedForm, 'namaLengkap', 'nama_lengkap')}
                 </p>
                 <p className="text-sm text-orange-900">
-                  <strong>Program:</strong> {selectedForm.program_yang_dipilih}
+                  <strong>Program:</strong>{' '}
+                  {getField(
+                    selectedForm,
+                    'programYangDipilih',
+                    'program_yang_dipilih'
+                  )}
                 </p>
               </div>
 
