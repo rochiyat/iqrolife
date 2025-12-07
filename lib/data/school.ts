@@ -271,24 +271,34 @@ export const schoolData = {
     title: '📅 Timeline Pembukaan KSS 2026/2027 📅',
     items: [
       {
+        phase: 'Open Day Iqrolife',
+        date: '7 Desember 2025',
+        description: 'Open Day Iqrolife',
+      },
+      {
         phase: 'Pendaftaran',
-        date: '7 Desember- 20 Desember 2025',
+        date: '7 Desember 2025 - 12 Januari 2026',
         description: 'Pengisian Formulir dan Pengumpulan Berkas',
       },
       {
         phase: 'Observasi dan Wawancara',
-        date: '21 Desember - 22 Desember 2025',
+        date: '19 - 20 Januari 2026',
         description: 'Obersevasi Anak dan Wawancara Orang Tua',
       },
       {
-        phase: 'Pengumuman',
-        date: '23 Desember 2025',
-        description: 'Pengumuman Hasil Seleksi',
+        phase: 'Pengumuman Kelulusan',
+        date: '26 Januari 2026',
+        description: 'Pengumuman Kelulusan',
       },
       {
-        phase: 'Daftar Ulang',
-        date: '23 Desember 2025 - 31 Januari 2026',
-        description: 'Pembayaran dan Daftar Ulang',
+        phase: 'Pembayaran Tahap 1',
+        date: '26 Januari - 28 Februari 2026',
+        description: 'Pembayaran Tahap 1',
+      },
+      {
+        phase: 'Pembayaran Tahap 2',
+        date: '1 Maret - 28 Maret 2026',
+        description: 'Pembayaran Tahap 2',
       },
     ],
   },
