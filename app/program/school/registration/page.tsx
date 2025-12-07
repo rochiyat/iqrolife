@@ -644,6 +644,7 @@ export default function RegistrationPage() {
                           className="border-2 border-gray-300 focus:border-orange-400 focus:ring-orange-500"
                         />
                       </div>
+                      {/*
                       <Button
                         type="button"
                         onClick={handleCheckReferral}
@@ -661,8 +662,8 @@ export default function RegistrationPage() {
                           'Check'
                         )}
                       </Button>
+                    */}
                     </div>
-
                     {/* Status Messages */}
                     {referralStatus === 'valid' && couponData && (
                       <motion.div
@@ -725,8 +726,8 @@ export default function RegistrationPage() {
                     </p>
                     <ul className="text-sm text-blue-700 space-y-1">
                       <li>• Bank: BSI</li>
-                      <li>• No. Rekening: 7016179838</li>
-                      <li>• Atas Nama: Agista Rosiana</li>
+                      <li>• No. Rekening: 7336694568</li>
+                      <li>• Atas Nama: TUMBUH BERSAMA IQROLIFE</li>
                     </ul>
                   </div>
 
