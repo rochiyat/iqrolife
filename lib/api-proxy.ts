@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://iqrolife-backend.vercel.app';
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || 'https://iqrolife-backend.vercel.app';
 
 export function getToken(request: NextRequest): string | null {
   const authHeader = request.headers.get('authorization');
@@ -37,7 +38,10 @@ export async function proxyToBackend(
       } else {
         // If response is HTML (error page), get text instead
         const text = await response.text();
-        console.error('Backend returned HTML instead of JSON:', text.substring(0, 200));
+        console.error(
+          'Backend returned HTML instead of JSON:',
+          text.substring(0, 200)
+        );
         errorMessage = `Backend returned error page (status ${response.status}). Endpoint may not exist.`;
       }
     } catch (e) {
@@ -51,8 +55,16 @@ export async function proxyToBackend(
   const contentType = response.headers.get('content-type');
   if (!contentType || !contentType.includes('application/json')) {
     const text = await response.text();
-    console.error('Backend returned non-JSON response:', contentType, text.substring(0, 200));
-    throw new Error(`Backend returned ${contentType || 'unknown content type'} instead of JSON`);
+    console.error(
+      'Backend returned non-JSON response:',
+      contentType,
+      text.substring(0, 200)
+    );
+    throw new Error(
+      `Backend returned ${
+        contentType || 'unknown content type'
+      } instead of JSON`
+    );
   }
 
   return response.json();
