@@ -768,6 +768,40 @@ export default function SchoolPage() {
           transition={{ duration: 0.6, delay: 0.9 }}
           className="mt-16"
         >
+          {/* Add the FlipHTML5 iframe in a card before the CTA */}
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg max-w-6xl mx-auto mb-8">
+            <CardContent className="p-8">
+              <h2 className="text-3xl font-bold mb-6 text-center text-[#4caade]">
+                Brosur Digital Interaktif
+              </h2>
+              <div
+                style={{
+                  position: 'relative',
+                  paddingTop: 'max(75%, 324px)',
+                  width: '100%',
+                  height: 0,
+                }}
+              >
+                <iframe
+                  style={{
+                    position: 'absolute',
+                    border: 'none',
+                    width: '100%',
+                    height: '100%',
+                    left: 0,
+                    top: 0,
+                  }}
+                  src="https://online.fliphtml5.com/gaesg/ydpd/"
+                  seamless
+                  scrolling="no"
+                  frameBorder="0"
+                  allowTransparency
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </CardContent>
+          </Card>
+
           <Card className="bg-gradient-to-br from-[#4caade]/20 via-white to-[#f2cd5b]/20 border-0 shadow-lg max-w-4xl mx-auto">
             <CardContent className="p-8 text-center">
               <h2 className="text-3xl font-bold mb-4 text-[#4caade]">
