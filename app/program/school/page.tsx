@@ -694,6 +694,192 @@ export default function SchoolPage() {
           </motion.section>
         )}
 
+        {/* Sisa Kuota Kelas Siap Sekolah Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.65 }}
+          className="mb-16"
+        >
+          <Card className="bg-gradient-to-br from-[#4caade]/10 via-white to-[#f2cd5b]/10 backdrop-blur-sm border-2 border-[#4caade]/20 shadow-2xl hover:shadow-3xl transition-all duration-300 overflow-hidden">
+            <CardContent className="p-8 md:p-12">
+              {/* Header with Icon */}
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-[#4caade] to-[#f2cd5b] mb-4 animate-pulse">
+                  <Users className="w-10 h-10 text-white" />
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#4caade] mb-2">
+                  Sisa Kuota Kelas Siap Sekolah
+                </h2>
+                <div className="flex items-center justify-center gap-2 text-sm md:text-base text-gray-600">
+                  <Calendar className="w-4 h-4 text-[#f2cd5b]" />
+                  <p className="font-semibold">Update per 12 Desember 2025</p>
+                </div>
+              </div>
+
+              {/* Quota Cards Grid */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                {/* KB Card */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.7 }}
+                  className="group"
+                >
+                  <Card className="h-full border-2 border-[#4caade]/30 bg-gradient-to-br from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-[#4caade]">
+                    <CardContent className="p-6 text-center">
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#4caade] to-blue-500 flex items-center justify-center shadow-lg group-hover:animate-bounce">
+                        <Book className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-[#4caade] mb-2">
+                        Kelas Bermain (KB)
+                      </h3>
+                      <div className="bg-white/80 rounded-lg py-3 px-4 shadow-inner">
+                        <div className="text-4xl font-extrabold text-[#4caade] mb-1">
+                          3
+                        </div>
+                        <p className="text-sm text-gray-600 font-medium">
+                          orang tersisa
+                        </p>
+                      </div>
+                      <div className="mt-3">
+                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-[#4caade] to-blue-500 rounded-full"
+                            style={{ width: '30%' }}
+                          ></div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* SS A Card */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                  className="group"
+                >
+                  <Card className="h-full border-2 border-[#f2cd5b]/50 bg-gradient-to-br from-orange-50 to-amber-50 hover:from-orange-100 hover:to-amber-100 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-[#f2cd5b]">
+                    <CardContent className="p-6 text-center">
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#f2cd5b] to-orange-400 flex items-center justify-center shadow-lg group-hover:animate-bounce">
+                        <Book className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-[#f2cd5b] mb-2">
+                        Siap Sekolah A (SS A)
+                      </h3>
+                      <div className="bg-white/80 rounded-lg py-3 px-4 shadow-inner">
+                        <div className="text-4xl font-extrabold text-[#f2cd5b] mb-1">
+                          7
+                        </div>
+                        <p className="text-sm text-gray-600 font-medium">
+                          orang tersisa
+                        </p>
+                      </div>
+                      <div className="mt-3">
+                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-[#f2cd5b] to-orange-400 rounded-full"
+                            style={{ width: '70%' }}
+                          ></div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* SS B Card */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.9 }}
+                  className="group"
+                >
+                  <Card className="h-full border-2 border-red-300 bg-gradient-to-br from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-red-400">
+                    <CardContent className="p-6 text-center">
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-red-400 to-pink-500 flex items-center justify-center shadow-lg group-hover:animate-bounce">
+                        <Book className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-red-600 mb-2">
+                        Siap Sekolah B (SS B)
+                      </h3>
+                      <div className="bg-white/80 rounded-lg py-3 px-4 shadow-inner">
+                        <div className="text-4xl font-extrabold text-red-600 mb-1">
+                          1
+                        </div>
+                        <p className="text-sm text-gray-600 font-medium">
+                          orang tersisa
+                        </p>
+                      </div>
+                      <div className="mt-3">
+                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-red-400 to-pink-500 rounded-full"
+                            style={{ width: '10%' }}
+                          ></div>
+                        </div>
+                      </div>
+                      <Badge className="mt-3 bg-red-500 text-white animate-pulse">
+                        Hampir Penuh!
+                      </Badge>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* SS C Card */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 1.0 }}
+                  className="group"
+                >
+                  <Card className="h-full border-2 border-[#4caade]/30 bg-gradient-to-br from-teal-50 to-emerald-50 hover:from-teal-100 hover:to-emerald-100 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-teal-400">
+                    <CardContent className="p-6 text-center">
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-teal-400 to-emerald-500 flex items-center justify-center shadow-lg group-hover:animate-bounce">
+                        <Book className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-teal-600 mb-2">
+                        Siap Sekolah C (SS C)
+                      </h3>
+                      <div className="bg-white/80 rounded-lg py-3 px-4 shadow-inner">
+                        <div className="text-4xl font-extrabold text-teal-600 mb-1">
+                          6
+                        </div>
+                        <p className="text-sm text-gray-600 font-medium">
+                          orang tersisa
+                        </p>
+                      </div>
+                      <div className="mt-3">
+                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-teal-400 to-emerald-500 rounded-full"
+                            style={{ width: '60%' }}
+                          ></div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </div>
+
+              {/* Footer Note */}
+              <div className="mt-8 text-center">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#4caade]/10 to-[#f2cd5b]/10 px-6 py-3 rounded-full border border-[#4caade]/20">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <p className="text-sm font-semibold text-gray-700">
+                    Kuota akan diperbaharui setiap hari atau jika ada yang
+                    mendaftar
+                  </p>
+                </div>
+                <p className="mt-4 text-sm text-gray-500 italic">
+                  🎯 Segera daftarkan putra-putri Anda sebelum kuota penuh!
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.section>
+
         {/* Requirements & Timeline Section */}
         {(schoolData.requirements || schoolData.timeline) && (
           <motion.section
@@ -791,7 +977,7 @@ export default function SchoolPage() {
                     left: 0,
                     top: 0,
                   }}
-                  src="https://online.fliphtml5.com/gaesg/ydpd/"
+                  src="https://online.fliphtml5.com/gaesg/Profile-KBTK-Iqrolife-Updated/"
                   seamless
                   scrolling="no"
                   frameBorder="0"
